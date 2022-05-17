@@ -1,0 +1,1 @@
+export const SERVER_ACCESS_URL: string = "http://localhost:8081/api/access";
