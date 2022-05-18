@@ -1,10 +1,10 @@
 <template>
+<!--main-app-container-->
   <v-app>
-
     <!--header-->
     <v-app-bar tag="header" color="cyan darken-1" elevation="0"  app>
       <v-app-bar-nav-icon color="white" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title class="white--text mr-5">OpenEyz</v-toolbar-title>
+      <v-toolbar-title class="logo white--text mr-5">OpenEyz</v-toolbar-title>
       <v-toolbar-items>
         <v-btn plain icon>
           <v-icon size="35px" color="white">mdi-account</v-icon>
@@ -43,3 +43,11 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Water+Brush&display=swap');
+.logo {
+  font-family: 'Water Brush', 'cursive'!important;
+  font-size: 2.5rem!important;
+}
+</style>

@@ -1,10 +1,14 @@
 import Vue from 'vue';
-export function post(body: FormData): void  {
-    
-    const p: FormData = new FormData();
-    p.append("username", "max@gmail.com");
-    p.append("password", "1234");
+export const httpRequest = {
 
-    Vue.http.post("http://localhost:8081/api/access", p, {credentials: true});
-    
-}
+    post: function (body: FormData): Promise<string>  {
+        return new Promise((resolve, reject) => {
+            Vue.http.post("http://localhost:8081/api/access", body, {credentials: true})
+            .then(
+                (res: Response) => { res.text().then( text => resolve(text) ); },
+                (err: Error)  => { reject(err.message) },
+            );
+        });
+    }, 
+
+};
