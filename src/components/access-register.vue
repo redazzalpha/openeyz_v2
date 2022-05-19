@@ -10,7 +10,7 @@
             <v-divider class="mb-7"></v-divider>
             <v-card-text class="pa-0">
                 <!--register-form-->
-                <v-form ref="register" v-model="valid" lazy-validation>
+                <v-form ref="register" class="register" v-model="valid" lazy-validation>
                     <v-container fluid grid-list-xs>
                         <v-row>
                             <!--first-name-field-->
@@ -62,9 +62,13 @@
                                     </v-checkbox>
                                 </v-col>
                                 <!--register-button-->
-                                <v-col class="d-flex justify-center my-0">
-                                    <v-btn :width="btnSize" color="primary" @click="register()">REGISTER
-                                    </v-btn>
+                                <v-col class="d-flex justify-center my-0 pb-0">
+                                    <v-btn :width="btnSize" color="primary" @click="register()">REGISTER</v-btn>
+                                </v-col>
+                            </v-row>
+                            <v-row>
+                                <v-col class="d-flex justify-center">
+                                    <v-btn text color="primary" @click="updateTab(0)">Got account ?</v-btn>
                                 </v-col>
                             </v-row>
                         </v-container>
@@ -79,11 +83,12 @@
 import Vue from 'vue';
 import { httpRequest } from "../utils/http";
 import { rules } from '../utils/rules';
+import { mapActions } from 'vuex';
 export default Vue.extend({
     name: 'Access-register',
     data() {
         return {
-            res: "",
+            response: "",
             valid: false,
             lname: "",
             name: "",
@@ -108,17 +113,21 @@ export default Vue.extend({
         };
     },
     methods: {
-        async register(): Promise<void> {
+        ...mapActions([
+            "updateTab"
+        ]),
+        async register() {
             let form: any = this.$refs.register;
             if (form != null) {
                 if (form.validate()) {
-                    const formElem: HTMLFormElement | null = document.querySelector("form");
+                    const formElem: HTMLFormElement | null = document.querySelector(".register");
                     if (formElem != null) {
-                        this.res = await httpRequest.post(new FormData(formElem));
+                        httpRequest.login(new FormData(formElem));
                     }
                 }
             }
         },
+        
     },
     computed: {
         btnSize(): string {

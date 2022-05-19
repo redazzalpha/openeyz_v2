@@ -15,10 +15,12 @@
     "@types/connect-flash": "^0.0.37",
     "fs": "^0.0.1-security",
     "vue": "^2.6.14",
+    "vue-property-decorator": "^9.1.2",
     "vue-resource": "^1.5.3",
     "vue-router": "^3.5.1",
     "vuetify": "^2.6.0",
-    "vuex": "^3.6.2"
+    "vuex": "^3.6.2",
+    "vuex-class": "^0.3.2"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.4.0",

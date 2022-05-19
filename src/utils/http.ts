@@ -1,12 +1,17 @@
 import Vue from 'vue';
-export const httpRequest = {
+import router from '../router/index';
+import * as Defines from './defines';
 
-    post: function (body: FormData): Promise<string>  {
+export const httpRequest = {
+    login: function (body: FormData): Promise<JSON>  {
         return new Promise((resolve, reject) => {
-            Vue.http.post("http://localhost:8081/api/access", body, {credentials: true})
+            Vue.http.post(Defines.SERVER_ACCESS_URL, body, {credentials: true})
             .then(
-                (res: Response) => { res.text().then( text => resolve(text) ); },
-                (err: Error)  => { reject(err.message) },
+                (response: JSON) => {
+                    resolve(response);
+                    router.push(Defines.HOME_PAGE_RELATIVE_URL)
+                },
+                (error: JSON) => reject(error),
             );
         });
     }, 
