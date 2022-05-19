@@ -1,51 +1,57 @@
 <template>
-<!--main-app-container-->
+  <!--main-app-container-->
   <v-app>
-    <!--header-->
-    <v-app-bar tag="header" color="cyan darken-1" elevation="0"  app>
-      <v-app-bar-nav-icon color="white" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title class="logo white--text mr-5">OpenEyz</v-toolbar-title>
-      <v-toolbar-items>
-        <v-btn plain icon>
-          <v-icon size="35px" color="white">mdi-account</v-icon>
-        </v-btn>
-      </v-toolbar-items>
-    </v-app-bar>
+    <!--app-bar-header-->
+    <Appbar />
     <!--main-->
     <v-main>
       <!--main-section-->
       <section>
+        <!--views-->
         <router-view />
       </section>
     </v-main>
-    <!--nav--->
-    <v-navigation-drawer
-    tag="nav"
-    v-model="drawer"
-    absolute
-    temporary
-    ></v-navigation-drawer>
+    <!--nav-->
+    <v-navigation-drawer tag="nav" v-model="drawer" absolute temporary></v-navigation-drawer>
     <!--footer-->
-    <v-footer></v-footer>
+    <Footer />
   </v-app>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import Footer from './components/footer-cpn.vue';
+import Appbar from './components/appbar-cpn.vue';
 export default Vue.extend({
   name: 'app',
-
-  data(){
+  components: {
+    Appbar,
+    Footer,
+  },
+  data() {
     return {
       drawer: false,
+
     };
   },
+
 });
 </script>
 
 <style lang="scss">
 .logo {
-  font-family: 'Water Brush', 'cursive'!important;
-  font-size: 2.5rem!important;
+  font-family: $font-logo;
+  font-size: $size-appbar-logo;
+}
+
+.btn {
+  i {
+    color: $color-appbar-icon;
+    font-size: $size-appbar-icon;
+  }
+
+  span {
+    color: $color-appbar-text;
+  }
 }
 </style>

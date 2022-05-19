@@ -1,21 +1,21 @@
 export const rules = {
-    isNotEmpty: (v: string) => {
+    isNotEmpty: (v: string): boolean => {
         return !/^\s*$/gi.test(v);
     },
 
-    requiredEmail: (v: string) => {
+    requiredEmail: (v: string): string | boolean => {
         return !!v || 'E-mail requise';
     },
-    requiredPasswd: (v: string) => {
+    requiredPasswd: (v: string): string | boolean => {
         return !!v || 'Mot de passe requis';
     },
-    requiredField: (v: string) => {
+    requiredField: (v: string): string | boolean => {
         return !!v || 'Champ requis';
     },
-    emailValidator: (v: string) => {
+    emailValidator: (v: string): string | boolean => {
         return v != null && !!v.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g) || "L'adresse e-mail est invalide";
     },
-    passwdValidator: (v: string) => {
+    passwdValidator: (v: string): string | boolean => {
         let errMsg = "";
         const regex = {
             digit: /.*\d.*/g,
@@ -46,11 +46,14 @@ export const rules = {
 
         return errMsg || true;     
     },
-    fieldValidator: (v: string) => {
+    fieldValidator: (v: string): string | boolean => {
         return v != null && !!v.match(/^\s*[0-9a-zA-ZÀ-ÿ]{2,}([\s|-]?[0-9a-zA-ZÀ-ÿ]{1,})*\s*$/g) || "Le champs est invalide";
     },
-    max255: (v: string) => {
+    max255: (v: string): string | boolean => {
         return v != null && v.length <= 255 || '255 Caractères max.';
     },
+    checked: (v: string): string | boolean => {
+        return !!v || "You must agree to continue";
+    }
 };
 

@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
 import home from '../views/home.vue';
-import login from '../views/login.vue';
+import access from '../views/access.vue';
 
 Vue.use(VueRouter);
 
@@ -12,9 +12,9 @@ const routes: Array<RouteConfig> = [
     component: home,
   },
   {
-    name: 'login',
-    path: "/login",
-    component: login,
+    name: 'access',
+    path: "/access",
+    component: access,
   },
 
 ];
