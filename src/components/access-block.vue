@@ -4,7 +4,7 @@
         <!--access-title-tabs-->
         <tabs />
         <!--tabs-content-->
-        <v-tabs-items v-model="tab">
+        <v-tabs-items v-model="$store.state.tab">
             <!--login-tab-content-->
             <login />
             <!--register-tab-content-->
@@ -18,9 +18,8 @@ import Vue from 'vue';
 import Tabs from '../components/access-tabs.vue';
 import Login from '../components/access-login.vue';
 import Register from '../components/access-register.vue';
-import { mapState } from 'vuex';
 export default Vue.extend({
-    name: 'access-input',
+    name: 'Access-block',
     components: {
         Tabs,
         Login,
@@ -31,10 +30,9 @@ export default Vue.extend({
             dialog: true,
         };
     },
+    methods: {
+    },
     computed: {
-        ...mapState([
-            'tab'
-        ]),
     }
 });
 </script>

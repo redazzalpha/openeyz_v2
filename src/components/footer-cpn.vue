@@ -28,7 +28,7 @@
 
 <script lang="ts">
 export default {
-    name: "footer-cpn",
+    name: "Footer-cpn",
     data() {
         return {
             icons: [

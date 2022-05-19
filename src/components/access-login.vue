@@ -35,8 +35,9 @@ import Vue from 'vue';
 import { rules } from '../utils/rules';
 import { httpRequest } from "../utils/http";
 import { mapActions } from 'vuex';
+
 export default Vue.extend({
-    name: 'access-login',
+    name: 'Access-login',
     data() {
         return {
             res: "",

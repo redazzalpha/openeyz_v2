@@ -9,7 +9,7 @@
 import Vue from "vue";
 import Access from '../components/access-block.vue'
 export default Vue.extend({
-  name: "login-page",
+  name: "Access-page",
   components: {
     Access,
   },

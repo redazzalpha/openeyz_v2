@@ -10,7 +10,11 @@
 <script lang="ts">
 import Vue from 'vue';
 export default Vue.extend({
-    name: 'access-tabs',
+    name: 'Access-tabs',
+    methods: {
+    },
+    computed: {
+    }
 });
 </script>
 

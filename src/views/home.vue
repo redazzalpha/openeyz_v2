@@ -8,6 +8,6 @@
 import Vue from 'vue';
 
 export default Vue.extend({
-    name: 'home-page',
+    name: 'Home-page',
 });
 </script>

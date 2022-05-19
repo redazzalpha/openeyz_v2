@@ -27,7 +27,7 @@
 <script lang="ts">
 import Vue from 'vue';
 export default Vue.extend({
-    name: 'appbar-cpn',
+    name: 'Appbar-cpn',
     data() {
         return {
             drawer: false,

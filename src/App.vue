@@ -23,7 +23,7 @@ import Vue from 'vue';
 import Footer from './components/footer-cpn.vue';
 import Appbar from './components/appbar-cpn.vue';
 export default Vue.extend({
-  name: 'app',
+  name: 'App',
   components: {
     Appbar,
     Footer,

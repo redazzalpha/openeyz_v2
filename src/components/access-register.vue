@@ -80,7 +80,7 @@ import Vue from 'vue';
 import { httpRequest } from "../utils/http";
 import { rules } from '../utils/rules';
 export default Vue.extend({
-    name: 'access-register',
+    name: 'Access-register',
     data() {
         return {
             res: "",
