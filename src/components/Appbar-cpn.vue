@@ -8,7 +8,7 @@
                 </v-col>
                 <v-col class="px-0">
                     <!--logo-->
-                    <v-toolbar-title class="logo text-center text-md-left white--text mr-5">OpenEyz</v-toolbar-title>
+                    <v-toolbar-title class="logo text-center ml-md-9 text-md-left white--text mr-5">OpenEyz</v-toolbar-title>
                 </v-col>
             </v-row>
         </v-container>

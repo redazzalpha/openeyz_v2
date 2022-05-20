@@ -16,32 +16,32 @@
                             <!--first-name-field-->
                             <v-col cols="12" sm="6" class="py-0">
                                 <v-text-field v-model="lname" required :rules="fieldRules" placeholder="Last name"
-                                    name="lname" outlined></v-text-field>
+                                    name="lname" class="pt-0"></v-text-field>
                             </v-col>
                             <!--name-field-->
                             <v-col cols="12" sm="6" class="py-0">
                                 <v-text-field v-model="name" required :rules="fieldRules" placeholder="First name"
-                                    name="name" outlined></v-text-field>
+                                    name="name" class="pt-0"></v-text-field>
                             </v-col>
                             <!--email-field-->
                             <v-col cols="12" sm="6" class="py-0">
                                 <v-text-field v-model="email" required :rules="emailRules" placeholder="E-mail"
-                                    name="username" outlined></v-text-field>
+                                    name="username" class="pt-0"></v-text-field>
                             </v-col>
                             <!--password-field-->
                             <v-col cols="12" sm="6" class="py-0">
                                 <v-text-field v-model="password" required :rules="passwordRules" placeholder="Password"
-                                    name="password" outlined type="password">
+                                    name="password" class="pt-0" type="password">
                                 </v-text-field>
                             </v-col>
                             <!--description-field-->
                             <v-col cols="12" class="py-0">
                                 <v-text-field v-model="description" :rules="fieldRules" placeholder="Description"
-                                    name="description" outlined></v-text-field>
+                                    name="description" class="pt-0"></v-text-field>
                             </v-col>
                         </v-row>
                     </v-container>
-                    <v-divider class="mb-7"></v-divider>
+                    <v-divider class="mb-7 mt-8"></v-divider>
                     <!--text-terms-->
                     <v-card-text class="text-caption text-sm-body-2 py-0">
                         En cliquant sur S’inscrire, vous acceptez nos Conditions générales.

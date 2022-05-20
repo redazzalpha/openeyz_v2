@@ -25,14 +25,14 @@
                 <!--login-form-->
                 <v-form ref="login" class="login" v-model="valid" lazy-validation>
                     <!--email-field-->
-                    <v-text-field v-model="email" required :rules="emailRules" placeholder="E-mail" name="username"
-                        outlined></v-text-field>
+                    <v-text-field v-model="email" class="pt-0" required :rules="emailRules" placeholder="E-mail" name="username"
+                        ></v-text-field>
                     <!--passwod-field-->
-                    <v-text-field v-model="password" required :rules="passwordRules" placeholder="Password"
-                        type="password" name="password" outlined></v-text-field>
+                    <v-text-field v-model="password" class="pt-0" required :rules="passwordRules" placeholder="Password"
+                        type="password" name="password" ></v-text-field>
                 </v-form>
             </v-card-text>
-            <v-divider class="mb-7"></v-divider>
+            <v-divider class="mb-7 mt-3"></v-divider>
             <!--connect-action-->
             <v-card-actions class="d-flex flex-column">
                 <!--connect-button-->

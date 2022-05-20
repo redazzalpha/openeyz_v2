@@ -15,9 +15,9 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import Tabs from '../components/access-tabs.vue';
-import Login from '../components/access-login.vue';
-import Register from '../components/access-register.vue';
+import Tabs from '../components/Access-tabs.vue';
+import Login from '../components/Access-login.vue';
+import Register from '../components/Access-register.vue';
 export default Vue.extend({
     name: 'Access-block',
     components: {

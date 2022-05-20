@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
-import home from '../views/home.vue';
-import access from '../views/access.vue';
+import Home from '../views/Home.vue';
+import Access from '../views/Access.vue';
 
 Vue.use(VueRouter);
 
@@ -9,12 +9,12 @@ const routes: Array<RouteConfig> = [
   {
     name: 'home',
     path: "/",
-    component: home,
+    component: Home,
   },
   {
     name: 'access',
     path: "/access",
-    component: access,
+    component: Access,
   },
 
 ];
