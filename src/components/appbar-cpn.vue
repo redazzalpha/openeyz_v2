@@ -1,14 +1,14 @@
 <template>
-    <v-app-bar tag="header" color="cyan darken-1" elevation="0" app>
+    <v-app-bar tag="header" color="cyan darken-1"  elevation="0" app>
         <v-container fluid grid-list-xs>
             <v-row>
-                <v-col v-show="!showAppBarLink" class="shrink">
-                    <!--navigation-drawer-icon-->
-                    <v-app-bar-nav-icon color="white" @click.stop="drawer = !drawer" />
+                <!--navigation-drawer-icon-->
+                <v-col v-show="!showAppBarLink" class="shrink px-0">
+                    <v-app-bar-nav-icon color="white" @click.stop="updateDrawer(!drawer)" />
                 </v-col>
-                <v-col class="">
+                <v-col class="px-0">
                     <!--logo-->
-                    <v-app-bar-title class="logo text-center white--text mr-5">OpenEyz</v-app-bar-title>
+                    <v-toolbar-title class="logo text-center text-md-left white--text mr-5">OpenEyz</v-toolbar-title>
                 </v-col>
             </v-row>
         </v-container>
@@ -17,7 +17,7 @@
             <v-btn class="btn d-flex mx-5" elevation=0 color="transparent" v-for="icon of icons" :key="icon.title"
                 :title="icon.title">
                 <!-- <font-awesome-icon  class="appbar-icon mr-2" :icon="item.icon"/> -->
-                <i :class="icon.class"></i><span>{{ icon.title }}</span>
+                <i :class="icon.class + ' mr-1'"></i><span>{{ icon.title }}</span>
                 <!-- <span class="white--text"></span> -->
             </v-btn>
         </v-toolbar-items>
@@ -26,11 +26,11 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { mapActions, mapState } from 'vuex';
 export default Vue.extend({
     name: 'Appbar-cpn',
     data() {
         return {
-            drawer: false,
             icons: [
                 { title: 'Profile', class: 'fa-solid fa-user' },
                 { title: 'Notifications', class: 'fa-solid fa-bell' },
@@ -39,7 +39,15 @@ export default Vue.extend({
             ],
         };
     },
+    methods: {
+        ...mapActions([
+            'updateDrawer'
+        ]),
+    },
     computed: {
+        ...mapState([
+            'drawer'
+        ]),
         showAppBarLink(): boolean {
             let show = true;
             switch (this.$vuetify.breakpoint.name) {

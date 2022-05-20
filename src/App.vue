@@ -4,7 +4,7 @@
     <!--app-bar-header-->
     <Appbar />
     <!--main-->
-    <v-main>
+    <v-main :style='"background:  url(" + ($vuetify.theme.dark? require("./assets/bg-home-dark.webp") : require("./assets/bg-home.webp")) + ") fixed no-repeat center; background-size: cover; "'>
       <!--main-section-->
       <section>
         <!--views-->
@@ -12,7 +12,7 @@
       </section>
     </v-main>
     <!--nav-->
-    <v-navigation-drawer tag="nav" v-model="drawer" absolute temporary></v-navigation-drawer>
+    <v-navigation-drawer tag="nav" v-model="$store.state.drawer" absolute temporary></v-navigation-drawer>
     <!--footer-->
     <Footer />
   </v-app>
@@ -30,7 +30,6 @@ export default Vue.extend({
   },
   data() {
     return {
-      drawer: false,
 
     };
   },

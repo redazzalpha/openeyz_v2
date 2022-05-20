@@ -3,17 +3,22 @@
     <v-tab-item>
         <v-card>
             <!--connect-title-->
-            <v-card-title primary-title class="d-flex flex-column justify-center align-center my-2">
+            <v-card-title primary-title class="d-flex flex-column justify-center align-center mt-2">
                 <div class="logo mb-2">OpenEyz</div>
-                <div>Connection</div>
+                <div v-show="!alertMessage">Connection</div>
                 <!--error-alert-message-->
-                <v-alert 
-                v-show="alertMessage" 
-                dense 
-                outlined 
-                type="error"
-                style="word-break: keep-all;"
-                >{{alertMessage}}</v-alert>
+                <Transition name="scale-transition">
+                    <v-alert 
+                    v-show="alertMessage" 
+                    dense 
+                    outlined 
+                    type="error"
+                    style="word-break: keep-all;"
+                    text
+                    elevation="5"
+                    class="mt-3"
+                    >{{alertMessage}}</v-alert>
+                </Transition>
             </v-card-title>
             <v-divider class="mb-7"></v-divider>
             <v-card-text class="py-0">
