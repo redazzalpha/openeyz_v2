@@ -63,7 +63,9 @@
                                 </v-col>
                                 <!--register-button-->
                                 <v-col class="d-flex justify-center my-0 pb-0">
-                                    <v-btn :width="btnSize" color="primary" @click="register()">REGISTER</v-btn>
+                                    <v-btn color="primary"
+                                        :width="btnSize"
+                                        @click="register()">REGISTER</v-btn>
                                 </v-col>
                             </v-row>
                             <v-row>
@@ -83,7 +85,11 @@
 import Vue from 'vue';
 import { httpRequest } from "../utils/http";
 import { rules } from '../utils/rules';
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
+
+type VueFunction = {validate: () => boolean};
+type VueElement = | undefined | Vue | Element | (Vue | Element) [];
+
 export default Vue.extend({
     name: 'Access-register',
     data() {
@@ -114,12 +120,12 @@ export default Vue.extend({
     },
     methods: {
         ...mapActions([
-            "updateTab"
+            "updateTab",
         ]),
         async register() {
-            let form: any = this.$refs.register;
+            let form: VueElement = this.$refs.register;
             if (form != null) {
-                if (form.validate()) {
+                if (((form as unknown ) as VueFunction).validate()) {
                     const formElem: HTMLFormElement | null = document.querySelector(".register");
                     if (formElem != null) {
                         httpRequest.login(new FormData(formElem));
@@ -127,13 +133,12 @@ export default Vue.extend({
                 }
             }
         },
-        
     },
     computed: {
-        btnSize(): string {
-            return this.$vuetify.breakpoint.name == 'xs' ? '100%' : '50%';
-        }
-    },
+        ...mapGetters([
+            'btnSize'
+        ]),
+    }
 });
 </script>
 

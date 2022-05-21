@@ -15,5 +15,25 @@ export const httpRequest = {
             );
         });
     }, 
+    post: function (url: string, body: FormData | object | null): Promise<JSON>  {
+        return new Promise((resolve, reject) => {
+
+            Vue.http.post(url, body, {credentials: true})
+            .then(
+                (response: JSON) => resolve(response),
+                (error: JSON) => reject(error),
+            );
+        });
+    }, 
+
+    get: function (url: string): Promise<JSON>  {
+        return new Promise((resolve, reject) => {
+            Vue.http.get(url)
+            .then(
+                (response: JSON) => resolve(response),
+                (error: JSON) => reject(error),
+            );
+        });
+    }, 
 
 };

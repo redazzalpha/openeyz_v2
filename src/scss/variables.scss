@@ -1,14 +1,17 @@
-$font-logo: 'Water Brush', 'cursive'!important;
+$font-logo: 'Water Brush', 'cursive' !important;
 
 // colos
 $color-appbar-icon: white;
 $color-appbar-text: white;
+$color-btn-scroll-top: #00ACC1;
 
 // sizes
 $size-appbar-logo: 2.5rem;
 $size-appbar-icon: 25px;
 $size-logo-title-home: 55px;
 
+// heights
+$height-editor-content: 250px;
+
 // transformations
 $btn-text-transform: unset !default;
-

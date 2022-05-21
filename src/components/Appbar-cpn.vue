@@ -6,9 +6,11 @@
                 <v-col v-show="!showAppBarLink" class="shrink px-0">
                     <v-app-bar-nav-icon color="white" @click.stop="updateDrawer(!drawer)" />
                 </v-col>
-                <v-col class="px-0">
+                <v-col :class="$vuetify.breakpoint.name == 'xs' ? '' : 'shrink' + ' px-0'">
                     <!--logo-->
-                    <v-toolbar-title class="logo text-center ml-md-9 text-md-left white--text mr-5">OpenEyz</v-toolbar-title>
+                    <router-link to="/" class=" d-block text-decoration-none">
+                        <v-toolbar-title class="logo text-center ml-md-9 text-md-left white--text mr-5">OpenEyz</v-toolbar-title>
+                    </router-link>
                 </v-col>
             </v-row>
         </v-container>

@@ -36,7 +36,7 @@
             <!--connect-action-->
             <v-card-actions class="d-flex flex-column">
                 <!--connect-button-->
-                <v-btn :width="btnSize" class="mx-auto mb-1" color="primary" @click="login()">CONNECT</v-btn>
+                <v-btn  class="mx-auto mb-1" color="primary" :width="btnSize" @click="login()">CONNECT</v-btn>
                 <v-btn text color="primary" @click="updateTab(1)">No account ?</v-btn>
             </v-card-actions>
         </v-card>
@@ -47,10 +47,11 @@
 import Vue from 'vue';
 import { rules } from '../utils/rules';
 import { httpRequest } from "../utils/http";
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters} from 'vuex';
 
 type Err = { body: { message: string } };
-
+type VueFunction = {validate: () => boolean};
+type VueElement = | undefined | Vue | Element | (Vue | Element) [];
 export default Vue.extend({
     name: 'Access-login',
     data() {
@@ -71,12 +72,12 @@ export default Vue.extend({
     },
     methods: {
         ...mapActions([
-            "updateTab"
+            "updateTab",
         ]),
         async login() {
-            let form: any = this.$refs.login;
+            let form: VueElement = this.$refs.login;
             if (form != null) {
-                if (form.validate()) {
+                if (((form as unknown ) as VueFunction).validate()) {
                     const formElem: HTMLFormElement | null = document.querySelector(".login");
                     if (formElem != null) {
                         httpRequest.login(new FormData(formElem))
@@ -90,9 +91,9 @@ export default Vue.extend({
         },
     },
     computed: {
-        btnSize(): string {
-            return this.$vuetify.breakpoint.name == 'xs' ? '100%' : '50%';
-        }
+        ...mapGetters([
+            'btnSize',
+        ])
     }
 });
 
