@@ -5,13 +5,27 @@
         <v-container grid-list-xs fluid>
             <v-row>
                 <v-col>
-                    <!-- editor-card -->
-                    <v-card max-width="500" class="mx-auto card" elevation="7">
+                    <!--card-container -->
+                    <v-card max-width="500" class="mx-auto card mb-6" elevation="7" style="position: relative;">
+                        <!--error-alert-message-->
+                        <Transition name="scale-transition">
+                            <v-alert v-show="alertMessage" dense outlined type="error"
+                                style="position: absolute; top: 40%; left: 10%; right:10%; z-index: 1; word-break: keep-all;"
+                                text elevation="5" class="mt-3">{{ alertMessage }}</v-alert>
+                        </Transition>
+                        <!-- header-title -->
+                        <v-card-title primary-title style="background-color: #00ACC1" class="white--text mb-4 pa-2">
+                            <v-avatar size="55" color="red" class="mr-3">
+                                <img src="" alt="alt">
+                            </v-avatar>
+                            Say what you want
+                        </v-card-title>
+                        <!--editor -->
                         <v-card-text>
-                            <!-- editor -->
                             <ckeditor :editor="editor" v-model="editorData" :config="editorConfig" height="300"
                                 tag-name="textarea" placeholder="Express yourself..."></ckeditor>
                         </v-card-text>
+                        <!-- buttons -->
                         <v-card-actions class="d-flex justify-center">
                             <v-btn color="primary" :width="btnSize" @click="publish">Publish</v-btn>
                         </v-card-actions>
@@ -26,14 +40,21 @@
 import Vue from 'vue';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import UploadAdapterPlugin from '../ckeditor5/ckeditor5-config';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState, mapActions } from 'vuex';
+import { httpRequest } from '../utils/http';
+import * as Defines from '../utils/defines';
 
+type Err = { body: { message: string } };
 export default Vue.extend({
     name: 'Post-input',
     components: {
     },
     data() {
         return {
+            ...mapState([
+                'posts'
+            ]),
+            alertMessage: "",
             editor: ClassicEditor,
             editorData: '',
             editorConfig: {
@@ -54,14 +75,36 @@ export default Vue.extend({
                     'blockQuote',
                     'undo',
                     'redo'
-
                 ],
             }
         };
     },
     methods: {
+        ...mapActions([
+            'getAllPosts'
+        ]),
+
         publish(): void {
-            console.log("publishing");
+            if (this.editorData) {
+                let data: FormData = new FormData();
+                data.append("data", this.editorData.replace(/<img/g, "<img width=100%"));
+                httpRequest.post(Defines.SERVER_PUBLICATION_URL, data)
+                    .then(
+                        (): void => {
+                            this.editorData = "";
+                            this.getAllPosts();
+                        },
+                        (error: Err): void => {
+                            this.alertMessage = error.body.message;
+                            setTimeout(() => {
+                                this.alertMessage = '';
+                            }, 5000);
+                        },
+                    );
+            }
+        },
+        showErrorMessage(message: string): void {
+            this.alertMessage = message;
         }
     },
     computed: {

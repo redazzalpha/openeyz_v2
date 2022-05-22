@@ -1,5 +1,5 @@
 <template>
-    <v-app-bar tag="header" color="cyan darken-1"  elevation="0" app>
+    <v-app-bar tag="header" color="cyan darken-1" elevation="0" app>
         <v-container fluid grid-list-xs>
             <v-row>
                 <!--navigation-drawer-icon-->
@@ -9,7 +9,8 @@
                 <v-col :class="$vuetify.breakpoint.name == 'xs' ? '' : 'shrink' + ' px-0'">
                     <!--logo-->
                     <router-link to="/" class=" d-block text-decoration-none">
-                        <v-toolbar-title class="logo text-center ml-md-9 text-md-left white--text mr-5">OpenEyz</v-toolbar-title>
+                        <v-toolbar-title class="logo text-center ml-md-9 text-md-left white--text mr-5">OpenEyz
+                        </v-toolbar-title>
                     </router-link>
                 </v-col>
             </v-row>
@@ -62,5 +63,6 @@ export default Vue.extend({
             return show;
         },
     },
+
 });
 </script>

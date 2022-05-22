@@ -31,7 +31,7 @@ class UploadAdapter {
         // integration to choose the right communication channel. This example uses
         // a POST request with JSON as a data structure but your configuration
         // could be different.
-        xhr.open('POST', Defines.SERVER_UPLOAD_IMAGE_URL, true);
+        xhr.open('POST', Defines.SERVER_IMAGE_URL, true);
         xhr.withCredentials = true;
         xhr.responseType = 'json';
     }

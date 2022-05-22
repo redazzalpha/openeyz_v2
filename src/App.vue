@@ -28,8 +28,8 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import Footer from './components/Footer-cpn.vue';
-import Appbar from './components/Appbar-cpn.vue';
+import Footer from '@/components/Footer-cpn.vue';
+import Appbar from '@/components/Appbar-cpn.vue';
 export default Vue.extend({
   name: 'App',
   components: {
@@ -54,8 +54,13 @@ export default Vue.extend({
     },
   },
 
+
+  mounted() {
+    this.$vuetify.theme.dark = false;
+  }
 });
 </script>
+
 
 <style lang="scss">
 #wrapper {

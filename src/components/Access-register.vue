@@ -44,13 +44,13 @@
                     <v-divider class="mb-7 mt-8"></v-divider>
                     <!--text-terms-->
                     <v-card-text class="text-caption text-sm-body-2 py-0">
-                        En cliquant sur S’inscrire, vous acceptez nos Conditions générales.
-                        Découvrez comment nous recueillons, utilisons et partageons vos données
-                        en lisant notre Politique d’utilisation des données et comment nous utilisons
+                        En cliquant sur S’inscrire, vous acceptez nos Conditions générales. <br>
+                        Découvrez comment nous recueillons, utilisons et partageons vos données <br>
+                        en lisant notre Politique d’utilisation des données et comment nous utilisons <br>
                         les cookies et autres technologies similaires en consultant notre Politique d’utilisation des
-                        cookies.
+                        cookies. <br>
                         Vous recevrez peut-être des notifications par texto de notre part et vous
-                        pouvez à tout moment vous désabonner.
+                        pouvez à tout moment vous désabonner. <br>
                     </v-card-text>
                     <!--register-actions-->
                     <v-card-actions>
@@ -68,6 +68,7 @@
                                         @click="register()">REGISTER</v-btn>
                                 </v-col>
                             </v-row>
+                            <!-- link -->
                             <v-row>
                                 <v-col class="d-flex justify-center">
                                     <v-btn text color="primary" @click="updateTab(0)">Got account ?</v-btn>
@@ -102,7 +103,6 @@ export default Vue.extend({
             password: "",
             description: "",
             checkbox: false,
-
             emailRules: [
                 rules.requiredEmail,
                 rules.emailValidator,

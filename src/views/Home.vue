@@ -1,32 +1,27 @@
 <template>
     <div class="home">
-        <!-- title-page -->
-        <h2>
-            <v-container grid-list-xs>
-                <v-row no-gutters class="text-center">
-                    <v-col>
-                        <span class="text-center">Welcome to</span>
-                    </v-col>
-                </v-row>
-                <v-row no-gutters class="text-center">
-                    <v-col>
-                        <span class="logo" size="50px">OpenEyz</span>
-                    </v-col>
-                </v-row>
-            </v-container>
-        </h2>
+        <Title  />
         <PostInput />
+        <Publication /> 
    </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import PostInput from '../components/Post-input.vue';
+import Title from '@/components/Title-cpn.vue';
+import PostInput from '@/components/Post-input.vue';
+import Publication from '@/components/Publication-cpn.vue';
 
 export default Vue.extend({
     name: 'Home-page',
     components: {
+        Title,
         PostInput,
+        Publication
+    },
+    data() {
+        return {
+        };
     }
 });
 </script>
