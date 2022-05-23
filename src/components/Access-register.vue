@@ -5,7 +5,13 @@
             <!--register-title-->
             <v-card-title primary-title class="d-flex flex-column justify-center align-center my-2">
                 <div class="logo mb-2">OpenEyz</div>
-                <div>Create account</div>
+                <div v-show="!alertMessage">Create account</div>
+                <!--error-alert-message-->
+                <Transition name="scale-transition">
+                    <v-alert v-show="alertMessage" dense outlined type="error" style="word-break: keep-all;" text
+                        elevation="5" class="mt-3">{{ alertMessage }}</v-alert>
+                </Transition>
+
             </v-card-title>
             <v-divider class="mb-7"></v-divider>
             <v-card-text class="pa-0">
@@ -63,9 +69,7 @@
                                 </v-col>
                                 <!--register-button-->
                                 <v-col class="d-flex justify-center my-0 pb-0">
-                                    <v-btn color="primary"
-                                        :width="btnSize"
-                                        @click="register()">REGISTER</v-btn>
+                                    <v-btn color="primary" :width="btnSize" @click="register()">REGISTER</v-btn>
                                 </v-col>
                             </v-row>
                             <!-- link -->
@@ -87,21 +91,24 @@ import Vue from 'vue';
 import { httpRequest } from "../utils/http";
 import { rules } from '../utils/rules';
 import { mapActions, mapGetters } from 'vuex';
+import { Error } from '../utils/types';
+import * as Defines from '../utils/defines';
 
-type VueFunction = {validate: () => boolean};
-type VueElement = | undefined | Vue | Element | (Vue | Element) [];
+type VueFunction = { validate: () => boolean };
+type VueElement = | undefined | Vue | Element | (Vue | Element)[];
 
 export default Vue.extend({
     name: 'Access-register',
     data() {
         return {
             response: "",
-            valid: false,
+            alertMessage: "",
             lname: "",
             name: "",
             email: "",
             password: "",
             description: "",
+            valid: false,
             checkbox: false,
             emailRules: [
                 rules.requiredEmail,
@@ -122,13 +129,18 @@ export default Vue.extend({
         ...mapActions([
             "updateTab",
         ]),
-        async register() {
+        register() {
             let form: VueElement = this.$refs.register;
             if (form != null) {
-                if (((form as unknown ) as VueFunction).validate()) {
+                if (((form as unknown) as VueFunction).validate()) {
                     const formElem: HTMLFormElement | null = document.querySelector(".register");
                     if (formElem != null) {
-                        httpRequest.login(new FormData(formElem));
+                        httpRequest.login(new FormData(formElem)).catch(
+                            (error: Error): void => {
+                                this.alertMessage = error.bodyText;
+                                setTimeout(() => { this.alertMessage = ''; }, Defines.ERROR_MESSAGE_DURATION);
+                            }
+                        );
                     }
                 }
             }

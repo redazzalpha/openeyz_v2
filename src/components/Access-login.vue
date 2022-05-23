@@ -41,10 +41,9 @@ import Vue from 'vue';
 import { rules } from '../utils/rules';
 import { httpRequest } from '../utils/http';
 import { mapActions, mapGetters } from 'vuex';
+import { Error, VueElement, VueFunction } from '../utils/types';
+import * as Defines from '../utils/defines';
 
-type Err = { body: { message: string } };
-type VueFunction = { validate: () => boolean };
-type VueElement = | undefined | Vue | Element | (Vue | Element)[];
 export default Vue.extend({
     name: 'Access-login',
     data() {
@@ -67,22 +66,18 @@ export default Vue.extend({
         ...mapActions([
             "updateTab",
         ]),
-        async login() {
+        login() {
             let form: VueElement = this.$refs.login;
             if (form != null) {
                 if (((form as unknown) as VueFunction).validate()) {
                     const formElem: HTMLFormElement | null = document.querySelector(".login");
                     if (formElem != null) {
-                        httpRequest.login(new FormData(formElem))
-                            .then(
-                                (): void => { this.alertMessage = "" },
-                                (error: Err): void => {
-                                    this.alertMessage = error.body.message;
-                                    setTimeout(() => {
-                                        this.alertMessage = '';
-                                    }, 5000);
-                                },
-                            );
+                        httpRequest.login(new FormData(formElem)).catch(
+                            (error: Error): void => {
+                                this.alertMessage = error.bodyText;
+                                setTimeout(() => { this.alertMessage = ''; }, Defines.ERROR_MESSAGE_DURATION);
+                            }
+                        );
                     }
                 }
             }

@@ -3,6 +3,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { httpRequest } from './../utils/http';
 import * as Defines  from './../utils/defines';
+import { Error } from "@/utils/types";
 
 Vue.use(Vuex);
 
@@ -39,17 +40,10 @@ export default new Vuex.Store({
     updateDrawer(context, payload): void {
       context.commit('UPDATE_DRAWER', payload);
     },
-    getAllPosts(context): void {
-      httpRequest.get(Defines.SERVER_PUBLICATION_URL)
-      .then(
-          (response: JSON): void => {
-            context.commit('UPDATE_POSTS', ((response as unknown) as Response).body);
-          },
-          error => {
-              console.log(error.message)
-          }
-      );
-
+    async getAllPosts(context): Promise<void | JSON> {
+      const response: JSON | void = await httpRequest.get(Defines.SERVER_PUBLICATION_URL)
+        .catch((error: Error) => console.log(error.bodyText));
+      context.commit('UPDATE_POSTS', ((response as unknown)as Response).body);
     }
   },
   modules: {

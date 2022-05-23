@@ -43,8 +43,8 @@ import UploadAdapterPlugin from '../ckeditor5/ckeditor5-config';
 import { mapGetters, mapState, mapActions } from 'vuex';
 import { httpRequest } from '../utils/http';
 import * as Defines from '../utils/defines';
+import { Error } from '../utils/types';
 
-type Err = { body: { message: string } };
 export default Vue.extend({
     name: 'Post-input',
     components: {
@@ -94,11 +94,11 @@ export default Vue.extend({
                             this.editorData = "";
                             this.getAllPosts();
                         },
-                        (error: Err): void => {
-                            this.alertMessage = error.body.message;
+                        (error: Error): void => {
+                            this.alertMessage = error.bodyText;
                             setTimeout(() => {
                                 this.alertMessage = '';
-                            }, 5000);
+                            }, Defines.ERROR_MESSAGE_DURATION);
                         },
                     );
             }
