@@ -1,34 +1,37 @@
 import Vue from 'vue';
 import router from '../router/index';
 import * as Defines from './defines';
-import { Error } from './types';
+import { HttpResponse } from './types';
 
 export const httpRequest = {
-    login: function (body: FormData): Promise<JSON>  {
+    login: function (body: FormData): Promise<HttpResponse>  {
         return new Promise((resolve, reject) => {
-            Vue.http.post(Defines.SERVER_ACCESS_URL, body, {credentials: true})
+            Vue.http.post(Defines.SERVER_ACCESS_URL, body)
             .then(
-                () => router.push(Defines.HOME_PAGE_RELATIVE_URL),
-                (error: Error) => reject(error),
+                (response: HttpResponse) => {
+                    localStorage.setItem("token", response.bodyText)
+                    router.push(Defines.HOME_PAGE_RELATIVE_URL);
+                }, 
+                (error: HttpResponse) => reject(error),
             );
         });
     }, 
     
-    post: function (url: string, body: FormData | string | object | null): Promise<JSON>  {
+    post: function (url: string, body: FormData | string | object | null): Promise<HttpResponse>  {
         return new Promise((resolve, reject) => {
-            Vue.http.post(url, body, {credentials: true})
+            Vue.http.post(url, body)
             .then(
-                (response: JSON) => resolve(response),
-                (error: JSON) => reject(error),
+                (response: HttpResponse) => resolve(response),
+                (error: HttpResponse) => reject(error),
             );
         });
     }, 
-    get: function (url: string): Promise<JSON>  {
+    get: function (url: string): Promise<HttpResponse>  {
         return new Promise((resolve, reject) => {
-            Vue.http.get(url, {credentials: true})
+            Vue.http.get(url)
             .then(
-                (response: JSON) => resolve(response),
-                (error: JSON) => reject(error),
+                (response: HttpResponse) => resolve(response),
+                (error: HttpResponse) => reject(error),
             );
         });
     }, 

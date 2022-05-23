@@ -10,6 +10,11 @@ Vue.config.productionTip = false;
 Vue.use(vueResource);
 Vue.use(CKEditor);
 
+Vue.http.interceptors.push(function(request: Request) {
+  (request as any).credentials = true;
+  request.headers.set('Authorization', 'Bearer ' + localStorage.getItem("token"));
+});
+
 new Vue({
   router,
   store,

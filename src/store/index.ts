@@ -3,12 +3,13 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { httpRequest } from './../utils/http';
 import * as Defines  from './../utils/defines';
-import { Error } from "@/utils/types";
+import { HttpResponse } from "@/utils/types";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    currentUser: [],
     tab:  0,
     drawer: false,
     posts: [],
@@ -20,6 +21,9 @@ export default new Vuex.Store({
 
   },
   mutations: {
+    UPDATE_CURRENT_USER(state, payload) {
+      state.currentUser = payload;
+    },
     UPDATE_POSTS(state, payload): void {
       state.posts = payload;
     },
@@ -31,6 +35,9 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    updateCurrentUser(context, payload) {
+      context.commit("UPDATE_CURRENT_USER", payload);
+    },
     updatePosts(context, payload): void {
       context.commit('UPDATE_POSTS', payload);
     },
@@ -40,10 +47,9 @@ export default new Vuex.Store({
     updateDrawer(context, payload): void {
       context.commit('UPDATE_DRAWER', payload);
     },
-    async getAllPosts(context): Promise<void | JSON> {
-      const response: JSON | void = await httpRequest.get(Defines.SERVER_PUBLICATION_URL)
-        .catch((error: Error) => console.log(error.bodyText));
-      context.commit('UPDATE_POSTS', ((response as unknown)as Response).body);
+    async getAllPosts(context): Promise<void | HttpResponse> {
+      const response: HttpResponse | void = await httpRequest.get(Defines.SERVER_PUBLICATION_URL)
+      context.commit('UPDATE_POSTS', (<HttpResponse> response).body);
     }
   },
   modules: {

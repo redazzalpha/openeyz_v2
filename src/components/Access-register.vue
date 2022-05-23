@@ -91,7 +91,7 @@ import Vue from 'vue';
 import { httpRequest } from "../utils/http";
 import { rules } from '../utils/rules';
 import { mapActions, mapGetters } from 'vuex';
-import { Error } from '../utils/types';
+import { HttpResponse } from '../utils/types';
 import * as Defines from '../utils/defines';
 
 type VueFunction = { validate: () => boolean };
@@ -136,7 +136,7 @@ export default Vue.extend({
                     const formElem: HTMLFormElement | null = document.querySelector(".register");
                     if (formElem != null) {
                         httpRequest.login(new FormData(formElem)).catch(
-                            (error: Error): void => {
+                            (error: HttpResponse): void => {
                                 this.alertMessage = error.bodyText;
                                 setTimeout(() => { this.alertMessage = ''; }, Defines.ERROR_MESSAGE_DURATION);
                             }

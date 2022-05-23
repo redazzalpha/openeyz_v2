@@ -6,7 +6,7 @@
             <v-row>
                 <v-col>
                     <!--card-container -->
-                    <v-card max-width="500" class="mx-auto card mb-6" elevation="7" style="position: relative;">
+                    <v-card max-width="500" class="mx-auto card mb-6 pb-2" elevation="7" style="position: relative;">
                         <!--error-alert-message-->
                         <Transition name="scale-transition">
                             <v-alert v-show="alertMessage" dense outlined type="error"
@@ -18,7 +18,7 @@
                             <v-avatar size="55" color="red" class="mr-3">
                                 <img src="" alt="alt">
                             </v-avatar>
-                            Say what you want
+                            Say what you want {{ }}
                         </v-card-title>
                         <!--editor -->
                         <v-card-text>
@@ -43,7 +43,7 @@ import UploadAdapterPlugin from '../ckeditor5/ckeditor5-config';
 import { mapGetters, mapState, mapActions } from 'vuex';
 import { httpRequest } from '../utils/http';
 import * as Defines from '../utils/defines';
-import { Error } from '../utils/types';
+import { HttpResponse } from '../utils/types';
 
 export default Vue.extend({
     name: 'Post-input',
@@ -94,7 +94,7 @@ export default Vue.extend({
                             this.editorData = "";
                             this.getAllPosts();
                         },
-                        (error: Error): void => {
+                        (error: HttpResponse): void => {
                             this.alertMessage = error.bodyText;
                             setTimeout(() => {
                                 this.alertMessage = '';

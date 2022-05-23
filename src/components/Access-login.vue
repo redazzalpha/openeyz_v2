@@ -41,7 +41,7 @@ import Vue from 'vue';
 import { rules } from '../utils/rules';
 import { httpRequest } from '../utils/http';
 import { mapActions, mapGetters } from 'vuex';
-import { Error, VueElement, VueFunction } from '../utils/types';
+import { HttpResponse, VueElement, VueFunction } from '../utils/types';
 import * as Defines from '../utils/defines';
 
 export default Vue.extend({
@@ -73,7 +73,7 @@ export default Vue.extend({
                     const formElem: HTMLFormElement | null = document.querySelector(".login");
                     if (formElem != null) {
                         httpRequest.login(new FormData(formElem)).catch(
-                            (error: Error): void => {
+                            (error: HttpResponse): void => {
                                 this.alertMessage = error.bodyText;
                                 setTimeout(() => { this.alertMessage = ''; }, Defines.ERROR_MESSAGE_DURATION);
                             }
