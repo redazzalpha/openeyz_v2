@@ -20,7 +20,7 @@
     <v-hover v-slot="{ hover }">
       <v-btn v-scroll="onScroll" v-show="fab" fab fixed bottom right tab="button" color="cyan darken-1"
         :class="(hover ? 'on-hover' : '')" @click="toTop">
-        <v-icon class="text-h3">mdi-chevron-up</v-icon>
+        <v-icon class="text-h3 white--text">mdi-chevron-up</v-icon>
       </v-btn>
     </v-hover>
   </v-app>

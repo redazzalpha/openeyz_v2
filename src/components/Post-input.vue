@@ -22,8 +22,7 @@
                         </v-card-title>
                         <!--editor -->
                         <v-card-text>
-                            <ckeditor :editor="editor" v-model="editorData" :config="editorConfig" height="300"
-                                tag-name="textarea" placeholder="Express yourself..."></ckeditor>
+                            <ckeditor :editor="editor" v-model="editorData" height="300" tag-name="textarea"></ckeditor>
                         </v-card-text>
                         <!-- buttons -->
                         <v-card-actions class="d-flex justify-center">
@@ -38,12 +37,11 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import UploadAdapterPlugin from '../ckeditor5/ckeditor5-config';
+import ClassicEditor from '../ckeditor5/ckeditor5';
 import { mapGetters, mapState, mapActions } from 'vuex';
 import { httpRequest } from '../utils/http';
-import * as Defines from '../utils/defines';
 import { HttpResponse } from '../utils/types';
+import * as Defines from '../utils/defines';
 
 export default Vue.extend({
     name: 'Post-input',
@@ -57,26 +55,6 @@ export default Vue.extend({
             alertMessage: "",
             editor: ClassicEditor,
             editorData: '',
-            editorConfig: {
-                language: 'fr',
-                extraPlugins: [UploadAdapterPlugin],
-                toolbar: [
-                    'ckfinder', '|',
-                    'heading', '|',
-                    'imageUpload',
-                    'bold',
-                    'italic',
-                    'link',
-                    'bulletedList',
-                    'numberedList', '|',
-                    'outdent',
-                    'indent', '|',
-                    'mediaEmbed',
-                    'blockQuote',
-                    'undo',
-                    'redo'
-                ],
-            }
         };
     },
     methods: {
@@ -105,7 +83,7 @@ export default Vue.extend({
         },
         showErrorMessage(message: string): void {
             this.alertMessage = message;
-        }
+        },
     },
     computed: {
         ...mapGetters([
