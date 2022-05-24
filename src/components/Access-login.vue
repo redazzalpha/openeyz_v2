@@ -38,11 +38,11 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { rules } from '../utils/rules';
-import { httpRequest } from '../utils/http';
+import { rules } from '@/utils/rules';
+import { httpRequest } from '@/utils/http';
 import { mapActions, mapGetters } from 'vuex';
 import { HttpResponse, VueElement, VueFunction } from '../utils/types';
-import * as Defines from '../utils/defines';
+import * as Defines from '@/utils/defines';
 
 export default Vue.extend({
     name: 'Access-login',

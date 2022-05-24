@@ -37,11 +37,11 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import ClassicEditor from '../ckeditor5/ckeditor5';
+import ClassicEditor from '@/ckeditor5/ckeditor5';
 import { mapGetters, mapState, mapActions } from 'vuex';
-import { httpRequest } from '../utils/http';
+import { httpRequest } from '@/utils/http';
 import { HttpResponse } from '../utils/types';
-import * as Defines from '../utils/defines';
+import * as Defines from '@/utils/defines';
 
 export default Vue.extend({
     name: 'Post-input',

@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import router from '../router/index';
+import router from '@/router/index';
 import * as Defines from './defines';
 import { HttpResponse } from './types';
 

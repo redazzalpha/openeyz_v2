@@ -46,7 +46,7 @@ ClassicEditor.builtinPlugins = [
     PasteFromOffice,
     Table,
     TableToolbar,
-    TextTransformation
+    TextTransformation,
 ];
 
 ClassicEditor.defaultConfig = {

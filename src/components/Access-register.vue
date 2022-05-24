@@ -88,14 +88,13 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { httpRequest } from "../utils/http";
-import { rules } from '../utils/rules';
+import { httpRequest } from "@/utils/http";
+import { rules } from '@/utils/rules';
 import { mapActions, mapGetters } from 'vuex';
-import { HttpResponse } from '../utils/types';
-import * as Defines from '../utils/defines';
+import * as Defines from '@/utils/defines';
+import { HttpResponse, VueElement, VueFunction } from '../utils/types';
 
-type VueFunction = { validate: () => boolean };
-type VueElement = | undefined | Vue | Element | (Vue | Element)[];
+
 
 export default Vue.extend({
     name: 'Access-register',
