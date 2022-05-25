@@ -21,6 +21,7 @@ import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefrom
 import Table from '@ckeditor/ckeditor5-table/src/table.js';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar.js';
 import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation.js';
+import AutoImage from '@ckeditor/ckeditor5-image/src/autoimage';
 
 import UploadAdapterPlugin from './uploadAdapter';
 
@@ -47,18 +48,18 @@ ClassicEditor.builtinPlugins = [
     Table,
     TableToolbar,
     TextTransformation,
+    AutoImage,
 ];
 
 ClassicEditor.defaultConfig = {
     language: 'en',
     placeholder: 'Express yourself...',
-    extraPlugins: [UploadAdapterPlugin],
+    extraPlugins: [UploadAdapterPlugin, AutoImage],
     mediaEmbed: {
         previewsInData: true,
     },
     toolbar: {
         items: [
-            // 'ckfinder', '|',
             'heading', '|',
             'imageUpload',
             'mediaEmbed',
@@ -81,7 +82,7 @@ ClassicEditor.defaultConfig = {
             'imageTextAlternative',
             'imageStyle:inline',
             'imageStyle:block',
-            'imageStyle:side'
+            'imageStyle:side',
         ]
     },
     table: {
