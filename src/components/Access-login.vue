@@ -6,12 +6,17 @@
             <!--connect-title-->
             <v-card-title primary-title class="d-flex flex-column justify-center align-center mt-2">
                 <div class="logo mb-2">OpenEyz</div>
-                <div v-show="!alertMessage">Connection</div>
-                <!--error-alert-message-->
-                <Transition name="scale-transition">
-                    <v-alert v-show="alertMessage" dense outlined type="error" style="word-break: keep-all;" text
-                        elevation="5" class="mt-3">{{ alertMessage }}</v-alert>
-                </Transition>
+                <!-- subtitle-alert -->
+                <div style="min-height: 70px; position: relative; width: 100%;" class="d-flex justify-center align-center">
+                    <Transition name="scale-transition" >
+                        <div v-show="!alertMessage" style="position: absolute">Connection</div>
+                    </Transition>
+                    <!--error-alert-message-->
+                    <Transition name="scale-transition">
+                        <v-alert v-show="alertMessage" dense outlined type="error" style="word-break: keep-all; position: absolute;" text
+                            elevation="5" class="mt-5">{{ alertMessage }}</v-alert>
+                    </Transition>
+                </div>
             </v-card-title>
             <v-divider class="mb-7"></v-divider>
             <!-- acces-login-card-content -->
@@ -41,7 +46,7 @@ import Vue from 'vue';
 import { rules } from '@/utils/rules';
 import { httpRequest } from '@/utils/http';
 import { mapActions, mapGetters } from 'vuex';
-import { HttpResponse, VueElement, VueFunction } from '../utils/types';
+import { VueResponse, VueElement, VueFunction } from '../utils/types';
 import * as Defines from '@/utils/defines';
 
 export default Vue.extend({
@@ -73,7 +78,7 @@ export default Vue.extend({
                     const formElem: HTMLFormElement | null = document.querySelector(".login");
                     if (formElem != null) {
                         httpRequest.login(new FormData(formElem)).catch(
-                            (error: HttpResponse): void => {
+                            (error: VueResponse): void => {
                                 this.alertMessage = error.bodyText;
                                 setTimeout(() => { this.alertMessage = ''; }, Defines.ERROR_MESSAGE_DURATION);
                             }

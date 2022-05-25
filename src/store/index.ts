@@ -3,7 +3,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { httpRequest } from './../utils/http';
 import * as Defines  from './../utils/defines';
-import { HttpResponse } from "@/utils/types";
+import { VueResponse } from "@/utils/types";
 
 Vue.use(Vuex);
 
@@ -13,6 +13,7 @@ export default new Vuex.Store({
     tab:  0,
     drawer: false,
     posts: [],
+    test: "zloom"
   },
   getters: {
     btnSize(): string {
@@ -47,9 +48,9 @@ export default new Vuex.Store({
     updateDrawer(context, payload): void {
       context.commit('UPDATE_DRAWER', payload);
     },
-    async getAllPosts(context): Promise<void | HttpResponse> {
-      const response: HttpResponse | void = await httpRequest.get(Defines.SERVER_PUBLICATION_URL)
-      context.commit('UPDATE_POSTS', (<HttpResponse> response).body);
+    async getAllPosts(context): Promise<void | VueResponse> {
+      const response: VueResponse | void = await httpRequest.get(Defines.SERVER_PUBLICATION_URL)
+      context.commit('UPDATE_POSTS', (<VueResponse> response).body);
     }
   },
   modules: {

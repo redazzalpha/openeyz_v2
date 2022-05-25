@@ -40,7 +40,7 @@ import Vue from 'vue';
 import ClassicEditor from '@/ckeditor5/ckeditor5';
 import { mapGetters, mapState, mapActions } from 'vuex';
 import { httpRequest } from '@/utils/http';
-import { HttpResponse } from '../utils/types';
+import { VueResponse } from '../utils/types';
 import * as Defines from '@/utils/defines';
 
 export default Vue.extend({
@@ -49,9 +49,6 @@ export default Vue.extend({
     },
     data() {
         return {
-            ...mapState([
-                'posts'
-            ]),
             alertMessage: "",
             editor: ClassicEditor,
             editorData: '',
@@ -72,7 +69,7 @@ export default Vue.extend({
                             this.editorData = "";
                             this.getAllPosts();
                         },
-                        (error: HttpResponse): void => {
+                        (error: VueResponse): void => {
                             this.alertMessage = error.bodyText;
                             setTimeout(() => {
                                 this.alertMessage = '';
@@ -86,6 +83,10 @@ export default Vue.extend({
         },
     },
     computed: {
+        ...mapState([
+            'posts',
+            'currentUser'
+        ]),
         ...mapGetters([
             'btnSize'
         ]),
