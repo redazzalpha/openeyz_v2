@@ -1,5 +1,5 @@
 <template>
-    <v-app-bar tag="header" color="cyan darken-1" elevation="0" app>
+    <v-app-bar tag="header" color="cyan darken-1" elevation="1" app>
         <v-container fluid grid-list-xs>
             <v-row>
                 <!--navigation-drawer-icon-->

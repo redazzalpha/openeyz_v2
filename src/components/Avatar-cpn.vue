@@ -1,26 +1,30 @@
 <template>
-    <div>
-        <router-link to="#">
-            <v-avatar size="55" class="mr-3">
-                <img v-if="user.avatarSrc == null && user.roles[0].roleName == 'SUPERADMIN'" src="../assets/suadmin.png"
-                    alt="alt">
-                <img v-else-if="user.avatarSrc == null && user.roles[0].roleName == 'ADMIN'" src="../assets/admin.png"
-                    alt="alt">
-                <img v-else-if="user.avatarSrc == null && user.roles[0].roleName == 'USER'" src="../assets/user.png"
-                    alt="alt">
-                <img v-else-if="user.avatarSrc != null" :src="user.avatarSrc" alt="alt">
-            </v-avatar>
-        </router-link>
-    </div>
+    <v-avatar :size="size" class="mr-3">
+        <img v-if="user.avatarSrc == null && imgs[0].role" :src="imgs[0].src" alt="alt">
+        <img v-else-if="user.avatarSrc == null && imgs[1].role" :src="imgs[1].src" alt="alt">
+        <img v-else-if="user.avatarSrc == null && imgs[2].role" :src="imgs[2].src" alt="alt">
+        <img v-else-if="user.avatarSrc != null" :src="user.avatarSrc" alt="alt">
+    </v-avatar>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import { Role } from '../utils/types';
 export default Vue.extend({
     name: 'Avatar-cpn',
     props: {
-        user: { type: Object, required: false }
-    }
+        user: { type: Object, required: false },
+        size: {type: String, default: "55"}
+    },
+    data() {
+        return {
+            imgs: [
+                { role: this.user.roles.some((r: Role) => r.roleName == 'SUPERADMIN'), src: require('../assets/suadmin.png') },
+                { role: this.user.roles.some((r: Role) => r.roleName == 'SUPERADMIN'), src: require('../assets/suadmin.png') },
+                { role: this.user.roles.some((r: Role) => r.roleName == 'SUPERADMIN'), src: require('../assets/suadmin.png') },
+            ]
+        };
+    },
 });
 </script>
 

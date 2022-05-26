@@ -4,18 +4,16 @@
             <v-row no-gutters>
                 <v-col>
                     <!-- publication-card -->
-                    <v-card max-width="700" class=" mx-auto mb-8" v-for="(post, index) of posts" :key="index">
+                    <v-card max-width="700" class=" mx-auto mb-8" v-for="(item, index) in posts" :key="index">
                         <!-- header-title -->
-                        <v-card-title primary-title class="text-body-1 white--text pa-2"
+                        <v-card-title primary-title class="text-body-1 white--text text-body-2 text-sm-subtitle-1 pa-2"
                             style="background-color: #00ACC1;">
                             <!-- author-avatar -->
-                            <v-avatar size="55" color="red" class="mr-3">
-                                <img src="" alt="alt">
-                            </v-avatar>
-                            Max posted on {{ post.creation }}
+                            <Avatar :user="item.post.author" size="40" />
+                            {{item.post.author.name}} posted on {{ item.creation }}
                         </v-card-title>
                         <!-- publication-content -->
-                        <v-card-text v-html="post.content" class="pa-0"></v-card-text>
+                        <v-card-text v-html="item.post.content" class="pa-0"></v-card-text>
                         <!-- buttons -->
                         <v-card-actions>
                             <v-container grid-list-xs fluid>
@@ -45,8 +43,12 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapState, mapActions } from 'vuex';
+import Avatar from '@/components/Avatar-cpn.vue'
 export default Vue.extend({
     name: "Publication-cpn",
+    components: {
+        Avatar
+    },
     data() {
         return {
         };

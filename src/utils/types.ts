@@ -3,7 +3,7 @@ export type VueFunction = { validate: () => boolean };
 export type VueElement = undefined | Vue | Element | (Vue | Element)[];
 
 export type VueResponse = {
-  body: object | Blob | string | Body,
+  body: object | Blob | string | Body | object[],
   bodyText: string,
   url: string,
   headers: Headers,
@@ -36,21 +36,21 @@ export type VueRequest = {
 
 };
 
-export type Users = {
-  username: string;
-  lname: string;
-  name: string;
-  password: string;
-  state: boolean;
-  description: string;
-  avatarSrc: string;
-  roles: Array<Role>;
+export class Users{
+  username = "";
+  lname = "";
+  name = "";
+  password = "";
+  state = true;
+  description = "";
+  avatarSrc = "";
+  roles: Array<Role> = [];
 };
 
-export enum RoleEnum { USER, ADMIN, SUPERADMIN };
+export enum RoleEnum { USER, ADMIN, SUPERADMIN }
 
 export type Role = {
-  roleName: RoleEnum,
+  roleName: RoleEnum | string,
 };
 
 export type Body = {

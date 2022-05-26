@@ -14,8 +14,10 @@
                                 text elevation="5" class="mt-3">{{ alertMessage }}</v-alert>
                         </Transition>
                         <!-- header-title -->
-                        <v-card-title primary-title style="background-color: #00ACC1" class="white--text mb-4 pa-2">
-                        <Avatar :user="currentUser" />
+                        <v-card-title primary-title style="background-color: #00ACC1" class="text-body-1 text-sm-h6 white--text mb-4 pa-2">
+                        <router-link to="#">
+                            <Avatar :user="currentUser" />
+                        </router-link>
                             Say what you want {{currentUser.name}}
                         </v-card-title>
                         <!--editor -->

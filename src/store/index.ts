@@ -2,7 +2,7 @@ import Vuetify from "@/plugins/vuetify";
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { httpRequest } from './../utils/http';
-import * as Defines  from './../utils/defines';
+import * as Defines from './../utils/defines';
 import { VueResponse } from "@/utils/types";
 import VuexPersistence from 'vuex-persist'
 
@@ -16,7 +16,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     currentUser: null,
-    tab:  0,
+    tab: 0,
     drawer: false,
     posts: [],
   },
@@ -55,7 +55,7 @@ export default new Vuex.Store({
     },
     async getAllPosts(context): Promise<void | VueResponse> {
       const response: VueResponse | void = await httpRequest.get(Defines.SERVER_PUBLICATION_URL)
-      context.commit('UPDATE_POSTS', (<VueResponse> response).body);
+      context.commit('UPDATE_POSTS', (JSON.parse(response.bodyText)));
     }
   },
   modules: {
