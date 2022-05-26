@@ -9,7 +9,7 @@ export const httpRequest = {
             Vue.http.post(Defines.SERVER_ACCESS_URL, body)
             .then(
                 () => {              
-                    router.push(Defines.HOME_PAGE_RELATIVE_URL);
+                    router.push(Defines.HOME_PAGE_URL);
                 }, 
                 (error: VueResponse) => reject(error),
             );

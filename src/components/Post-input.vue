@@ -15,10 +15,8 @@
                         </Transition>
                         <!-- header-title -->
                         <v-card-title primary-title style="background-color: #00ACC1" class="white--text mb-4 pa-2">
-                            <v-avatar size="55" color="red" class="mr-3">
-                                <img src="" alt="alt">
-                            </v-avatar>
-                            Say what you want {{ }}
+                        <Avatar :user="currentUser" />
+                            Say what you want {{currentUser.name}}
                         </v-card-title>
                         <!--editor -->
                         <v-card-text>
@@ -42,16 +40,20 @@ import { mapGetters, mapState, mapActions } from 'vuex';
 import { httpRequest } from '@/utils/http';
 import { VueResponse } from '../utils/types';
 import * as Defines from '@/utils/defines';
+import Avatar from './Avatar-cpn.vue';
+// import Avatar from './Avatar2-cpn.vue';
 
 export default Vue.extend({
     name: 'Post-input',
     components: {
+        Avatar,
     },
     data() {
         return {
             alertMessage: "",
             editor: ClassicEditor,
             editorData: '',
+            test: Number,
         };
     },
     methods: {

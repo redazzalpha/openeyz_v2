@@ -19,7 +19,7 @@ Vue.http.interceptors.push(function(request: VueRequest) {
   return (response: VueResponse) => {
     const {status, body} = response;
     if(status === 0)
-      router.push(Defines.ACCESS_PAGE_RELATIVE_URL)      
+      router.push(Defines.ACCESS_PAGE_URL)      
     
       if(body) {
       const {token, user} = body as Body;

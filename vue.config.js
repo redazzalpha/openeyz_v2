@@ -6,6 +6,7 @@ const { defineConfig } = require('@vue/cli-service');
 module.exports = defineConfig({
   transpileDependencies: [
     'vuetify',
+    'vuex-persist',
     /ckeditor5-[^/\\]+[/\\]src[/\\].+\.js$/,
   ],
 

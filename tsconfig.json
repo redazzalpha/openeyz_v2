@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es2021",
-    "module": "ES2022",
+    "target": "es5",
+    "module": "ES2015",
     "experimentalDecorators": true,
     "strict": true,
     "allowJs": true,
@@ -40,5 +40,6 @@
   ],
   "exclude": [
     "node_modules"
-  ]
+  ],
+  
 }

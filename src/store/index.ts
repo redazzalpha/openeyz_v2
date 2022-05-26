@@ -4,16 +4,21 @@ import Vuex from 'vuex';
 import { httpRequest } from './../utils/http';
 import * as Defines  from './../utils/defines';
 import { VueResponse } from "@/utils/types";
+import VuexPersistence from 'vuex-persist'
+
+const vuexLocal = new VuexPersistence({
+  storage: window.localStorage
+})
+
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    currentUser: [],
+    currentUser: null,
     tab:  0,
     drawer: false,
     posts: [],
-    test: "zloom"
   },
   getters: {
     btnSize(): string {
@@ -54,5 +59,7 @@ export default new Vuex.Store({
     }
   },
   modules: {
-  }
+  },
+  plugins: [vuexLocal.plugin]
+
 });
