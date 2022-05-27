@@ -97,10 +97,7 @@ import { httpRequest } from "@/utils/http";
 import { rules } from '@/utils/rules';
 import { mapActions, mapGetters } from 'vuex';
 import * as Defines from '@/utils/defines';
-import { VueResponse, VueElement, VueFunction } from '../utils/types';
-
-
-
+import { VueResponse, VueElement, VueFunction } from '../../utils/types';
 export default Vue.extend({
     name: 'Access-register',
     data() {
@@ -133,7 +130,7 @@ export default Vue.extend({
         ...mapActions([
             "updateTab",
         ]),
-        register() {
+        register(): void {
             let form: VueElement = this.$refs.register;
             if (form != null) {
                 if (((form as unknown) as VueFunction).validate()) {

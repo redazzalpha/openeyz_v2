@@ -8,9 +8,9 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import Title from '@/components/Title-cpn.vue';
-import PostInput from '@/components/Post-input.vue';
-import Publication from '@/components/Publication-cpn.vue';
+import Title from '@/components/cpn/Title-cpn.vue';
+import PostInput from '@/components/cpn/Post-cpn.vue';
+import Publication from '@/components/cpn/Publication-cpn.vue';
 
 export default Vue.extend({
     name: 'Home-page',

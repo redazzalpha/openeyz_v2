@@ -46,7 +46,7 @@ import Vue from 'vue';
 import { rules } from '@/utils/rules';
 import { httpRequest } from '@/utils/http';
 import { mapActions, mapGetters } from 'vuex';
-import { VueResponse, VueElement, VueFunction } from '../utils/types';
+import { VueResponse, VueElement, VueFunction } from '../../utils/types';
 import * as Defines from '@/utils/defines';
 
 export default Vue.extend({
@@ -71,7 +71,7 @@ export default Vue.extend({
         ...mapActions([
             "updateTab",
         ]),
-        login() {
+        login(): void {
             let form: VueElement = this.$refs.login;
             if (form != null) {
                 if (((form as unknown) as VueFunction).validate()) {

@@ -28,8 +28,8 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import Footer from '@/components/Footer-cpn.vue';
-import Appbar from '@/components/Appbar-cpn.vue';
+import Footer from '@/components/cpn/Footer-cpn.vue';
+import Appbar from '@/components/cpn/Appbar-cpn.vue';
 export default Vue.extend({
   name: 'App',
   components: {

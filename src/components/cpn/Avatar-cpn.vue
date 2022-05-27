@@ -8,20 +8,20 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { Role } from '../utils/types';
+import Vue, {PropType} from 'vue';
+import { Role, Users } from '../../utils/types';
 export default Vue.extend({
     name: 'Avatar-cpn',
     props: {
-        user: { type: Object, required: false },
+        user: { type: Object as PropType<Users>, required: false },
         size: {type: String, default: "55"}
     },
     data() {
         return {
             imgs: [
-                { role: this.user.roles.some((r: Role) => r.roleName == 'SUPERADMIN'), src: require('../assets/suadmin.png') },
-                { role: this.user.roles.some((r: Role) => r.roleName == 'SUPERADMIN'), src: require('../assets/suadmin.png') },
-                { role: this.user.roles.some((r: Role) => r.roleName == 'SUPERADMIN'), src: require('../assets/suadmin.png') },
+                { role: this.user.roles.some((r: Role) => r.roleName == 'SUPERADMIN'), src: require('../../assets/suadmin.png') },
+                { role: this.user.roles.some((r: Role) => r.roleName == 'SUPERADMIN'), src: require('../../assets/suadmin.png') },
+                { role: this.user.roles.some((r: Role) => r.roleName == 'SUPERADMIN'), src: require('../../assets/suadmin.png') },
             ]
         };
     },

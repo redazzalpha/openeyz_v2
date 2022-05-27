@@ -52,13 +52,9 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapState, mapActions } from 'vuex';
-import Avatar from '@/components/Avatar-cpn.vue';
-import Comment from '@/components/Comment-block.vue';
-
-import { httpRequest } from '@/utils/http';
-import * as Defines from '@/utils/defines';
-import { VueResponse } from '../utils/types';
-
+import Avatar from '@/components/cpn/Avatar-cpn.vue';
+import Comment from '@/components/comment/Comment-block.vue';
+import {Item} from '../../utils/types';
 
 export default Vue.extend({
     name: "Publication-cpn",
@@ -82,15 +78,14 @@ export default Vue.extend({
     methods: {
         ...mapActions([
             'getAllPosts',
+            'getAllComments'
         ]),
-        async getAllComment(postId: number): Promise<VueResponse | void> {
-            const response: VueResponse = await httpRequest.get(Defines.SERVER_COMMENT_URL, {params: {postId}});
-            this.comments = JSON.parse(response.bodyText);
-        },
-        showComment(item: object) {
-            this.getAllComment((item as any).post.id);
-            this.dialog = true;
-            this.item = item;
+        showComment(item: Item): void {
+            if(item.post) {
+                this.getAllComments(item.post.id);
+                this.dialog = true;
+                this.item = item;
+            }
         },
         created(): void {
             this.getAllPosts();

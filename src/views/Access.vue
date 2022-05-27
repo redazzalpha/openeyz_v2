@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import Access from '@/components/Access-block.vue'
+import Access from '@/components/access/Access-block.vue'
 export default Vue.extend({
   name: "Access-page",
   components: {

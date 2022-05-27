@@ -17,15 +17,16 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import Avatar from '../components/Avatar-cpn.vue';
+import Vue, {PropType} from 'vue';
+import Avatar from '../cpn/Avatar-cpn.vue';
+import { Item } from '../../utils/types';
 export default Vue.extend({
     name: 'Comment-publication',
     components: {
         Avatar,
     },
     props: {
-        item : {type: Object, required: true}
+        item : {type: Object as PropType<Item>, required: true}
     }
 });
 </script>

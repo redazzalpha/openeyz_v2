@@ -14,9 +14,10 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import Publication from '../components/Comment-publication.vue';
-import Message from '../components/Comment-message.vue';
+import Vue, {PropType} from 'vue';
+import Publication from './Comment-publication.vue';
+import Message from './Comment-message.vue';
+import {Item} from '../../utils/types'
 export default Vue.extend({
     name: 'Comment-cpn',
     components: {
@@ -25,14 +26,10 @@ export default Vue.extend({
     },
     props: {
         dialog: { type: Boolean, required: true},
-        itemComPub: { type: Object, required: true },
-    },
-    data() {
-        return {
-        }
+        itemComPub: { type: Object as PropType<Item>, required: true },
     },
     methods: {
-        dialogStop({ code }: KeyboardEvent) {
+        dialogStop({ code }: KeyboardEvent): void {
             if (code.match("Escape"))
                 this.$emit('stop', true);
         }

@@ -24,8 +24,8 @@
                     <v-card-title primary-title class="text-decoration-underline">
                         Comment:
                     </v-card-title>
-                    <v-card-text >
-                        maccclooouf
+                    <v-card-text v-for="(item, index) in comments" :key="index">
+                    {{item.comment.content}}
                     </v-card-text>
                     <!-- comment-content -->
                 </v-card>
@@ -36,11 +36,10 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import Avatar from '../components/Avatar-cpn.vue';
-import { mapState } from 'vuex';
-import { httpRequest } from '../utils/http';
-import * as Defines from '../utils/defines';
-import { VueResponse } from '../utils/types';
+import Avatar from '../cpn/Appbar-cpn.vue';
+import { mapState, mapActions} from 'vuex';
+import { httpRequest } from '@/utils/http';
+import * as Defines from '@/utils/defines';
 export default Vue.extend({
     name: 'Comment-msg',
     components: {
@@ -57,18 +56,22 @@ export default Vue.extend({
     computed: {
         ...mapState([
             'currentUser',
+            'comments'
         ]),
     },
     methods: {
-        async send() {
+        ...mapActions([
+            'getAllComments'
+        ]),
+        async send(): Promise<void> {
             const data: FormData = new FormData();
             data.append("comment", this.comment);
             data.append("postId", this.postId.toString());
-            const response: VueResponse = await httpRequest.post(Defines.SERVER_COMMENT_URL, data);
+            await httpRequest.post(Defines.SERVER_COMMENT_URL, data);
             this.comment = "";
+            this.getAllComments(this.postId);
         }
     },
-
 });
 </script>
 

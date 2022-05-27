@@ -63,6 +63,5 @@ export default Vue.extend({
             return show;
         },
     },
-
 });
 </script>
