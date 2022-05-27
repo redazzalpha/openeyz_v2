@@ -66,7 +66,7 @@ export default Vue.extend({
         publish(): void {
             if (this.editorData) {
                 let data: FormData = new FormData();
-                data.append("data", this.editorData.replace(/<img/g, "<img width=100%"));
+                data.append("post", this.editorData.replace(/<img/g, "<img width=100%"));
                 httpRequest.post(Defines.SERVER_PUBLICATION_URL, data)
                     .then(
                         (): void => {

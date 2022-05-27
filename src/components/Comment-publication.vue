@@ -1,0 +1,32 @@
+<template>
+    <div>
+        <v-card-title primary-title class="text-body-1 white--text text-body-2 text-sm-subtitle-1 pa-2"
+            style="background-color: #00ACC1;">
+            <!-- author-avatar -->
+            <Avatar :user="item.post.author" size="45" />
+            {{ item.post.author.name }} posted on {{ item.creation }}
+            <v-spacer></v-spacer>
+        </v-card-title>
+        <v-divider></v-divider>
+        <!-- main-content -->
+        <v-card-text class="pa-0">
+            <div v-html="item.post.content"></div>
+            <v-divider class="my-5"></v-divider>
+        </v-card-text>
+    </div>
+</template>
+
+<script lang="ts">
+import Vue from 'vue';
+import Avatar from '../components/Avatar-cpn.vue';
+export default Vue.extend({
+    name: 'Comment-publication',
+    components: {
+        Avatar,
+    },
+    props: {
+        item : {type: Object, required: true}
+    }
+});
+</script>
+

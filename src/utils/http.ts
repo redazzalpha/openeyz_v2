@@ -16,7 +16,7 @@ export const httpRequest = {
         });
     }, 
     
-    post: function (url: string, body: FormData | string | object | null): Promise<VueResponse>  {
+    post: function (url: string, body?: FormData | string | object | null): Promise<VueResponse>  {
         return new Promise((resolve, reject) => {
             Vue.http.post(url, body)
             .then(
@@ -25,9 +25,9 @@ export const httpRequest = {
             );
         });
     }, 
-    get: function (url: string): Promise<VueResponse>  {
+    get: function (url: string, config?: object): Promise<VueResponse>  {
         return new Promise((resolve, reject) => {
-            Vue.http.get(url)
+            Vue.http.get(url, {...config})
             .then(
                 (response: VueResponse) => resolve(response),
                 (error: VueResponse) => reject(error),

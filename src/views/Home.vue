@@ -2,7 +2,7 @@
     <div class="home">
         <Title  />
         <PostInput />
-        <Publication /> 
+        <Publication />
    </div>
 </template>
 
@@ -17,7 +17,7 @@ export default Vue.extend({
     components: {
         Title,
         PostInput,
-        Publication
+        Publication,
     },
     data() {
         return {
