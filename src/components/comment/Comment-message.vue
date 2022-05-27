@@ -21,28 +21,39 @@
         <v-row>
             <v-col>
                 <v-card elevation="0">
-                    <!-- comment-title -->
-                    <v-card-title primary-title class="text-decoration-underline text-body-2 text-sm-body-1">
-                        Comment:
-                    </v-card-title>
-                    <!-- comment-content-card -->
-                    <v-card v-for="(item, index) in comments" :key="index" class="d-flex align-center mb-2"
-                        elevation="0">
-                        <Avatar :user="item.comment.author" size="40" class="flex-shrink-1" />
-                        <div class="message-arrowed flex-grow-1 elevation-3" style="background-color:#2196F3; position: relative;">
-                            <v-card-title primary-title class="text-body-2 text-sm-subtitle-1 white--text pa-2 mb-2">
-                                {{ item.comment.author.name }}
-                                said on
-                                {{ item.creation }}
-                            </v-card-title>
-                            <div class="message-arrowed"></div>
-                            <v-card-text class="white--text">
-                                <div class="d-flex">
-                                    {{ item.comment.content }}
-                                </div>
-                            </v-card-text>
-                        </div>
-                    </v-card>
+
+                    <!-- no comment-message -->
+                    <VAlert v-if="comments.length < 1" text color="primary" :value="true" class="text-center">
+                        This post has not comment be the first to leave one
+                    </VAlert>
+                    <!-- comment-block -->
+                    <div v-else class="comment-block">
+                        <!-- comment-title -->
+                        <v-card-title primary-title class="text-decoration-underline text-body-2 text-sm-body-1">
+                            Comment:
+                        </v-card-title>
+                        <!-- message-card -->
+                        <v-card v-for="(item, index) in comments" :key="index" class="d-flex align-center mb-5"
+                            elevation="0">
+                            <Avatar :user="item.comment.author" size="40" class="flex-shrink-1" />
+                            <div class="message-arrowed flex-grow-1 elevation-3"
+                                style="background-color:#2196F3; position: relative;">
+                                <!-- comment-title-header -->
+                                <v-card-title primary-title class="text-body-2 text-sm-subtitle-1 white--text pa-2 mb-2">
+                                    {{ item.comment.author.name }}
+                                    said on
+                                    {{ item.creation }}
+                                </v-card-title>
+                                <!-- comment-content -->
+                                <div class="message-arrowed"></div>
+                                <v-card-text class="white--text pt-0">
+                                    <div class="d-flex">
+                                        {{ item.comment.content }}
+                                    </div>
+                                </v-card-text>
+                            </div>
+                        </v-card>
+                    </div>
                 </v-card>
             </v-col>
         </v-row>

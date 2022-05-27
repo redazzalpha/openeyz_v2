@@ -5,9 +5,7 @@
             <!-- author-avatar -->
             <Avatar :user="item.post.author" size="45" />
             {{ item.post.author.name }} posted on {{ item.creation }}
-            <v-spacer></v-spacer>
         </v-card-title>
-        <v-divider></v-divider>
         <!-- main-content -->
         <v-card-text class="pa-0">
             <div v-html="item.post.content"></div>

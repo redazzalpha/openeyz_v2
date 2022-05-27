@@ -18,8 +18,15 @@ Vue.http.interceptors.push(function(request: VueRequest) {
 
   return (response: VueResponse) => {
     const {status, body} = response;
-    if(status === 0)
+    // TODO: look for solution to delet vuex correctly
+    if(status === 0) {
+      store.dispatch('clearVuex');
       router.push(Defines.ACCESS_PAGE_URL)      
+    }
+    if(status === 401) {
+      store.dispatch('clearVuex');
+      router.push(Defines.ACCESS_PAGE_URL)      
+    }
     
       if(body) {
       const {token, user} = body as Body;

@@ -2,7 +2,7 @@
     <!-- main-row-container -->
     <v-row justify="center">
         <!-- dialog-block -->
-        <v-dialog v-if="itemComPub.post" :value="dialog" dialog-transition @click:outside="$emit('stop', true)"
+        <v-dialog v-if="itemComPub.post" :value="dialog" dialog-transition @click:outside="$emit('stop')"
             @keydown="dialogStop" max-width=800>
             <!-- main-card -->
             <v-card>
@@ -31,7 +31,7 @@ export default Vue.extend({
     methods: {
         dialogStop({ code }: KeyboardEvent): void {
             if (code.match("Escape"))
-                this.$emit('stop', true);
+                this.$emit('stop');
         }
     }
 });

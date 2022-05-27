@@ -30,15 +30,16 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapActions, mapState } from 'vuex';
+import {httpRequest} from '../../utils/http';
 export default Vue.extend({
     name: 'Appbar-cpn',
     data() {
         return {
             icons: [
-                { title: 'Profile', class: 'fa-solid fa-user' },
-                { title: 'Notifications', class: 'fa-solid fa-bell' },
-                { title: 'Team', class: 'fa-solid fa-users' },
-                { title: 'Logout', class: 'fa-solid fa-right-from-bracket' },
+                { title: 'Profile', class: 'fa-solid fa-user', action: '#' },
+                { title: 'Notifications', class: 'fa-solid fa-bell', action: '#' },
+                { title: 'Team', class: 'fa-solid fa-users', action: '#' },
+                { title: 'Logout', class: 'fa-solid fa-right-from-bracket'},
             ],
         };
     },
@@ -46,6 +47,9 @@ export default Vue.extend({
         ...mapActions([
             'updateDrawer'
         ]),
+        logout() {
+            console.log('logggg')
+        }
     },
     computed: {
         ...mapState([

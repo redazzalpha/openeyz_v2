@@ -12,6 +12,8 @@ const vuexLocal = new VuexPersistence({
 
 Vue.use(Vuex);
 
+  // FIXME:  try to fix bug on persistant vuex cause when server is off or empty data still remains and looks like working
+
 export default new Vuex.Store({
   state: {
     currentUser: Users,
@@ -42,6 +44,10 @@ export default new Vuex.Store({
     UPDATE_DRAWER(state, payload): void {
       state.drawer = payload;
     },
+    CLEAR_VUEX(state) {
+      state.posts = [];
+      state.comments = [];
+    }
   },
   actions: {
     updateCurrentUser(context, payload): void {
@@ -67,7 +73,11 @@ export default new Vuex.Store({
     async getAllComments(context, payload): Promise<void | VueResponse> {
       const response: VueResponse = await httpRequest.get(Defines.SERVER_COMMENT_URL, { params: { payload } });
       context.commit('UPDATE_COMMENTS', (JSON.parse(response.bodyText)));
+    },
+    clearVuex(context) {
+      context.commit('CLEAR_VUEX');
     }
+
   },
   modules: {
   },

@@ -45,7 +45,7 @@
                 </v-container>
             </div>
         </v-lazy>
-        <Comment :dialog="dialog" @stop="dialog = false" :itemComPub="item" />
+        <Comment :dialog="dialog" @stop="closeComment" :itemComPub="item" />
     </div>
 </template>
 
@@ -54,7 +54,7 @@ import Vue from 'vue';
 import { mapState, mapActions } from 'vuex';
 import Avatar from '@/components/cpn/Avatar-cpn.vue';
 import Comment from '@/components/comment/Comment-block.vue';
-import {Item} from '../../utils/types';
+import { Item } from '../../utils/types';
 
 export default Vue.extend({
     name: "Publication-cpn",
@@ -78,19 +78,25 @@ export default Vue.extend({
     methods: {
         ...mapActions([
             'getAllPosts',
-            'getAllComments'
+            'getAllComments',
+            'updateComments'
         ]),
         showComment(item: Item): void {
-            if(item.post) {
+            if (item.post) {
                 this.getAllComments(item.post.id);
                 this.dialog = true;
                 this.item = item;
             }
         },
-        created(): void {
-            this.getAllPosts();
+        closeComment() {
+            this.dialog = false;
+            this.updateComments([]);
+
         }
-    }
+    },
+    created(): void {
+        this.getAllPosts();
+    },
 });
 </script>
 
