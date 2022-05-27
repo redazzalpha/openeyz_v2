@@ -45,7 +45,7 @@
                 </v-container>
             </div>
         </v-lazy>
-        <Comment :dialog="dialog" @stop="dialog = false" :item="item" />
+        <Comment :dialog="dialog" @stop="dialog = false" :itemComPub="item" />
     </div>
 </template>
 

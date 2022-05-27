@@ -2,12 +2,12 @@
     <!-- main-row-container -->
     <v-row justify="center">
         <!-- dialog-block -->
-        <v-dialog v-if="item.post" :value="dialog" dialog-transition @click:outside="$emit('stop', true)"
+        <v-dialog v-if="itemComPub.post" :value="dialog" dialog-transition @click:outside="$emit('stop', true)"
             @keydown="dialogStop" max-width=800>
             <!-- main-card -->
             <v-card>
-                <Publication :item="item" />
-                <Message :postId="item.post.id" />
+                <Publication :item="itemComPub" />
+                <Message :postId="itemComPub.post.id" />
             </v-card>
         </v-dialog>
     </v-row>
@@ -25,7 +25,7 @@ export default Vue.extend({
     },
     props: {
         dialog: { type: Boolean, required: true},
-        item: { type: Object, required: true },
+        itemComPub: { type: Object, required: true },
     },
     data() {
         return {

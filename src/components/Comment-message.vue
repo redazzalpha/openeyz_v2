@@ -5,7 +5,8 @@
         <v-row>
             <v-col class="d-flex align-center">
                 <Avatar :user="currentUser" size="40" />
-                <v-textarea v-model="comment" placeholder="leave comment..." auto-grow outlined rows="1" row-height="15" hide-details>
+                <v-textarea v-model="comment" placeholder="leave comment..." auto-grow outlined rows="1" row-height="15"
+                    hide-details>
                     <!-- send-comment-button -->
                     <template v-slot:append>
                         <v-btn icon color="primary" @click="send">
@@ -21,12 +22,12 @@
                 <v-card elevation="0">
                     <!-- comment-title -->
                     <v-card-title primary-title class="text-decoration-underline">
-                        Comments:
+                        Comment:
                     </v-card-title>
-                    <!-- comment-content -->
-                    <v-card-text style="border: solid red 1px;">
-                        coucouc
+                    <v-card-text >
+                        maccclooouf
                     </v-card-text>
+                    <!-- comment-content -->
                 </v-card>
             </v-col>
         </v-row>
@@ -46,7 +47,7 @@ export default Vue.extend({
         Avatar,
     },
     props: {
-        postId: {type: Number, required: true}
+        postId: { type: Number, required: true },
     },
     data() {
         return {
@@ -63,8 +64,8 @@ export default Vue.extend({
             const data: FormData = new FormData();
             data.append("comment", this.comment);
             data.append("postId", this.postId.toString());
-            const response: VueResponse  = await httpRequest.post(Defines.SERVER_COMMENT_URL, data);
-            this.comment = "";  
+            const response: VueResponse = await httpRequest.post(Defines.SERVER_COMMENT_URL, data);
+            this.comment = "";
         }
     },
 
