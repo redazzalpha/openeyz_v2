@@ -17,7 +17,7 @@
 import Vue, { PropType } from 'vue';
 import Publication from './Comment-publication.vue';
 import Message from './Comment-message.vue';
-import { Item, Post } from '../../utils/types';
+import { Item } from '../../utils/types';
 export default Vue.extend({
     name: 'Comment-cpn',
     components: {

@@ -70,8 +70,8 @@ export default new Vuex.Store({
       const response: VueResponse | void = await httpRequest.get(Defines.SERVER_PUBLICATION_URL);
       context.commit('UPDATE_POSTS', (JSON.parse(response.bodyText)));
     },
-    async getAllComments(context, payload): Promise<void | VueResponse> {
-      const response: VueResponse = await httpRequest.get(Defines.SERVER_COMMENT_URL, { params: { payload } });
+    async getAllComments(context, postId): Promise<void | VueResponse> {
+      const response: VueResponse = await httpRequest.get(Defines.SERVER_COMMENT_URL, { params: { postId } });
       context.commit('UPDATE_COMMENTS', (JSON.parse(response.bodyText)));
     },
     clearVuex(context) {
