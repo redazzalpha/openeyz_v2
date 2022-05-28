@@ -74,7 +74,9 @@ export type Comment = {
 };
 export interface Item {
   post?: Post;
-  creation?: string
+  creation?: string,
+  commentCount?: number,
+
 }
 // export type Item = {
 //   post:Post,

@@ -3,12 +3,12 @@
         <v-card-title primary-title class="text-body-1 white--text text-body-2 text-sm-subtitle-1 pa-2"
             style="background-color: #00ACC1;">
             <!-- author-avatar -->
-            <Avatar :user="item.post.author" size="45" />
-            {{ item.post.author.name }} posted on {{ item.creation }}
+            <Avatar :user="itemPost.post.author" size="45" />
+            {{ itemPost.post.author.name }} posted on {{ itemPost.creation }}
         </v-card-title>
         <!-- main-content -->
         <v-card-text class="pa-0">
-            <div v-html="item.post.content"></div>
+            <div v-html="itemPost.post.content"></div>
             <v-divider class="my-5"></v-divider>
         </v-card-text>
     </div>
@@ -24,7 +24,7 @@ export default Vue.extend({
         Avatar,
     },
     props: {
-        item : {type: Object as PropType<Item>, required: true}
+        itemPost : {type: Object as PropType<Item>, required: true}
     }
 });
 </script>

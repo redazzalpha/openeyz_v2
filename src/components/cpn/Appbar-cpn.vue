@@ -30,7 +30,6 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapActions, mapState } from 'vuex';
-import {httpRequest} from '../../utils/http';
 export default Vue.extend({
     name: 'Appbar-cpn',
     data() {

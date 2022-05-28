@@ -26,14 +26,16 @@
                                         <v-row>
                                             <!-- comment-button -->
                                             <v-col class="d-flex justify-center pa-0">
-                                                <v-btn text plain :ripple="false" @click="showComment(item)">
-                                                    comments<i class="fa fa-comment-dots"></i>
+                                                <v-btn text plain :ripple="false" title="see comments" color="primary" @click="showComment(item)">
+                                                    comments<i class="fa fa-comment-dots"> <span class="text-body-2">{{ item.commentCount }}</span></i>
                                                 </v-btn>
                                             </v-col>
                                             <!-- like-button -->
                                             <v-col class="d-flex justify-center pa-0">
-                                                <v-btn icon plain :ripple="false">
-                                                    <i class="fa fa-heart"></i>
+                                                <v-btn icon plain :ripple="false" title="like this post">
+                                                    <i class="fa fa-heart">
+                                                        <v-badge :value="true" content="1"></v-badge>
+                                                    </i>
                                                 </v-btn>
                                             </v-col>
                                         </v-row>
@@ -45,7 +47,7 @@
                 </v-container>
             </div>
         </v-lazy>
-        <Comment :dialog="dialog" @stop="closeComment" :itemComPub="item" />
+        <Comment :dialog="dialog" @stop="closeComment" :itemPost="item" @send="commentSent" />
     </div>
 </template>
 
@@ -54,7 +56,7 @@ import Vue from 'vue';
 import { mapState, mapActions } from 'vuex';
 import Avatar from '@/components/cpn/Avatar-cpn.vue';
 import Comment from '@/components/comment/Comment-block.vue';
-import { Item } from '../../utils/types';
+import { Item, Post } from '../../utils/types';
 
 export default Vue.extend({
     name: "Publication-cpn",
@@ -82,17 +84,18 @@ export default Vue.extend({
             'updateComments'
         ]),
         showComment(item: Item): void {
-            if (item.post) {
-                this.getAllComments(item.post.id);
-                this.dialog = true;
-                this.item = item;
-            }
+            this.getAllComments(item.post?.id);
+            this.dialog = true;
+            this.item = item;
         },
         closeComment() {
             this.dialog = false;
             this.updateComments([]);
-
-        }
+        },
+        commentSent(itemPost: Item) {
+            if (itemPost.commentCount != undefined)
+                itemPost.commentCount++;
+        },
     },
     created(): void {
         this.getAllPosts();
@@ -107,5 +110,11 @@ export default Vue.extend({
 
 p {
     margin: 10px 10px !important;
+}
+
+.v-badge__badge {
+    
+    height: 18px; 
+    inset: auto auto calc(100% - 9px) calc(100% - 9px)!important;
 }
 </style>

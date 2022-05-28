@@ -39,7 +39,8 @@
                             <div class="message-arrowed flex-grow-1 elevation-3"
                                 style="background-color:#2196F3; position: relative;">
                                 <!-- comment-title-header -->
-                                <v-card-title primary-title class="text-body-2 text-sm-subtitle-1 white--text pa-2 mb-2">
+                                <v-card-title primary-title
+                                    class="text-body-2 text-sm-subtitle-1 white--text pa-2 mb-2">
                                     {{ item.comment.author.name }}
                                     said on
                                     {{ item.creation }}
@@ -61,18 +62,19 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue, { PropType } from 'vue';
 import Avatar from '../cpn/Avatar-cpn.vue';
 import { mapState, mapActions } from 'vuex';
 import { httpRequest } from '@/utils/http';
 import * as Defines from '@/utils/defines';
+import { Item } from '../../utils/types';
 export default Vue.extend({
     name: 'Comment-msg',
     components: {
         Avatar,
     },
     props: {
-        postId: { type: Number, required: true },
+        itemPost: { type: Object as PropType<Item>, required: true },
     },
     data() {
         return {
@@ -90,12 +92,15 @@ export default Vue.extend({
             'getAllComments'
         ]),
         async send(): Promise<void> {
-            const data: FormData = new FormData();
-            data.append("comment", this.comment);
-            data.append("postId", this.postId.toString());
-            await httpRequest.post(Defines.SERVER_COMMENT_URL, data);
-            this.comment = "";
-            this.getAllComments(this.postId);
+            if (this.itemPost.post) {
+                const data: FormData = new FormData();
+                data.append("comment", this.comment);
+                data.append("postId", this.itemPost.post?.id.toString());
+                await httpRequest.post(Defines.SERVER_COMMENT_URL, data);
+                this.comment = "";
+                this.getAllComments(this.itemPost.post?.id);
+                this.$emit('send', this.itemPost);
+            }
         }
     },
 });

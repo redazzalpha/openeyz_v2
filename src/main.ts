@@ -12,27 +12,31 @@ Vue.config.productionTip = false;
 Vue.use(vueResource);
 Vue.use(CKEditor);
 
-Vue.http.interceptors.push(function(request: VueRequest) {
+Vue.http.interceptors.push(function (request: VueRequest) {
   request.credentials = true;
   request.headers.set('Authorization', 'Bearer ' + localStorage.getItem("token"));
 
   return (response: VueResponse) => {
-    const {status, body} = response;
+    const { status, body } = response;
     // TODO: look for solution to delet vuex correctly
-    if(status === 0) {
+    if (status === 0) {
       store.dispatch('clearVuex');
-      router.push(Defines.ACCESS_PAGE_URL)      
+      router.push(Defines.ACCESS_PAGE_URL);
     }
-    if(status === 401) {
+    if (status === 401) {
       store.dispatch('clearVuex');
-      router.push(Defines.ACCESS_PAGE_URL)      
+      router.push(Defines.ACCESS_PAGE_URL);
     }
-    
-      if(body) {
-      const {token, user} = body as Body;
-      if(token)
+    if (status === 500) {
+      store.dispatch('clearVuex');
+      router.push(Defines.ACCESS_PAGE_URL);
+    }
+
+    if (body) {
+      const { token, user } = body as Body;
+      if (token)
         localStorage.setItem("token", token);
-      if(user)
+      if (user)
         store.dispatch('updateCurrentUser', user);
     }
   };
@@ -42,6 +46,6 @@ new Vue({
   router,
   store,
   vuetify,
-  http: {root: '/'},
+  http: { root: '/' },
   render: h => h(App)
 }).$mount('#app');

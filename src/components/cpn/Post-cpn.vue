@@ -68,10 +68,7 @@ export default Vue.extend({
     publish(): void {
       if (this.editorData) {
         let data: FormData = new FormData();
-        data.append(
-          "post",
-          this.editorData.replace(/<img/g, "<img width=100%")
-        );
+        data.append("post", this.editorData.replace(/<img/g, "<img width=100%"));
         httpRequest.post(Defines.SERVER_PUBLICATION_URL, data).then(
           (): void => {
             this.editorData = "";
@@ -102,8 +99,11 @@ export default Vue.extend({
 /* .ck.ck-editor {
 } */
 // editor-toolbar
-/* .ck-rounded-corners .ck.ck-editor__top .ck-sticky-panel .ck-toolbar, .ck.ck-editor__top .ck-sticky-panel .ck-toolbar.ck-rounded-corners {
+/* .ck-rounded-corners .ck.ck-editor__top .ck-sticky-panel .ck-toolbar,
+.ck.ck-editor__top .ck-sticky-panel .ck-toolbar.ck-rounded-corners {
+  background-color: #BDBDBD;
 } */
+
 // editor-content
 .ck.ck-editor__main>.ck-editor__editable {
   min-height: $height-editor-content !important;
