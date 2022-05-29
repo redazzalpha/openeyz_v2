@@ -1,4 +1,5 @@
 <template>
+<div>
     <v-app-bar tag="header" color="cyan darken-1" elevation="1" app>
         <v-container fluid grid-list-xs>
             <v-row>
@@ -23,7 +24,9 @@
                 <i :class="icon.class + ' mr-1'"></i><span>{{ icon.title }}</span>
             </v-btn>
         </v-toolbar-items>
+
     </v-app-bar>
+</div>
 </template>
 
 <script lang="ts">
@@ -31,6 +34,8 @@ import Vue from 'vue';
 import { mapActions, mapState } from 'vuex';
 export default Vue.extend({
     name: 'Appbar-cpn',
+    components: {
+    },
     data() {
         return {
             icons: [

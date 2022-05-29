@@ -12,7 +12,6 @@ export default Vue.extend({
     name: 'Profile-account',
     data() {
         return {
-            tab: 0,
             text: 'profile account'
         };
     }

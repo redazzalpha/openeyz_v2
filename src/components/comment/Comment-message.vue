@@ -6,7 +6,7 @@
             <v-col class="d-flex align-center">
                 <Avatar :user="currentUser" size="40" />
                 <v-textarea v-model="comment" placeholder="leave comment..." auto-grow outlined rows="1" row-height="15"
-                    hide-details>
+                    rounded hide-details>
                     <!-- FIXME: fix btn bug sometimes does not appear - try to change with append directive -->
                     <!-- send-comment-button -->
                     <template v-slot:append>

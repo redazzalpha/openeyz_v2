@@ -1,6 +1,5 @@
 <template>
-    <v-navigation-drawer tag="nav" v-model="$store.state.drawer" absolute temporary>
-
+    <v-navigation-drawer tag="nav" v-model="$store.state.drawer" temporary app bottom>
         <!-- item-list -->
         <v-list-item>
             <!-- user-vatara -->
@@ -15,13 +14,13 @@
         <!-- links -->
         <v-list dense rounded>
             <!-- item-list -->
-            <v-list-item v-for="icon in icons" :key="icon.title" link @click="icon.action">
+            <v-list-item v-for="icon in icons" :key="icon.title" link @click="icon.action" >
                 <!-- icon-item -->
-                <v-list-item-icon>
+                <v-list-item-icon class="cyan--text text--darken-1">
                     <i :class="icon.class"></i>
                 </v-list-item-icon>
                 <!-- content-item -->
-                <v-list-item-content>
+                <v-list-item-content >
                     <v-list-item-title>{{ icon.title }}</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
@@ -31,7 +30,7 @@
 
 <script>
 import Vue from 'vue';
-import Avatar from '../../components/cpn/Avatar-cpn.vue';
+import Avatar from './Avatar-cpn.vue';
 import { mapActions, mapState } from 'vuex';
 export default Vue.extend({
     name: 'Nav-drawer',

@@ -1,6 +1,6 @@
 <template>
     <div class="tabs">
-        <v-tabs v-model="$store.state.tabProfile" center-active show-arrows>
+        <v-tabs v-model="$store.state.tabProfile" center-active show-arrows  class="d-flex justify-center pt-2" style="background-color: white">
             <v-tabs-slider color="yellow" centered ></v-tabs-slider>
             <v-tab v-for="item in items" :key="item">
                 {{ item }}

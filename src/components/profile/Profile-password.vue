@@ -12,7 +12,6 @@ export default Vue.extend({
     name: 'Profile-password',
     data() {
         return {
-            tab: 0,
             text: 'profile password'
         };
     }
