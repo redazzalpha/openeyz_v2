@@ -37,7 +37,7 @@
                                             <!-- like-button -->
                                             <v-col class="d-flex justify-center pa-0">
                                                 <v-btn icon plain :ripple="false" title="like this post" @click="like(item)">
-                                                    <i class="fa fa-heart">
+                                                    <i class="fa fa-heart" :style="'color: ' + (item.userLike? 'red' : '')">
                                                         <v-badge :value="true" :content="item.likeCount" color="transparent">
                                                         </v-badge>
                                                     </i>

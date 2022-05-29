@@ -20,8 +20,8 @@ export default Vue.extend({
         return {
             imgs: [
                 { role: this.user.roles.some((r: Role) => r.roleName == 'SUPERADMIN'), src: require('../../assets/suadmin.png') },
-                { role: this.user.roles.some((r: Role) => r.roleName == 'SUPERADMIN'), src: require('../../assets/suadmin.png') },
-                { role: this.user.roles.some((r: Role) => r.roleName == 'SUPERADMIN'), src: require('../../assets/suadmin.png') },
+                { role: this.user.roles.some((r: Role) => r.roleName == 'ADMIN'), src: require('../../assets/admin.png') },
+                { role: this.user.roles.some((r: Role) => r.roleName == 'USER'), src: require('../../assets/user.png') },
             ]
         };
     },

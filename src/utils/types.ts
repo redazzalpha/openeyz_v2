@@ -77,6 +77,7 @@ export interface Item {
   creation?: string,
   commentCount?: number,
   likeCount?: number,
+  userLike?: boolean,
 
 }
 // export type Item = {
