@@ -17,11 +17,10 @@
         </v-container>
         <!--appbar-icon-link-->
         <v-toolbar-items v-show="showAppBarLink">
-            <v-btn class="btn d-flex mx-5" elevation=0 color="transparent" v-for="icon of icons" :key="icon.title"
-                :title="icon.title">
-                <!-- <font-awesome-icon  class="appbar-icon mr-2" :icon="item.icon"/> -->
+            <!-- profile-icon -->
+            <v-btn v-for="icon in icons" :key="icon.title" class="btn d-flex mx-5" elevation=0 color="transparent"
+                :title="icon.title" @click="icon.action">
                 <i :class="icon.class + ' mr-1'"></i><span>{{ icon.title }}</span>
-                <!-- <span class="white--text"></span> -->
             </v-btn>
         </v-toolbar-items>
     </v-app-bar>
@@ -35,20 +34,40 @@ export default Vue.extend({
     data() {
         return {
             icons: [
-                { title: 'Profile', class: 'fa-solid fa-user', action: '#' },
-                { title: 'Notifications', class: 'fa-solid fa-bell', action: '#' },
-                { title: 'Team', class: 'fa-solid fa-users', action: '#' },
-                { title: 'Logout', class: 'fa-solid fa-right-from-bracket'},
+                {
+                    title: 'Profile', 
+                    class: 'fa-solid fa-user', 
+                    action: () => { this.$store.dispatch('updateProfileDialog', true); }
+                },
+                {
+                    title: 'Notifications', 
+                    class: 'fa-solid fa-bell', 
+                    action: () => { console.log('notif action'); }
+                },
+                {
+                    title: 'Team', 
+                    class: 'fa-solid fa-users', 
+                    action: () => { console.log('team action'); }
+                },
+                {
+                    title: 'Logout', 
+                    class: 'fa-solid fa-right-from-bracket', 
+                    action: () => { console.log('logout action'); }
+                },
             ],
         };
     },
     methods: {
         ...mapActions([
-            'updateDrawer'
+            'updateDrawer',
+            'updateProfileDialog',
         ]),
+        openProfile() {
+            this.updateProfileDialog(true);
+        },  
         logout() {
-            console.log('logggg')
-        }
+            console.log('logggg');
+        },
     },
     computed: {
         ...mapState([

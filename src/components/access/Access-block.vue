@@ -2,13 +2,13 @@
     <!--access-dialog-->
     <v-dialog v-model="dialog" width="500" persistent role="dialog">
         <!--access-title-tabs-->
-        <tabs />
+        <Tabs />
         <!--tabs-content-->
-        <v-tabs-items v-model="$store.state.tab">
+        <v-tabs-items  v-model="$store.state.tabAccess">
             <!--login-tab-content-->
-            <login />
+            <Login />
             <!--register-tab-content-->
-            <register />
+            <Register />
         </v-tabs-items>
     </v-dialog>
 </template>

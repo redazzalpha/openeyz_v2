@@ -1,4 +1,4 @@
-import * as Defines from '@/utils/defines';
+import * as Defines from '../utils/defines';
 
 class UploadAdapter {
     constructor(loader) {

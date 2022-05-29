@@ -16,7 +16,6 @@
                             elevation="5" class="mt-5">{{ alertMessage }}</v-alert>
                     </Transition>
                 </div>
-
             </v-card-title>
             <v-divider class="mb-7"></v-divider>
             <v-card-text class="pa-0">
@@ -80,7 +79,7 @@
                             <!-- link -->
                             <v-row>
                                 <v-col class="d-flex justify-center">
-                                    <v-btn text color="primary" @click="updateTab(0)">Got account ?</v-btn>
+                                    <v-btn text color="primary" @click="updateTabAccess(0)">Got account ?</v-btn>
                                 </v-col>
                             </v-row>
                         </v-container>
@@ -128,7 +127,7 @@ export default Vue.extend({
     },
     methods: {
         ...mapActions([
-            "updateTab",
+            "updateTabAccess",
         ]),
         register(): void {
             let form: VueElement = this.$refs.register;

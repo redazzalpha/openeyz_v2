@@ -13,7 +13,7 @@
       </section>
     </v-main>
     <!--nav-->
-    <v-navigation-drawer tag="nav" v-model="$store.state.drawer" absolute temporary></v-navigation-drawer>
+    <Nav />
     <!--footer-->
     <Footer />
     <!--scroll-top-button-->
@@ -30,11 +30,13 @@
 import Vue from 'vue';
 import Footer from '@/components/cpn/Footer-cpn.vue';
 import Appbar from '@/components/cpn/Appbar-cpn.vue';
+import Nav from '@/components/cpn/Nav-drawer.vue';
 export default Vue.extend({
   name: 'App',
   components: {
     Appbar,
     Footer,
+    Nav,
   },
   data() {
     return {

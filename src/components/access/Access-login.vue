@@ -35,7 +35,7 @@
             <!--connect-button-->
             <v-card-actions class="d-flex flex-column">
                 <v-btn class="mx-auto mb-1" color="primary" :width="btnSize" @click="login()">CONNECT</v-btn>
-                <v-btn text color="primary" @click="updateTab(1)">No account ?</v-btn>
+                <v-btn text color="primary" @click="updateTabAccess(1)">No account ?</v-btn>
             </v-card-actions>
         </v-card>
     </v-tab-item>
@@ -69,7 +69,7 @@ export default Vue.extend({
     },
     methods: {
         ...mapActions([
-            "updateTab",
+            "updateTabAccess",
         ]),
         login(): void {
             let form: VueElement = this.$refs.login;
