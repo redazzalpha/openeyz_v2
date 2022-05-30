@@ -25,6 +25,15 @@ export const httpRequest = {
             );
         });
     }, 
+    patch: function (url: string, body?: FormData | string | object | null): Promise<VueResponse>  {
+        return new Promise((resolve, reject) => {
+            Vue.http.patch(url, body)
+            .then(
+                (response: VueResponse) => resolve(response),
+                (error: VueResponse) => reject(error),
+            );
+        });
+    }, 
     get: function (url: string, config?: object): Promise<VueResponse>  {
         return new Promise((resolve, reject) => {
             Vue.http.get(url, {...config})

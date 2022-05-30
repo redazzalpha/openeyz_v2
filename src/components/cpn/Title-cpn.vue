@@ -17,6 +17,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { mapState } from 'vuex';
 export default Vue.extend({
     name: 'Title-cpn',
     props: {
@@ -24,6 +25,11 @@ export default Vue.extend({
             type: String,
             default: 'Welcome to'
         }
+    },
+    computed: {
+        ...mapState([
+            'currentUser',
+        ]),
     },
 });
 </script>

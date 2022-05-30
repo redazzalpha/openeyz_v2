@@ -4,7 +4,9 @@
         <v-list-item>
             <!-- user-vatara -->
             <v-list-item-avatar>
-                <Avatar :user="currentUser" size="40" />
+                <div v-if="(typeof currentUser) != 'function'">
+                    <Avatar :user="currentUser" size="40" />
+                </div>
             </v-list-item-avatar>
             <v-list-item-content>
                 <v-list-item-title>{{ currentUser.name }}</v-list-item-title>
@@ -14,13 +16,13 @@
         <!-- links -->
         <v-list dense rounded>
             <!-- item-list -->
-            <v-list-item v-for="icon in icons" :key="icon.title" link @click="icon.action" >
+            <v-list-item v-for="icon in icons" :key="icon.title" link @click="icon.action">
                 <!-- icon-item -->
                 <v-list-item-icon class="cyan--text text--darken-1">
                     <i :class="icon.class"></i>
                 </v-list-item-icon>
                 <!-- content-item -->
-                <v-list-item-content >
+                <v-list-item-content>
                     <v-list-item-title>{{ icon.title }}</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
@@ -41,26 +43,26 @@ export default Vue.extend({
         return {
             icons: [
                 {
-                    title: 'Profile', 
-                    class: 'fa-solid fa-user', 
-                    action: () => { 
+                    title: 'Profile',
+                    class: 'fa-solid fa-user',
+                    action: () => {
                         this.updateProfileDialog(true);
                         this.updateDrawer(false);
                     }
                 },
                 {
-                    title: 'Notifications', 
-                    class: 'fa-solid fa-bell', 
+                    title: 'Notifications',
+                    class: 'fa-solid fa-bell',
                     action: () => { console.log('notif action'); }
                 },
                 {
-                    title: 'Team', 
-                    class: 'fa-solid fa-users', 
+                    title: 'Team',
+                    class: 'fa-solid fa-users',
                     action: () => { console.log('team action'); }
                 },
                 {
-                    title: 'Logout', 
-                    class: 'fa-solid fa-right-from-bracket', 
+                    title: 'Logout',
+                    class: 'fa-solid fa-right-from-bracket',
                     action: () => { console.log('logout action'); }
                 },
             ],

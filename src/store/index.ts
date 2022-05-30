@@ -3,7 +3,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { httpRequest } from './../utils/http';
 import * as Defines from './../utils/defines';
-import { VueResponse, Users } from "../utils/types";
+import { VueResponse } from "../utils/types";
 import VuexPersistence from 'vuex-persist';
 
 const vuexLocal = new VuexPersistence({
@@ -16,10 +16,10 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    currentUser: Users,
+    currentUser: null,
     tabAccess: 0,
     tabProfile: 0,
-    drawer: 0,
+    drawer: null,
     profileDialog: false,
     posts: [],
     comments: [],
@@ -72,6 +72,7 @@ export default new Vuex.Store({
     },
     updateProfileDialog(context, payload: boolean): void {
       context.commit('UPDATE_PROFILE_DIALOG', payload);
+      context.commit('UPDATE_TAB_PROFILE', 0);
     },
     updatePosts(context, payload): void {
       context.commit('UPDATE_POSTS', payload);

@@ -14,7 +14,7 @@
             </v-toolbar>
 
             <Tabs />
-            <v-tabs-items v-model="$store.state.tabProfile" >
+            <v-tabs-items v-model="$store.state.tabProfile">
                 <Info />
                 <Password />
                 <Account />
@@ -39,18 +39,6 @@ export default Vue.extend({
         Password,
         Account,
     },
-    data() {
-        return {
-            notifications: false,
-            sound: true,
-            widgets: false,
-
-
-
-            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-
-        };
-    },
     methods: {
         ...mapActions([
             'updateProfileDialog'
@@ -66,6 +54,9 @@ export default Vue.extend({
             'profileDialog'
         ]),
     },
+    created() {
+        this.updateProfileDialog(false);
+    }
 
 });
 </script>

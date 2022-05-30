@@ -4,6 +4,9 @@ export const SERVER_IMAGE_URL = SERVER_URL + '/image';
 export const SERVER_PUBLICATION_URL = SERVER_URL + '/publication';
 export const SERVER_COMMENT_URL = SERVER_URL + '/comment';
 export const SERVER_LIKE_URL = SERVER_URL + '/like';
+export const SERVER_USER_LNAME_URL = SERVER_URL + '/user/lname';
+export const SERVER_USER_NAME_URL = SERVER_URL + '/user/name';
+export const SERVER_USER_USERNAME_URL = SERVER_URL + '/user/username';
 export const SERVER_DESCRIPTION_URL = SERVER_URL + '/description';
 
 export const ROOT_URL = "/";
