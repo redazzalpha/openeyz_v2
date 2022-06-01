@@ -23,10 +23,10 @@ Vue.http.interceptors.push(function (request: VueRequest) {
       store.dispatch('clearVuex');
       router.push(Defines.ACCESS_PAGE_URL);
     }
-    if (status === 401) {
-      store.dispatch('clearVuex');
-      router.push(Defines.ACCESS_PAGE_URL);
-    }
+    // if (status === 401) {
+    //   store.dispatch('clearVuex');
+    //   router.push(Defines.ACCESS_PAGE_URL);
+    // }
     if (status === 500) {
       store.dispatch('clearVuex');
       router.push(Defines.ACCESS_PAGE_URL);

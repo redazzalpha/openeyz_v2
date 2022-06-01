@@ -9,7 +9,10 @@
                 <span style="position: relative">
                     <Avatar :user="currentUser" size="150" />
                     <v-btn icon color="primary" style="position: absolute; top: 122px; right: 18px; "
-                        title="modify image">
+                        @click="openFolder" title="modify image">
+                        <input v-show="0" type="file" accept="image/*" ref="input" @change="pickFile" />
+
+
                         <i class="fa-solid fa-camera" style="font-size: 20px;"></i>
                     </v-btn>
                 </span>
@@ -20,7 +23,7 @@
                     <!-- title-row -->
                     <v-row>
                         <v-col>
-                            <h3 class="text-decoration-underline">User's informations</h3>
+                            <h3 class="text-decoration-underline">Informations</h3>
                         </v-col>
                     </v-row>
                     <!-- last-name-row -->
@@ -161,7 +164,7 @@ export default Vue.extend({
         },
         async proceed() {
             let form: VueElement = this.$refs.form;
-// TODO: got to check for username modification cause need change cookie from server according the new username
+            // TODO: got to check for username modification cause need change cookie from server according the new username
             if (form != null) {
                 if (((form as unknown) as VueFunction).validate()) {
                     const formElem: HTMLFormElement | null = document.querySelector(".form");
@@ -201,6 +204,19 @@ export default Vue.extend({
                     break;
             }
             this.updateCurrentUser(this.currentUser);
+        },
+        openFolder() {
+            const input = this.$refs.input as HTMLInputElement;
+            input.click();
+        },
+        pickFile() {
+            const input = this.$refs.input as HTMLInputElement;
+
+            const file = new FormData();
+            file.append("file", input.files![0]);
+            httpRequest.post(Defines.SERVER_USER_IMG_URL, file);
+            
+
         }
     },
     computed: {

@@ -15,6 +15,7 @@ export default Vue.extend({
     name: 'Avatar-cpn',
     props: {
         user: { type: Object as PropType<Users>, required: false },
+        src: {type: String, required: false},
         size: { type: String, default: "55" }
     },
     data() {
