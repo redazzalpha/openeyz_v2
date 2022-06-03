@@ -7,12 +7,10 @@
                 <!-- user-avatar -->
                 <span>{{ currentUser.name }}</span>
                 <span style="position: relative">
-                    <Avatar :user="currentUser" size="150" />
-                    <v-btn icon color="primary" style="position: absolute; top: 122px; right: 18px; "
+                    <Avatar :user="currentUser" size="170" />
+                    <v-btn icon color="primary" style="position: absolute; top: 145px; right: 18px; "
                         @click="openFolder" title="modify image">
                         <input v-show="0" type="file" accept="image/*" ref="input" @change="pickFile" />
-
-
                         <i class="fa-solid fa-camera" style="font-size: 20px;"></i>
                     </v-btn>
                 </span>
@@ -49,9 +47,9 @@
                         <v-col>
                             <span class="mr-3">E-mail: {{ currentUser.username }} </span>
                         </v-col>
-                        <v-col class="shrink">
+                        <!-- <v-col class="shrink">
                             <v-btn small color="primary" @click="openModify(2)">Modify</v-btn> <br>
-                        </v-col>
+                        </v-col> -->
                     </v-row>
                     <!-- description-row -->
                     <v-row>
@@ -112,7 +110,7 @@ import Vue from 'vue';
 import { mapState } from 'vuex';
 import Avatar from '../cpn/Avatar-cpn.vue';
 import * as Defines from '../../utils/defines';
-import { VueElement, VueFunction } from '../../utils/types';
+import { VueElement, VueFunction, VueResponse } from '../../utils/types';
 import { mapActions } from 'vuex';
 export default Vue.extend({
     name: 'Profile-info',
@@ -209,14 +207,13 @@ export default Vue.extend({
             const input = this.$refs.input as HTMLInputElement;
             input.click();
         },
-        pickFile() {
+        async pickFile() {
             const input = this.$refs.input as HTMLInputElement;
-
             const file = new FormData();
             file.append("file", input.files![0]);
-            httpRequest.post(Defines.SERVER_USER_IMG_URL, file);
-            
-
+            const response: VueResponse =  await httpRequest.post(Defines.SERVER_USER_IMG_URL, file);
+            this.currentUser.avatarSrc = response.bodyText; 
+            this.updateCurrentUser(this.currentUser);  
         }
     },
     computed: {

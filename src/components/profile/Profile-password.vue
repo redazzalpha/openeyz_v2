@@ -7,7 +7,7 @@
                 <!-- user-avatar -->
                 <span style="position: relative">
                     <v-avatar size="175" color="red">
-                        <img src="../../assets/password1.png" alt="alt" width="10%">
+                        <v-img src="../../assets/password1.png" alt="alt" />
                     </v-avatar>
                 </span>
             </v-card-title>

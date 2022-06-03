@@ -1,10 +1,10 @@
 <template>
     <v-avatar :size="size" class="mr-3">
-        <!-- FIXME: got to fix bug that when sending publication or comment good appear only reload -->
-        <img v-if="user.avatarSrc == null && imgs[0].role" :src="imgs[0].src" alt="alt">
-        <img v-else-if="user.avatarSrc == null && imgs[1].role" :src="imgs[1].src" alt="alt">
-        <img v-else-if="user.avatarSrc == null && imgs[2].role" :src="imgs[2].src" alt="alt">
-        <img v-else-if="user.avatarSrc != null" :src="user.avatarSrc" alt="alt">
+        <!-- FIXME: got to fix bug that when sending publication or comment good img  appears only reload -->
+        <v-img v-if="user.avatarSrc == null && imgs[0].role" :src="imgs[0].src" alt="alt" />
+        <v-img v-else-if="user.avatarSrc == null && imgs[1].role" :src="imgs[1].src" alt="alt" />
+        <v-img v-else-if="user.avatarSrc == null && imgs[2].role" :src="imgs[2].src" alt="alt" />
+        <v-img v-else-if="user.avatarSrc != null" :src="user.avatarSrc" alt="alt" />
     </v-avatar>
 </template>
 
@@ -15,7 +15,7 @@ export default Vue.extend({
     name: 'Avatar-cpn',
     props: {
         user: { type: Object as PropType<Users>, required: false },
-        src: {type: String, required: false},
+        src: { type: String, required: false },
         size: { type: String, default: "55" }
     },
     data() {

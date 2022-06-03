@@ -43,4 +43,13 @@ export const httpRequest = {
             );
         });
     }, 
+    delete: function (url: string, config?: object): Promise<VueResponse>  {
+        return new Promise((resolve, reject) => {
+            Vue.http.delete(url, {...config})
+            .then(
+                (response: VueResponse) => resolve(response),
+                (error: VueResponse) => reject(error),
+            );
+        });
+    }, 
 };
