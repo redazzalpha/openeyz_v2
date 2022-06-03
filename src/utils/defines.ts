@@ -1,4 +1,5 @@
-export const SERVER_URL = "http://localhost:8081/api";
+export const SERVER_DOMAIN_URL = "http://localhost:8081";
+export const SERVER_URL =  SERVER_DOMAIN_URL + "/api";
 export const SERVER_ACCESS_URL = SERVER_URL + "/access";
 export const SERVER_IMAGE_URL = SERVER_URL + '/image';
 export const SERVER_PUBLICATION_URL = SERVER_URL + '/publication';
@@ -11,6 +12,7 @@ export const SERVER_USER_USERNAME_URL = SERVER_URL + '/user/username';
 export const SERVER_USER_PASSWORD_URL = SERVER_URL + '/user/password';
 export const SERVER_USER_IMG_URL = SERVER_URL + '/user/img';
 export const SERVER_USER_DELETE_URL = SERVER_URL + '/user/delete';
+export const SERVER_LOGOUT_URL = SERVER_DOMAIN_URL + '/logout';
 
 export const ROOT_URL = "/";
 export const HOME_PAGE_URL = ROOT_URL;

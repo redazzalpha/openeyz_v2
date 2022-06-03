@@ -32,6 +32,8 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapActions, mapState } from 'vuex';
+import { httpRequest } from '../../utils/http';
+import * as Defines from '../../utils/defines';
 export default Vue.extend({
     name: 'Appbar-cpn',
     components: {
@@ -57,7 +59,11 @@ export default Vue.extend({
                 {
                     title: 'Logout', 
                     class: 'fa-solid fa-right-from-bracket', 
-                    action: () => { console.log('logout action'); }
+                    action: async () => {
+                        await httpRequest.post(Defines.SERVER_LOGOUT_URL);
+                        localStorage.removeItem("token");
+                        localStorage.removeItem("vuex");
+                    },
                 },
             ],
         };

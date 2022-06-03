@@ -26,6 +26,7 @@ const routes: Array<RouteConfig> = [
 
 const router = new VueRouter({
   routes,
+  // TODO: try to fix probleme that cant navigate when deployed  on mode: 'history'
   mode: 'hash',
 })
 
