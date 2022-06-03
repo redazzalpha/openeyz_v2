@@ -1,20 +1,20 @@
 // vue types
 export type VueFunction = { validate: () => boolean };
 export type VueElement = undefined | Vue | Element | (Vue | Element)[];
-export type VueResponse = {
-  body: object | Blob | string | Body | object[],
-  bodyText: string,
-  url: string,
-  headers: Headers,
-  ok: boolean,
-  status: number,
-  statusText: string,
+export interface VueResponse {
+  body: object | Blob | string | Body | object[];
+  bodyText: string;
+  url: string;
+  headers: Headers;
+  ok: boolean;
+  status: number;
+  statusText: string;
 
-  text: () => Promise<string>,
-  json: () => Promise<JSON>,
-  blob: () => Promise<Blob>,
-};
-export type VueRequest = {
+  text: () => Promise<string>;
+  json: () => Promise<JSON>;
+  blob: () => Promise<Blob>;
+}
+export interface VueRequest {
   url: string;
   body: Body;
   headers: Headers;
@@ -32,13 +32,13 @@ export type VueRequest = {
   respondWith: (body: Body, config: object) => (Response);
   abort: () => (void);
 
-};
+}
 
 // model types
 export enum RoleEnum { USER, ADMIN, SUPERADMIN }
-export type Role = {
-  roleName: RoleEnum | string,
-};
+export interface Role {
+  roleName: RoleEnum | string;
+}
 // export type Users = {
 //   username: string,
 //   lname: string,
@@ -59,25 +59,28 @@ export class Users{
   avatarSrc = "";
   roles: Array<Role> = [];
 }
-export type Post = {
+
+export type UserMap = [[]];
+
+export interface Post {
   id: number;
-  content: string,
-  creation: string,
-  author: Users,
-};
-export type Comment = {
-  id: number,
-  content: string,
-  creation: string,
-  author: Users,
-  post: Post
-};
+  content: string;
+  creation: string;
+  author: Users;
+}
+export interface Comment {
+  id: number;
+  content: string;
+  creation: string;
+  author: Users;
+  post: Post;
+}
 export interface Item {
   post?: Post;
-  creation?: string,
-  commentCount?: number,
-  likeCount?: number,
-  userLike?: boolean,
+  creation?: string;
+  commentCount?: number;
+  likeCount?: number;
+  userLike?: boolean;
 
 }
 // export type Item = {
@@ -85,7 +88,7 @@ export interface Item {
 // }
 
 // http types
-export type Body = {
-  token: string,
-  user: object,
-};
+export interface Body {
+  token: string;
+  user: object;
+}

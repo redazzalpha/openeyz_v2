@@ -33,7 +33,9 @@
 <script lang="ts">
 import Vue from 'vue';
 import Avatar from './Avatar-cpn.vue';
-import { mapActions, mapState } from 'vuex';
+import { mapState } from 'vuex';
+import { httpRequest } from '../../utils/http';
+import * as Defines from '../../utils/defines';
 export default Vue.extend({
     name: 'Nav-drawer',
     components: {
@@ -46,8 +48,8 @@ export default Vue.extend({
                     title: 'Profile',
                     class: 'fa-solid fa-user',
                     action: () => {
-                        this.updateProfileDialog(true);
-                        this.updateDrawer(false);
+                        this.$store.dispatch("updateProfileDialog", true);
+                        this.$store.dispatch("updateDrawer", false);
                     }
                 },
                 {
@@ -58,21 +60,22 @@ export default Vue.extend({
                 {
                     title: 'Team',
                     class: 'fa-solid fa-users',
-                    action: () => { console.log('team action'); }
+                    action: () => {
+                        this.$store.dispatch("updateTeamDialog", true);
+                        this.$store.dispatch("updateDrawer", false);
+                    }
                 },
                 {
                     title: 'Logout',
                     class: 'fa-solid fa-right-from-bracket',
-                    action: () => { console.log('logout action'); }
+                    action: () => {
+                        httpRequest.post(Defines.SERVER_LOGOUT_URL);
+                    }
                 },
             ],
         };
     },
     methods: {
-        ...mapActions([
-            'updateProfileDialog',
-            'updateDrawer',
-        ]),
         checkCurrentUser(): boolean { 
             return (typeof this.currentUser) != 'function' && this.currentUser != null;
         }

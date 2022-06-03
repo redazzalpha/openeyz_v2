@@ -1,5 +1,5 @@
 <template>
-    <div class="comment">
+    <div class="publication">
         <v-lazy v-model="isActive" :options="{
             threshold: 0.5
         }" min-height="200" transition="fade-transition">
@@ -8,6 +8,7 @@
                 <v-container grid-list-xs fluid>
                     <v-row no-gutters>
                         <v-col>
+                            <!-- TODO: add cross icon to remove publication -->
                             <!-- publication-card -->
                             <v-card max-width="700" class=" mx-auto mb-8" v-for="(item, index) in posts" :key="index">
                                 <!-- header-title -->
@@ -71,6 +72,12 @@ export default Vue.extend({
         Avatar,
         Comment,
     },
+    props: {
+        action: {
+            type: Function, 
+            required: false
+        },
+    },  
     data() {
         return {
             isActive: false,

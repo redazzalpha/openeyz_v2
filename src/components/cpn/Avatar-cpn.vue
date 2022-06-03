@@ -14,8 +14,7 @@ import { Role, Users } from '../../utils/types';
 export default Vue.extend({
     name: 'Avatar-cpn',
     props: {
-        user: { type: Object as PropType<Users>, required: false },
-        src: { type: String, required: false },
+        user: { type: Object as PropType<Users>, required: false, default: null  },
         size: { type: String, default: "55" }
     },
     data() {

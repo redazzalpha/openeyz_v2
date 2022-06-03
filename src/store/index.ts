@@ -21,6 +21,7 @@ export default new Vuex.Store({
     tabProfile: 0,
     drawer: null,
     profileDialog: false,
+    teamDialog: false,
     posts: [],
     comments: [],
   },
@@ -46,6 +47,9 @@ export default new Vuex.Store({
     UPDATE_PROFILE_DIALOG(state, payload: boolean): void {
       state.profileDialog = payload;
     },
+    UPDATE_TEAM_DIALOG(state, payload: boolean): void {
+      state.teamDialog = payload;
+    },
     UPDATE_POSTS(state, payload): void {
       state.posts = payload;
     },
@@ -58,6 +62,7 @@ export default new Vuex.Store({
       state.tabProfile = 0;
       state.drawer = null;
       state.profileDialog = false;
+      state.teamDialog = false;
       state.posts = [];
       state.comments = [];
     }
@@ -78,6 +83,9 @@ export default new Vuex.Store({
     updateProfileDialog(context, payload: boolean): void {
       context.commit('UPDATE_PROFILE_DIALOG', payload);
       context.commit('UPDATE_TAB_PROFILE', 0);
+    },
+    updateTeamDialog(context, payload: boolean): void {
+      context.commit('UPDATE_TEAM_DIALOG', payload);
     },
     updatePosts(context, payload): void {
       context.commit('UPDATE_POSTS', payload);

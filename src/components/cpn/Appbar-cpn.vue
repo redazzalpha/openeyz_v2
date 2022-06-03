@@ -21,7 +21,7 @@
                 <!-- profile-icon -->
                 <v-btn v-for="icon in icons" :key="icon.title" class="btn d-flex mx-5" elevation=0 color="transparent"
                     :title="icon.title" @click="icon.action">
-                    <i :class="icon.class + ' mr-1'"></i><span>{{ icon.title }}</span>
+                    <i :class="icon.class + ' mr-1'"></i><span style="font-size: 13px;">{{ icon.title }}</span>
                 </v-btn>
             </v-toolbar-items>
 
@@ -54,7 +54,7 @@ export default Vue.extend({
                 {
                     title: 'Team',
                     class: 'fa-solid fa-users',
-                    action: () => { console.log('team action'); }
+                    action: () => { this.$store.dispatch('updateTeamDialog', true); }
                 },
                 {
                     title: 'Logout',
@@ -70,6 +70,7 @@ export default Vue.extend({
         ...mapActions([
             'updateDrawer',
             'updateProfileDialog',
+            'updateTeamDialog',
         ]),
         openProfile() {
             this.updateProfileDialog(true);

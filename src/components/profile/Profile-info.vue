@@ -207,6 +207,7 @@ export default Vue.extend({
             const input = this.$refs.input as HTMLInputElement;
             input.click();
         },
+        // TODO: try to find a solution to give possibility to user to remove his user image 
         async pickFile() {
             const input = this.$refs.input as HTMLInputElement;
             const file = new FormData();
