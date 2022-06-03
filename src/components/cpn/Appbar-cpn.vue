@@ -1,32 +1,32 @@
 <template>
-<div>
-    <v-app-bar tag="header" color="cyan darken-1" elevation="1" app>
-        <v-container fluid grid-list-xs>
-            <v-row>
-                <!--navigation-drawer-icon-->
-                <v-col v-show="!showAppBarLink" class="shrink px-0">
-                    <v-app-bar-nav-icon color="white" @click.stop="updateDrawer(!drawer)" />
-                </v-col>
-                <v-col :class="$vuetify.breakpoint.name == 'xs' ? '' : 'shrink' + ' px-0'">
-                    <!--logo-->
-                    <router-link to="/" class=" d-block text-decoration-none">
-                        <v-toolbar-title class="logo text-center ml-md-9 text-md-left white--text mr-5">OpenEyz
-                        </v-toolbar-title>
-                    </router-link>
-                </v-col>
-            </v-row>
-        </v-container>
-        <!--appbar-icon-link-->
-        <v-toolbar-items v-show="showAppBarLink">
-            <!-- profile-icon -->
-            <v-btn v-for="icon in icons" :key="icon.title" class="btn d-flex mx-5" elevation=0 color="transparent"
-                :title="icon.title" @click="icon.action">
-                <i :class="icon.class + ' mr-1'"></i><span>{{ icon.title }}</span>
-            </v-btn>
-        </v-toolbar-items>
+    <div>
+        <v-app-bar tag="header" color="cyan darken-1" elevation="1" app>
+            <v-container fluid grid-list-xs>
+                <v-row>
+                    <!--navigation-drawer-icon-->
+                    <v-col v-show="!showAppBarLink" class="shrink px-0">
+                        <v-app-bar-nav-icon color="white" @click.stop="updateDrawer(!drawer)" />
+                    </v-col>
+                    <v-col :class="$vuetify.breakpoint.name == 'xs' ? '' : 'shrink' + ' px-0'">
+                        <!--logo-->
+                        <router-link to="/" class=" d-block text-decoration-none">
+                            <v-toolbar-title class="logo text-center ml-md-9 text-md-left white--text mr-5">OpenEyz
+                            </v-toolbar-title>
+                        </router-link>
+                    </v-col>
+                </v-row>
+            </v-container>
+            <!--appbar-icon-link-->
+            <v-toolbar-items v-show="showAppBarLink">
+                <!-- profile-icon -->
+                <v-btn v-for="icon in icons" :key="icon.title" class="btn d-flex mx-5" elevation=0 color="transparent"
+                    :title="icon.title" @click="icon.action">
+                    <i :class="icon.class + ' mr-1'"></i><span>{{ icon.title }}</span>
+                </v-btn>
+            </v-toolbar-items>
 
-    </v-app-bar>
-</div>
+        </v-app-bar>
+    </div>
 </template>
 
 <script lang="ts">
@@ -42,27 +42,25 @@ export default Vue.extend({
         return {
             icons: [
                 {
-                    title: 'Profile', 
-                    class: 'fa-solid fa-user', 
+                    title: 'Profile',
+                    class: 'fa-solid fa-user',
                     action: () => { this.$store.dispatch('updateProfileDialog', true); }
                 },
                 {
-                    title: 'Notifications', 
-                    class: 'fa-solid fa-bell', 
+                    title: 'Notifications',
+                    class: 'fa-solid fa-bell',
                     action: () => { console.log('notif action'); }
                 },
                 {
-                    title: 'Team', 
-                    class: 'fa-solid fa-users', 
+                    title: 'Team',
+                    class: 'fa-solid fa-users',
                     action: () => { console.log('team action'); }
                 },
                 {
-                    title: 'Logout', 
-                    class: 'fa-solid fa-right-from-bracket', 
-                    action: async () => {
-                        await httpRequest.post(Defines.SERVER_LOGOUT_URL);
-                        localStorage.removeItem("token");
-                        localStorage.removeItem("vuex");
+                    title: 'Logout',
+                    class: 'fa-solid fa-right-from-bracket',
+                    action: () => {
+                        httpRequest.post(Defines.SERVER_LOGOUT_URL);
                     },
                 },
             ],
@@ -75,9 +73,6 @@ export default Vue.extend({
         ]),
         openProfile() {
             this.updateProfileDialog(true);
-        },  
-        logout() {
-            console.log('logggg');
         },
     },
     computed: {

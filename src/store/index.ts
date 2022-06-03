@@ -53,6 +53,11 @@ export default new Vuex.Store({
       state.comments = payload;
     },
     CLEAR_VUEX(state) {
+      state.currentUser = null;
+      state.tabAccess = 0;
+      state.tabProfile = 0;
+      state.drawer = null;
+      state.profileDialog = false;
       state.posts = [];
       state.comments = [];
     }
@@ -91,6 +96,11 @@ export default new Vuex.Store({
     },
     clearVuex(context) {
       context.commit('CLEAR_VUEX');
+    },
+    clearStorage(context) {
+      context.commit("CLEAR_VUEX"),
+      localStorage.removeItem("token");
+      localStorage.removeItem("vuex");
     }
   },
   modules: {

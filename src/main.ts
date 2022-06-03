@@ -20,7 +20,7 @@ Vue.http.interceptors.push(function (request: VueRequest) {
     const { status, body } = response;
     // TODO: look for solution to delet vuex correctly
     if (status === 0) {
-      store.dispatch('clearVuex');
+      store.dispatch('clearStorage');
       router.push(Defines.ACCESS_PAGE_URL);
     }
     // if (status === 401) {
@@ -28,7 +28,7 @@ Vue.http.interceptors.push(function (request: VueRequest) {
     //   router.push(Defines.ACCESS_PAGE_URL);
     // }
     if (status === 500) {
-      store.dispatch('clearVuex');
+      store.dispatch('clearStorage');
       router.push(Defines.ACCESS_PAGE_URL);
     }
 

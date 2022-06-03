@@ -19,13 +19,12 @@
                 " text elevation="5" class="mt-3">{{ alertMessage }}</v-alert>
             </Transition>
             <!-- header-title -->
-            <v-card-title primary-title style="background-color: #00acc1"
+            <v-card-title v-if="checkCurrentUser()" primary-title style="background-color: #00acc1"
               class="text-body-1 text-sm-h6 white--text mb-4 pa-2">
               <!-- <router-link to="#">
                 <Avatar :user="currentUser" />
               </router-link> -->
-              <v-btn :ripple="false" plain icon class="pa-7"
-                @click="updateProfileDialog(true)">
+              <v-btn :ripple="false" plain icon class="pa-7" @click="updateProfileDialog(true)">
                 <Avatar :user="currentUser" />
               </v-btn>
               Say what you want {{ currentUser.name }}
@@ -72,6 +71,9 @@ export default Vue.extend({
       "getAllPosts",
       "updateProfileDialog"
     ]),
+    checkCurrentUser(): boolean {
+      return (typeof this.currentUser) != 'function' && this.currentUser != null;
+    },
     publish(): void {
       if (this.editorData) {
         let data: FormData = new FormData();
@@ -114,10 +116,10 @@ export default Vue.extend({
 
 // editor-content
 .ck.ck-editor__main>.ck-editor__editable {
-  min-height: $height-editor-content !important;
+  min-height: $height-editor-content  !important;
 }
 
-.v-btn__content{
-    opacity: 1 !important;
+.v-btn__content {
+  opacity: 1 !important;
 }
 </style>

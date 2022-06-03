@@ -99,10 +99,10 @@
                 </v-card-text>
                 <v-divider></v-divider>
                 <!-- button-action -->
-                <v-card-actions>
+                <v-card-actions >
                     <v-spacer></v-spacer>
-                    <v-btn color="error" text @click="procced" :disabled="!(confirmModel === currentUser.username)">
-                        procced
+                    <v-btn color="error" text @click="delAccount" :disabled="!(confirmModel === currentUser.username)">
+                        Procced
                     </v-btn>
                 </v-card-actions>
             </v-card>
@@ -131,11 +131,11 @@ export default Vue.extend({
     methods: {
         ...mapActions([
             'updateCurrentUser',
+            'clearStorage'
         ]),
-        async procced() {
+        async delAccount() {
             await httpRequest.delete(Defines.SERVER_USER_DELETE_URL);
-            localStorage.removeItem("token");
-            localStorage.removeItem("vuex");
+            this.clearStorage();
             this.$router.push(Defines.ACCESS_PAGE_URL);
         },
     },

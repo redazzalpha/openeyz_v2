@@ -4,12 +4,12 @@
         <v-list-item>
             <!-- user-vatara -->
             <v-list-item-avatar>
-                <div v-if="(typeof currentUser) != 'function'">
+                <div v-if="checkCurrentUser()">
                     <Avatar :user="currentUser" size="40" />
                 </div>
             </v-list-item-avatar>
             <v-list-item-content>
-                <v-list-item-title>{{ currentUser.name }}</v-list-item-title>
+                <v-list-item-title v-if="checkCurrentUser()">{{ currentUser.name }}</v-list-item-title>
             </v-list-item-content>
         </v-list-item>
         <v-divider></v-divider>
@@ -30,7 +30,7 @@
     </v-navigation-drawer>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue';
 import Avatar from './Avatar-cpn.vue';
 import { mapActions, mapState } from 'vuex';
@@ -73,6 +73,9 @@ export default Vue.extend({
             'updateProfileDialog',
             'updateDrawer',
         ]),
+        checkCurrentUser(): boolean { 
+            return (typeof this.currentUser) != 'function' && this.currentUser != null;
+        }
     },
     computed: {
         ...mapState([
