@@ -65,7 +65,6 @@ import Comment from '@/components/comment/Comment-block.vue';
 import { Item } from '../../utils/types';
 import { httpRequest } from '../../utils/http';
 import * as Defines from '../../utils/defines';
-import store from '../../store/index';
 
 export default Vue.extend({
     name: "Publication-cpn",

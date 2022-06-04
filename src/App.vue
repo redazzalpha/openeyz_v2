@@ -1,5 +1,4 @@
 <template>
-
   <!--main-app-container-->
   <v-app id="wrapper">
     <!--app-bar-header-->

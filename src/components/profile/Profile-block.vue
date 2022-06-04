@@ -7,15 +7,16 @@
 
                 <!-- toolbar -->
                 <v-toolbar dark color="cyan darken-1">
-                    <v-toolbar-title>Profile</v-toolbar-title>
+                    <v-toolbar-title>
+                        <i class="fa fa-user"></i>
+                        <span class="ml-2">Profile</span>
+                    </v-toolbar-title>
                     <v-spacer></v-spacer>
-                    <v-toolbar-items>
-                        <v-btn icon dark @click="updateProfileDialog(false)">
-                            <v-icon>mdi-close</v-icon>
-                        </v-btn>
-                    </v-toolbar-items>
+                    <v-btn icon dark @click="updateProfileDialog(false)">
+                        <v-icon>mdi-close</v-icon>
+                    </v-btn>
                 </v-toolbar>
-                
+
                 <Tabs />
                 <v-tabs-items v-model="$store.state.tabProfile">
                     <Info />

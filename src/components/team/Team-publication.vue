@@ -6,11 +6,19 @@
             <div class="publication">
                 <!-- main-container -->
                 <v-container grid-list-xs fluid>
+                    <v-row class="my-5">
+                        <v-col class="text-center">
+                            <v-card-title primary-title class="d-flex justify-center">
+                                {{ author }} 's publications
+                            </v-card-title>
+                        </v-col>
+                    </v-row>
                     <v-row no-gutters>
                         <v-col>
                             <!-- TODO: add cross icon to remove publication -->
                             <!-- publication-card -->
-                            <v-card max-width="700" class=" mx-auto mb-8" v-for="(item, index) in userPosts" :key="index">
+                            <v-card max-width="700" class=" mx-auto mb-8" v-for="(item, index) in userPosts"
+                                :key="index">
                                 <!-- header-title -->
                                 <v-card-title primary-title
                                     class="text-body-1 white--text text-body-2 text-sm-subtitle-1 pa-2"
@@ -37,9 +45,12 @@
                                             </v-col>
                                             <!-- like-button -->
                                             <v-col class="d-flex justify-center pa-0">
-                                                <v-btn icon plain :ripple="false" title="like this post" @click="like(item)">
-                                                    <i class="fa fa-heart" :style="'color: ' + (item.userLike? 'red' : '')">
-                                                        <v-badge :value="true" :content="item.likeCount" color="transparent">
+                                                <v-btn icon plain :ripple="false" title="like this post"
+                                                    @click="like(item)">
+                                                    <i class="fa fa-heart"
+                                                        :style="'color: ' + (item.userLike ? 'red' : '')">
+                                                        <v-badge :value="true" :content="item.likeCount"
+                                                            color="transparent">
                                                         </v-badge>
                                                     </i>
                                                 </v-btn>
@@ -48,6 +59,10 @@
                                     </v-container>
                                 </v-card-actions>
                             </v-card>
+
+                            <VAlert text color="primary" :value="true" max-width="700" class="mx-auto text-center">
+                                You have reach end of {{ author }} 's publications
+                            </VAlert>
                         </v-col>
                     </v-row>
                 </v-container>
@@ -72,8 +87,12 @@ export default Vue.extend({
         Avatar,
         Comment,
     },
-    props:{
+    props: {
         author: {
+            type: String,
+            required: true,
+        },
+        username: {
             type: String,
             required: true,
         },
@@ -81,9 +100,9 @@ export default Vue.extend({
     data() {
         return {
             isActive: false,
-            dialog: false,
             item: {},
             comments: [],
+            dialog: false,
         };
     },
     computed: {
@@ -112,14 +131,14 @@ export default Vue.extend({
         },
         async like(item: Item) {
             const postId: FormData = new FormData();
-            if(item.post)
+            if (item.post)
                 postId.append("postId", item.post?.id.toString());
             await httpRequest.post(Defines.SERVER_LIKE_URL, postId);
             this.getAllUserPosts();
         },
     },
     created(): void {
-        this.getAllUserPosts(this.author);
+        this.getAllUserPosts(this.username);
     },
 });
 </script>
@@ -141,6 +160,7 @@ p {
     /* background-color: transparent; */
     color: #2196F3 !important;
 }
+
 /* 
 .v-btn--plain:not(.v-btn--active):not(.v-btn--loading):not(:focus):not(:hover) 
 .v-btn__content {
