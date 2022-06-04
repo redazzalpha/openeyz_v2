@@ -3,23 +3,26 @@
         <!-- main-dialog -->
         <v-dialog :value="profileDialog" fullscreen hide-overlay transition="dialog-bottom-transition"
             @keydown="keyPressed">
-            <!-- toolbar -->
-            <v-toolbar dark color="cyan darken-1">
-                <v-toolbar-title>Profile</v-toolbar-title>
-                <v-spacer></v-spacer>
-                <v-toolbar-items>
-                    <v-btn icon dark @click="updateProfileDialog(false)">
-                        <v-icon>mdi-close</v-icon>
-                    </v-btn>
-                </v-toolbar-items>
-            </v-toolbar>
-            
-            <Tabs />
-            <v-tabs-items v-model="$store.state.tabProfile">
-                <Info />
-                <Password />
-                <Account />
-            </v-tabs-items>
+            <v-card>
+
+                <!-- toolbar -->
+                <v-toolbar dark color="cyan darken-1">
+                    <v-toolbar-title>Profile</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <v-toolbar-items>
+                        <v-btn icon dark @click="updateProfileDialog(false)">
+                            <v-icon>mdi-close</v-icon>
+                        </v-btn>
+                    </v-toolbar-items>
+                </v-toolbar>
+                
+                <Tabs />
+                <v-tabs-items v-model="$store.state.tabProfile">
+                    <Info />
+                    <Password />
+                    <Account />
+                </v-tabs-items>
+            </v-card>
         </v-dialog>
     </v-row>
 </template>

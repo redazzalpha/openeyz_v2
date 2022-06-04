@@ -1,38 +1,50 @@
 <template>
     <v-row justify="center">
+        <!-- main-dialog -->
         <v-dialog :value="teamDialog" fullscreen hide-overlay transition="dialog-bottom-transition"
             @keydown="keyPressed">
-            <!-- toolbar -->
-            <v-toolbar dark color="cyan darken-1">
-                <v-toolbar-title>Team</v-toolbar-title>
-                <!-- search-bar -->
-                <v-spacer></v-spacer>
-                <v-autocomplete v-model="select" :loading="loading" :items="userList" :search-input.sync="search"
-                    cache-items class="mx-4" flat hide-no-data hide-details label="Search by username" solo-inverted>
-                </v-autocomplete>
-                <v-spacer></v-spacer>
-                <!-- close-button -->
-                <v-toolbar-items>
-                    <v-btn icon dark @click="updateTeamDialog(false)">
-                        <v-icon>mdi-close</v-icon>
-                    </v-btn>
-                </v-toolbar-items>
-            </v-toolbar>
+
+
+
+
             <!-- main-card -->
             <v-card>
+
+
+                <!-- toolbar -->
+                <v-toolbar dark color="cyan darken-1">
+                    <v-toolbar-title>Team</v-toolbar-title>
+                    <!-- search-bar -->
+                    <v-spacer></v-spacer>
+                    <v-autocomplete v-model="select" :loading="loading" :items="userList" :search-input.sync="search"
+                        cache-items class="mx-4" flat hide-no-data hide-details label="Search by username"
+                        solo-inverted>
+                    </v-autocomplete>
+                    <v-spacer></v-spacer>
+                    <!-- close-button -->
+                    <v-toolbar-items>
+                        <v-btn icon dark @click="updateTeamDialog(false)">
+                            <v-icon>mdi-close</v-icon>
+                        </v-btn>
+                    </v-toolbar-items>
+                </v-toolbar> <!-- end-toolbar -->
+
+
+                <!-- user-card -->
                 <v-container grid-list-xs style="max-width: 800px;">
                     <v-row class="d-flex justify-center">
+                        <!-- TODO: CHANGE type of recieved object cu=ause deos not respect convention need get map<string, value> as json   -->
                         <v-col class="col-12 col-sm-6 " v-for="(item, index) in userMap" :key="index">
                             <!-- user-card -->
-                            <v-hover v-slot="{hover}">
-                                <v-card :elevation="hover? 7 : 2 "  :class="{hover : 'test'} ">
-                                    <v-card-text class="text-center">
+                            <v-hover v-slot="{ hover }">
+                                <v-card :elevation="hover ? 7 : 2" :class="{ hover: 'test' }">
+                                    <v-card-text class="text-center" @click="openUserProf(item[3])">
                                         <v-avatar size="50" class="mr-3">
                                             <!-- FIXME: got to fix bug that when sending publication or comment good img  appears only reload -->
-                                            <v-img v-if="!item[1] && item[2] == 'SUPERADMIN'" src="../../assets/suadmin.png"
-                                                alt="alt" />
-                                            <v-img v-else-if="!item[1] && item[2] == 'ADMIN'" src="../../assets/admin.png"
-                                                alt="alt" />
+                                            <v-img v-if="!item[1] && item[2] == 'SUPERADMIN'"
+                                                src="../../assets/suadmin.png" alt="alt" />
+                                            <v-img v-else-if="!item[1] && item[2] == 'ADMIN'"
+                                                src="../../assets/admin.png" alt="alt" />
                                             <v-img v-else-if="!item[1] && item[2] == 'USER'" src="../../assets/user.png"
                                                 alt="alt" />
                                             <v-img v-else-if="item[1]" :src="item[1]" alt="alt" />
@@ -43,11 +55,37 @@
                             </v-hover>
                         </v-col>
                     </v-row>
-                </v-container>
+                </v-container> <!-- end-user-card -->
 
-                <Publication author="max@gmail.com" />
+
+                <!-- selected-user-dialog -->
+                <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-transition">
+                    <v-card>
+                        <v-toolbar dark color="cyan darken-1">
+                            <v-toolbar-title>publication of </v-toolbar-title>
+                            <v-spacer></v-spacer>
+                            <!-- close-button -->
+                            <v-toolbar-items>
+                                <v-btn icon>
+                                    <v-icon @click="dialog = !dialog">mdi-close</v-icon>
+                                </v-btn>
+                            </v-toolbar-items>
+                        </v-toolbar>
+                        <Publication :author="selectedUser" />
+                    </v-card>
+                </v-dialog> <!-- end-selected-user-dialog -->
+
+
+
             </v-card>
-        </v-dialog>
+            <!--end-main-card-->
+
+
+
+
+
+
+        </v-dialog> <!-- end-main-dialog -->
     </v-row>
 </template>
 
@@ -71,6 +109,8 @@ export default Vue.extend({
             loading: false,
             search: null,
             select: null,
+            dialog: false,
+            selectedUser: "",
         };
     },
     methods: {
@@ -89,8 +129,10 @@ export default Vue.extend({
                 return name;
             });
         },
-        openUserProf(){
-            console.log("in userprof")
+        openUserProf(username: string) {
+            console.log(username);
+            this.selectedUser = username;
+            this.dialog = true;
         },
     },
     computed: {

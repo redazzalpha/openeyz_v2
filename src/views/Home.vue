@@ -1,3 +1,4 @@
+
 <template>
     <div class="home">
         <Title />
@@ -5,7 +6,7 @@
         <Publication />
         <Profile />
         <Team />
-   </div>
+    </div>
 </template>
 
 <script lang="ts">
@@ -35,6 +36,6 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .logo {
-    font-size: $size-logo-title-home !important;
+    font-size: $size-logo-title-home  !important;
 }
 </style>

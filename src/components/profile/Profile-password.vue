@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item style="height: 100vh; overflow-y: hidden;">
+    <v-tab-item>
         <!-- main-card -->
         <v-card flat max-width="600" class="mx-auto">
             <!-- header-title -->
