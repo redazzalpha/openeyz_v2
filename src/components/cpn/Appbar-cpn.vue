@@ -5,7 +5,7 @@
                 <v-row>
                     <!--navigation-drawer-icon-->
                     <v-col v-show="!showAppBarLink" class="shrink px-0">
-                        <v-app-bar-nav-icon color="white" @click.stop="updateDrawer(!drawer)" />
+                        <v-app-bar-nav-icon color="white" @click.stop="updateDrawer(true)" />
                     </v-col>
                     <v-col :class="$vuetify.breakpoint.name == 'xs' || 'sm' ? '' : 'shrink' + ' px-0'">
                         <!--logo-->

@@ -78,7 +78,7 @@ export default Vue.extend({
     methods: {
         checkCurrentUser(): boolean { 
             return (typeof this.currentUser) != 'function' && this.currentUser != null;
-        }
+        },
     },
     computed: {
         ...mapState([

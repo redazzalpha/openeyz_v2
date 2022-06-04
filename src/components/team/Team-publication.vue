@@ -23,9 +23,18 @@
                                 <v-card-title primary-title
                                     class="text-body-1 white--text text-body-2 text-sm-subtitle-1 pa-2"
                                     style="background-color: #00ACC1;">
+
+
+
+
+
                                     <!-- author-avatar -->
-                                    <Avatar :user="item.post.author" />
+                                    <Avatar :avatarSrc="item.post.author.avatarSrc"  :role="item.post.author.roles[0].roleName" />
                                     {{ item.post.author.name }} posted on {{ item.creation }}
+
+
+
+
                                 </v-card-title>
                                 <!-- publication-content -->
                                 <v-card-text v-html="item.post.content" class="pa-0"></v-card-text>
@@ -75,7 +84,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapState, mapActions } from 'vuex';
-import Avatar from '@/components/cpn/Avatar-cpn.vue';
+import Avatar from '@/components/team/Team-avatar.vue';
 import Comment from '@/components/comment/Comment-block.vue';
 import { Item } from '../../utils/types';
 import { httpRequest } from '../../utils/http';
@@ -107,7 +116,8 @@ export default Vue.extend({
     },
     computed: {
         ...mapState([
-            'userPosts'
+            'userPosts',
+            'teamSelectDialog',
         ]),
     },
     methods: {
@@ -135,6 +145,12 @@ export default Vue.extend({
                 postId.append("postId", item.post?.id.toString());
             await httpRequest.post(Defines.SERVER_LIKE_URL, postId);
             this.getAllUserPosts();
+        },
+    },
+    watch: {
+        teamSelectDialog(selected: boolean) {
+            if (selected)
+                this.getAllUserPosts(this.username);
         },
     },
     created(): void {

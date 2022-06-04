@@ -98,8 +98,13 @@ export default Vue.extend({
     },
   },
   computed: {
-    ...mapState(["posts", "currentUser"]),
-    ...mapGetters(["btnSize"]),
+    ...mapState([
+      "posts",
+      "currentUser"
+    ]),
+    ...mapGetters([
+      "btnSize"
+    ]),
   },
 });
 </script>

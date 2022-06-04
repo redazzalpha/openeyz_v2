@@ -1,11 +1,11 @@
 <template>
     <!-- selected-user-dialog -->
-    <v-dialog :value="teamSelectDialog" fullscreen hide-overlay transition="dialog-transition">
+    <v-dialog :value="teamSelectDialog" fullscreen hide-overlay transition="dialog-transition" @keydown="keyPressed">
         <v-card>
             <v-toolbar dark color="cyan darken-1">
                 <v-toolbar-title>
                     <i class="fa fa-users"></i>
-                    <span>Publication of {{ author }}</span>
+                    <span class="ml-2">Publication of {{ author }}</span>
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
                 <!-- close-button -->
@@ -46,6 +46,11 @@ export default Vue.extend({
         ...mapActions([
             'updateTeamSelectDialog'
         ]),
+        keyPressed({ code }: KeyboardEvent): void {
+            if (code === "Escape")
+                this.updateTeamSelectDialog(false);
+        }
+
     }
 });
 </script>

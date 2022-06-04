@@ -113,6 +113,7 @@ export default Vue.extend({
         },
     },
     created(): void {
+        //TODO:find a why to get posts cause posts is only refresh on created wich means only once 
         this.getAllPosts();
     },
 });

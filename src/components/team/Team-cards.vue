@@ -7,17 +7,32 @@
                 <!-- user-card -->
                 <v-hover v-slot="{ hover }">
                     <v-card :elevation="hover ? 7 : 2" @click="openSelected(item[0], item[3])">
-                        <v-card-text class="text-center" >
-                            <v-avatar size="50" class="mr-3">
-                                <!-- FIXME: got to fix bug that when sending publication or comment good img  appears only reload -->
-                                <v-img v-if="!item[1] && item[2] == 'SUPERADMIN'" src="../../assets/suadmin.png"
-                                    alt="alt" />
-                                <v-img v-else-if="!item[1] && item[2] == 'ADMIN'" src="../../assets/admin.png"
-                                    alt="alt" />
-                                <v-img v-else-if="!item[1] && item[2] == 'USER'" src="../../assets/user.png"
-                                    alt="alt" />
-                                <v-img v-else-if="item[1]" :src="item[1]" alt="alt" />
-                            </v-avatar>
+                        <v-card-text class="text-center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <Avatar :avatarSrc="item[1]" :role="item[2]" />
+
+
+
+
+
+
+
+
+
                             {{ item[0] }}
                         </v-card-text>
                     </v-card>
@@ -31,11 +46,13 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapActions, mapState } from 'vuex';
-import Selected from './Team-selected.vue'
+import Selected from './Team-selected.vue';
+import Avatar from './Team-avatar.vue';
 export default Vue.extend({
     name: 'Team-cards',
     components: {
         Selected,
+        Avatar,
     },
     data() {
         return {
@@ -55,7 +72,7 @@ export default Vue.extend({
         openSelected(author: string, username: string) {
             this.author = author;
             this.username = username;
-            this.updateTeamSelectDialog(true);  
+            this.updateTeamSelectDialog(true);
         },
     }
 });

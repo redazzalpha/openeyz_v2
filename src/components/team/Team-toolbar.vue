@@ -36,7 +36,8 @@ export default Vue.extend({
     },
     computed: {
         ...mapState([
-            'userMap'
+            'userMap',
+            'teamDialog',
         ]),
     },
     methods: {
@@ -45,6 +46,8 @@ export default Vue.extend({
             'updateUserMap',
         ]),
         async getUsers(): Promise<void> {
+            console.log("get users");
+
             const res = await httpRequest.get(Defines.SERVER_USER_SIMPLE_URL);
             this.updateUserMap(res.body);
 
@@ -59,8 +62,12 @@ export default Vue.extend({
             val && val !== this.select;
             // val && val !== this.select && this.querySelections(val);
         },
+        teamDialog(visible: boolean) {
+            if (visible)
+                this.getUsers();
+        },
     },
-    created(): void {
+    created() {
         this.getUsers();
     }
 });
