@@ -44,17 +44,9 @@
                         </v-col>
                     </v-row>
                 </v-container>
+
+                <Publication author="max@gmail.com" />
             </v-card>
-
-
-
-            <Publication></Publication>
-
-            pppp
-
-
-
-
         </v-dialog>
     </v-row>
 </template>
@@ -65,7 +57,7 @@ import { mapState, mapActions } from 'vuex';
 import { httpRequest } from '../../utils/http';
 import * as Defines from '../../utils/defines';
 import { UserMap } from '../../utils/types';
-import Publication from '../cpn/Publication-cpn.vue';
+import Publication from './Team-publication.vue';
 
 export default Vue.extend({
     name: 'Team-page',

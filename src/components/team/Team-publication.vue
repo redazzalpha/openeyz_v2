@@ -10,7 +10,7 @@
                         <v-col>
                             <!-- TODO: add cross icon to remove publication -->
                             <!-- publication-card -->
-                            <v-card max-width="700" class=" mx-auto mb-8" v-for="(item, index) in posts" :key="index">
+                            <v-card max-width="700" class=" mx-auto mb-8" v-for="(item, index) in userPosts" :key="index">
                                 <!-- header-title -->
                                 <v-card-title primary-title
                                     class="text-body-1 white--text text-body-2 text-sm-subtitle-1 pa-2"
@@ -65,13 +65,18 @@ import Comment from '@/components/comment/Comment-block.vue';
 import { Item } from '../../utils/types';
 import { httpRequest } from '../../utils/http';
 import * as Defines from '../../utils/defines';
-import store from '../../store/index';
 
 export default Vue.extend({
-    name: "Publication-cpn",
+    name: "Team-publication",
     components: {
         Avatar,
         Comment,
+    },
+    props:{
+        author: {
+            type: String,
+            required: true,
+        },
     },
     data() {
         return {
@@ -83,12 +88,12 @@ export default Vue.extend({
     },
     computed: {
         ...mapState([
-            'posts'
+            'userPosts'
         ]),
     },
     methods: {
         ...mapActions([
-            'getAllPosts',
+            'getAllUserPosts',
             'getAllComments',
             'updateComments'
         ]),
@@ -110,11 +115,11 @@ export default Vue.extend({
             if(item.post)
                 postId.append("postId", item.post?.id.toString());
             await httpRequest.post(Defines.SERVER_LIKE_URL, postId);
-            this.getAllPosts();
+            this.getAllUserPosts();
         },
     },
     created(): void {
-        this.getAllPosts();
+        this.getAllUserPosts(this.author);
     },
 });
 </script>

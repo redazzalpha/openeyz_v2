@@ -23,6 +23,7 @@ export default new Vuex.Store({
     profileDialog: false,
     teamDialog: false,
     posts: [],
+    userPosts: [],
     comments: [],
   },
   getters: {
@@ -52,6 +53,9 @@ export default new Vuex.Store({
     },
     UPDATE_POSTS(state, payload): void {
       state.posts = payload;
+    },
+    UPDATE_USER_POSTS(state, payload): void {
+      state.userPosts = payload;
     },
     UPDATE_COMMENTS(state, payload): void {
       state.comments = payload;
@@ -90,6 +94,9 @@ export default new Vuex.Store({
     updatePosts(context, payload): void {
       context.commit('UPDATE_POSTS', payload);
     },
+    updateUserPosts(context, payload): void {
+      context.commit('UPDATE_USER_POSTS', payload);
+    },
     updateComments(context, payload): void {
       context.commit('UPDATE_COMMENTS', payload);
     },
@@ -97,6 +104,10 @@ export default new Vuex.Store({
     async getAllPosts(context): Promise<void | VueResponse> {
       const response: VueResponse | void = await httpRequest.get(Defines.SERVER_PUBLICATION_URL);
       context.commit('UPDATE_POSTS', (JSON.parse(response.bodyText)));
+    },
+    async getAllUserPosts(context, authorId: string): Promise<void | VueResponse> {
+      const response: VueResponse | void = await httpRequest.get(Defines.SERVER_PUBLICATION_URL, {params: {authorId}});
+      context.commit('UPDATE_USER_POSTS', (JSON.parse(response.bodyText)));
     },
     async getAllComments(context, postId: number): Promise<void | VueResponse> {
       const response: VueResponse = await httpRequest.get(Defines.SERVER_COMMENT_URL, { params: { postId } });
