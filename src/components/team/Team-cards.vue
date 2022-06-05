@@ -57,7 +57,8 @@ export default Vue.extend({
   },
   watch: {
     teamSelectedUser(userObj) {
-      this.openSelected(userObj[0].name, userObj[0].username);
+      if (userObj.length)
+        this.openSelected(userObj[0].name, userObj[0].username);
     },
   },
 });

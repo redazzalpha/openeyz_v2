@@ -84,7 +84,7 @@ export default Vue.extend({
     ...mapState(["teamSelectDialog", "userPosts"]),
   },
   methods: {
-    ...mapActions(["updateTeamSelectDialog", "updateTeamSelectedUser", "getAllUserPosts"]),
+    ...mapActions(["updateTeamSelectDialog", "getAllUserPosts"]),
     closeDialog(){
       this.updateTeamSelectDialog(false);
     },
