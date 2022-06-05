@@ -1,73 +1,121 @@
 <template>
-    <v-card>
+  <v-card>
+    <Toolbar title="Team" icon="fa-solid fa-users">
+      <template v-slot:center>
+        <v-autocomplete
+          v-model="select"
+          :items="userList"
+          flat
+          chips
+          cache-items
+          hide-no-data
+          hide-details
+          solo-inverted
+          class="mx-4"
+          label="Search by username"
+          item-text="name"
+          item-value="username"
+          @input="input"
+        >
+          <template v-slot:selection="data">
+            <v-chip
+              v-bind="data.attrs"
+              :input-value="data.selected"
+              @click="data.select"
+            >
+              <Avatar
+                :avatarSrc="data.item.avatarSrc"
+                :role="data.item.role"
+                size="30"
+              />
+              {{ data.item.name }}
+            </v-chip>
+          </template>
 
-        <Toolbar title="Team" icon="fa-solid fa-users" >
-            <template v-slot:center>
-                <v-autocomplete v-model="select" :loading="loading" :items="userList" :search-input.sync="search"
-                    cache-items class="mx-4" flat hide-no-data hide-details label="Search by username" solo-inverted>
-                </v-autocomplete>
-
+          <template v-slot:item="data">
+            <template>
+              <v-list-item-avatar>
+                <Avatar
+                  :avatarSrc="data.item.avatarSrc"
+                  :role="data.item.role"
+                  size="30"
+                />
+              </v-list-item-avatar>
+              <v-list-item-content>
+                <v-list-item-title v-html="data.item.name"></v-list-item-title>
+              </v-list-item-content>
             </template>
-        </Toolbar>
-
-        <Title />
-        <Cards />
-    </v-card>
+          </template>
+        </v-autocomplete>
+      </template>
+    </Toolbar>
+    <Title />
+    <Cards />
+  </v-card>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { mapActions, mapState } from 'vuex';
-import Toolbar from '../components/cpn/Toolbar-cpn.vue';
-import Title from '../components/team/Team-title.vue';
-import Cards from '../components/team/Team-cards.vue';
-import { httpRequest } from '../utils/http';
-import * as Defines from '../utils/defines';
+import Vue from "vue";
+import { mapActions, mapState } from "vuex";
+import Toolbar from "../components/cpn/Toolbar-cpn.vue";
+import Title from "../components/team/Team-title.vue";
+import Cards from "../components/team/Team-cards.vue";
+import { httpRequest } from "../utils/http";
+import { UserObj } from "../utils/types";
+import * as Defines from "../utils/defines";
+import Avatar from "../components/cpn/Avatar-cpn.vue";
 
 export default Vue.extend({
-    name: 'Team-page',
-    components: {
-        Toolbar,
-        Title,
-        Cards,
-    },
-    data() {
+  name: "Team-page",
+  components: {
+    Toolbar,
+    Title,
+    Cards,
+    Avatar,
+  },
+  data() {
+    return {
+      autoUpdate: true,
+      isUpdating: false,
+
+      select: [],
+      loading: false,
+      search: null,
+      userList: [],
+      test: null,
+    };
+  },
+  computed: {
+    ...mapState(["userMap", "teamSelectedUser"]),
+  },
+  methods: {
+    ...mapActions(["updateUserMap", "updateTeamSelectedUser"]),
+    async getUsers(): Promise<void> {
+      const res = await httpRequest.get(Defines.SERVER_USER_SIMPLE_URL);
+      this.updateUserMap(res.body);
+
+      this.userList = this.userMap.map((e: string[]) => {
+        const [name, avatarSrc, role, username] = e;
         return {
-            select: null,
-            loading: false,
-            search: null,
-            userList: [],
+          name: name,
+          avatarSrc: avatarSrc,
+          role: role,
+          username: username,
         };
-    },
-    computed: {
-        ...mapState([
-            'userMap',
-        ]),
-    },
-    methods: {
-        ...mapActions([
-            'updateUserMap',
-        ]),
-        async getUsers(): Promise<void> {
-            const res = await httpRequest.get(Defines.SERVER_USER_SIMPLE_URL);
-            this.updateUserMap(res.body);
+      });
 
-            this.userList = this.userMap.map((e: string[]) => {
-                const [name] = e;
-                return name;
-            });
-        },
     },
-    watch: {
-        search(val) {
-            val && val !== this.select;
-            // val && val !== this.select && this.querySelections(val);
-        },
-    },
-    created() {
-        this.getUsers();
-    }
+    input(selectedUsername: any) {
 
+
+      const userObj: UserObj[] = this.userList.filter((e: UserObj) => {
+        return e.username == selectedUsername;
+      });
+      this.updateTeamSelectedUser(userObj);
+    },
+  },
+  created() {
+    this.getUsers();
+  },
 });
 </script>
-

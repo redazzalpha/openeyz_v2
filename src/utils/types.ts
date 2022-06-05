@@ -68,6 +68,12 @@ export interface Post {
   creation: string;
   author: Users;
 }
+export interface UserObj {
+  name : string;
+  avatarSrc : string;
+  role : string;
+  username : string;
+}
 export interface Comment {
   id: number;
   content: string;
@@ -76,11 +82,11 @@ export interface Comment {
   post: Post;
 }
 export interface Item {
-  post?: Post;
-  creation?: string;
-  commentCount?: number;
-  likeCount?: number;
-  userLike?: boolean;
+  post: Post;
+  creation: string;
+  commentCount: number;
+  likeCount: number;
+  userLike: boolean;
 
 }
 // export type Item = {
@@ -92,3 +98,4 @@ export interface Body {
   token: string;
   user: object;
 }
+

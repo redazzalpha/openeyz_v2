@@ -17,15 +17,13 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     currentUser: Users,
+    teamSelectedUser: [],
     userMap: [[]],
     drawer: null,
 
     tabAccess: 0,
     tabProfile: 0,
 
-    profileDialog: false,
-    notifDialog: false,
-    teamDialog: false,
     teamSelectDialog: false,
 
     posts: [],
@@ -41,6 +39,9 @@ export default new Vuex.Store({
     UPDATE_CURRENT_USER(state, payload): void {
       state.currentUser = payload;
     },
+    UPDATE_TEAM_SELECTED_USER(state, payload): void {
+      state.teamSelectedUser = payload;
+    },
     UPDATE_USER_MAP(state, payload): void {
       state.userMap = payload;
     },
@@ -55,15 +56,6 @@ export default new Vuex.Store({
       state.tabProfile = payload;
     },
 
-    UPDATE_PROFILE_DIALOG(state, payload: boolean): void {
-      state.profileDialog = payload;
-    },
-    UPDATE_NOTIF_DIALOG(state, payload: boolean): void {
-      state.notifDialog = payload;
-    },
-    UPDATE_TEAM_DIALOG(state, payload: boolean): void {
-      state.teamDialog = payload;
-    },
     UPDATE_TEAM_SELECT_DIALOG(state, payload: boolean): void {
       state.teamSelectDialog = payload;
     },
@@ -86,20 +78,19 @@ export default new Vuex.Store({
       state.tabAccess = 0;
       state.tabProfile = 0;
   
-      state.profileDialog = false;
-      state.notifDialog = false;
-      state.teamDialog = false;
       state.teamSelectDialog = false;
   
       state.posts = [];
       state.userPosts = [];
       state.comments = [];
-  
     }
   },
   actions: {
     updateCurrentUser(context, payload): void {
       context.commit("UPDATE_CURRENT_USER", payload);
+    },
+    updateTeamSelectedUser(context, payload): void {
+      context.commit("UPDATE_TEAM_SELECTED_USER", payload);
     },
     updateUserMap(context, payload): void {
       context.commit("UPDATE_USER_MAP", payload);
@@ -115,16 +106,6 @@ export default new Vuex.Store({
       context.commit('UPDATE_TAB_PROFILE', payload);
     },
 
-    updateProfileDialog(context, payload: boolean): void {
-      context.commit('UPDATE_PROFILE_DIALOG', payload);
-      context.commit('UPDATE_TAB_PROFILE', 0);
-    },
-    updateNotifDialog(context, payload: boolean): void {
-      context.commit('UPDATE_NOTIF_DIALOG', payload);
-    },
-    updateTeamDialog(context, payload: boolean): void {
-      context.commit('UPDATE_TEAM_DIALOG', payload);
-    },
     updateTeamSelectDialog(context, payload: boolean): void {
       context.commit('UPDATE_TEAM_SELECT_DIALOG', payload);
     },
