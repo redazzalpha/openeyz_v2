@@ -8,31 +8,7 @@
                 <v-hover v-slot="{ hover }">
                     <v-card :elevation="hover ? 7 : 2" @click="openSelected(item[0], item[3])">
                         <v-card-text class="text-center">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            <Avatar :avatarSrc="item[1]" :role="item[2]" />
-
-
-
-
-
-
-
-
-
+                            <Avatar v-if="item[2]" :avatarSrc="item[1]" :role="item[2]" />
                             {{ item[0] }}
                         </v-card-text>
                     </v-card>
@@ -47,7 +23,7 @@
 import Vue from 'vue';
 import { mapActions, mapState } from 'vuex';
 import Selected from './Team-selected.vue';
-import Avatar from './Team-avatar.vue';
+import Avatar from '../cpn/Avatar-cpn.vue';
 export default Vue.extend({
     name: 'Team-cards',
     components: {
@@ -72,9 +48,9 @@ export default Vue.extend({
         openSelected(author: string, username: string) {
             this.author = author;
             this.username = username;
-            this.updateTeamSelectDialog(true);
+            this.updateTeamSelectDialog(true);            
         },
-    }
+    },
 });
 </script>
 

@@ -3,7 +3,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { httpRequest } from './../utils/http';
 import * as Defines from './../utils/defines';
-import { VueResponse } from "../utils/types";
+import { Users, VueResponse } from "../utils/types";
 import VuexPersistence from 'vuex-persist';
 
 const vuexLocal = new VuexPersistence({
@@ -16,7 +16,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    currentUser: null,
+    currentUser: Users,
     userMap: [[]],
     drawer: null,
 
@@ -79,7 +79,7 @@ export default new Vuex.Store({
     },
 
     CLEAR_VUEX(state) {
-      state.currentUser = null;
+      state.currentUser = Users;
       state.userMap = [[]];
       state.drawer = null;
   

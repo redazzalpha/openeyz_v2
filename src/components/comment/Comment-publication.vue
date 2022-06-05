@@ -3,7 +3,7 @@
         <v-card-title primary-title class="text-body-1 white--text text-body-2 text-sm-subtitle-1 pa-2"
             style="background-color: #00ACC1;">
             <!-- author-avatar -->
-            <Avatar :user="itemPost.post.author" size="45" />
+            <Avatar :avatarSrc="itemPost.post.author.avatarSrc" :role="itemPost.post.author.roles[0].roleName" size="45" />
             {{ itemPost.post.author.name }} posted on {{ itemPost.creation }}
         </v-card-title>
         <!-- main-content -->
@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import Vue, {PropType} from 'vue';
+import Vue, { PropType } from 'vue';
 import Avatar from '../cpn/Avatar-cpn.vue';
 import { Item } from '../../utils/types';
 export default Vue.extend({
@@ -24,7 +24,7 @@ export default Vue.extend({
         Avatar,
     },
     props: {
-        itemPost : {type: Object as PropType<Item>, required: true}
+        itemPost: { type: Object as PropType<Item>, required: true }
     }
 });
 </script>

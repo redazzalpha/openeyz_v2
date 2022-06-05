@@ -24,8 +24,8 @@
               <!-- <router-link to="#">
                 <Avatar :user="currentUser" />
               </router-link> -->
-              <v-btn :ripple="false" plain icon class="pa-7" @click="updateProfileDialog(true)">
-                <Avatar :user="currentUser" />
+              <v-btn :ripple="false" plain icon class="pa-7" to="/profile">
+                <Avatar :avatarSrc="currentUser.avatarSrc" :role="currentUser.roles[0].roleName" />
               </v-btn>
               Say what you want {{ currentUser.name }}
             </v-card-title>
@@ -49,9 +49,9 @@ import Vue from "vue";
 import ClassicEditor from "@/ckeditor5/ckeditor5";
 import { mapGetters, mapState, mapActions } from "vuex";
 import { httpRequest } from "@/utils/http";
-import * as Defines from "@/utils/defines";
-import Avatar from "../cpn/Avatar-cpn.vue";
 import { VueResponse } from "../../utils/types";
+import Avatar from "../cpn/Avatar-cpn.vue";
+import * as Defines from "@/utils/defines";
 
 export default Vue.extend({
   name: "Post-input",
@@ -63,13 +63,11 @@ export default Vue.extend({
       alertMessage: "",
       editor: ClassicEditor,
       editorData: "",
-      test: Number,
     };
   },
   methods: {
     ...mapActions([
       "getAllPosts",
-      "updateProfileDialog"
     ]),
     checkCurrentUser(): boolean {
       return (typeof this.currentUser) != 'function' && this.currentUser != null;

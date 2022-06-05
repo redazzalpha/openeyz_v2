@@ -16,7 +16,7 @@
                                     class="text-body-1 white--text text-body-2 text-sm-subtitle-1 pa-2"
                                     style="background-color: #00ACC1;">
                                     <!-- author-avatar -->
-                                    <Avatar :user="item.post.author" />
+                                    <Avatar :avatarSrc="item.post.author.avatarSrc" :role="item.post.author.roles[0].roleName" />
                                     {{ item.post.author.name }} posted on {{ item.creation }}
                                 </v-card-title>
                                 <!-- publication-content -->
@@ -58,11 +58,11 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { mapState, mapActions } from 'vuex';
+import Vue, { PropType } from 'vue';
+import { mapActions } from 'vuex';
 import Avatar from '@/components/cpn/Avatar-cpn.vue';
 import Comment from '@/components/comment/Comment-block.vue';
-import { Item } from '../../utils/types';
+import { Item, Post } from '../../utils/types';
 import { httpRequest } from '../../utils/http';
 import * as Defines from '../../utils/defines';
 
@@ -72,6 +72,20 @@ export default Vue.extend({
         Avatar,
         Comment,
     },
+    props: {
+        action: {
+            type: Function,
+            required: true,
+        },
+        posts: {
+            type: [] as PropType<Post[]>,
+            required: false,
+        },
+        username: {
+            type: String,
+            required: false,
+        }
+    },
     data() {
         return {
             isActive: false,
@@ -79,11 +93,6 @@ export default Vue.extend({
             item: {},
             comments: [],
         };
-    },
-    computed: {
-        ...mapState([
-            'posts'
-        ]),
     },
     methods: {
         ...mapActions([
@@ -114,7 +123,8 @@ export default Vue.extend({
     },
     created(): void {
         //TODO:find a why to get posts cause posts is only refresh on created wich means only once 
-        this.getAllPosts();
+        // this.getAllPosts();
+        this.action(this.username);
     },
 });
 </script>

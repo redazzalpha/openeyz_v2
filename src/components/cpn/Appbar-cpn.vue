@@ -18,12 +18,13 @@
                 </v-row>
             </v-container>
             <!--appbar-icon-link-->
-                <div v-if="showAppBarLink" class="d-flex">
-                    <v-btn v-for="icon in icons" :key="icon.title" class="btn d-flex mx-5" elevation=0 color="transparent"
-                        :title="icon.title" @click="icon.action">
-                        <i :class="icon.class + ' mr-1'"></i><span style="font-size: 13px;">{{ icon.title }}</span>
-                    </v-btn>
-                </div>
+            <div v-if="showAppBarLink" class="d-flex">
+                <v-btn v-for="icon in icons" :key="icon.title" class="btn d-flex mx-5" elevation=0 color="transparent"
+                    :title="icon.title" :to="icon.title == 'Logout' ? '' : icon.href"
+                    @click="icon.title == 'Logout' ? logout() : ''">
+                    <i :class="icon.class + ' mr-1'"></i><span style="font-size: 13px;">{{ icon.title }}</span>
+                </v-btn>
+            </div>
         </v-app-bar>
     </div>
 </template>
@@ -41,26 +42,30 @@ export default Vue.extend({
         return {
             icons: [
                 {
+                    title: 'Home',
+                    class: 'fa-solid fa-house',
+                    href: "/"
+                },
+
+                {
                     title: 'Profile',
                     class: 'fa-solid fa-user',
-                    action: () => { this.$store.dispatch('updateProfileDialog', true); }
+                    href: "/profile"
                 },
                 {
                     title: 'Notifications',
                     class: 'fa-solid fa-bell',
-                    action: () => { console.log('notif action'); }
+                    href: "/notification"
                 },
                 {
                     title: 'Team',
                     class: 'fa-solid fa-users',
-                    action: () => { this.$store.dispatch('updateTeamDialog', true); }
+                    href: "/team"
                 },
                 {
                     title: 'Logout',
                     class: 'fa-solid fa-right-from-bracket',
-                    action: () => {
-                        httpRequest.post(Defines.SERVER_LOGOUT_URL);
-                    },
+                    href: '',
                 },
             ],
         };
@@ -74,6 +79,9 @@ export default Vue.extend({
         openProfile() {
             this.updateProfileDialog(true);
         },
+        logout(): void {
+            httpRequest.post(Defines.SERVER_LOGOUT_URL);
+        }
     },
     computed: {
         ...mapState([

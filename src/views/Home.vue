@@ -3,9 +3,9 @@
     <div class="home">
         <Title />
         <PostInput />
-        <Publication />
-        <Profile />
-        <Team />
+        <Publication :action="getAllPosts" :posts="posts" />
+        <!-- <Profile />
+        <Team /> -->
     </div>
 </template>
 
@@ -14,22 +14,23 @@ import Vue from 'vue';
 import Title from '@/components/cpn/Title-cpn.vue';
 import PostInput from '@/components/cpn/Post-cpn.vue';
 import Publication from '@/components/cpn/Publication-cpn.vue';
-import Profile from '../components/profile/Profile-block.vue';
-import Team from '../components/team/Team-block.vue';
+import { mapActions, mapState } from 'vuex';
 export default Vue.extend({
     name: 'Home-page',
     components: {
         Title,
         PostInput,
         Publication,
-        Profile,
-        Team,
     },
-    data() {
-        return {
-        };
+    computed: {
+        ...mapState([
+            'posts'
+        ]),
     },
     methods: {
+        ...mapActions([
+            'getAllPosts',
+        ]),
     },
 });
 </script>

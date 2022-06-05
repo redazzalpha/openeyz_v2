@@ -4,7 +4,7 @@
         <!-- leave-comment-area -->
         <v-row>
             <v-col class="d-flex align-center">
-                <Avatar :user="currentUser" size="40" />
+                <Avatar :avatarSrc="currentUser.avatarSrc" :role="currentUser.roles[0].roleName" size="40" />
                 <v-textarea v-model="comment" placeholder="leave comment..." auto-grow outlined rows="1" row-height="15"
                     rounded hide-details>
                     <!-- FIXME: fix btn bug sometimes does not appear - try to change with append directive -->
@@ -35,7 +35,7 @@
                         <!-- message-card -->
                         <v-card v-for="(item, index) in comments" :key="index" class="d-flex align-center mb-5"
                             elevation="0">
-                            <Avatar :user="item.comment.author" size="40" class="flex-shrink-1" />
+                            <Avatar :avatarSrc="item.comment.author.avatarSrc" :role="item.comment.author.roles[0].roleName" size=40 class="flex-shrink-1" />
                             <div class="message-arrowed flex-grow-1 elevation-3"
                                 style="background-color:#2196F3; position: relative;">
                                 <!-- comment-title-header -->

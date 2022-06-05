@@ -1,27 +1,36 @@
 <template>
-    <!-- toolbar -->
-    <v-toolbar dark color="cyan darken-1">
-        <v-toolbar-title>
-            <i class="fa fa-users"></i>
-            <span class="ml-2">Team</span>
-        </v-toolbar-title>
-        <!-- search-bar -->
-        <v-spacer></v-spacer>
-        <v-autocomplete v-model="select" :loading="loading" :items="userList" :search-input.sync="search" cache-items
-            class="mx-4" flat hide-no-data hide-details label="Search by username" solo-inverted>
-        </v-autocomplete>
-        <v-spacer></v-spacer> <!-- end-search-bar -->
-    </v-toolbar> <!-- end-toolbar -->
+    <v-card>
+
+        <Toolbar title="Team" icon="fa-solid fa-users" >
+            <template v-slot:center>
+                <v-autocomplete v-model="select" :loading="loading" :items="userList" :search-input.sync="search"
+                    cache-items class="mx-4" flat hide-no-data hide-details label="Search by username" solo-inverted>
+                </v-autocomplete>
+
+            </template>
+        </Toolbar>
+
+        <Title />
+        <Cards />
+    </v-card>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import { mapActions, mapState } from 'vuex';
-import { httpRequest } from '../../utils/http';
-import * as Defines from '../../utils/defines';
+import Toolbar from '../components/cpn/Toolbar-cpn.vue';
+import Title from '../components/team/Team-title.vue';
+import Cards from '../components/team/Team-cards.vue';
+import { httpRequest } from '../utils/http';
+import * as Defines from '../utils/defines';
 
 export default Vue.extend({
-    name: 'Team-toolbar',
+    name: 'Team-page',
+    components: {
+        Toolbar,
+        Title,
+        Cards,
+    },
     data() {
         return {
             select: null,
@@ -33,7 +42,6 @@ export default Vue.extend({
     computed: {
         ...mapState([
             'userMap',
-            'teamDialog',
         ]),
     },
     methods: {
@@ -55,14 +63,11 @@ export default Vue.extend({
             val && val !== this.select;
             // val && val !== this.select && this.querySelections(val);
         },
-        teamDialog(visible: boolean) {
-            if (visible)
-                this.getUsers();
-        },
     },
     created() {
         this.getUsers();
     }
+
 });
 </script>
 

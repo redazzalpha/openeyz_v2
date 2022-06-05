@@ -5,7 +5,7 @@
             <!-- user-vatara -->
             <v-list-item-avatar>
                 <div v-if="checkCurrentUser()">
-                    <Avatar :user="currentUser" size="40" />
+                <Avatar :avatarSrc="currentUser.avatarSrc" :role="currentUser.roles[0].roleName"  size="40"/>
                 </div>
             </v-list-item-avatar>
             <v-list-item-content>
@@ -16,7 +16,7 @@
         <!-- links -->
         <v-list dense rounded>
             <!-- item-list -->
-            <v-list-item v-for="icon in icons" :key="icon.title" link @click="icon.action">
+            <v-list-item v-for="icon in icons" :key="icon.title" link :to="icon.title == 'Logout' ?  '' : icon.href" @click="icon.title == 'Logout' ? logout() : '' ">
                 <!-- icon-item -->
                 <v-list-item-icon class="cyan--text text--darken-1">
                     <i :class="icon.class"></i>
@@ -45,40 +45,40 @@ export default Vue.extend({
         return {
             icons: [
                 {
+                    title: 'Home',
+                    class: 'fa-solid fa-house',
+                    href: "/"
+                },
+                {
                     title: 'Profile',
                     class: 'fa-solid fa-user',
-                    action: () => {
-                        this.$store.dispatch("updateProfileDialog", true);
-                        this.$store.dispatch("updateDrawer", false);
-                    }
+                    href: "/profile"
                 },
                 {
                     title: 'Notifications',
                     class: 'fa-solid fa-bell',
-                    action: () => { console.log('notif action'); }
+                    href: "/notification"
                 },
                 {
                     title: 'Team',
                     class: 'fa-solid fa-users',
-                    action: () => {
-                        this.$store.dispatch("updateTeamDialog", true);
-                        this.$store.dispatch("updateDrawer", false);
-                    }
+                    href: "/team"
                 },
                 {
                     title: 'Logout',
                     class: 'fa-solid fa-right-from-bracket',
-                    action: () => {
-                        httpRequest.post(Defines.SERVER_LOGOUT_URL);
-                    }
+                    href: '',
                 },
             ],
         };
     },
     methods: {
-        checkCurrentUser(): boolean { 
+        checkCurrentUser(): boolean {
             return (typeof this.currentUser) != 'function' && this.currentUser != null;
         },
+        logout(): void {
+            httpRequest.post(Defines.SERVER_LOGOUT_URL);
+        }
     },
     computed: {
         ...mapState([

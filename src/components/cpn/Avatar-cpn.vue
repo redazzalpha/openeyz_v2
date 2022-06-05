@@ -1,31 +1,32 @@
 <template>
     <v-avatar :size="size" class="mr-3">
         <!-- FIXME: got to fix bug that when sending publication or comment good img  appears only reload -->
-        <v-img v-if="user.avatarSrc == null && imgs[0].role" :src="imgs[0].src" alt="alt" />
-        <v-img v-else-if="user.avatarSrc == null && imgs[1].role" :src="imgs[1].src" alt="alt" />
-        <v-img v-else-if="user.avatarSrc == null && imgs[2].role" :src="imgs[2].src" alt="alt" />
-        <v-img v-else-if="user.avatarSrc != null" :src="user.avatarSrc" alt="alt" />
+        <v-img v-if="!avatarSrc && role == 'SUPERADMIN'" src="../../assets/suadmin.png" alt="alt" />
+        <v-img v-else-if="!avatarSrc && role == 'ADMIN'" src="../../assets/admin.png" alt="alt" />
+        <v-img v-else-if="!avatarSrc && role == 'USER'" src="../../assets/user.png" alt="alt" />
+        <v-img v-else-if="avatarSrc" :src="avatarSrc" alt="alt" />
     </v-avatar>
 </template>
 
 <script lang="ts">
-import Vue, { PropType } from 'vue';
-import { Role, Users } from '../../utils/types';
+import Vue from 'vue';
 export default Vue.extend({
-    name: 'Avatar-cpn',
+    name: "Avatar-cpn",
     props: {
-        user: { type: Object as PropType<Users>, required: false, default: null  },
-        size: { type: String, default: "55" }
-    },
-    data() {
-        return {
-            imgs: [
-                { role: this.user.roles.some((r: Role) => r.roleName == 'SUPERADMIN'), src: require('../../assets/suadmin.png') },
-                { role: this.user.roles.some((r: Role) => r.roleName == 'ADMIN'), src: require('../../assets/admin.png') },
-                { role: this.user.roles.some((r: Role) => r.roleName == 'USER'), src: require('../../assets/user.png') },
-            ]
-        };
-    },
+        avatarSrc: {
+            // got no spedcify type cause throw error on null value
+            required: true,
+        },
+        role: {
+            type: String,
+            required: true,
+        },
+        size: {
+            type: String,
+            default: "55",
+            required: false,
+        }
+    }
 });
 </script>
 

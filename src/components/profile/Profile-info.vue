@@ -7,7 +7,7 @@
                 <!-- user-avatar -->
                 <span>{{ currentUser.name }}</span>
                 <span style="position: relative">
-                    <Avatar :user="currentUser" size="170" />
+                <Avatar :avatarSrc="currentUser.avatarSrc" :role="currentUser.roles[0].roleName" size="170" />
                     <v-btn icon color="primary" style="position: absolute; top: 145px; right: 18px; "
                         @click="openFolder" title="modify image">
                         <input v-show="0" type="file" accept="image/*" ref="input" @change="pickFile" />
