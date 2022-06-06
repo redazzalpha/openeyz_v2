@@ -1,16 +1,13 @@
 <template>
-    <v-card>
-
+    <div>
         <Toolbar icon="fa-solid fa-user" title="Profile" />
         <Tabs />
-
         <v-tabs-items v-model="$store.state.tabProfile">
             <Info />
             <Password />
             <Account />
         </v-tabs-items>
-        
-    </v-card>
+    </div>
 </template>
 
 <script lang="ts">
@@ -37,3 +34,9 @@ export default Vue.extend({
     },
 });
 </script>
+
+<style lang="scss" scoped>
+.theme--light.v-tabs-items {
+    background-color: transparent;
+}
+</style>

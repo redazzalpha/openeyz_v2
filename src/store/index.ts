@@ -19,15 +19,17 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     currentUser: Users,
-    teamSelectedUser: UserObj,
     userListObj : [] as PropType<UserObj>,
     userLOSecondary : [] as PropType<UserObj>,
+
+    teamSelectedUser: UserObj,
+    teamSelectDialog: false,
+
     drawer: null,
 
     tabAccess: 0,
     tabProfile: 0,
 
-    teamSelectDialog: false,
 
     posts: [],
     userPosts: [],
@@ -42,15 +44,20 @@ export default new Vuex.Store({
     UPDATE_CURRENT_USER(state, payload): void {
       state.currentUser = payload;
     },
-    UPDATE_TEAM_SELECTED_USER(state, payload): void {
-      state.teamSelectedUser = payload;
-    },
     UPDATE_USER_LIST_OBJ(state, payload): void {
       state.userListObj = payload;
     },
     UPDATE_USER_LO_SECONDARY(state, payload): void {
       state.userLOSecondary = payload;
     },
+
+    UPDATE_TEAM_SELECTED_USER(state, payload): void {
+      state.teamSelectedUser = payload;
+    },
+    UPDATE_TEAM_SELECT_DIALOG(state, payload: boolean): void {
+      state.teamSelectDialog = payload;
+    },
+
     UPDATE_DRAWER(state, payload): void {
       state.drawer = payload;
     },
@@ -60,10 +67,6 @@ export default new Vuex.Store({
     },
     UPDATE_TAB_PROFILE(state, payload: number): void {
       state.tabProfile = payload;
-    },
-
-    UPDATE_TEAM_SELECT_DIALOG(state, payload: boolean): void {
-      state.teamSelectDialog = payload;
     },
 
     UPDATE_POSTS(state, payload): void {
@@ -80,12 +83,14 @@ export default new Vuex.Store({
       state.currentUser = Users;
       state.userListObj = [] as PropType<UserObj>;
       state.userLOSecondary = [] as PropType<UserObj>;
+
+      state.teamSelectedUser = UserObj,
+      state.teamSelectDialog = false;
+
       state.drawer = null;
   
       state.tabAccess = 0;
       state.tabProfile = 0;
-  
-      state.teamSelectDialog = false;
   
       state.posts = [];
       state.userPosts = [];
@@ -96,15 +101,21 @@ export default new Vuex.Store({
     updateCurrentUser(context, payload): void {
       context.commit("UPDATE_CURRENT_USER", payload);
     },
-    updateTeamSelectedUser(context, payload): void {
-      context.commit("UPDATE_TEAM_SELECTED_USER", payload);
-    },
     updateUserListObj(context, payload): void {
       context.commit("UPDATE_USER_LIST_OBJ", payload);
     },
     updateUserLOSecondary(context, payload): void {
       context.commit("UPDATE_USER_LO_SECONDARY", payload);
     },
+
+    updateTeamSelectedUser(context, payload): void {
+      context.commit("UPDATE_TEAM_SELECTED_USER", payload);
+    },
+    updateTeamSelectDialog(context, payload: boolean): void {
+      context.commit('UPDATE_TEAM_SELECT_DIALOG', payload);
+    },
+
+
     updateDrawer(context, payload): void {
       context.commit('UPDATE_DRAWER', payload);
     },
@@ -114,10 +125,6 @@ export default new Vuex.Store({
     },
     updateTabProfile(context, payload: number): void {
       context.commit('UPDATE_TAB_PROFILE', payload);
-    },
-
-    updateTeamSelectDialog(context, payload: boolean): void {
-      context.commit('UPDATE_TEAM_SELECT_DIALOG', payload);
     },
 
     updatePosts(context, payload): void {

@@ -2,7 +2,6 @@
   <!-- toolbar -->
   <v-toolbar dark color="cyan darken-1">
     <v-toolbar-title>
-
       <i :class="icon"></i>
       <span class="ml-2">{{ title }}</span>
     </v-toolbar-title>
@@ -10,7 +9,6 @@
     <slot name="center"></slot>
     <v-spacer></v-spacer>
     <slot name="button"></slot>
-    
   </v-toolbar>
   <!-- end-toolbar -->
 </template>
@@ -27,6 +25,11 @@ export default Vue.extend({
     icon: {
       type: String,
       required: true,
+    },
+    name: {
+      type: String,
+      required: false,
+      default: "",
     },
   },
 });

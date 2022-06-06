@@ -1,7 +1,8 @@
 <template>
-  <v-card>
+  <div>
     <Toolbar title="Team" icon="fa-solid fa-users">
       <template v-slot:center>
+        <!-- search-field -->
         <v-autocomplete
           v-model="select"
           :items="userListObj"
@@ -50,9 +51,11 @@
         </v-autocomplete>
       </template>
     </Toolbar>
+    <!-- title-component -->
     <Title />
+    <!-- cards-component -->
     <Cards />
-  </v-card>
+  </div>
 </template>
 
 <script lang="ts">
@@ -92,6 +95,7 @@ export default Vue.extend({
       "updateUserListObj",
       "updateUserLOSecondary",
       "updateTeamSelectedUser",
+      "updateTeamSelectDialog",
     ]),
     async getUsers(): Promise<void> {
       const res = await httpRequest.get(Defines.SERVER_USER_SIMPLE_URL);
@@ -120,12 +124,13 @@ export default Vue.extend({
       const found = this.userListObj.filter((e: UserObj) => {
         return regexp.test(e.name);
       });
-      
+
       if (search) this.updateUserLOSecondary(found);
       else if (!search) this.updateUserLOSecondary(this.userListObj);
     },
   },
   created() {
+    this.updateTeamSelectDialog(false);
     this.getUsers();
   },
 });

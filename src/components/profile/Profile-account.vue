@@ -1,8 +1,7 @@
 <template>
     <v-tab-item>
         <!-- main-card -->
-        <!-- {{ test() }} -->
-        <v-card flat max-width="600" class="mx-auto">
+        <v-card max-width="600" class="mx-auto my-10 " shaped raised outlined >
             <!-- header-title -->
             <v-card-title class="d-flex  flex-column justify-center align-center">
                 <!-- user-avatar -->

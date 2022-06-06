@@ -9,14 +9,17 @@
   >
     <v-card>
       <!-- toolbar -->
-      <Toolbar icon="fa-solid fa-users" :title="`Publication of ${author}`">
+      <ToolbarCpn icon="fa-solid fa-users" :title="`Publication of ${author}`" >
         <template v-slot:button>
+          <!-- icon-links -->
+          <LinksCpn :show="showAppBarLink" />
+
           <!-- close-button -->
           <v-btn icon>
             <v-icon @click="closeDialog">mdi-close</v-icon>
           </v-btn>
         </template>
-      </Toolbar>
+      </ToolbarCpn>
 
       <!-- card-title -->
       <v-container grid-list-xs fluid>
@@ -30,7 +33,7 @@
 
         <!-- publication component -->
         <div v-for="(post, index) in userPosts" :key="index">
-          <Publication :item="post" />
+          <PublicationCpn :item="post" />
         </div>
 
         <!-- alert part -->
@@ -62,13 +65,15 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapActions, mapState } from "vuex";
-import Publication from "../../components/cpn/Publication-cpn.vue";
-import Toolbar from "../cpn/Toolbar-cpn.vue";
+import PublicationCpn from "../../components/cpn/Publication-cpn.vue";
+import ToolbarCpn from "../cpn/Toolbar-cpn.vue";
+import LinksCpn from "../cpn/links-cpn.vue";
 export default Vue.extend({
   name: "Team-selected",
   components: {
-    Toolbar,
-    Publication,
+    ToolbarCpn,
+    PublicationCpn,
+    LinksCpn,
   },
   props: {
     author: {
@@ -82,10 +87,31 @@ export default Vue.extend({
   },
   computed: {
     ...mapState(["teamSelectDialog", "userPosts"]),
+    showAppBarLink(): boolean {
+      let show = true;
+      switch (this.$vuetify.breakpoint.name) {
+        case "xs":
+          show = false;
+          break;
+        case "sm":
+          show = false;
+          break;
+        case "md":
+          show = true;
+          break;
+        case "lg":
+          show = true;
+          break;
+        case "xl":
+          show = true;
+          break;
+      }
+      return show;
+    },
   },
   methods: {
     ...mapActions(["updateTeamSelectDialog", "getAllUserPosts"]),
-    closeDialog(){
+    closeDialog() {
       this.updateTeamSelectDialog(false);
     },
     keyPressed({ code }: KeyboardEvent): void {

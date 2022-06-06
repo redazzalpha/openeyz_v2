@@ -1,5 +1,6 @@
 import * as Defines from '../utils/defines';
 
+// TODO find a way to delete uploaded image when the image is not send into post 
 class UploadAdapter {
     constructor(loader) {
         this.loader = loader;
