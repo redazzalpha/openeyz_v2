@@ -88,10 +88,15 @@ export default Vue.extend({
     ...mapState(["userListObj", "teamSelectedUser"]),
   },
   methods: {
-    ...mapActions(["updateUserListObj", "updateTeamSelectedUser"]),
+    ...mapActions([
+      "updateUserListObj",
+      "updateUserLOSecondary",
+      "updateTeamSelectedUser",
+    ]),
     async getUsers(): Promise<void> {
       const res = await httpRequest.get(Defines.SERVER_USER_SIMPLE_URL);
-      const userListObj  = (res.body as UserMap).map((e: string[]) => {
+
+      const userListObj = (res.body as UserMap).map((e: string[]) => {
         const [name, avatarSrc, role, username] = e;
         return {
           name: name,
@@ -102,6 +107,7 @@ export default Vue.extend({
       });
 
       this.updateUserListObj(userListObj);
+      this.updateUserLOSecondary(userListObj);
     },
     input(selectedUsername: string) {
       const userObj: UserObj[] = this.userListObj.filter((e: UserObj) => {
@@ -109,12 +115,14 @@ export default Vue.extend({
       });
       this.updateTeamSelectedUser(userObj[0]);
     },
-    fct(search: string){
-
-        this.userListObj.filter((e: UserObj []) => {
-          return e.includes(search as never);
-        });
-
+    fct(search: string) {
+      const regexp = new RegExp(search, "gi");
+      const found = this.userListObj.filter((e: UserObj) => {
+        return regexp.test(e.name);
+      });
+      
+      if (search) this.updateUserLOSecondary(found);
+      else if (!search) this.updateUserLOSecondary(this.userListObj);
     },
   },
   created() {

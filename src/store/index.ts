@@ -21,6 +21,7 @@ export default new Vuex.Store({
     currentUser: Users,
     teamSelectedUser: UserObj,
     userListObj : [] as PropType<UserObj>,
+    userLOSecondary : [] as PropType<UserObj>,
     drawer: null,
 
     tabAccess: 0,
@@ -46,6 +47,9 @@ export default new Vuex.Store({
     },
     UPDATE_USER_LIST_OBJ(state, payload): void {
       state.userListObj = payload;
+    },
+    UPDATE_USER_LO_SECONDARY(state, payload): void {
+      state.userLOSecondary = payload;
     },
     UPDATE_DRAWER(state, payload): void {
       state.drawer = payload;
@@ -74,7 +78,8 @@ export default new Vuex.Store({
 
     CLEAR_VUEX(state) {
       state.currentUser = Users;
-      state.userListObj = [];
+      state.userListObj = [] as PropType<UserObj>;
+      state.userLOSecondary = [] as PropType<UserObj>;
       state.drawer = null;
   
       state.tabAccess = 0;
@@ -96,6 +101,9 @@ export default new Vuex.Store({
     },
     updateUserListObj(context, payload): void {
       context.commit("UPDATE_USER_LIST_OBJ", payload);
+    },
+    updateUserLOSecondary(context, payload): void {
+      context.commit("UPDATE_USER_LO_SECONDARY", payload);
     },
     updateDrawer(context, payload): void {
       context.commit('UPDATE_DRAWER', payload);

@@ -5,7 +5,7 @@
       <!-- TODO: CHANGE type of recieved object cu=ause deos not respect convention need get map<string, value> as json   -->
       <v-col
         class="col-12 col-sm-6"
-        v-for="(item, index) in userListObj"
+        v-for="(item, index) in userLOSecondary"
         :key="index"
       >
         <!-- user-card -->
@@ -46,7 +46,7 @@ export default Vue.extend({
     };
   },
   computed: {
-    ...mapState(["userListObj", "teamSelectedUser"]),
+    ...mapState(["userLOSecondary", "teamSelectedUser"]),
   },
   methods: {
     ...mapActions(["updateTeamSelectDialog"]),
