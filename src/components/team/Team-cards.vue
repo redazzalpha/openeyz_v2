@@ -5,18 +5,18 @@
       <!-- TODO: CHANGE type of recieved object cu=ause deos not respect convention need get map<string, value> as json   -->
       <v-col
         class="col-12 col-sm-6"
-        v-for="(item, index) in userMap"
+        v-for="(item, index) in userListObj"
         :key="index"
       >
         <!-- user-card -->
         <v-hover v-slot="{ hover }">
           <v-card
             :elevation="hover ? 7 : 2"
-            @click="openSelected(item[0], item[3])"
+            @click="openSelected(item.name, item.username)"
           >
             <v-card-text class="text-center">
-              <Avatar v-if="item[2]" :avatarSrc="item[1]" :role="item[2]" />
-              {{ item[0] }}
+              <Avatar v-if="item.role" :avatarSrc="item.avatarSrc" :role="item.role" />
+              {{ item.name }}
             </v-card-text>
           </v-card>
         </v-hover>
@@ -32,6 +32,7 @@ import Vue from "vue";
 import { mapActions, mapState } from "vuex";
 import Selected from "./Team-selected.vue";
 import Avatar from "../cpn/Avatar-cpn.vue";
+import { UserObj } from "../../utils/types";
 export default Vue.extend({
   name: "Team-cards",
   components: {
@@ -45,7 +46,7 @@ export default Vue.extend({
     };
   },
   computed: {
-    ...mapState(["userMap", "teamSelectedUser"]),
+    ...mapState(["userListObj", "teamSelectedUser"]),
   },
   methods: {
     ...mapActions(["updateTeamSelectDialog"]),
@@ -56,9 +57,9 @@ export default Vue.extend({
     },
   },
   watch: {
-    teamSelectedUser(userObj) {
-      if (userObj.length)
-        this.openSelected(userObj[0].name, userObj[0].username);
+    teamSelectedUser(userObj: UserObj) {
+      if (userObj)
+        this.openSelected(userObj.name, userObj.username);
     },
   },
 });

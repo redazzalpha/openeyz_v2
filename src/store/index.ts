@@ -1,3 +1,4 @@
+import { UserObj } from './../utils/types';
 import Vuetify from "@/plugins/vuetify";
 import Vue from 'vue';
 import Vuex from 'vuex';
@@ -5,6 +6,7 @@ import { httpRequest } from './../utils/http';
 import * as Defines from './../utils/defines';
 import { Users, VueResponse } from "../utils/types";
 import VuexPersistence from 'vuex-persist';
+import { PropType } from 'vue/types/umd';
 
 const vuexLocal = new VuexPersistence({
   storage: window.localStorage
@@ -17,8 +19,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     currentUser: Users,
-    teamSelectedUser: [],
-    userMap: [[]],
+    teamSelectedUser: UserObj,
+    userListObj : [] as PropType<UserObj>,
     drawer: null,
 
     tabAccess: 0,
@@ -42,8 +44,8 @@ export default new Vuex.Store({
     UPDATE_TEAM_SELECTED_USER(state, payload): void {
       state.teamSelectedUser = payload;
     },
-    UPDATE_USER_MAP(state, payload): void {
-      state.userMap = payload;
+    UPDATE_USER_LIST_OBJ(state, payload): void {
+      state.userListObj = payload;
     },
     UPDATE_DRAWER(state, payload): void {
       state.drawer = payload;
@@ -72,7 +74,7 @@ export default new Vuex.Store({
 
     CLEAR_VUEX(state) {
       state.currentUser = Users;
-      state.userMap = [[]];
+      state.userListObj = [];
       state.drawer = null;
   
       state.tabAccess = 0;
@@ -92,8 +94,8 @@ export default new Vuex.Store({
     updateTeamSelectedUser(context, payload): void {
       context.commit("UPDATE_TEAM_SELECTED_USER", payload);
     },
-    updateUserMap(context, payload): void {
-      context.commit("UPDATE_USER_MAP", payload);
+    updateUserListObj(context, payload): void {
+      context.commit("UPDATE_USER_LIST_OBJ", payload);
     },
     updateDrawer(context, payload): void {
       context.commit('UPDATE_DRAWER', payload);

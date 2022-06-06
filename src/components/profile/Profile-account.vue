@@ -56,7 +56,7 @@
                                             <!-- button-row -->
                                             <v-row>
                                                 <v-col class="d-flex justify-center">
-                                                    <v-btn :width="btnSize" color="error"
+                                                    <v-btn :width="btnSize" color="#ba1c1e" class="white--text"
                                                         @click.stop="dialog = !dialog">
                                                         Delete my account</v-btn>
                                                 </v-col>
@@ -74,7 +74,7 @@
         <v-dialog v-model="dialog" width="500">
             <v-card>
                 <!-- dialog-title -->
-                <v-card-title class="text-h5 red white--text">
+                <v-card-title class="text-h5 white--text" style="background-color: #ba1c1e">
                     Delete My account
                 </v-card-title>
                 <!-- dialog-content -->
@@ -149,6 +149,3 @@ export default Vue.extend({
     },
 });
 </script>
-
-
-<style lang="scss" scoped>

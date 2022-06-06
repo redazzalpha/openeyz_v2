@@ -4,7 +4,7 @@
       <template v-slot:center>
         <v-autocomplete
           v-model="select"
-          :items="userList"
+          :items="userListObj"
           flat
           chips
           cache-items
@@ -16,6 +16,7 @@
           item-text="name"
           item-value="username"
           @input="input"
+          @update:search-input="fct"
         >
           <template v-slot:selection="data">
             <v-chip
@@ -61,7 +62,7 @@ import Toolbar from "../components/cpn/Toolbar-cpn.vue";
 import Title from "../components/team/Team-title.vue";
 import Cards from "../components/team/Team-cards.vue";
 import { httpRequest } from "../utils/http";
-import { UserObj } from "../utils/types";
+import { UserMap, UserObj } from "../utils/types";
 import * as Defines from "../utils/defines";
 import Avatar from "../components/cpn/Avatar-cpn.vue";
 
@@ -81,20 +82,16 @@ export default Vue.extend({
       select: [],
       loading: false,
       search: null,
-      userList: [],
-      test: null,
     };
   },
   computed: {
-    ...mapState(["userMap", "teamSelectedUser"]),
+    ...mapState(["userListObj", "teamSelectedUser"]),
   },
   methods: {
-    ...mapActions(["updateUserMap", "updateTeamSelectedUser"]),
+    ...mapActions(["updateUserListObj", "updateTeamSelectedUser"]),
     async getUsers(): Promise<void> {
       const res = await httpRequest.get(Defines.SERVER_USER_SIMPLE_URL);
-      this.updateUserMap(res.body);
-
-      this.userList = this.userMap.map((e: string[]) => {
+      const userListObj  = (res.body as UserMap).map((e: string[]) => {
         const [name, avatarSrc, role, username] = e;
         return {
           name: name,
@@ -104,14 +101,20 @@ export default Vue.extend({
         };
       });
 
+      this.updateUserListObj(userListObj);
     },
-    input(selectedUsername: any) {
-
-
-      const userObj: UserObj[] = this.userList.filter((e: UserObj) => {
+    input(selectedUsername: string) {
+      const userObj: UserObj[] = this.userListObj.filter((e: UserObj) => {
         return e.username == selectedUsername;
       });
-      this.updateTeamSelectedUser(userObj);
+      this.updateTeamSelectedUser(userObj[0]);
+    },
+    fct(search: string){
+
+        this.userListObj.filter((e: UserObj []) => {
+          return e.includes(search as never);
+        });
+
     },
   },
   created() {

@@ -50,15 +50,22 @@ export interface Role {
 //   roles: Array<Role>;
 // }
 export class Users{
-  username = "";
-  lname = "";
-  name = "";
-  password = "";
-  state = true;
-  description = "";
-  avatarSrc = "";
-  roles: Array<Role> = [];
+  username = String;
+  lname = String;
+  name = String;
+  password = String;
+  state = Boolean;
+  description = String;
+  avatarSrc = String;
+  roles = Array<Role>();
 }
+export class UserObj {
+  name = "";
+  avatarSrc = "";
+  role = "";
+  username = "";
+}
+
 
 export type UserMap = [[]];
 
@@ -67,12 +74,6 @@ export interface Post {
   content: string;
   creation: string;
   author: Users;
-}
-export interface UserObj {
-  name : string;
-  avatarSrc : string;
-  role : string;
-  username : string;
 }
 export interface Comment {
   id: number;

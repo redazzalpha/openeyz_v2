@@ -98,7 +98,7 @@ export default Vue.extend({
     },
   },
   created() {
-    this.getAllUserPosts();
+    this.getAllUserPosts(this.username);
   },
 });
 </script>
