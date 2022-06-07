@@ -1,6 +1,6 @@
 <template>
   <!-- user-cards-->
-  <v-container grid-list-xs style="max-width: 800px">
+  <v-container grid-list-xs style="max-width: 800px;" >
     <v-row class="d-flex justify-center">
       <!-- TODO: CHANGE type of recieved object cu=ause deos not respect convention need get map<string, value> as json   -->
       <v-col
@@ -15,14 +15,14 @@
             @click="openSelected(item.name, item.username)"
           >
             <v-card-text class="text-center">
-              <Avatar v-if="item.role" :avatarSrc="item.avatarSrc" :role="item.role" />
+              <AvatarCpn v-if="item.role" :avatarSrc="item.avatarSrc" :role="item.role" />
               {{ item.name }}
             </v-card-text>
           </v-card>
         </v-hover>
       </v-col>
     </v-row>
-    <Selected :author="author" :username="username" />
+    <TeamSelected :author="author" :username="username" />
   </v-container>
   <!-- end-user-cards -->
 </template>
@@ -30,14 +30,14 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapActions, mapState } from "vuex";
-import Selected from "./Team-selected.vue";
-import Avatar from "../cpn/Avatar-cpn.vue";
 import { UserObj } from "../../utils/types";
+import AvatarCpn from "../cpn/Avatar-cpn.vue";
+import TeamSelected from "./Team-selected.vue";
 export default Vue.extend({
   name: "Team-cards",
   components: {
-    Selected,
-    Avatar,
+    TeamSelected,
+    AvatarCpn,
   },
   data() {
     return {

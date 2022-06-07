@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style=" padding-top: 65px">
         <!-- title -->
         <v-card-title primary-title class="d-flex justify-center">
             Searching user
@@ -15,7 +15,6 @@
 import Vue from 'vue';
 export default Vue.extend({
     name: 'Team-title',
-
 });
 </script>
 

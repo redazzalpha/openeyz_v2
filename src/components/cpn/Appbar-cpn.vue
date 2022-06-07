@@ -2,32 +2,33 @@
   <div>
     <v-app-bar tag="header" color="cyan darken-1" elevation="1" app>
       <v-container fluid grid-list-xs>
-        <v-row>
+        <v-row class="d-flex">
           <!--navigation-drawer-icon-->
-          <v-col v-show="!showAppBarLink" class="shrink px-0">
+          <v-col v-if="!show">
             <v-app-bar-nav-icon
               color="white"
               @click.stop="updateDrawer(true)"
             />
           </v-col>
-          <v-col
-            :class="
-              $vuetify.breakpoint.name == 'xs' || 'sm' ? '' : 'shrink' + ' px-0'
-            "
-          >
-            <!--logo-->
-            <router-link to="/" class="d-block text-decoration-none">
-              <v-toolbar-title
-                class="logo text-center text-md-left white--text mr-5"
-              >
+
+          <!--logo-->
+          <v-col class="shrink">
+            <router-link
+              to="/"
+              class="d-block text-decoration-none "
+            >
+              <v-toolbar-title class="logo text-center text-md-left white--text">
                 OpenEyz
               </v-toolbar-title>
             </router-link>
           </v-col>
+
+          <!--icon-link-->
+          <v-col class="d-flex justify-end align-center">
+            <LinksCpn :show="show" />
+          </v-col>
         </v-row>
       </v-container>
-      <!--icon-link-->
-      <LinksCpn :show="showAppBarLink" />
     </v-app-bar>
   </div>
 </template>
@@ -77,7 +78,7 @@ export default Vue.extend({
   },
   computed: {
     ...mapState(["drawer"]),
-    showAppBarLink(): boolean {
+    show(): boolean {
       let show = true;
       switch (this.$vuetify.breakpoint.name) {
         case "xs":

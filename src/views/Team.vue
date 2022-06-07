@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Toolbar title="Team" icon="fa-solid fa-users">
+    <ToolbarCpn icon="fa-solid fa-users" title="Team">
       <template v-slot:center>
         <!-- search-field -->
         <v-autocomplete
@@ -17,7 +17,7 @@
           item-text="name"
           item-value="username"
           @input="input"
-          @update:search-input="fct"
+          @update:search-input="searching"
         >
           <template v-slot:selection="data">
             <v-chip
@@ -25,7 +25,7 @@
               :input-value="data.selected"
               @click="data.select"
             >
-              <Avatar
+              <AvatarCpn
                 :avatarSrc="data.item.avatarSrc"
                 :role="data.item.role"
                 size="30"
@@ -37,7 +37,7 @@
           <template v-slot:item="data">
             <template>
               <v-list-item-avatar>
-                <Avatar
+                <AvatarCpn
                   :avatarSrc="data.item.avatarSrc"
                   :role="data.item.role"
                   size="30"
@@ -50,32 +50,32 @@
           </template>
         </v-autocomplete>
       </template>
-    </Toolbar>
+    </ToolbarCpn>
     <!-- title-component -->
-    <Title />
+    <TitleCpn />
     <!-- cards-component -->
-    <Cards />
+    <TeamCards />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import { mapActions, mapState } from "vuex";
-import Toolbar from "../components/cpn/Toolbar-cpn.vue";
-import Title from "../components/team/Team-title.vue";
-import Cards from "../components/team/Team-cards.vue";
 import { httpRequest } from "../utils/http";
 import { UserMap, UserObj } from "../utils/types";
 import * as Defines from "../utils/defines";
-import Avatar from "../components/cpn/Avatar-cpn.vue";
+import TitleCpn from "../components/team/Team-title.vue";
+import AvatarCpn from "../components/cpn/Avatar-cpn.vue";
+import TeamCards from "../components/team/Team-cards.vue";
+import ToolbarCpn from "../components/cpn/Toolbar-cpn.vue";
 
 export default Vue.extend({
   name: "Team-page",
   components: {
-    Toolbar,
-    Title,
-    Cards,
-    Avatar,
+    ToolbarCpn,
+    TitleCpn,
+    TeamCards,
+    AvatarCpn,
   },
   data() {
     return {
@@ -119,7 +119,7 @@ export default Vue.extend({
       });
       this.updateTeamSelectedUser(userObj[0]);
     },
-    fct(search: string) {
+    searching(search: string) {
       const regexp = new RegExp(search, "gi");
       const found = this.userListObj.filter((e: UserObj) => {
         return regexp.test(e.name);
@@ -127,6 +127,27 @@ export default Vue.extend({
 
       if (search) this.updateUserLOSecondary(found);
       else if (!search) this.updateUserLOSecondary(this.userListObj);
+    },
+    showTitle(): boolean {
+      let show = true;
+      switch (this.$vuetify.breakpoint.name) {
+        case "xs":
+          show = false;
+          break;
+        case "sm":
+          show = false;
+          break;
+        case "md":
+          show = true;
+          break;
+        case "lg":
+          show = true;
+          break;
+        case "xl":
+          show = true;
+          break;
+      }
+      return show;
     },
   },
   created() {

@@ -1,15 +1,23 @@
 <template>
-  <!-- toolbar -->
-  <v-toolbar dark color="cyan darken-1">
-    <v-toolbar-title>
-      <i :class="icon"></i>
-      <span class="ml-2">{{ title }}</span>
+  <v-toolbar
+    dark
+    color="cyan darken-1"
+    style="position: fixed; width: 100%; z-index: 1"
+  >
+    <v-toolbar-title v-if="$vuetify.breakpoint.name != 'xs' || xs" style="position: absolute">
+        <i class="mr-2" :class="icon"></i>
+      {{ title }}
     </v-toolbar-title>
+
     <v-spacer></v-spacer>
+
     <slot name="center"></slot>
+
     <v-spacer></v-spacer>
+
     <slot name="button"></slot>
   </v-toolbar>
+
   <!-- end-toolbar -->
 </template>
 
@@ -20,17 +28,18 @@ export default Vue.extend({
   props: {
     title: {
       type: String,
-      required: true,
+      required: false,
+      default: "",
     },
     icon: {
       type: String,
       required: true,
     },
-    name: {
-      type: String,
+    xs: {
+      type: Boolean,
       required: false,
-      default: "",
-    },
+      default: false,
+    }
   },
 });
 </script>

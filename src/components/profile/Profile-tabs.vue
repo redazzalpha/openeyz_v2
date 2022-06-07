@@ -3,10 +3,10 @@
     v-model="$store.state.tabProfile"
     center-active
     show-arrows
-    class="d-flex justify-center pt-2"
-    style="background-color: white"
+    centered
+    class="d-flex justify-center"
   >
-    <v-tabs-slider color="#FFAD69" centered></v-tabs-slider>
+    <v-tabs-slider color="#EE964B" centered></v-tabs-slider>
     <v-tab v-for="item in items" :key="item">
       {{ item }}
     </v-tab>

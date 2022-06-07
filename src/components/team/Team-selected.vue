@@ -9,10 +9,10 @@
   >
     <v-card>
       <!-- toolbar -->
-      <ToolbarCpn icon="fa-solid fa-users" :title="`Publication of ${author}`" >
+      <ToolbarCpn icon="fa-solid fa-users" title="Publications" style="position: fixed; width: 100%; z-index: 1" xs>
         <template v-slot:button>
           <!-- icon-links -->
-          <LinksCpn :show="showAppBarLink" />
+          <LinksCpn :show="show" />
 
           <!-- close-button -->
           <v-btn icon>
@@ -23,7 +23,7 @@
 
       <!-- card-title -->
       <v-container grid-list-xs fluid>
-        <v-row class="my-5">
+        <v-row class="mt-15">
           <v-col class="text-center">
             <v-card-title primary-title class="d-flex justify-center">
               {{ author }} 's publications
@@ -87,7 +87,7 @@ export default Vue.extend({
   },
   computed: {
     ...mapState(["teamSelectDialog", "userPosts"]),
-    showAppBarLink(): boolean {
+    show(): boolean {
       let show = true;
       switch (this.$vuetify.breakpoint.name) {
         case "xs":

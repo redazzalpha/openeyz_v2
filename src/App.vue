@@ -1,8 +1,9 @@
 <template>
+  <!-- TODO: got to lock all access if not authentified cause there a bug user can access to profil page cause there no request to the server to reject request -->
   <!--main-app-container-->
   <v-app id="wrapper">
     <!--app-bar-header-->
-    <Appbar />
+    <AppbarCpn />
     <!--main-->
     <v-main
       :style='"background:  url(" + ($vuetify.theme.dark ? require("./assets/bg-home-dark.webp") : require("./assets/bg-home.webp")) + ") fixed no-repeat center; background-size: cover; "'>
@@ -13,9 +14,9 @@
       </section>
     </v-main>
     <!--nav-->
-    <Drawer />
+    <DrawerCpn />
     <!--footer-->
-    <Footer />
+    <FooterCpn />
     <!--scroll-top-button-->
     <v-hover v-slot="{ hover }">
       <v-btn v-scroll="onScroll" v-show="fab" fab fixed bottom right tab="button" color="cyan darken-1"
@@ -28,15 +29,15 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import Footer from '@/components/cpn/Footer-cpn.vue';
-import Appbar from '@/components/cpn/Appbar-cpn.vue';
-import Drawer from '@/components/cpn/Drawer-cpn.vue';
+import FooterCpn from '@/components/cpn/Footer-cpn.vue';
+import AppbarCpn from '@/components/cpn/Appbar-cpn.vue';
+import DrawerCpn from '@/components/cpn/Drawer-cpn.vue';
 export default Vue.extend({
   name: 'App',
   components: {
-    Appbar,
-    Footer,
-    Drawer,
+    AppbarCpn,
+    FooterCpn,
+    DrawerCpn,
   },
   data() {
     return {

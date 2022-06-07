@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item>
+    <v-tab-item >
         <!-- main-card -->
         <v-card max-width="600" class="mx-auto my-10 " shaped raised outlined >
             <!-- header-title -->
@@ -7,7 +7,7 @@
                 <!-- user-avatar -->
                 <span>{{ currentUser.name }}</span>
                 <span style="position: relative">
-                <Avatar :avatarSrc="currentUser.avatarSrc" :role="currentUser.roles[0].roleName" size="170" />
+                <AvatarCpn :avatarSrc="currentUser.avatarSrc" :role="currentUser.roles[0].roleName" size="170" />
                     <v-btn icon color="primary" style="position: absolute; top: 145px; right: 18px; "
                         @click="openFolder" title="modify image">
                         <input v-show="0" type="file" accept="image/*" ref="input" @change="pickFile" />
@@ -105,17 +105,16 @@
 </template>
 
 <script lang="ts">
-import { httpRequest } from '@/utils/http';
 import Vue from 'vue';
-import { mapState } from 'vuex';
-import Avatar from '../cpn/Avatar-cpn.vue';
-import * as Defines from '../../utils/defines';
+import { mapState, mapActions } from 'vuex';
+import { httpRequest } from '@/utils/http';
 import { VueElement, VueFunction, VueResponse } from '../../utils/types';
-import { mapActions } from 'vuex';
+import * as Defines from '../../utils/defines';
+import AvatarCpn from '../cpn/Avatar-cpn.vue';
 export default Vue.extend({
     name: 'Profile-info',
     components: {
-        Avatar,
+        AvatarCpn,
     },
     data() {
         return {
