@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="profile">
     <!-- toolbar -->
     <ToolbarCpn
       icon="fa-solid fa-user"
@@ -54,7 +54,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.theme--light.v-tabs-items {
+.v-tabs-items {
   background-color: transparent;
 }
 </style>

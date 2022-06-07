@@ -1,6 +1,7 @@
 import * as Defines from '../utils/defines';
 
 // TODO find a way to delete uploaded image when the image is not send into post 
+// TODO:   block max img send in a post need to do it in server side too
 class UploadAdapter {
     constructor(loader) {
         this.loader = loader;

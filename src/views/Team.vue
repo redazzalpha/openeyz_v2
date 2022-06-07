@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="team">
     <ToolbarCpn icon="fa-solid fa-users" title="Team">
       <template v-slot:center>
         <!-- search-field -->

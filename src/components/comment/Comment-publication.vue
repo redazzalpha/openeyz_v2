@@ -7,7 +7,7 @@
       style="background-color: #00acc1"
     >
       <!-- author-avatar -->
-      <Avatar
+      <AvatarCpn
         :avatarSrc="itemPost.post.author.avatarSrc"
         :role="itemPost.post.author.roles[0].roleName"
         size="45"
@@ -26,12 +26,12 @@
 
 <script lang="ts">
 import Vue, { PropType } from "vue";
-import Avatar from "../cpn/Avatar-cpn.vue";
+import AvatarCpn from "../cpn/Avatar-cpn.vue";
 import { Item } from "../../utils/types";
 export default Vue.extend({
   name: "Comment-publication",
   components: {
-    Avatar,
+    AvatarCpn,
   },
   props: {
     itemPost: { type: Object as PropType<Item>, required: true },

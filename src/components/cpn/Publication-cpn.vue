@@ -13,12 +13,9 @@
         <v-container grid-list-xs fluid>
           <v-row no-gutters>
             <v-col>
-              <!-- TODO: add cross icon to remove publication -->
+              <!-- TODO: add cross icon to remove publication from user and superuser-->
               <!-- publication-card -->
-              <v-card
-                max-width="700"
-                class="mx-auto mb-8"
-              >
+              <v-card max-width="700" class="mx-auto mb-8">
                 <!-- header-title -->
                 <v-card-title
                   primary-title
@@ -26,7 +23,7 @@
                   style="background-color: #00acc1"
                 >
                   <!-- author-avatar -->
-                  <Avatar
+                  <AvatarCpn
                     :avatarSrc="item.post.author.avatarSrc"
                     :role="item.post.author.roles[0].roleName"
                   />
@@ -93,7 +90,7 @@
         </v-container>
       </div>
     </v-lazy>
-    <Comment
+    <CommentBlock
       :dialog="dialog"
       :itemPost="item"
       @stop="closeComment"
@@ -105,17 +102,17 @@
 <script lang="ts">
 import Vue, { PropType } from "vue";
 import { mapActions } from "vuex";
-import Avatar from "@/components/cpn/Avatar-cpn.vue";
-import Comment from "@/components/comment/Comment-block.vue";
 import { Item } from "../../utils/types";
 import { httpRequest } from "../../utils/http";
 import * as Defines from "../../utils/defines";
+import AvatarCpn from "@/components/cpn/Avatar-cpn.vue";
+import CommentBlock from "@/components/comment/Comment-block.vue";
 
 export default Vue.extend({
   name: "Publication-cpn",
   components: {
-    Avatar,
-    Comment,
+    AvatarCpn,
+    CommentBlock,
   },
   props: {
     item: {

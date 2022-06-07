@@ -1,6 +1,11 @@
 // vue types
-export type VueFunction = { validate: () => boolean };
+export interface VueFunction  {
+   validate() : boolean
+  }
 export type VueElement = undefined | Vue | Element | (Vue | Element)[];
+export interface PPP  extends  VueFunction {
+  name: string,
+}
 export interface VueResponse {
   body: object | Blob | string | Body | object[];
   bodyText: string;
@@ -34,21 +39,30 @@ export interface VueRequest {
 
 }
 
+// http types
+export interface Body {
+  token: string;
+  user: object;
+}
+
 // model types
 export enum RoleEnum { USER, ADMIN, SUPERADMIN }
-export interface Role {
-  roleName: RoleEnum | string;
+export interface Role { roleName: RoleEnum | string; }
+export type UserMap = [[]];
+export class UserObj {
+  name = "";
+  avatarSrc = "";
+  role = "";
+  username = "";
 }
-// export type Users = {
-//   username: string,
-//   lname: string,
-//   name: string,
-//   password: string,
-//   state: boolean,
-//   description: string,
-//   avatarSrc: string,
-//   roles: Array<Role>;
-// }
+export interface Item {
+  post: Post;
+  creation: string;
+  commentCount: number;
+  likeCount: number;
+  userLike: boolean;
+}
+
 export class Users{
   username = String;
   lname = String;
@@ -59,16 +73,6 @@ export class Users{
   avatarSrc = String;
   roles = Array<Role>();
 }
-export class UserObj {
-  name = "";
-  avatarSrc = "";
-  role = "";
-  username = "";
-}
-
-
-export type UserMap = [[]];
-
 export interface Post {
   id: number;
   content: string;
@@ -82,21 +86,14 @@ export interface Comment {
   author: Users;
   post: Post;
 }
-export interface Item {
-  post: Post;
-  creation: string;
-  commentCount: number;
-  likeCount: number;
-  userLike: boolean;
-
+export interface Notif {
+  id: number,
+  owner: Users,
+  comment: Comment, 
 }
-// export type Item = {
-//   post:Post,
-// }
-
-// http types
-export interface Body {
-  token: string;
-  user: object;
+export interface Likes {
+  id: number,
+  post: Post,
+  author: Users,
 }
 

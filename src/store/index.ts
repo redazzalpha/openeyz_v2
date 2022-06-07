@@ -1,4 +1,5 @@
-import { UserObj } from './../utils/types';
+import { Post } from './../../../openeyz_v2/src/utils/types';
+import { UserObj, Notif } from './../utils/types';
 import Vuetify from "@/plugins/vuetify";
 import Vue from 'vue';
 import Vuex from 'vuex';
@@ -19,8 +20,9 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     currentUser: Users,
-    userListObj : [] as PropType<UserObj>,
-    userLOSecondary : [] as PropType<UserObj>,
+    userListObj : [] as UserObj[],
+    userLOSecondary : [] as UserObj[],
+    userNotifs: [] as Notif[],
 
     teamSelectedUser: UserObj,
     teamSelectDialog: false,
@@ -31,9 +33,9 @@ export default new Vuex.Store({
     tabProfile: 0,
 
 
-    posts: [],
-    userPosts: [],
-    comments: [],
+    posts: [] as Post[],
+    userPosts: [] as Post[],
+    comments: [] as Comment[],
   },
   getters: {
     btnSize(): string {
@@ -49,6 +51,9 @@ export default new Vuex.Store({
     },
     UPDATE_USER_LO_SECONDARY(state, payload): void {
       state.userLOSecondary = payload;
+    },
+    UPDATE_USER_NOTIFS(state, payload): void {
+      state.userNotifs = payload;
     },
 
     UPDATE_TEAM_SELECTED_USER(state, payload): void {
@@ -81,8 +86,10 @@ export default new Vuex.Store({
 
     CLEAR_VUEX(state) {
       state.currentUser = Users;
-      state.userListObj = [] as PropType<UserObj>;
-      state.userLOSecondary = [] as PropType<UserObj>;
+      state.userListObj = [] as UserObj[];
+      state.userLOSecondary = [] as UserObj[];
+      state.userNotifs = [] as Notif[],
+
 
       state.teamSelectedUser = UserObj,
       state.teamSelectDialog = false;
@@ -106,6 +113,9 @@ export default new Vuex.Store({
     },
     updateUserLOSecondary(context, payload): void {
       context.commit("UPDATE_USER_LO_SECONDARY", payload);
+    },
+    updateUseNotifs(context, payload): void {
+      context.commit("UPDATE_USER_NOTIFS", payload);
     },
 
     updateTeamSelectedUser(context, payload): void {
@@ -148,6 +158,10 @@ export default new Vuex.Store({
     async getAllComments(context, postId: number): Promise<void | VueResponse> {
       const response: VueResponse = await httpRequest.get(Defines.SERVER_COMMENT_URL, { params: { postId } });
       context.commit('UPDATE_COMMENTS', (JSON.parse(response.bodyText)));
+    },
+    async getAllNotifs(context): Promise<void | VueResponse> {
+      const response: VueResponse = await httpRequest.get(Defines.SERVER_USER_NOTIF_URL);
+      context.commit('UPDATE_USER_NOTIFS', (response.body));
     },
 
     clearVuex(context) {

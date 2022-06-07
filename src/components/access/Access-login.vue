@@ -95,6 +95,7 @@ import { mapActions, mapGetters } from "vuex";
 import { VueResponse, VueElement, VueFunction } from "../../utils/types";
 import * as Defines from "@/utils/defines";
 
+// TODO: make in server side the refresh
 export default Vue.extend({
   name: "Access-login",
   data() {

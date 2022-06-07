@@ -26,7 +26,7 @@
     </v-hover>
   </v-app>
 </template>
-
+<!-- TODO: need to change code where i modify front end value without get server  response like in profile information field and like publication value has been modified without get server response-->
 <script lang="ts">
 import Vue from 'vue';
 import FooterCpn from '@/components/cpn/Footer-cpn.vue';
@@ -57,8 +57,8 @@ export default Vue.extend({
     },
   },
 
-
   mounted() {
+    // TODO; add black theme feature 
     this.$vuetify.theme.dark = false;
   }
 });

@@ -12,8 +12,8 @@
     >
       <!-- main-card -->
       <v-card>
-        <Publication :itemPost="itemPost" />
-        <Message :itemPost="itemPost" @send="send" />
+        <CommentPublication :itemPost="itemPost" />
+        <CommentMessage :itemPost="itemPost" @send="send" />
       </v-card>
     </v-dialog>
   </v-row>
@@ -21,17 +21,15 @@
 
 <script lang="ts">
 import Vue, { PropType } from "vue";
-import Publication from "./Comment-publication.vue";
-//TODO: this import cause error try to find out a way to fix this
-// import Publication from '../cpn/Publication-cpn.vue';
-
-import Message from "./Comment-message.vue";
 import { Item } from "../../utils/types";
+//TODO: this import cause error try to find out a way to fix this
+import CommentPublication from "./Comment-publication.vue";
+import CommentMessage from "./Comment-message.vue";
 export default Vue.extend({
   name: "Comment-cpn",
   components: {
-    Publication,
-    Message,
+    CommentPublication,
+    CommentMessage,
   },
   props: {
     dialog: { type: Boolean, required: true },

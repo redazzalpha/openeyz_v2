@@ -1,6 +1,6 @@
 <template>
   <!--access-container-->
-  <div class="login-container">
+  <div class="access">
     <!--access-dialog-->
     <v-dialog v-model="dialog" width="500" persistent role="dialog">
       <!--access-title-tabs-->

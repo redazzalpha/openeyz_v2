@@ -59,7 +59,7 @@
               class="d-flex align-center mb-5"
               elevation="0"
             >
-              <Avatar
+              <AvatarCpn
                 :avatarSrc="item.comment.author.avatarSrc"
                 :role="item.comment.author.roles[0].roleName"
                 size="40"
@@ -96,15 +96,15 @@
 
 <script lang="ts">
 import Vue, { PropType } from "vue";
-import Avatar from "../cpn/Avatar-cpn.vue";
 import { mapState, mapActions } from "vuex";
 import { httpRequest } from "@/utils/http";
-import * as Defines from "@/utils/defines";
 import { Item } from "../../utils/types";
+import AvatarCpn from "../cpn/Avatar-cpn.vue";
+import * as Defines from "@/utils/defines";
 export default Vue.extend({
   name: "Comment-msg",
   components: {
-    Avatar,
+    AvatarCpn,
   },
   props: {
     itemPost: { type: Object as PropType<Item>, required: true },
@@ -119,6 +119,7 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions(["getAllComments"]),
+    // TODO; block message length as 255 char max need to do it on server too
     async send(): Promise<void> {
       if (this.itemPost.post) {
         const data: FormData = new FormData();
