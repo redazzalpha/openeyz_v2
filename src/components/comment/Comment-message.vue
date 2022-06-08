@@ -18,6 +18,7 @@
           row-height="15"
           rounded
           hide-details
+          autofocus
         >
           <!-- FIXME: fix btn bug sometimes does not appear - try to change with append directive -->
           <!-- send-comment-button -->

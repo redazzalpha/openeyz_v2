@@ -16,6 +16,11 @@
                     </v-btn>
                 </v-col>
             </v-row>
+            <v-row class="d-flex justify-center">
+                <v-col class="mb-5  shrink">
+                    <LinksCpn show  :plain="false" />
+                </v-col>
+            </v-row>
             <!--copyright-row-->
             <v-row>
                 <v-col class="py-4 text-center white--text" cols="12" style="background-color: rgba(0, 0, 0, 0.2);">
@@ -27,8 +32,13 @@
 </template>
 
 <script lang="ts">
-export default {
+import Vue from 'vue';
+import LinksCpn from './Links-cpn.vue'
+export default Vue.extend({
     name: "Footer-cpn",
+    components: {
+        LinksCpn,
+    },
     data() {
         return {
             icons: [
@@ -40,5 +50,5 @@ export default {
             ],
         };
     }
-}
+});
 </script>

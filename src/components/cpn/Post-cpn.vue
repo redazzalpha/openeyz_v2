@@ -25,7 +25,7 @@
                 <Avatar :user="currentUser" />
               </router-link> -->
               <v-btn :ripple="false" plain icon class="pa-7" to="/profile">
-                <Avatar :avatarSrc="currentUser.avatarSrc" :role="currentUser.roles[0].roleName" />
+                <AvatarCpn :avatarSrc="currentUser.avatarSrc" :role="currentUser.roles[0].roleName" />
               </v-btn>
               Say what you want {{ currentUser.name }}
             </v-card-title>
@@ -50,13 +50,12 @@ import ClassicEditor from "@/ckeditor5/ckeditor5";
 import { mapGetters, mapState, mapActions } from "vuex";
 import { httpRequest } from "@/utils/http";
 import { VueResponse } from "../../utils/types";
-import Avatar from "../cpn/Avatar-cpn.vue";
+import AvatarCpn from "../cpn/Avatar-cpn.vue";
 import * as Defines from "@/utils/defines";
-
 export default Vue.extend({
   name: "Post-input",
   components: {
-    Avatar,
+    AvatarCpn,
   },
   data() {
     return {

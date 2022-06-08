@@ -51,9 +51,7 @@
         </v-autocomplete>
       </template>
     </ToolbarCpn>
-    <!-- title-component -->
     <TitleCpn />
-    <!-- cards-component -->
     <TeamCards />
   </div>
 </template>
@@ -66,8 +64,8 @@ import { UserMap, UserObj } from "../utils/types";
 import * as Defines from "../utils/defines";
 import TitleCpn from "../components/team/Team-title.vue";
 import AvatarCpn from "../components/cpn/Avatar-cpn.vue";
-import TeamCards from "../components/team/Team-cards.vue";
 import ToolbarCpn from "../components/cpn/Toolbar-cpn.vue";
+import TeamCards from "../components/team/Team-cards.vue";
 
 export default Vue.extend({
   name: "Team-page",

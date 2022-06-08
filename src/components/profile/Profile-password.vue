@@ -60,7 +60,7 @@
                             :rules="passwordRules"
                             :type="isSecret ? 'password' : 'text'"
                             name="password"
-                          >
+                          > 
                             <template v-slot:append>
                               <v-btn
                                 icon

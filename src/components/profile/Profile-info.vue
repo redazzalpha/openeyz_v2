@@ -84,7 +84,7 @@
           <!-- decription-modify-area -->
           <v-row>
             <v-col>
-              <VTextarea
+              <v-textarea
                 outlined
                 no-resize
                 autoGrow
@@ -92,6 +92,7 @@
                 placeholder="New description here"
                 rows="1"
                 append="mdi-send"
+                autofocus
               >
                 <template v-slot:append>
                   <v-btn
@@ -103,7 +104,7 @@
                     <v-icon>mdi-send</v-icon>
                   </v-btn>
                 </template>
-              </VTextarea>
+              </v-textarea>
             </v-col>
           </v-row>
         </v-container>

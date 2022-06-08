@@ -9,10 +9,29 @@
   >
     <v-card>
       <!-- toolbar -->
-      <ToolbarCpn icon="fa-solid fa-users" title="Publications" style="position: fixed; width: 100%; z-index: 1" xs>
-        <template v-slot:button>
+      <ToolbarCpn
+        icon="fa-solid fa-users"
+        title="Publications"
+        style="position: fixed; width: 100%; z-index: 1"
+        xs
+      >
+        <template v-slot:end>
           <!-- icon-links -->
-          <LinksCpn :show="show" />
+          <div v-if="show" class="d-flex flex-column flex-sm-row">
+            <v-btn
+              v-for="icon in icons"
+              :key="icon.title"
+              class="btn d-flex mx-5"
+              elevation="0"
+              color="transparent"
+              :title="icon.title"
+              :to="icon.title == 'Logout' ? '' : icon.href"
+              @click="icon.title == 'Logout' ? logout() : ''"
+            >
+              <i :class="icon.class + ' mr-1'"></i
+              ><span style="font-size: 13px">{{ icon.title }}</span>
+            </v-btn>
+          </div>
 
           <!-- close-button -->
           <v-btn icon>
@@ -37,7 +56,7 @@
         </div>
 
         <!-- alert part -->
-        <VAlert
+        <v-alert
           v-if="!userPosts.length"
           text
           color="red"
@@ -46,8 +65,8 @@
           class="mx-auto text-center"
         >
           {{ author }} has no post at now !
-        </VAlert>
-        <VAlert
+        </v-alert>
+        <v-alert
           v-else
           text
           color="primary"
@@ -56,7 +75,7 @@
           class="mx-auto text-center"
         >
           You have reach end of {{ author }} 's publications
-        </VAlert>
+        </v-alert>
       </v-container>
     </v-card>
   </v-dialog>
@@ -65,15 +84,14 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapActions, mapState } from "vuex";
-import PublicationCpn from "../../components/cpn/Publication-cpn.vue";
+import PublicationCpn from "../cpn/Publication-cpn.vue";
 import ToolbarCpn from "../cpn/Toolbar-cpn.vue";
-import LinksCpn from "../cpn/links-cpn.vue";
+import * as Defines from "../../utils/defines";
 export default Vue.extend({
   name: "Team-selected",
   components: {
     ToolbarCpn,
     PublicationCpn,
-    LinksCpn,
   },
   props: {
     author: {
@@ -84,6 +102,37 @@ export default Vue.extend({
       type: String,
       required: true,
     },
+  },
+  data() {
+    return {
+      icons: [
+        {
+          title: "Home",
+          class: "fa-solid fa-house",
+          href: Defines.HOME_PAGE_URL,
+        },
+        {
+          title: "Profile",
+          class: "fa-solid fa-user",
+          href: Defines.PROFILE_PAGE_URL,
+        },
+        {
+          title: "Notifications",
+          class: "fa-solid fa-bell",
+          href: Defines.NOTIFICATION_PAGE_URL,
+        },
+        {
+          title: "Team",
+          class: "fa-solid fa-users",
+          href: Defines.TEAM_PAGE_URL,
+        },
+        {
+          title: "Logout",
+          class: "fa-solid fa-right-from-bracket",
+          href: "",
+        },
+      ],
+    };
   },
   computed: {
     ...mapState(["teamSelectDialog", "userPosts"]),

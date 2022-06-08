@@ -7,7 +7,6 @@ import { httpRequest } from './../utils/http';
 import * as Defines from './../utils/defines';
 import { Users, VueResponse } from "../utils/types";
 import VuexPersistence from 'vuex-persist';
-import { DateTime } from "luxon";
 
 
 const vuexLocal = new VuexPersistence({

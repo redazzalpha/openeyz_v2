@@ -26,7 +26,8 @@
     </v-hover>
   </v-app>
 </template>
-<!-- TODO: need to change code where i modify front end value without get server  response like in profile information field and like publication value has been modified without get server response-->
+// <!-- TODO: need to change code where i modify front end value without get server  response like in profile information field and like publication value has been modified without get server response-->
+// TODO: add autofocuse on fields  
 <script lang="ts">
 import Vue from 'vue';
 import FooterCpn from '@/components/cpn/Footer-cpn.vue';

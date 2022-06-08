@@ -14,10 +14,12 @@
           <!--logo-->
           <v-col class="shrink">
             <router-link
-              to="/"
-              class="d-block text-decoration-none "
+              :to="defines.HOME_PAGE_URL"
+              class="d-block text-decoration-none"
             >
-              <v-toolbar-title class="logo text-center text-md-left white--text">
+              <v-toolbar-title
+                class="logo text-center text-md-left white--text"
+              >
                 OpenEyz
               </v-toolbar-title>
             </router-link>
@@ -38,7 +40,7 @@ import Vue from "vue";
 import { mapActions, mapState } from "vuex";
 import { httpRequest } from "../../utils/http";
 import * as Defines from "../../utils/defines";
-import LinksCpn from "./links-cpn.vue";
+import LinksCpn from "./Links-cpn.vue";
 export default Vue.extend({
   name: "Appbar-cpn",
   components: {
@@ -46,34 +48,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      icons: [
-        {
-          title: "Home",
-          class: "fa-solid fa-house",
-          href: "/",
-        },
-
-        {
-          title: "Profile",
-          class: "fa-solid fa-user",
-          href: "/profile",
-        },
-        {
-          title: "Notifications",
-          class: "fa-solid fa-bell",
-          href: "/notification",
-        },
-        {
-          title: "Team",
-          class: "fa-solid fa-users",
-          href: "/team",
-        },
-        {
-          title: "Logout",
-          class: "fa-solid fa-right-from-bracket",
-          href: "",
-        },
-      ],
+      defines: Defines,
     };
   },
   computed: {

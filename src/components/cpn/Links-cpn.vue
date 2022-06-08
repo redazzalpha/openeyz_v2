@@ -1,5 +1,5 @@
 <template>
-  <div v-if="show" class="d-flex">
+  <div v-if="show" class="d-flex flex-column flex-sm-row">
     <v-btn
       v-for="icon in icons"
       :key="icon.title"
@@ -8,7 +8,9 @@
       color="transparent"
       :title="icon.title"
       :to="icon.title == 'Logout' ? '' : icon.href"
-      @click="icon.clicked"
+      @click="icon.title == 'Logout' ? logout() : ''"
+      :ripple="plain"
+      :plain="!plain"
     >
       <i :class="icon.class + ' mr-1'"></i
       ><span style="font-size: 13px">{{ icon.title }}</span>
@@ -28,6 +30,11 @@ export default Vue.extend({
       required: false,
       default: false,
     },
+    plain: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
   data() {
     return {
@@ -35,33 +42,27 @@ export default Vue.extend({
         {
           title: "Home",
           class: "fa-solid fa-house",
-          href: "/",
-          clicked: () => (""),
+          href: Defines.HOME_PAGE_URL,
         },
-
         {
           title: "Profile",
           class: "fa-solid fa-user",
-          href: "/profile",
-          clicked: () => (""),
+          href: Defines.PROFILE_PAGE_URL,
         },
         {
           title: "Notifications",
           class: "fa-solid fa-bell",
-          href: "/notification",
-          clicked: () => (""),
+          href: Defines.NOTIFICATION_PAGE_URL,
         },
         {
           title: "Team",
           class: "fa-solid fa-users",
-          href: "/team",
-          clicked: () => (""),
+          href: Defines.TEAM_PAGE_URL,
         },
         {
           title: "Logout",
           class: "fa-solid fa-right-from-bracket",
           href: "",
-          clicked: () => (httpRequest.post(Defines.SERVER_LOGOUT_URL)),
         },
       ],
     };

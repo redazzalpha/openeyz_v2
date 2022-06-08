@@ -14,10 +14,9 @@
               class="mt-5"
               style="border-radius: 15px"
             >
+            <!-- TODO: modify fake avatar and replace it by real user avartar src -->
               <!-- item-headeer -->
               <v-expansion-panel-header class="pa-3">
-
-
                 <span class="shrink">
                   <v-badge content="New">
                     <AvatarCpn :avatarSrc="null" role="SUPERADMIN" size="50" />
@@ -28,11 +27,6 @@
                   message from {{ item.owner.name }} <br />
                   {{ translateDate(item.comment.creation) }}
                 </span>
-
-
-
-
-                
               </v-expansion-panel-header>
               <!-- item-content -->
               <v-expansion-panel-content>
@@ -54,7 +48,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapState } from "vuex";
-import { translateDate } from '../../utils/function';
+import { translateDate } from "../../utils/function";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
 
 export default Vue.extend({
