@@ -2,8 +2,6 @@
   <div class="home">
     <TitleCpn />
     <PostCpn />
-
-    <!-- publication component -->
     <div v-for="(post, index) in posts" :key="index">
       <PublicationCpn :item="post" />
     </div>

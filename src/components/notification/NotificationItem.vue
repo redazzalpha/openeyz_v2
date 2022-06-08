@@ -1,36 +1,13 @@
 <template>
   <div class="notification-item">
-    <!-- button -->
-    <v-container grid-list-xs>
-      <v-row class="d-flex justify-center">
-        <v-col class="col-12 col-sm-4">
-          <v-btn @click="toogle" class="mr-3" block>
-            {{ isAllHidden ? "show all" : "hide all" }}
-          </v-btn>
-        </v-col>
-
-        <v-col class="col-12 col-sm-4">
-          <v-btn @click="toogle" class="mr-3" block>
-            {{ isAllHidden ? "mark all as read" : "hide all" }}
-          </v-btn>
-        </v-col>
-
-        <v-col class="col-12 col-sm-4">
-          <v-btn @click="toogle" class="mr-3" block>
-            {{ isAllHidden ? "delete all" : "hide all" }}
-          </v-btn>
-        </v-col>
-      </v-row>
-    </v-container>
-
-    {{userNotifs[0].comment.post.content }}
+    <!-- {{ userNotifs[0] }} -->
 
     <!-- notification-container -->
     <v-container grid-list-xs>
       <v-row>
         <v-col>
           <!-- notification-items -->
-          <v-expansion-panels v-model="panel" multiple>
+          <v-expansion-panels :value="panel" multiple>
             <v-expansion-panel
               v-for="(item, i) in userNotifs"
               :key="i"
@@ -39,16 +16,31 @@
             >
               <!-- item-headeer -->
               <v-expansion-panel-header class="pa-3">
-                <span>
+
+
+                <span class="shrink">
                   <v-badge content="New">
                     <AvatarCpn :avatarSrc="null" role="SUPERADMIN" size="50" />
                   </v-badge>
-                  message from {{item.owner.name}}
                 </span>
+
+                <span>
+                  message from {{ item.owner.name }} <br />
+                  {{ translateDate(item.comment.creation) }}
+                </span>
+
+
+
+
+                
               </v-expansion-panel-header>
               <!-- item-content -->
               <v-expansion-panel-content>
-                <div v-html="item.comment.content" style="background-color: #BBDEFB; border-radius: 15px" class="mb-5 pa-3"></div>
+                <div
+                  v-html="item.comment.content"
+                  style="background-color: #bbdefb; border-radius: 15px"
+                  class="mb-5 pa-3"
+                ></div>
                 <div v-html="item.comment.post.content"></div>
               </v-expansion-panel-content>
             </v-expansion-panel>
@@ -61,38 +53,32 @@
 
 <script lang="ts">
 import Vue from "vue";
-import {mapState} from 'vuex';
+import { mapState } from "vuex";
+import { translateDate } from '../../utils/function';
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
+
 export default Vue.extend({
   name: "Notification-item",
   components: {
     AvatarCpn,
   },
+  props: {
+    panel: {
+      type: [],
+      required: true,
+    },
+    hidden: {
+      type: Boolean,
+      required: true,
+    },
+  },
   data() {
     return {
-      panel: [],
-      isAllHidden: true,
+      translateDate: translateDate,
     };
   },
   computed: {
-    ...mapState([
-      'userNotifs'
-    ]),
-  },
-  methods: {
-    toogle() {
-      this.isAllHidden = !this.isAllHidden;
-      if (this.isAllHidden) this.hideAll();
-      else this.showAll();
-    },
-    showAll() {
-      let tab: number[] = [];
-      for (let i = 0; i < this.userNotifs.length; i++) tab[i] = i as never;
-      this.panel = tab as never[];
-    },
-    hideAll() {
-      this.panel = [];
-    },
+    ...mapState(["userNotifs"]),
   },
 });
 </script>

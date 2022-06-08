@@ -23,11 +23,16 @@
                   style="background-color: #00acc1"
                 >
                   <!-- author-avatar -->
-                  <AvatarCpn
-                    :avatarSrc="item.post.author.avatarSrc"
-                    :role="item.post.author.roles[0].roleName"
-                  />
-                  {{ item.post.author.name }} posted on {{ item.creation }}
+                  <span class="shrink">
+                    <AvatarCpn
+                      :avatarSrc="item.post.author.avatarSrc"
+                      :role="item.post.author.roles[0].roleName"
+                    />
+                  </span>
+                  <span>
+                    post from {{ item.post.author.name }} <br />
+                    {{ translateDate(item.post.creation) }}
+                  </span>
                 </v-card-title>
                 <!-- publication-content -->
                 <v-card-text
@@ -104,6 +109,7 @@ import Vue, { PropType } from "vue";
 import { mapActions } from "vuex";
 import { Item } from "../../utils/types";
 import { httpRequest } from "../../utils/http";
+import { translateDate } from "../../utils/function";
 import * as Defines from "../../utils/defines";
 import AvatarCpn from "@/components/cpn/Avatar-cpn.vue";
 import CommentBlock from "@/components/comment/Comment-block.vue";
@@ -122,6 +128,7 @@ export default Vue.extend({
   },
   data() {
     return {
+      translateDate: translateDate,
       isActive: false,
       dialog: false,
       comments: [],

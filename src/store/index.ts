@@ -1,4 +1,4 @@
-import { Post } from './../../../openeyz_v2/src/utils/types';
+import { Post } from '../utils/types';
 import { UserObj, Notif } from './../utils/types';
 import Vuetify from "@/plugins/vuetify";
 import Vue from 'vue';
@@ -7,7 +7,8 @@ import { httpRequest } from './../utils/http';
 import * as Defines from './../utils/defines';
 import { Users, VueResponse } from "../utils/types";
 import VuexPersistence from 'vuex-persist';
-import { PropType } from 'vue/types/umd';
+import { DateTime } from "luxon";
+
 
 const vuexLocal = new VuexPersistence({
   storage: window.localStorage
@@ -19,10 +20,14 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    currentUser: Users,
     userListObj : [] as UserObj[],
     userLOSecondary : [] as UserObj[],
+    posts: [] as Post[],
+    userPosts: [] as Post[],
+    comments: [] as Comment[],
     userNotifs: [] as Notif[],
+
+    currentUser: Users,
 
     teamSelectedUser: UserObj,
     teamSelectDialog: false,
@@ -31,11 +36,6 @@ export default new Vuex.Store({
 
     tabAccess: 0,
     tabProfile: 0,
-
-
-    posts: [] as Post[],
-    userPosts: [] as Post[],
-    comments: [] as Comment[],
   },
   getters: {
     btnSize(): string {
@@ -52,28 +52,6 @@ export default new Vuex.Store({
     UPDATE_USER_LO_SECONDARY(state, payload): void {
       state.userLOSecondary = payload;
     },
-    UPDATE_USER_NOTIFS(state, payload): void {
-      state.userNotifs = payload;
-    },
-
-    UPDATE_TEAM_SELECTED_USER(state, payload): void {
-      state.teamSelectedUser = payload;
-    },
-    UPDATE_TEAM_SELECT_DIALOG(state, payload: boolean): void {
-      state.teamSelectDialog = payload;
-    },
-
-    UPDATE_DRAWER(state, payload): void {
-      state.drawer = payload;
-    },
-
-    UPDATE_TAB_ACCESS(state, payload: number): void {
-      state.tabAccess = payload;
-    },
-    UPDATE_TAB_PROFILE(state, payload: number): void {
-      state.tabProfile = payload;
-    },
-
     UPDATE_POSTS(state, payload): void {
       state.posts = payload;
     },
@@ -83,6 +61,31 @@ export default new Vuex.Store({
     UPDATE_COMMENTS(state, payload): void {
       state.comments = payload;
     },
+    UPDATE_USER_NOTIFS(state, payload): void {
+      state.userNotifs = payload;
+    },
+
+
+    UPDATE_TEAM_SELECTED_USER(state, payload): void {
+      state.teamSelectedUser = payload;
+    },
+    UPDATE_TEAM_SELECT_DIALOG(state, payload: boolean): void {
+      state.teamSelectDialog = payload;
+    },
+
+
+    UPDATE_DRAWER(state, payload): void {
+      state.drawer = payload;
+    },
+
+
+    UPDATE_TAB_ACCESS(state, payload: number): void {
+      state.tabAccess = payload;
+    },
+    UPDATE_TAB_PROFILE(state, payload: number): void {
+      state.tabProfile = payload;
+    },
+
 
     CLEAR_VUEX(state) {
       state.currentUser = Users;
@@ -114,9 +117,19 @@ export default new Vuex.Store({
     updateUserLOSecondary(context, payload): void {
       context.commit("UPDATE_USER_LO_SECONDARY", payload);
     },
+    updatePosts(context, payload): void {
+      context.commit('UPDATE_POSTS', payload);
+    },
+    updateUserPosts(context, payload): void {
+      context.commit('UPDATE_USER_POSTS', payload);
+    },
+    updateComments(context, payload): void {
+      context.commit('UPDATE_COMMENTS', payload);
+    },
     updateUseNotifs(context, payload): void {
       context.commit("UPDATE_USER_NOTIFS", payload);
     },
+
 
     updateTeamSelectedUser(context, payload): void {
       context.commit("UPDATE_TEAM_SELECTED_USER", payload);
@@ -130,6 +143,7 @@ export default new Vuex.Store({
       context.commit('UPDATE_DRAWER', payload);
     },
 
+
     updateTabAccess(context, payload: number): void {
       context.commit('UPDATE_TAB_ACCESS', payload);
     },
@@ -137,16 +151,8 @@ export default new Vuex.Store({
       context.commit('UPDATE_TAB_PROFILE', payload);
     },
 
-    updatePosts(context, payload): void {
-      context.commit('UPDATE_POSTS', payload);
-    },
-    updateUserPosts(context, payload): void {
-      context.commit('UPDATE_USER_POSTS', payload);
-    },
-    updateComments(context, payload): void {
-      context.commit('UPDATE_COMMENTS', payload);
-    },
 
+    // TODO: got to move those function in seperated file i think but  looks to good to store those function cause they are not stored in the vuex
     async getAllPosts(context): Promise<void | VueResponse> {
       const response: VueResponse | void = await httpRequest.get(Defines.SERVER_PUBLICATION_URL);
       context.commit('UPDATE_POSTS', (JSON.parse(response.bodyText)));
@@ -157,12 +163,14 @@ export default new Vuex.Store({
     },
     async getAllComments(context, postId: number): Promise<void | VueResponse> {
       const response: VueResponse = await httpRequest.get(Defines.SERVER_COMMENT_URL, { params: { postId } });
-      context.commit('UPDATE_COMMENTS', (JSON.parse(response.bodyText)));
+      context.commit('UPDATE_COMMENTS', (response.body));
+      // context.commit('UPDATE_COMMENTS', (JSON.parse(response.bodyText)));
     },
     async getAllNotifs(context): Promise<void | VueResponse> {
       const response: VueResponse = await httpRequest.get(Defines.SERVER_USER_NOTIF_URL);
       context.commit('UPDATE_USER_NOTIFS', (response.body));
     },
+
 
     clearVuex(context) {
       context.commit('CLEAR_VUEX');
@@ -171,7 +179,7 @@ export default new Vuex.Store({
       context.commit("CLEAR_VUEX"),
       localStorage.removeItem("token");
       localStorage.removeItem("vuex");
-    }
+    },
   },
   modules: {
   },

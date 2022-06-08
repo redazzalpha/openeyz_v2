@@ -4,7 +4,7 @@
     <!-- leave-comment-area -->
     <v-row>
       <v-col class="d-flex align-center">
-        <Avatar
+        <AvatarCpn
           :avatarSrc="currentUser.avatarSrc"
           :role="currentUser.roles[0].roleName"
           size="40"
@@ -34,7 +34,7 @@
       <v-col>
         <v-card elevation="0">
           <!-- no comment-message -->
-          <VAlert
+          <v-alert
             v-if="comments.length < 1"
             text
             color="red"
@@ -42,7 +42,7 @@
             class="text-center"
           >
             This post has not comment be the first to leave one
-          </VAlert>
+          </v-alert>
           <!-- comment-block -->
           <div v-else class="comment-block">
             <!-- comment-title -->
@@ -54,14 +54,14 @@
             </v-card-title>
             <!-- message-card -->
             <v-card
-              v-for="(item, index) in comments"
+              v-for="(comment, index) in comments"
               :key="index"
               class="d-flex align-center mb-5"
               elevation="0"
             >
               <AvatarCpn
-                :avatarSrc="item.comment.author.avatarSrc"
-                :role="item.comment.author.roles[0].roleName"
+                :avatarSrc="comment.author.avatarSrc"
+                :role="comment.author.roles[0].roleName"
                 size="40"
                 class="flex-shrink-1"
               />
@@ -74,15 +74,15 @@
                   primary-title
                   class="text-body-2 text-sm-subtitle-1 white--text pa-2 mb-2"
                 >
-                  {{ item.comment.author.name }}
+                  {{ comment.author.name }}
                   said on
-                  {{ item.creation }}
+                  {{ translateDate(comment.creation) }}
                 </v-card-title>
                 <!-- comment-content -->
                 <div class="message-arrowed"></div>
                 <v-card-text class="white--text pt-0">
                   <div class="d-flex">
-                    {{ item.comment.content }}
+                    {{ comment.content }}
                   </div>
                 </v-card-text>
               </div>
@@ -99,6 +99,7 @@ import Vue, { PropType } from "vue";
 import { mapState, mapActions } from "vuex";
 import { httpRequest } from "@/utils/http";
 import { Item } from "../../utils/types";
+import { translateDate } from "../../utils/function";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
 import * as Defines from "@/utils/defines";
 export default Vue.extend({
@@ -111,6 +112,7 @@ export default Vue.extend({
   },
   data() {
     return {
+      translateDate: translateDate,
       comment: "",
     };
   },

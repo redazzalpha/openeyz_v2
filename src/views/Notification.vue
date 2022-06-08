@@ -1,7 +1,42 @@
 <template>
   <div class="notifications">
     <!-- toolbar -->
-    <ToolbarCpn icon="fa-solid fa-bell" title="Notifications" xs />
+    <ToolbarCpn icon="fa-solid fa-bell" title="Notifications">
+      <template v-slot:center>
+        <div style="display: flex; justify-content: space-between;">
+          <v-btn
+            @click="toogle"
+            plain
+            small
+            depressed
+            class="ma-1"
+            style="border: solid grey 1px"
+          >
+            {{ isAllHidden ? "show all" : "hide all" }}
+          </v-btn>
+          <v-btn
+            @click="toogle"
+            plain
+            small
+            depressed
+            class="ma-1"
+            style="border: solid grey 1px"
+          >
+            all as read
+          </v-btn>
+          <v-btn
+            @click="toogle"
+            plain
+            small
+            depressed
+            class="ma-1"
+            style="border: solid grey 1px"
+          >
+            delete all
+          </v-btn>
+        </div>
+      </template>
+    </ToolbarCpn>
     <!-- main-card-container -->
     <v-card
       color="transparent"
@@ -11,14 +46,14 @@
       style="padding-top: 65px"
     >
       <NotificationTitle />
-      <NotificationItem />
+      <NotificationItem :hidden="isAllHidden" :panel="panel" />
     </v-card>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import {mapActions } from 'vuex';
+import { mapActions, mapState } from "vuex";
 import ToolbarCpn from "../components/cpn/Toolbar-cpn.vue";
 import NotificationTitle from "../components/notification/Notification-title.vue";
 import NotificationItem from "../components/notification/NotificationItem.vue";
@@ -29,12 +64,33 @@ export default Vue.extend({
     NotificationTitle,
     NotificationItem,
   },
-  methods: {
-    ...mapActions([
-      'getAllNotifs'
-    ]),
+  data() {
+    return {
+      panel: [] as number[],
+      isAllHidden: true,
+    };
   },
-  beforeMount(){
+  computed: {
+    ...mapState(["userNotifs"]),
+  },
+
+  methods: {
+    ...mapActions(["getAllNotifs"]),
+    toogle() {
+      this.isAllHidden = !this.isAllHidden;
+      if (this.isAllHidden) this.hideAll();
+      else this.showAll();
+    },
+    showAll() {
+      let tab: number[] = [];
+      for (let i = 0; i < this.userNotifs.length; i++) tab[i] = i;
+      this.panel = tab;
+    },
+    hideAll() {
+      this.panel = [];
+    },
+  },
+  beforeMount() {
     this.getAllNotifs();
   },
 });

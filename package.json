@@ -24,6 +24,7 @@
     "@types/ckeditor__ckeditor5-editor-classic": "^27.1.2",
     "ckeditor5-images-upload": "^1.2.0",
     "css-loader": "^5.2.7",
+    "luxon": "^2.4.0",
     "postcss-loader": "^4.3.0",
     "raw-loader": "^4.0.2",
     "style-loader": "^2.0.0",
@@ -40,6 +41,7 @@
   },
   "devDependencies": {
     "@types/ckeditor__ckeditor5-build-classic": "^29.0.1",
+    "@types/luxon": "^2.3.2",
     "@types/node": "^17.0.35",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",

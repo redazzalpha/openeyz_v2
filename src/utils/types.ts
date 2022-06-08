@@ -57,7 +57,6 @@ export class UserObj {
 }
 export interface Item {
   post: Post;
-  creation: string;
   commentCount: number;
   likeCount: number;
   userLike: boolean;
