@@ -6,36 +6,40 @@
     <v-container grid-list-xs>
       <v-row>
         <v-col>
-          <!-- notification-items -->
+          <!-- notifications -->
           <v-expansion-panels :value="panel" multiple>
             <v-expansion-panel
-              v-for="(item, i) in userNotifs"
+              v-for="(notif, i) in userNotifs"
               :key="i"
               class="mt-5"
               style="border-radius: 15px"
             >
-            <!-- TODO: modify fake avatar and replace it by real user avartar src -->
-              <!-- item-headeer -->
+              <!-- TODO: modify fake avatar and replace it by real user avartar src -->
+              <!-- notif-header -->
               <v-expansion-panel-header class="pa-3">
                 <span class="shrink">
-                  <v-badge content="New">
-                    <AvatarCpn :avatarSrc="null" role="SUPERADMIN" size="50" />
+                  <v-badge content="New" :value="!notif.read">
+                    <AvatarCpn
+                      :avatarSrc="notif.owner.avatarSrc"
+                      :role="notif.owner.roles[0].roleName"
+                      size="50"
+                    />
                   </v-badge>
                 </span>
 
                 <span>
-                  message from {{ item.owner.name }} <br />
-                  {{ translateDate(item.comment.creation) }}
+                  message from {{ notif.owner.name }} <br />
+                  {{ translateDate(notif.comment.creation) }}
                 </span>
               </v-expansion-panel-header>
-              <!-- item-content -->
+              <!-- notif-content -->
               <v-expansion-panel-content>
                 <div
-                  v-html="item.comment.content"
+                  v-html="notif.comment.content"
                   style="background-color: #bbdefb; border-radius: 15px"
                   class="mb-5 pa-3"
                 ></div>
-                <div v-html="item.comment.post.content"></div>
+                <div v-html="notif.comment.post.content"></div>
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>
@@ -48,7 +52,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapState } from "vuex";
-import { translateDate } from "../../utils/function";
+import { translateDate } from "../../utils/functions";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
 
 export default Vue.extend({

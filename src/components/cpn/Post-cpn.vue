@@ -47,9 +47,10 @@
 <script lang="ts">
 import Vue from "vue";
 import ClassicEditor from "@/ckeditor5/ckeditor5";
-import { mapGetters, mapState, mapActions } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import { httpRequest } from "@/utils/http";
 import { VueResponse } from "../../utils/types";
+import { getAllPosts } from '../../utils/functions';
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
 import * as Defines from "@/utils/defines";
 export default Vue.extend({
@@ -65,9 +66,6 @@ export default Vue.extend({
     };
   },
   methods: {
-    ...mapActions([
-      "getAllPosts",
-    ]),
     checkCurrentUser(): boolean {
       return (typeof this.currentUser) != 'function' && this.currentUser != null;
     },
@@ -79,7 +77,7 @@ export default Vue.extend({
         httpRequest.post(Defines.SERVER_PUBLICATION_URL, data).then(
           (): void => {
             this.editorData = "";
-            this.getAllPosts();
+            getAllPosts();
           },
           (error: VueResponse): void => {
             this.alertMessage = error.bodyText;

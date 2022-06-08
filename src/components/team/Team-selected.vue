@@ -84,6 +84,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapActions, mapState } from "vuex";
+import {getAllUserPosts} from '../../utils/functions';
 import PublicationCpn from "../cpn/Publication-cpn.vue";
 import ToolbarCpn from "../cpn/Toolbar-cpn.vue";
 import * as Defines from "../../utils/defines";
@@ -159,7 +160,7 @@ export default Vue.extend({
     },
   },
   methods: {
-    ...mapActions(["updateTeamSelectDialog", "getAllUserPosts"]),
+    ...mapActions(["updateTeamSelectDialog"]),
     closeDialog() {
       this.updateTeamSelectDialog(false);
     },
@@ -169,11 +170,11 @@ export default Vue.extend({
   },
   watch: {
     teamSelectDialog(visible: boolean) {
-      if (visible) this.getAllUserPosts(this.username);
+      if (visible) getAllUserPosts(this.username);
     },
   },
   created() {
-    this.getAllUserPosts(this.username);
+    getAllUserPosts(this.username);
   },
 });
 </script>

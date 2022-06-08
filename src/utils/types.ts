@@ -1,9 +1,9 @@
 // vue types
-export interface VueFunction  {
-   validate() : boolean
-  }
+export interface VueFunction {
+  validate(): boolean;
+}
 export type VueElement = undefined | Vue | Element | (Vue | Element)[];
-export interface PPP  extends  VueFunction {
+export interface PPP extends VueFunction {
   name: string,
 }
 export interface VueResponse {
@@ -62,7 +62,7 @@ export interface Item {
   userLike: boolean;
 }
 
-export class Users{
+export class Users {
   username = String;
   lname = String;
   name = String;
@@ -88,7 +88,8 @@ export interface Comment {
 export interface Notif {
   id: number,
   owner: Users,
-  comment: Comment, 
+  comment: Comment,
+  read: boolean,
 }
 export interface Likes {
   id: number,

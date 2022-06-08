@@ -5,32 +5,32 @@
       <template v-slot:center>
         <div style="display: flex; justify-content: space-between;">
           <v-btn
-            @click="toogle"
             plain
             small
             depressed
             class="ma-1"
             style="border: solid grey 1px"
+            @click="toogle"
           >
             {{ isAllHidden ? "show all" : "hide all" }}
           </v-btn>
           <v-btn
-            @click="toogle"
             plain
             small
             depressed
             class="ma-1"
             style="border: solid grey 1px"
+            @click="readAll"
           >
             all as read
           </v-btn>
           <v-btn
-            @click="toogle"
             plain
             small
             depressed
             class="ma-1"
             style="border: solid grey 1px"
+            @click="deleteAll"
           >
             delete all
           </v-btn>
@@ -53,7 +53,10 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { mapActions, mapState } from "vuex";
+import { mapState } from "vuex";
+import {getAllNotifs} from '../utils/functions';
+import { httpRequest } from "../utils/http";
+import * as Defines from '../utils/defines';
 import ToolbarCpn from "../components/cpn/Toolbar-cpn.vue";
 import NotificationTitle from "../components/notification/Notification-title.vue";
 import NotificationItem from "../components/notification/NotificationItem.vue";
@@ -75,7 +78,6 @@ export default Vue.extend({
   },
 
   methods: {
-    ...mapActions(["getAllNotifs"]),
     toogle() {
       this.isAllHidden = !this.isAllHidden;
       if (this.isAllHidden) this.hideAll();
@@ -89,9 +91,19 @@ export default Vue.extend({
     hideAll() {
       this.panel = [];
     },
+    async readAll() {
+      await httpRequest.patch(Defines.SERVER_USER_NOTIF_URL);
+      await getAllNotifs();
+
+    },
+    async deleteAll() {
+      await httpRequest.delete(Defines.SERVER_USER_NOTIF_URL);
+      await getAllNotifs();
+
+    },
   },
   beforeMount() {
-    this.getAllNotifs();
+    getAllNotifs();
   },
 });
 </script>

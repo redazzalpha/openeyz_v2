@@ -100,7 +100,8 @@ import Vue, { PropType } from "vue";
 import { mapState, mapActions } from "vuex";
 import { httpRequest } from "@/utils/http";
 import { Item } from "../../utils/types";
-import { translateDate } from "../../utils/function";
+import { translateDate } from "../../utils/functions";
+import {getAllComments} from '../../utils/functions';
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
 import * as Defines from "@/utils/defines";
 export default Vue.extend({
@@ -121,7 +122,6 @@ export default Vue.extend({
     ...mapState(["currentUser", "comments"]),
   },
   methods: {
-    ...mapActions(["getAllComments"]),
     // TODO; block message length as 255 char max need to do it on server too
     async send(): Promise<void> {
       if (this.itemPost.post) {
@@ -130,7 +130,7 @@ export default Vue.extend({
         data.append("postId", this.itemPost.post?.id.toString());
         await httpRequest.post(Defines.SERVER_COMMENT_URL, data);
         this.comment = "";
-        this.getAllComments(this.itemPost.post?.id);
+        getAllComments(this.itemPost.post?.id);
         this.$emit("send", this.itemPost);
       }
     },

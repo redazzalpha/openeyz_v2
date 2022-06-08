@@ -61,7 +61,7 @@ import Vue from "vue";
 import { mapActions, mapState } from "vuex";
 import { httpRequest } from "../utils/http";
 import { UserMap, UserObj } from "../utils/types";
-import * as Defines from "../utils/defines";
+import {getUsers} from '../utils/functions';
 import TitleCpn from "../components/team/Team-title.vue";
 import AvatarCpn from "../components/cpn/Avatar-cpn.vue";
 import ToolbarCpn from "../components/cpn/Toolbar-cpn.vue";
@@ -95,22 +95,6 @@ export default Vue.extend({
       "updateTeamSelectedUser",
       "updateTeamSelectDialog",
     ]),
-    async getUsers(): Promise<void> {
-      const res = await httpRequest.get(Defines.SERVER_USER_SIMPLE_URL);
-
-      const userListObj = (res.body as UserMap).map((e: string[]) => {
-        const [name, avatarSrc, role, username] = e;
-        return {
-          name: name,
-          avatarSrc: avatarSrc,
-          role: role,
-          username: username,
-        };
-      });
-
-      this.updateUserListObj(userListObj);
-      this.updateUserLOSecondary(userListObj);
-    },
     input(selectedUsername: string) {
       const userObj: UserObj[] = this.userListObj.filter((e: UserObj) => {
         return e.username == selectedUsername;
@@ -150,7 +134,7 @@ export default Vue.extend({
   },
   created() {
     this.updateTeamSelectDialog(false);
-    this.getUsers();
+    getUsers();
   },
 });
 </script>

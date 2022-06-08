@@ -109,7 +109,8 @@ import Vue, { PropType } from "vue";
 import { mapActions } from "vuex";
 import { Item } from "../../utils/types";
 import { httpRequest } from "../../utils/http";
-import { translateDate } from "../../utils/function";
+import { translateDate } from "../../utils/functions";
+import { getAllPosts, getAllComments} from '../../utils/functions';
 import * as Defines from "../../utils/defines";
 import AvatarCpn from "@/components/cpn/Avatar-cpn.vue";
 import CommentBlock from "@/components/comment/Comment-block.vue";
@@ -135,9 +136,9 @@ export default Vue.extend({
     };
   },
   methods: {
-    ...mapActions(["getAllPosts", "getAllComments", "updateComments"]),
+    ...mapActions(["updateComments"]),
     showComment(item: Item): void {
-      this.getAllComments(item.post.id);
+      getAllComments(item.post.id);
       this.dialog = true;
     },
     closeComment() {
@@ -151,7 +152,7 @@ export default Vue.extend({
       const postId: FormData = new FormData();
       if (item.post) postId.append("postId", item.post.id.toString());
       await httpRequest.post(Defines.SERVER_LIKE_URL, postId);
-      this.getAllPosts();
+      getAllPosts();
     },
   },
   created(): void {

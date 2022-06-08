@@ -31,7 +31,7 @@
 <script lang="ts">
 import Vue, { PropType } from "vue";
 import { Item } from "../../utils/types";
-import { translateDate } from "../../utils/function";
+import { translateDate } from "../../utils/functions";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
 export default Vue.extend({
   name: "Comment-publication",

@@ -3,9 +3,7 @@ import { UserObj, Notif } from './../utils/types';
 import Vuetify from "@/plugins/vuetify";
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { httpRequest } from './../utils/http';
-import * as Defines from './../utils/defines';
-import { Users, VueResponse } from "../utils/types";
+import { Users } from "../utils/types";
 import VuexPersistence from 'vuex-persist';
 
 
@@ -125,7 +123,7 @@ export default new Vuex.Store({
     updateComments(context, payload): void {
       context.commit('UPDATE_COMMENTS', payload);
     },
-    updateUseNotifs(context, payload): void {
+    updateUserNotifs(context, payload): void {
       context.commit("UPDATE_USER_NOTIFS", payload);
     },
 
@@ -148,36 +146,6 @@ export default new Vuex.Store({
     },
     updateTabProfile(context, payload: number): void {
       context.commit('UPDATE_TAB_PROFILE', payload);
-    },
-
-
-    // TODO: got to move those function in seperated file i think but  looks to good to store those function cause they are not stored in the vuex
-    async getAllPosts(context): Promise<void | VueResponse> {
-      const response: VueResponse | void = await httpRequest.get(Defines.SERVER_PUBLICATION_URL);
-      context.commit('UPDATE_POSTS', (JSON.parse(response.bodyText)));
-    },
-    async getAllUserPosts(context, authorId: string): Promise<void | VueResponse> {
-      const response: VueResponse | void = await httpRequest.get(Defines.SERVER_PUBLICATION_URL, {params: {authorId}});
-      context.commit('UPDATE_USER_POSTS', (JSON.parse(response.bodyText)));
-    },
-    async getAllComments(context, postId: number): Promise<void | VueResponse> {
-      const response: VueResponse = await httpRequest.get(Defines.SERVER_COMMENT_URL, { params: { postId } });
-      context.commit('UPDATE_COMMENTS', (response.body));
-      // context.commit('UPDATE_COMMENTS', (JSON.parse(response.bodyText)));
-    },
-    async getAllNotifs(context): Promise<void | VueResponse> {
-      const response: VueResponse = await httpRequest.get(Defines.SERVER_USER_NOTIF_URL);
-      context.commit('UPDATE_USER_NOTIFS', (response.body));
-    },
-
-
-    clearVuex(context) {
-      context.commit('CLEAR_VUEX');
-    },
-    clearStorage(context) {
-      context.commit("CLEAR_VUEX"),
-      localStorage.removeItem("token");
-      localStorage.removeItem("vuex");
     },
   },
   modules: {

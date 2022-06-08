@@ -10,7 +10,8 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { mapActions, mapState } from "vuex";
+import { mapState } from "vuex";
+import {getAllPosts} from '../utils/functions';
 import TitleCpn from "@/components/cpn/Title-cpn.vue";
 import PostCpn from "@/components/cpn/Post-cpn.vue";
 import PublicationCpn from "@/components/cpn/Publication-cpn.vue";
@@ -24,11 +25,8 @@ export default Vue.extend({
   computed: {
     ...mapState(["posts"]),
   },
-  methods: {
-    ...mapActions(["getAllPosts"]),
-  },
   created() {
-      this.getAllPosts();
+      getAllPosts();
   },
 });
 </script>

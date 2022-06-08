@@ -6,6 +6,7 @@ import vuetify from '@/plugins/vuetify';
 import vueResource from 'vue-resource';
 import CKEditor from '@ckeditor/ckeditor5-vue2';
 import { Body, VueRequest, VueResponse } from './utils/types';
+import {clearStorage} from './utils/functions';
 import * as Defines from './utils/defines';
 
 Vue.config.productionTip = false;
@@ -20,7 +21,7 @@ Vue.http.interceptors.push(function (request: VueRequest) {
     const { status, body } = response;
     // TODO: look for solution to delet vuex correctly
     if (status === 0) {
-      store.dispatch('clearStorage');
+      clearStorage();
       router.push(Defines.ACCESS_PAGE_URL);
     }
     // if (status === 401) {
@@ -28,7 +29,7 @@ Vue.http.interceptors.push(function (request: VueRequest) {
     //   router.push(Defines.ACCESS_PAGE_URL);
     // }
     if (status === 500) {
-      store.dispatch('clearStorage');
+      clearStorage();
       router.push(Defines.ACCESS_PAGE_URL);
     }
 
