@@ -59,8 +59,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapActions, mapState } from "vuex";
-import { httpRequest } from "../utils/http";
-import { UserMap, UserObj } from "../utils/types";
+import { UserObj } from "../utils/types";
 import {getUsers} from '../utils/functions';
 import TitleCpn from "../components/team/Team-title.vue";
 import AvatarCpn from "../components/cpn/Avatar-cpn.vue";

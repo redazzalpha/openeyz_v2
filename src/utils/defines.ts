@@ -6,6 +6,7 @@ export const SERVER_PUBLICATION_URL = SERVER_URL + '/publication';
 export const SERVER_COMMENT_URL = SERVER_URL + '/comment';
 export const SERVER_LIKE_URL = SERVER_URL + '/like';
 export const SERVER_USER_NOTIF_URL = SERVER_URL + '/notif';
+export const SERVER_USER_NOTIF_ONE_URL = SERVER_URL + '/notif/one';
 export const SERVER_IMAGE_URL = SERVER_URL + '/image';
 export const SERVER_LOGOUT_URL = SERVER_DOMAIN_URL + '/logout';
 export const SERVER_USER_LNAME_URL = SERVER_URL + '/user/lname';

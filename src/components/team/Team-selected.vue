@@ -55,28 +55,35 @@
           <PublicationCpn :item="post" />
         </div>
 
-        <!-- alert part -->
-        <v-alert
-          v-if="!userPosts.length"
-          text
-          color="red"
-          :value="true"
-          max-width="700"
-          class="mx-auto text-center"
-        >
-          {{ author }} has no post at now !
-        </v-alert>
-        <v-alert
-          v-else
-          text
-          color="primary"
-          :value="true"
-          max-width="700"
-          class="mx-auto text-center"
-        >
-          You have reach end of {{ author }} 's publications
-        </v-alert>
+
       </v-container>
+
+      <div class="d-flex justify-center">
+
+          <!-- alert part -->
+        <v-btn class="btn" plain :ripple="false" @click="closeDialog">
+          <v-alert
+            v-if="!userPosts.length"
+            text
+            color="red"
+            :value="true"
+            max-width="700"
+            class="mx-auto text-center"
+          >
+            {{ author }} has no post at now !
+          </v-alert>
+          <v-alert
+            v-else
+            text
+            color="primary"
+            :value="true"
+            max-width="700"
+            class="mx-auto text-center"
+          >
+            You have reach end of {{ author }} 's publications
+          </v-alert>
+        </v-btn>
+      </div>
     </v-card>
   </v-dialog>
 </template>
@@ -84,7 +91,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapActions, mapState } from "vuex";
-import {getAllUserPosts} from '../../utils/functions';
+import { getAllUserPosts } from "../../utils/functions";
 import PublicationCpn from "../cpn/Publication-cpn.vue";
 import ToolbarCpn from "../cpn/Toolbar-cpn.vue";
 import * as Defines from "../../utils/defines";
@@ -178,3 +185,9 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+.btn:hover {
+  cursor: default;
+}
+</style>

@@ -94,12 +94,10 @@ export default Vue.extend({
     async readAll() {
       await httpRequest.patch(Defines.SERVER_USER_NOTIF_URL);
       await getAllNotifs();
-
     },
     async deleteAll() {
       await httpRequest.delete(Defines.SERVER_USER_NOTIF_URL);
       await getAllNotifs();
-
     },
   },
   beforeMount() {

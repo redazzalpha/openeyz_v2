@@ -97,6 +97,7 @@
                   </template>
                 </v-text-field>
               </v-col>
+              <!-- // TODO: set description on database and user profile cause not done yet -->
               <!--description-field-->
               <v-col cols="12" class="py-0">
                 <v-text-field
