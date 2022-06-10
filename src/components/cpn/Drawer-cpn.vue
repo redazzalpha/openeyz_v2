@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer tag="nav" v-model="$store.state.drawer" temporary app>
+  <v-navigation-drawer tag="nav"  v-model="$store.state.drawer" temporary app>
     <!-- item-list -->
     <v-list-item>
       <!-- user-vatara -->

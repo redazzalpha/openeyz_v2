@@ -1,14 +1,22 @@
 <template>
   <!-- TODO: got to lock all access if not authentified cause there a bug user can access to profil page cause there no request to the server to reject request -->
   <!--main-app-container-->
-  <v-app id="wrapper">
+  <v-app
+    id="wrapper"
+    :style="
+      'background:  url(' +
+      ($vuetify.theme.dark
+        ? require('./assets/bg-home-dark.webp')
+        : require('./assets/bg-home.webp')) +
+      ') fixed no-repeat center; background-size: cover; '
+    "
+  >
     <!--app-bar-header-->
     <AppbarCpn />
     <!--main-->
-    <v-main
-      :style='"background:  url(" + ($vuetify.theme.dark ? require("./assets/bg-home-dark.webp") : require("./assets/bg-home.webp")) + ") fixed no-repeat center; background-size: cover; "'>
+    <v-main>
       <!--main-section-->
-      <section>
+      <section style="min-height: 100vh" >
         <!--views-->
         <router-view />
       </section>
@@ -19,22 +27,34 @@
     <FooterCpn />
     <!--scroll-top-button-->
     <v-hover v-slot="{ hover }">
-      <v-btn v-scroll="onScroll" v-show="fab" fab fixed bottom right tab="button" color="cyan darken-1"
-        :class="(hover ? 'on-hover' : '')" @click="toTop">
+      <v-btn
+        v-scroll="onScroll"
+        v-show="fab"
+        fab
+        fixed
+        bottom
+        right
+        tab="button"
+        :color="$vuetify.theme.dark ? '#424242' : 'cyan darken-1'"
+        :class="hover ? 'on-hover' : ''"
+        @click="toTop"
+      >
         <v-icon class="text-h3 white--text">mdi-chevron-up</v-icon>
       </v-btn>
     </v-hover>
   </v-app>
 </template>
-// <!-- TODO: need to change code where i modify front end value without get server  response like in profile information field and like publication value has been modified without get server response-->
-// TODO: add autofocuse on fields  
+//
+<!-- TODO: need to change code where i modify front end value without get server  response like in profile information field and like publication value has been modified without get server response-->
+// TODO: add autofocuse on fields
 <script lang="ts">
-import Vue from 'vue';
-import FooterCpn from '@/components/cpn/Footer-cpn.vue';
-import AppbarCpn from '@/components/cpn/Appbar-cpn.vue';
-import DrawerCpn from '@/components/cpn/Drawer-cpn.vue';
+import Vue from "vue";
+import FooterCpn from "@/components/cpn/Footer-cpn.vue";
+import AppbarCpn from "@/components/cpn/Appbar-cpn.vue";
+import DrawerCpn from "@/components/cpn/Drawer-cpn.vue";
+import { mapState } from "vuex";
 export default Vue.extend({
-  name: 'App',
+  name: "App",
   components: {
     AppbarCpn,
     FooterCpn,
@@ -45,26 +65,57 @@ export default Vue.extend({
       fab: false,
     };
   },
+
+  computed: {
+    ...mapState(["currentUser"]),
+  },
   methods: {
     onScroll(e: UIEvent) {
-      if (typeof window === 'undefined') return;
+      if (typeof window === "undefined") return;
       if (e.target != null) {
-        const top = window.pageYOffset || ((e.target) as Element).scrollTop || 0;
+        const top = window.pageYOffset || (e.target as Element).scrollTop || 0;
         this.fab = top > 20;
       }
     },
     toTop() {
       this.$vuetify.goTo(0);
     },
+    async ckeThemeSwitcher() {
+      const style = document.documentElement.style;
+      if (this.currentUser.dark) {
+        style.setProperty("--ck-color-base-foreground", "#424242");
+        style.setProperty("--ck-color-base-background", "#424242");
+        style.setProperty("--ck-color-base-text", "white");
+        style.setProperty(
+          "--ck-color-button-default-hover-background",
+          "#757575"
+        );
+        style.setProperty("--ck-color-button-on-background", "#757575");
+      } else {
+        style.removeProperty("--ck-color-base-foreground");
+        style.removeProperty("--ck-color-base-background");
+        style.removeProperty("--ck-color-base-text");
+        style.removeProperty("--ck-color-button-default-hover-background");
+        style.removeProperty("--ck-color-button-on-background");
+      }
+    },
   },
+  created() {
+    this.$vuetify.theme.dark = this.currentUser.dark;
+    this.ckeThemeSwitcher();
+  },
+  updated() {
+    this.$vuetify.theme.dark = this.currentUser.dark;
+    this.ckeThemeSwitcher();
+        window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
 
-  mounted() {
-    // TODO; add black theme feature 
-    this.$vuetify.theme.dark = false;
-  }
+  },
 });
 </script>
-
 
 <style lang="scss">
 #wrapper {

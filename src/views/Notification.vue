@@ -3,7 +3,7 @@
     <!-- toolbar -->
     <ToolbarCpn icon="fa-solid fa-bell" title="Notifications">
       <template v-slot:center>
-        <div style="display: flex; justify-content: space-between;">
+        <div style="display: flex; justify-content: space-between">
           <v-btn
             plain
             small
@@ -38,33 +38,31 @@
       </template>
     </ToolbarCpn>
     <!-- main-card-container -->
-    <v-card
-      color="transparent"
-      max-width="800"
-      flat
-      class="mx-auto"
-      style="padding-top: 65px"
+    <ContainerCpn
+      title="Notifications"
+      subtitle="Stay tuned on user comments. Here you find all notifications about unread messages."
     >
-      <NotificationTitle />
-      <NotificationItem :hidden="isAllHidden" :panel="panel" />
-    </v-card>
+      <template v-slot:content>
+        <NotificationItem :hidden="isAllHidden" :panel="panel" />
+      </template>
+    </ContainerCpn>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import { mapState } from "vuex";
-import {getAllNotifs} from '../utils/functions';
+import { getAllNotifs } from "../utils/functions";
 import { httpRequest } from "../utils/http";
-import * as Defines from '../utils/defines';
+import * as Defines from "../utils/defines";
 import ToolbarCpn from "../components/cpn/Toolbar-cpn.vue";
-import NotificationTitle from "../components/notification/Notification-title.vue";
 import NotificationItem from "../components/notification/NotificationItem.vue";
+import ContainerCpn from "../components/cpn/Container-cpn.vue";
 export default Vue.extend({
   name: "Notificatione-page",
   components: {
+    ContainerCpn,
     ToolbarCpn,
-    NotificationTitle,
     NotificationItem,
   },
   data() {

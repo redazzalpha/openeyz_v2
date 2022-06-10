@@ -51,8 +51,15 @@
         </v-autocomplete>
       </template>
     </ToolbarCpn>
-    <TitleCpn />
-    <TeamCards />
+    <!-- main-card-container -->
+    <ContainerCpn
+      title="Searching user"
+      subtitle="Interact with other users from here. Search and select a user, access their publications, react by adding a comment."
+    >
+      <template v-slot:content>
+        <TeamCards />
+      </template>
+    </ContainerCpn>
   </div>
 </template>
 
@@ -60,17 +67,17 @@
 import Vue from "vue";
 import { mapActions, mapState } from "vuex";
 import { UserObj } from "../utils/types";
-import {getUsers} from '../utils/functions';
-import TitleCpn from "../components/team/Team-title.vue";
+import { getUsers } from "../utils/functions";
 import AvatarCpn from "../components/cpn/Avatar-cpn.vue";
 import ToolbarCpn from "../components/cpn/Toolbar-cpn.vue";
 import TeamCards from "../components/team/Team-cards.vue";
+import ContainerCpn from "../components/cpn/Container-cpn.vue";
 
 export default Vue.extend({
   name: "Team-page",
   components: {
+    ContainerCpn,
     ToolbarCpn,
-    TitleCpn,
     TeamCards,
     AvatarCpn,
   },
@@ -100,6 +107,7 @@ export default Vue.extend({
       });
       this.updateTeamSelectedUser(userObj[0]);
     },
+    // TODO: check algo cause give bug on delete search field input after chip card remains only one , the one i searched
     searching(search: string) {
       const regexp = new RegExp(search, "gi");
       const found = this.userListObj.filter((e: UserObj) => {

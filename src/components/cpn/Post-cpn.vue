@@ -6,36 +6,66 @@
       <v-row>
         <v-col>
           <!--card-container -->
-          <v-card max-width="500" class="mx-auto card mb-6 pb-2" elevation="7" style="position: relative">
+          <v-card
+            max-width="500"
+            class="mx-auto card mb-6 pb-2"
+            elevation="7"
+            style="position: relative; border-radius: 7px "
+            :color="$vuetify.theme.dark ? '#424242' : ''"
+          >
             <!--error-alert-message-->
             <Transition name="scale-transition">
-              <v-alert v-show="alertMessage" dense outlined type="error" style="
+              <v-alert
+                v-show="alertMessage"
+                dense
+                outlined
+                type="error"
+                style="
                   position: absolute;
                   top: 40%;
                   left: 10%;
                   right: 10%;
                   z-index: 1;
                   word-break: keep-all;
-                " text elevation="5" class="mt-3">{{ alertMessage }}</v-alert>
+                "
+                text
+                elevation="5"
+                class="mt-3"
+                >{{ alertMessage }}</v-alert
+              >
             </Transition>
             <!-- header-title -->
-            <v-card-title v-if="checkCurrentUser()" primary-title style="background-color: #00acc1"
-              class="text-body-1 text-sm-h6 white--text mb-4 pa-2">
-              <!-- <router-link to="#">
-                <Avatar :user="currentUser" />
-              </router-link> -->
+            <v-card-title
+              v-if="checkCurrentUser()"
+              primary-title
+              :style="`background-color: ${
+                $vuetify.theme.dark ? '#424242' : '#00acc1'
+              }`"
+              style="border-radius: 7px 7px 0 0"
+              class="font-italic white--text mb-4 pa-2"
+            >
               <v-btn :ripple="false" plain icon class="pa-7" to="/profile">
-                <AvatarCpn :avatarSrc="currentUser.avatarSrc" :role="currentUser.roles[0].roleName" />
+                <AvatarCpn
+                  :avatarSrc="currentUser.avatarSrc"
+                  :role="currentUser.roles[0].roleName"
+                />
               </v-btn>
               Say what you want {{ currentUser.name }}
             </v-card-title>
             <!--editor -->
             <v-card-text>
-              <ckeditor :editor="editor" v-model="editorData" height="300" tag-name="textarea"></ckeditor>
+              <ckeditor
+                :editor="editor"
+                v-model="editorData"
+                height="300"
+                tag-name="textarea"
+              ></ckeditor>
             </v-card-text>
             <!-- buttons -->
             <v-card-actions class="d-flex justify-center">
-              <v-btn color="primary" :width="btnSize" @click="publish">Publish</v-btn>
+              <v-btn color="primary" :width="btnSize" @click="publish"
+                >Publish</v-btn
+              >
             </v-card-actions>
           </v-card>
         </v-col>
@@ -50,9 +80,10 @@ import ClassicEditor from "@/ckeditor5/ckeditor5";
 import { mapGetters, mapState } from "vuex";
 import { httpRequest } from "@/utils/http";
 import { VueResponse } from "../../utils/types";
-import { getAllPosts } from '../../utils/functions';
+import { getAllPosts } from "../../utils/functions";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
 import * as Defines from "@/utils/defines";
+
 export default Vue.extend({
   name: "Post-input",
   components: {
@@ -67,13 +98,16 @@ export default Vue.extend({
   },
   methods: {
     checkCurrentUser(): boolean {
-      return (typeof this.currentUser) != 'function' && this.currentUser != null;
+      return typeof this.currentUser != "function" && this.currentUser != null;
     },
     publish(): void {
       if (this.editorData) {
         let data: FormData = new FormData();
-        // TODO: try to add src attribut to see imge on click 
-        data.append("post", this.editorData.replace(/<img/g, "<img width=100%"));
+        // TODO: try to add src attribut to see imge on click
+        data.append(
+          "post",
+          this.editorData.replace(/<img/g, "<img width=100%")
+        );
         httpRequest.post(Defines.SERVER_PUBLICATION_URL, data).then(
           (): void => {
             this.editorData = "";
@@ -93,33 +127,23 @@ export default Vue.extend({
     },
   },
   computed: {
-    ...mapState([
-      "posts",
-      "currentUser"
-    ]),
-    ...mapGetters([
-      "btnSize"
-    ]),
+    ...mapState(["posts", "currentUser"]),
+    ...mapGetters(["btnSize"]),
   },
 });
 </script>
 
 <style lang="scss">
-// editor body
-/* .ck.ck-editor {
-} */
-// editor-toolbar
-/* .ck-rounded-corners .ck.ck-editor__top .ck-sticky-panel .ck-toolbar,
-.ck.ck-editor__top .ck-sticky-panel .ck-toolbar.ck-rounded-corners {
-  background-color: #BDBDBD;
-} */
-
-// editor-content
-.ck.ck-editor__main>.ck-editor__editable {
-  min-height: $height-editor-content  !important;
+:root {
+  --ck-border-radius: 5px;
 }
-
+// editor-content
+.ck.ck-editor__main > .ck-editor__editable {
+  min-height: $height-editor-content;
+}
 .v-btn__content {
   opacity: 1 !important;
 }
 </style>
+
+// :color="$vuetify.theme.dark? '#212121' : 'cyan darken-1'"

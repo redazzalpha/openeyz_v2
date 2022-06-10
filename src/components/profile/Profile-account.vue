@@ -1,13 +1,13 @@
 <template>
   <v-tab-item>
     <!-- main-card -->
-    <v-card max-width="600" class="mx-auto my-10" shaped raised outlined>
+    <v-card max-width="600" class="mx-auto mb-10" shaped raised outlined>
       <!-- header-title -->
       <v-card-title class="d-flex flex-column justify-center align-center">
-        <!-- user-avatar -->
+        <!-- title-avatar -->
         <span style="position: relative">
-          <v-avatar size="175" color="red">
-            <v-img src="../../assets/account.jpg" alt="alt" />
+          <v-avatar size="175" tile>
+            <v-img src="../../assets/account.png" alt="alt" />
           </v-avatar>
         </span>
       </v-card-title>
@@ -16,8 +16,7 @@
         <v-container grid-list-xs>
           <!-- title-row -->
           <v-row>
-            <v-col
-              >-
+            <v-col>
               <h3 class="text-decoration-underline">Account</h3>
             </v-col>
           </v-row>
@@ -116,7 +115,6 @@
             v-model="confirmModel"
             solo
             hide-details
-            background-color="grey lighten-3"
             style="border: solid red 2px"
           >
           </v-text-field>
@@ -144,7 +142,7 @@ import Vue from "vue";
 import { mapState } from "vuex";
 import { mapActions, mapGetters } from "vuex";
 import { httpRequest } from "../../utils/http";
-import { clearStorage } from '../../utils/functions';
+import { clearStorage } from "../../utils/functions";
 import * as Defines from "../../utils/defines";
 export default Vue.extend({
   name: "Profile-account",

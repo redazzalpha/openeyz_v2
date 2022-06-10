@@ -9,12 +9,14 @@ export const SERVER_USER_NOTIF_URL = SERVER_URL + '/notif';
 export const SERVER_USER_NOTIF_ONE_URL = SERVER_URL + '/notif/one';
 export const SERVER_IMAGE_URL = SERVER_URL + '/image';
 export const SERVER_LOGOUT_URL = SERVER_DOMAIN_URL + '/logout';
+export const SERVER_USER_URL = SERVER_URL + '/user';
 export const SERVER_USER_LNAME_URL = SERVER_URL + '/user/lname';
 export const SERVER_USER_NAME_URL = SERVER_URL + '/user/name';
 export const SERVER_DESCRIPTION_URL = SERVER_URL + '/user/description';
 export const SERVER_USER_USERNAME_URL = SERVER_URL + '/user/username';
 export const SERVER_USER_PASSWORD_URL = SERVER_URL + '/user/password';
 export const SERVER_USER_IMG_URL = SERVER_URL + '/user/img';
+export const SERVER_USER_DARK_URL = SERVER_URL + '/user/dark';
 export const SERVER_USER_DELETE_URL = SERVER_URL + '/user/delete';
 
 export const ROOT_URL = "/";

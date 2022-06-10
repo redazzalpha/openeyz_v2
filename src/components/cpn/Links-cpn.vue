@@ -1,20 +1,32 @@
 <template>
   <div v-if="show" class="d-flex flex-column flex-sm-row">
-    <v-btn
-      v-for="icon in icons"
-      :key="icon.title"
-      class="btn d-flex mx-5"
-      elevation="0"
-      color="transparent"
-      :title="icon.title"
-      :to="icon.title == 'Logout' ? '' : icon.href"
-      @click="icon.title == 'Logout' ? logout() : ''"
-      :ripple="plain"
-      :plain="!plain"
+    <v-hover 
+    v-for="icon in icons"
+    :key="icon.title" 
+    v-slot="{hover}"
     >
-      <i :class="icon.class + ' mr-1'"></i
-      ><span style="font-size: 13px">{{ icon.title }}</span>
-    </v-btn>
+      <v-badge 
+      :value="icon.title == 'Notifications'? true : false"
+      :dot="!hover"
+      overlap
+      content="24"
+      :color="$vuetify.theme.dark ? 'error' : '#293fa3'"
+      >
+        <v-btn
+          class="btn d-flex mx-2"
+          elevation="0"
+          color="transparent"
+          :title="icon.title"
+          :to="icon.title == 'Logout' ? '' : icon.href"
+          @click="icon.title == 'Logout' ? logout() : ''"
+          :ripple="plain"
+          :plain="!plain"
+        >
+          <i :class="icon.class + ' mr-1'"></i>
+          <span style="font-size: 13px">{{ icon.title }}</span>
+        </v-btn>
+      </v-badge>
+    </v-hover>
   </div>
 </template>
 
@@ -74,3 +86,5 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style lang="scss" scoped>

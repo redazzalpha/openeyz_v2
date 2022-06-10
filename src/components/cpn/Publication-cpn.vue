@@ -20,7 +20,9 @@
                 <v-card-title
                   primary-title
                   class="text-body-1 white--text text-body-2 text-sm-subtitle-1 pa-2"
-                  style="background-color: #00acc1"
+                  :style="`background-color: ${
+                    $vuetify.theme.dark ? '#424242' : '#00acc1'
+                  }`"
                 >
                   <!-- author-avatar -->
                   <span class="shrink">

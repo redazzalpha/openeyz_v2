@@ -1,7 +1,7 @@
 <template>
-  <v-tab-item>
+  <v-tab-item >
     <!-- main-card -->
-    <v-card max-width="600" class="mx-auto my-10" shaped raised outlined>
+    <v-card max-width="600" class="mx-auto mb-10" shaped raised outlined>
       <!-- header-title -->
       <v-card-title class="d-flex flex-column justify-center align-center">
         <!-- user-avatar -->
@@ -33,7 +33,7 @@
       <!-- profile-tab-content -->
       <v-card-text>
         <v-container grid-list-xs>
-          <!-- title-row -->
+          <!-- information-title-row -->
           <v-row>
             <v-col>
               <h3 class="text-decoration-underline">Informations</h3>
@@ -64,9 +64,6 @@
             <v-col>
               <span class="mr-3">E-mail: {{ currentUser.username }} </span>
             </v-col>
-            <!-- <v-col class="shrink">
-                            <v-btn small color="primary" @click="openModify(2)">Modify</v-btn> <br>
-                        </v-col> -->
           </v-row>
           <!-- description-row -->
           <v-row>
@@ -105,6 +102,25 @@
                   </v-btn>
                 </template>
               </v-textarea>
+            </v-col>
+          </v-row>
+
+          <!-- feature-title-row -->
+          <v-row>
+            <v-col>
+              <h3 class="text-decoration-underline">Features</h3>
+            </v-col>
+          </v-row>
+          <!-- dark-mode-switch -->
+          <v-row>
+            <v-col>
+              <v-switch
+                v-model="$vuetify.theme.dark"
+                hide-details
+                :label="`Dark mode: ${$vuetify.theme.dark ? 'on' : 'off'}`"
+                class="pt-0"
+                @change="themeSwitcher"
+              />
             </v-col>
           </v-row>
         </v-container>
@@ -146,9 +162,10 @@
 import Vue from "vue";
 import { mapState, mapActions } from "vuex";
 import { httpRequest } from "@/utils/http";
-import { VueElement, VueFunction, VueResponse } from "../../utils/types";
+import { Users, VueElement, VueFunction, VueResponse, Body } from '../../utils/types';
 import * as Defines from "../../utils/defines";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
+
 export default Vue.extend({
   name: "Profile-info",
   components: {
@@ -156,6 +173,7 @@ export default Vue.extend({
   },
   data() {
     return {
+      darkTheme: this.$vuetify.theme.dark,
       userData: "",
       description: "",
       modifyDialog: false,
@@ -168,6 +186,7 @@ export default Vue.extend({
   methods: {
     ...mapActions(["updateCurrentUser"]),
     // TODO: GOT to reload current user cause vuex is not affected on reload
+    // TODO:  got to get the real value from de server insted of fale incrmentation here
     async sendDescription() {
       const description: FormData = new FormData();
       description.append("description", this.description);
@@ -200,7 +219,8 @@ export default Vue.extend({
       // TODO: got to check for username modification cause need change cookie from server according the new username
       if (form != null) {
         if ((form as unknown as VueFunction).validate()) {
-          const formElem: HTMLFormElement | null = document.querySelector(".form");
+          const formElem: HTMLFormElement | null =
+            document.querySelector(".form");
           if (formElem != null) {
             this.switchTarget();
             await httpRequest.patch(this.url, new FormData(formElem));
@@ -253,6 +273,32 @@ export default Vue.extend({
       );
       this.currentUser.avatarSrc = response.bodyText;
       this.updateCurrentUser(this.currentUser);
+    },
+    async themeSwitcher(darkMode: boolean) {
+      const data: FormData = new FormData();
+      data.append("dark", darkMode.toString());
+      await httpRequest.patch(Defines.SERVER_USER_DARK_URL, data);
+      this.currentUser.dark = darkMode;
+      this.updateCurrentUser(this.currentUser);
+      this.$vuetify.theme.dark = darkMode;
+
+      const style = document.documentElement.style;
+      if (darkMode) {
+        style.setProperty("--ck-color-base-foreground", "#424242");
+        style.setProperty("--ck-color-base-background", "#424242");
+        style.setProperty("--ck-color-base-text", "white");
+        style.setProperty(
+          "--ck-color-button-default-hover-background",
+          "#757575"
+        );
+        style.setProperty("--ck-color-button-on-background", "#757575");
+      } else {
+        style.removeProperty("--ck-color-base-foreground");
+        style.removeProperty("--ck-color-base-background");
+        style.removeProperty("--ck-color-base-text");
+        style.removeProperty("--ck-color-button-default-hover-background");
+        style.removeProperty("--ck-color-button-on-background");
+      }
     },
   },
   computed: {

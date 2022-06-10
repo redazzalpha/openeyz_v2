@@ -24,9 +24,9 @@ export default new Vuex.Store({
     comments: [] as Comment[],
     userNotifs: [] as Notif[],
 
-    currentUser: Users,
+    currentUser: null,
 
-    teamSelectedUser: UserObj,
+    teamSelectedUser: null,
     teamSelectDialog: false,
 
     drawer: null,
@@ -85,13 +85,17 @@ export default new Vuex.Store({
 
 
     CLEAR_VUEX(state) {
-      state.currentUser = Users;
+      state.currentUser = null;
       state.userListObj = [] as UserObj[];
       state.userLOSecondary = [] as UserObj[];
+      state.posts = [] as Post[];
+      state.userPosts = [] as Post[];
+      state.comments = [] as Comment [];
       state.userNotifs = [] as Notif[],
 
 
-      state.teamSelectedUser = UserObj,
+
+      state.teamSelectedUser = null,
       state.teamSelectDialog = false;
 
       state.drawer = null;
@@ -99,9 +103,6 @@ export default new Vuex.Store({
       state.tabAccess = 0;
       state.tabProfile = 0;
   
-      state.posts = [];
-      state.userPosts = [];
-      state.comments = [];
     }
   },
   actions: {
@@ -147,6 +148,10 @@ export default new Vuex.Store({
     updateTabProfile(context, payload: number): void {
       context.commit('UPDATE_TAB_PROFILE', payload);
     },
+
+    clearVuex(context) {
+      context.commit("CLEAR_VUEX");
+    }
   },
   modules: {
   },

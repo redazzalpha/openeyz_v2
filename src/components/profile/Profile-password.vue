@@ -1,13 +1,13 @@
 <template>
   <v-tab-item>
     <!-- main-card -->
-    <v-card max-width="600" class="mx-auto my-10" shaped raised outlined>
+    <v-card max-width="600" class="mx-auto mb-10" shaped raised outlined >
       <!-- header-title -->
       <v-card-title class="d-flex flex-column justify-center align-center">
-        <!-- user-avatar -->
+        <!-- tile-avatar -->
         <span style="position: relative">
-          <v-avatar size="175" color="red">
-            <v-img src="../../assets/password1.png" alt="alt" />
+          <v-avatar size="200">
+            <v-img src="../../assets/password.png" alt="alt" />
           </v-avatar>
         </span>
       </v-card-title>

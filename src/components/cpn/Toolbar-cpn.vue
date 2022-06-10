@@ -1,7 +1,7 @@
 <template>
   <v-toolbar
     dark
-    color="cyan darken-1"
+    :color="$vuetify.theme.dark ? '#212121' : 'cyan darken-1'"
     style="position: fixed; width: 100%; z-index: 2"
   >
     <v-toolbar-title

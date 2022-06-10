@@ -14,7 +14,6 @@
               class="mt-5"
               style="border-radius: 15px"
             >
-              <!-- TODO: modify fake avatar and replace it by real user avartar src -->
               <!-- notif-header -->
               <v-expansion-panel-header class="pa-3" @click="readOne(notif)">
                 <!-- avatar -->
@@ -33,7 +32,15 @@
                   {{ translateDate(notif.comment.creation) }}
                 </span>
                 <!-- delete-button -->
-                <v-btn color="error" absolute right icon title="delete" @click.stop="deleteOne(notif.id)" class="ma-5">
+                <v-btn
+                  color="error"
+                  absolute
+                  right
+                  icon
+                  title="delete"
+                  @click.stop="deleteOne(notif.id)"
+                  class="ma-5"
+                >
                   <v-icon>mdi-close-circle</v-icon>
                 </v-btn>
               </v-expansion-panel-header>
@@ -53,7 +60,7 @@
             <v-alert
               v-if="userNotifs.length <= 0"
               type="warning"
-              color="cyan darken-1"
+              :color="$vuetify.theme.dark? '#212121' : 'cyan darken-1'"
               :value="true"
               class="white--text mx-auto"
             >

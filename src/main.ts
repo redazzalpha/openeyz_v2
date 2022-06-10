@@ -33,7 +33,7 @@ Vue.http.interceptors.push(function (request: VueRequest) {
       router.push(Defines.ACCESS_PAGE_URL);
     }
 
-    if (body) {
+    if (body && (body as Body).user != undefined) {
       const { token, user } = body as Body;
       if (token)
         localStorage.setItem("token", token);
