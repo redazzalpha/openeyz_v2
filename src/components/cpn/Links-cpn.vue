@@ -6,10 +6,10 @@
     v-slot="{hover}"
     >
       <v-badge 
-      :value="icon.title == 'Notifications'? true : false"
+      :value="icon.title == 'Notifications' && unreadNotif? true : false"
       :dot="!hover"
       overlap
-      content="24"
+      :content="unreadNotif"
       :color="$vuetify.theme.dark ? 'error' : '#293fa3'"
       >
         <v-btn
@@ -34,6 +34,8 @@
 import Vue from "vue";
 import { httpRequest } from "@/utils/http";
 import * as Defines from "../../utils/defines";
+import { mapState } from 'vuex';
+import { Notif } from "../../utils/types";
 export default Vue.extend({
   name: "Links-cpn",
   props: {
@@ -78,6 +80,16 @@ export default Vue.extend({
         },
       ],
     };
+  },
+  computed: {
+    ...mapState([
+      'userNotifs'
+    ]),
+    unreadNotif() {
+        return this.userNotifs.filter((e: Notif) => {
+          return !e.read
+        }).length;
+    }
   },
   methods: {
     logout(): void {

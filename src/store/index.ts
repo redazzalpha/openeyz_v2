@@ -3,7 +3,6 @@ import { UserObj, Notif } from './../utils/types';
 import Vuetify from "@/plugins/vuetify";
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { Users } from "../utils/types";
 import VuexPersistence from 'vuex-persist';
 
 
@@ -18,7 +17,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     userListObj : [] as UserObj[],
-    userLOSecondary : [] as UserObj[],
+    userCardList : [] as UserObj[],
     posts: [] as Post[],
     userPosts: [] as Post[],
     comments: [] as Comment[],
@@ -47,7 +46,7 @@ export default new Vuex.Store({
       state.userListObj = payload;
     },
     UPDATE_USER_LO_SECONDARY(state, payload): void {
-      state.userLOSecondary = payload;
+      state.userCardList = payload;
     },
     UPDATE_POSTS(state, payload): void {
       state.posts = payload;
@@ -87,7 +86,7 @@ export default new Vuex.Store({
     CLEAR_VUEX(state) {
       state.currentUser = null;
       state.userListObj = [] as UserObj[];
-      state.userLOSecondary = [] as UserObj[];
+      state.userCardList = [] as UserObj[];
       state.posts = [] as Post[];
       state.userPosts = [] as Post[];
       state.comments = [] as Comment [];
@@ -112,7 +111,7 @@ export default new Vuex.Store({
     updateUserListObj(context, payload): void {
       context.commit("UPDATE_USER_LIST_OBJ", payload);
     },
-    updateUserLOSecondary(context, payload): void {
+    updateUserCardList(context, payload): void {
       context.commit("UPDATE_USER_LO_SECONDARY", payload);
     },
     updatePosts(context, payload): void {

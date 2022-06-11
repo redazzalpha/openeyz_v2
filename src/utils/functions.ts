@@ -4,7 +4,7 @@ import { UserMap, VueResponse } from "./types";
 import { DateTime } from "luxon";
 import * as Defines from "./defines";
 
-export async function getUsers(): Promise<void> {
+export async function getSimpleUsers(): Promise<void> {
   const res = await httpRequest.get(Defines.SERVER_USER_SIMPLE_URL);
   const userListObj = (res.body as UserMap).map((e: string[]) => {
     const [name, avatarSrc, role, username] = e;
@@ -16,7 +16,7 @@ export async function getUsers(): Promise<void> {
     };
   });
   store.dispatch("updateUserListObj", userListObj);
-  store.dispatch("updateUserLOSecondary", userListObj);
+  store.dispatch("updateUserCardList", userListObj);
 }
 export async function getAllPosts(): Promise<void | VueResponse> {
   const response: VueResponse | void = await httpRequest.get(

@@ -103,7 +103,8 @@ export default Vue.extend({
     publish(): void {
       if (this.editorData) {
         let data: FormData = new FormData();
-        // TODO: try to add src attribut to see imge on click
+        this.editorData = this.editorData.trim();
+        // TODO: try to add src attribut to see imge on click and try to resize properly the image cause sometimes image is too big
         data.append(
           "post",
           this.editorData.replace(/<img/g, "<img width=100%")

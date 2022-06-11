@@ -46,11 +46,16 @@
               </v-expansion-panel-header>
               <!-- notif-content -->
               <v-expansion-panel-content>
-                <div
+                <!-- comment-content -->
+                <v-card-text
                   v-html="notif.comment.content"
-                  style="background-color: #bbdefb; border-radius: 15px"
+                  :style="`background-color: ${
+                    $vuetify.theme.dark ? '#424242' : '#bbdefb'
+                  }; border-radius: 15px;`"
                   class="mb-5 pa-3"
-                ></div>
+                ></v-card-text>
+
+                <!-- publication-content -->
                 <div v-html="notif.comment.post.content"></div>
               </v-expansion-panel-content>
             </v-expansion-panel>
@@ -60,7 +65,7 @@
             <v-alert
               v-if="userNotifs.length <= 0"
               type="warning"
-              :color="$vuetify.theme.dark? '#212121' : 'cyan darken-1'"
+              :color="$vuetify.theme.dark ? '#212121' : 'cyan darken-1'"
               :value="true"
               class="white--text mx-auto"
             >

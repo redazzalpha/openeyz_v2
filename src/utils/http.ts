@@ -25,6 +25,15 @@ export const httpRequest = {
             );
         });
     }, 
+    put: function (url: string, body?: FormData | string | object | null): Promise<VueResponse>  {
+        return new Promise((resolve, reject) => {
+            Vue.http.put(url, body)
+            .then(
+                (response: VueResponse) => resolve(response),
+                (error: VueResponse) => reject(error),
+            );
+        });
+    }, 
     patch: function (url: string, body?: FormData | string | object | null): Promise<VueResponse>  {
         return new Promise((resolve, reject) => {
             Vue.http.patch(url, body)
@@ -37,6 +46,15 @@ export const httpRequest = {
     get: function (url: string, config?: object): Promise<VueResponse>  {
         return new Promise((resolve, reject) => {
             Vue.http.get(url, {...config})
+            .then(
+                (response: VueResponse) => resolve(response),
+                (error: VueResponse) => reject(error),
+            );
+        });
+    }, 
+    head: function (url: string, config?: object): Promise<VueResponse>  {
+        return new Promise((resolve, reject) => {
+            Vue.http.head(url, {...config})
             .then(
                 (response: VueResponse) => resolve(response),
                 (error: VueResponse) => reject(error),

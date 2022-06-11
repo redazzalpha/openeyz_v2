@@ -7,33 +7,17 @@
           v-model="select"
           :items="userListObj"
           flat
-          chips
-          cache-items
           hide-no-data
           hide-details
           solo-inverted
           class="mx-4"
+          id="test"
           label="Search by username"
           item-text="name"
           item-value="username"
           @input="input"
           @update:search-input="searching"
         >
-          <template v-slot:selection="data">
-            <v-chip
-              v-bind="data.attrs"
-              :input-value="data.selected"
-              @click="data.select"
-            >
-              <AvatarCpn
-                :avatarSrc="data.item.avatarSrc"
-                :role="data.item.role"
-                size="30"
-              />
-              {{ data.item.name }}
-            </v-chip>
-          </template>
-
           <template v-slot:item="data">
             <template>
               <v-list-item-avatar>
@@ -67,7 +51,7 @@
 import Vue from "vue";
 import { mapActions, mapState } from "vuex";
 import { UserObj } from "../utils/types";
-import { getUsers } from "../utils/functions";
+import { getSimpleUsers } from "../utils/functions";
 import AvatarCpn from "../components/cpn/Avatar-cpn.vue";
 import ToolbarCpn from "../components/cpn/Toolbar-cpn.vue";
 import TeamCards from "../components/team/Team-cards.vue";
@@ -97,7 +81,7 @@ export default Vue.extend({
   methods: {
     ...mapActions([
       "updateUserListObj",
-      "updateUserLOSecondary",
+      "updateUserCardList",
       "updateTeamSelectedUser",
       "updateTeamSelectDialog",
     ]),
@@ -114,8 +98,8 @@ export default Vue.extend({
         return regexp.test(e.name);
       });
 
-      if (search) this.updateUserLOSecondary(found);
-      else if (!search) this.updateUserLOSecondary(this.userListObj);
+      if (search) this.updateUserCardList(found);
+      else if (!search) this.updateUserCardList(this.userListObj);
     },
     showTitle(): boolean {
       let show = true;
@@ -140,8 +124,7 @@ export default Vue.extend({
     },
   },
   created() {
-    this.updateTeamSelectDialog(false);
-    getUsers();
+    getSimpleUsers();
   },
 });
 </script>

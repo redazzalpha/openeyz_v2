@@ -162,7 +162,7 @@
 import Vue from "vue";
 import { mapState, mapActions } from "vuex";
 import { httpRequest } from "@/utils/http";
-import { Users, VueElement, VueFunction, VueResponse, Body } from '../../utils/types';
+import { VueElement, VueFunction, VueResponse } from '../../utils/types';
 import * as Defines from "../../utils/defines";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
 

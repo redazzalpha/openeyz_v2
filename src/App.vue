@@ -16,7 +16,7 @@
     <!--main-->
     <v-main>
       <!--main-section-->
-      <section style="min-height: 100vh" >
+      <section style="min-height: 100vh">
         <!--views-->
         <router-view />
       </section>
@@ -49,10 +49,12 @@
 // TODO: add autofocuse on fields
 <script lang="ts">
 import Vue from "vue";
+import { mapState } from "vuex";
+import {getAllNotifs} from  './utils/functions';
 import FooterCpn from "@/components/cpn/Footer-cpn.vue";
 import AppbarCpn from "@/components/cpn/Appbar-cpn.vue";
 import DrawerCpn from "@/components/cpn/Drawer-cpn.vue";
-import { mapState } from "vuex";
+
 export default Vue.extend({
   name: "App",
   components: {
@@ -67,7 +69,7 @@ export default Vue.extend({
   },
 
   computed: {
-    ...mapState(["currentUser"]),
+    ...mapState(["currentUser", "userNotifs"]),
   },
   methods: {
     onScroll(e: UIEvent) {
@@ -107,12 +109,12 @@ export default Vue.extend({
   updated() {
     this.$vuetify.theme.dark = this.currentUser.dark;
     this.ckeThemeSwitcher();
-        window.scrollTo({
+    window.scrollTo({
       top: 0,
       left: 0,
       behavior: "smooth",
     });
-
+    getAllNotifs();
   },
 });
 </script>

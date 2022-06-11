@@ -173,6 +173,7 @@ export default Vue.extend({
         params: { postId },
       });
       await getAllPosts();
+      this.$emit("sent")
     },
   },
   created(): void {

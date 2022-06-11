@@ -11,7 +11,7 @@
         />
         <v-textarea
           v-model="comment"
-          placeholder="leave comment..."
+          placeholder="comment here"
           auto-grow
           outlined
           rows="1"
@@ -151,5 +151,11 @@ export default Vue.extend({
   border: solid transparent 15px;
   border-left: solid transparent 15px;
   border-right: solid #2196f3 15px;
+}
+</style>
+
+<style lang="scss" scoped>
+.v-textarea.v-text-field--enclosed.v-text-field--outlined:not(.v-input--dense) textarea {
+  margin-top: 13px!important  ;
 }
 </style>

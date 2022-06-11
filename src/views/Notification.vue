@@ -85,6 +85,7 @@ export default Vue.extend({
       let tab: number[] = [];
       for (let i = 0; i < this.userNotifs.length; i++) tab[i] = i;
       this.panel = tab;
+      this.readAll();
     },
     hideAll() {
       this.panel = [];
@@ -93,13 +94,11 @@ export default Vue.extend({
       await httpRequest.patch(Defines.SERVER_USER_NOTIF_URL);
       await getAllNotifs();
     },
+
     async deleteAll() {
       await httpRequest.delete(Defines.SERVER_USER_NOTIF_URL);
       await getAllNotifs();
     },
-  },
-  beforeMount() {
-    getAllNotifs();
   },
 });
 </script>

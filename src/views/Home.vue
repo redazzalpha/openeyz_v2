@@ -11,7 +11,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapState } from "vuex";
-import {getAllPosts} from '../utils/functions';
+import {getAllPosts, getAllNotifs} from '../utils/functions';
 import HeadCpn from "@/components/cpn/Head-cpn.vue";
 import PostCpn from "@/components/cpn/Post-cpn.vue";
 import PublicationCpn from "@/components/cpn/Publication-cpn.vue";
@@ -29,6 +29,10 @@ export default Vue.extend({
   created() {
       getAllPosts();
   },
+  updated(){
+    getAllNotifs();
+    
+  }
 });
 </script>
 

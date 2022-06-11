@@ -7,18 +7,18 @@
         
       <v-col
         class="col-12 col-sm-6"
-        v-for="(item, index) in userLOSecondary"
+        v-for="(user, index) in userCardList"
         :key="index"
       >
         <!-- user-card -->
         <v-hover v-slot="{ hover }">
           <v-card
             :elevation="hover ? 7 : 2"
-            @click="openSelected(item.name, item.username)"
+            @click="openSelected(user.name, user.username)"
           >
             <v-card-text class="text-center">
-              <AvatarCpn v-if="item.role" :avatarSrc="item.avatarSrc" :role="item.role" />
-              {{ item.name }}
+              <AvatarCpn v-if="user.role" :avatarSrc="user.avatarSrc" :role="user.role" />
+              {{ user.name }}
             </v-card-text>
           </v-card>
         </v-hover>
@@ -48,7 +48,7 @@ export default Vue.extend({
     };
   },
   computed: {
-    ...mapState(["userLOSecondary", "teamSelectedUser"]),
+    ...mapState(["userCardList", "teamSelectedUser"]),
   },
   methods: {
     ...mapActions(["updateTeamSelectDialog"]),
