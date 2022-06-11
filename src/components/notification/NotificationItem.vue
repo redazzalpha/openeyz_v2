@@ -56,13 +56,20 @@
                 ></v-card-text>
                 <!-- // TODO: make post cntent in v-lazy to make images appear smoothly -->
                 <!-- publication-content -->
-                <div class="text-start">publication of {{translateDate(notif.comment.post.creation)}}</div>
+                <div class="text-start">
+                  publication of
+                  {{ translateDate(notif.comment.post.creation) }}
+                </div>
                 <div v-html="notif.comment.post.content"></div>
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>
           <!-- alert-mesasge -->
-            <AlertCpn v-if="userNotifs.length <= 0" message="no notification" :href="Defines.HOME_PAGE_URL" />
+          <AlertCpn
+            v-if="userNotifs.length <= 0"
+            message="no notification"
+            :href="Defines.HOME_PAGE_URL"
+          />
         </v-col>
       </v-row>
     </v-container>
@@ -123,4 +130,3 @@ export default Vue.extend({
   },
 });
 </script>
-

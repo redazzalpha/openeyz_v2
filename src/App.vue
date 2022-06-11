@@ -1,44 +1,45 @@
 <template>
   <!-- TODO: got to lock all access if not authentified cause there a bug user can access to profil page cause there no request to the server to reject request -->
-  <v-app
-    id="wrapper"
-    class="app-container"
-    :style="
-      'background:  url(' +
-      ($vuetify.theme.dark
-        ? require('./assets/bg-home-dark.webp')
-        : require('./assets/bg-home.webp')) +
-      ') fixed no-repeat center; background-size: cover; '
-    "
-  >
-    <AppbarCpn />
-    <!--main-->
-    <v-main>
-      <!--main-section-->
-      <section style="min-height: 100vh">
-        <!--views-->
-        <router-view />
-      </section>
-    </v-main>
-    <DrawerCpn />
-    <FooterCpn />
-    <!--scroll-top-button-->
-    <v-hover v-slot="{ hover }">
-      <v-btn
-        v-scroll="onScroll"
-        v-show="fab"
-        fab
-        fixed
-        bottom
-        right
-        tab="button"
-        :color="$vuetify.theme.dark ? '#424242' : 'cyan darken-1'"
-        :class="hover ? 'on-hover' : ''"
-        @click="toTop"
-      >
-        <v-icon class="text-h3 white--text">mdi-chevron-up</v-icon>
-      </v-btn>
-    </v-hover>
+  <v-app id="wrapper" class="app-container">
+    <v-card
+      class="app-container-card"
+      :style="
+        'background:  url(' +
+        ($vuetify.theme.dark
+          ? require('./assets/bg-home-dark.webp')
+          : require('./assets/bg-home.webp')) +
+        ') no-repeat fixed center'
+      "
+    >
+      <AppbarCpn />
+      <!--main-->
+      <v-main>
+        <!--main-section-->
+        <section style="min-height: 100vh">
+          <!--views-->
+          <router-view />
+        </section>
+      </v-main>
+      <DrawerCpn />
+      <FooterCpn />
+      <!--scroll-top-button-->
+      <v-hover v-slot="{ hover }">
+        <v-btn
+          v-scroll="onScroll"
+          v-show="fab"
+          fab
+          fixed
+          bottom
+          right
+          tab="button"
+          :color="$vuetify.theme.dark ? '#424242' : 'cyan darken-1'"
+          :class="hover ? 'on-hover' : ''"
+          @click="toTop"
+        >
+          <v-icon class="text-h3 white--text">mdi-chevron-up</v-icon>
+        </v-btn>
+      </v-hover>
+    </v-card>
   </v-app>
 </template>
 //

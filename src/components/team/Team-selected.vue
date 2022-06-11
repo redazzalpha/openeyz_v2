@@ -7,11 +7,19 @@
     transition="dialog-transition"
     class="team-selected-dialog"
     @keydown="keyPressed"
+    @click:outside="closeDialog"
   >
     <v-card
       v-scroll.self="onScroll"
       class="overflow-y-auto test inscroll"
       max-height="400"
+      :style="
+        'background:  url(' +
+        ($vuetify.theme.dark
+          ? require('../../assets/bg-team-selected-dark.webp')
+          : require('../../assets/bg-team-selected.webp')) +
+        ') no-repeat fixed center'
+      "
     >
       <!-- toolbar -->
       <ToolbarCpn
@@ -155,6 +163,7 @@ export default Vue.extend({
     ...mapActions(["updateTeamSelectDialog"]),
     closeDialog() {
       this.updateTeamSelectDialog(false);
+      this.toTop();
     },
     keyPressed({ code }: KeyboardEvent): void {
       if (code === "Escape") this.closeDialog();
@@ -194,6 +203,9 @@ export default Vue.extend({
       }
     },
   },
+  destroyed(){
+    this.updateTeamSelectDialog(false);
+  }
 });
 </script>
 

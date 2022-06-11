@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-xs class="alert-cpn-container">
+  <v-container grid-list-xs class="alert-cpn-container" style="margin-bottom: 120px">
     <v-row>
       <v-col>
         <router-link
@@ -13,6 +13,7 @@
             }`"
             max-width="700"
             :color="$vuetify.theme.dark ? 'primary' : 'cyan darken-1'"
+            :style="`background-color: ${$vuetify.theme.dark ? '#424242' : ''}`"
             type="info"
             border="top"
             colored-border
