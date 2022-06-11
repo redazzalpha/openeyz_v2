@@ -1,5 +1,5 @@
 <template>
-  <div v-if="show" class="d-flex flex-column flex-sm-row">
+  <div v-if="show" class="link-cpn-container d-flex flex-column flex-sm-row">
     <v-hover 
     v-for="icon in icons"
     :key="icon.title" 

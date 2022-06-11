@@ -1,5 +1,5 @@
 <template>
-  <v-tab-item >
+  <v-tab-item class="profile-info-tab-item">
     <!-- main-card -->
     <v-card max-width="600" class="mx-auto mb-10" shaped raised outlined>
       <!-- header-title -->
@@ -52,7 +52,7 @@
           <!-- name-row -->
           <v-row>
             <v-col>
-              <span class="mr-3">Name: {{ currentUser.name }} </span>
+              <span class="mr-3">First name: {{ currentUser.name }} </span>
             </v-col>
             <v-col class="shrink">
               <v-btn small color="primary" @click="openModify(1)">Modify</v-btn>
@@ -69,7 +69,7 @@
           <v-row>
             <v-col>
               <span class="mr-3">
-                description:
+                Description:
                 {{
                   currentUser.description
                     ? currentUser.description
@@ -113,7 +113,7 @@
           </v-row>
           <!-- dark-mode-switch -->
           <v-row>
-            <v-col>
+            <v-col class="shrink text-no-wrap">
               <v-switch
                 v-model="$vuetify.theme.dark"
                 hide-details
@@ -182,6 +182,9 @@ export default Vue.extend({
       target: 0,
       url: "",
     };
+  },
+    computed: {
+    ...mapState(["currentUser"]),
   },
   methods: {
     ...mapActions(["updateCurrentUser"]),
@@ -300,9 +303,6 @@ export default Vue.extend({
         style.removeProperty("--ck-color-button-on-background");
       }
     },
-  },
-  computed: {
-    ...mapState(["currentUser"]),
   },
 });
 </script>

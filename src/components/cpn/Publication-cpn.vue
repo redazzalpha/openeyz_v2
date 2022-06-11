@@ -42,6 +42,8 @@
                     right
                     icon
                     title="delete"
+                    plain
+                    :ripple="false"
                     @click.stop="deleteOne(item.post.id)"
                   >
                     <v-icon color="white">mdi-close-circle</v-icon>
@@ -77,27 +79,30 @@
                           >
                         </v-btn>
                       </v-col>
+                      <!-- // TODO: got to fix bug on like click cause nmber of like doesnt appaer -->
                       <!-- like-button -->
                       <v-col class="d-flex justify-center pa-0">
-                        <v-btn
-                          icon
-                          plain
-                          :ripple="false"
-                          title="like this post"
-                          @click="like(item)"
+                        <v-badge
+                          :value="item.likeCount > 0"
+                          :content="item.likeCount"
+                          overlap
+                          bottom
+                          class="badge"
                         >
-                          <i
-                            class="fa fa-heart"
-                            :style="'color: ' + (item.userLike ? 'red' : '')"
+                          <v-btn
+                            icon
+                            plain
+                            :ripple="false"
+                            title="like this post"
+                            @click="like(item)"
                           >
-                            <v-badge
-                              :value="true"
-                              :content="item.likeCount"
-                              color="transparent"
+                            <i
+                              class="fa fa-heart"
+                              :style="`color: ${item.userLike ? 'red' : ''}`"
                             >
-                            </v-badge>
-                          </i>
-                        </v-btn>
+                            </i>
+                          </v-btn>
+                        </v-badge>
                       </v-col>
                     </v-row>
                   </v-container>
@@ -173,7 +178,7 @@ export default Vue.extend({
         params: { postId },
       });
       await getAllPosts();
-      this.$emit("sent")
+      this.$emit("sent");
     },
   },
   created(): void {
@@ -183,25 +188,28 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+
+
 .fa-heart {
-  font-size: 30px;
+  font-size: 25px;
 }
 
 p {
   margin: 10px 10px !important;
 }
 
-.v-badge__badge {
-  inset: auto auto calc(100% - 9px) calc(100% - 11px) !important;
-  font-size: 12px !important;
-  font-weight: bold;
-  /* background-color: transparent; */
-  color: #2196f3 !important;
-}
-/* 
-.v-btn--plain:not(.v-btn--active):not(.v-btn--loading):not(:focus):not(:hover) 
-.v-btn__content {
-    opacity: 1 !important;
+/* .v-badge__badge{
+    min-width: 15px!important;
+    height: 15px!important;
+
 } */
+.badge {
+    width: 32px!important;
+    height: 27px!important;
+}
+.v-btn--plain:not(.v-btn--active):not(.v-btn--loading):not(:focus):not(:hover)
+  .v-btn__content {
+  opacity: 1 !important;
+}
 </style>

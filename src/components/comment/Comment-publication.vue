@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="comment-publicatiion-block">
     <!-- main-card -->
     <v-card-title
       primary-title

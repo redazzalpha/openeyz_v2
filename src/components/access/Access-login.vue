@@ -1,6 +1,6 @@
 <template>
   <!--login-tab-->
-  <v-tab-item>
+  <v-tab-item class="access-login-tab-item">
     <!-- main-card-conjtainer -->
     <v-card>
       <!--connect-title-->
@@ -54,6 +54,7 @@
             v-model="password"
             class="pt-0"
             required
+            counter
             :rules="passwordRules"
             placeholder="Password"
             :type="isSecret ? 'password' : 'text'"

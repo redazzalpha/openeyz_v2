@@ -1,15 +1,15 @@
 <template>
-  <!--access-container-->
-  <div class="access">
-    <!--access-dialog-->
-    <v-dialog v-model="dialog" width="500" persistent role="dialog">
-      <!--access-title-tabs-->
+  <div class="access-page-block">
+    <v-dialog
+      class="access-page-dialog"
+      v-model="dialog"
+      width="500"
+      persistent
+      role="dialog"
+    >
       <Tabs />
-      <!--tabs-content-->
       <v-tabs-items v-model="$store.state.tabAccess">
-        <!--login-tab-content-->
         <Login />
-        <!--register-tab-content-->
         <Register />
       </v-tabs-items>
     </v-dialog>
@@ -36,13 +36,11 @@ export default Vue.extend({
     };
   },
   methods: {
-    ...mapActions([
-      'updateTabAccess',
-    ])
+    ...mapActions(["updateTabAccess"]),
   },
-  created(){
+  created() {
     this.updateTabAccess(0);
-  }
+  },
 });
 </script>
 

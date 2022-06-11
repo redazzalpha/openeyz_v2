@@ -1,6 +1,6 @@
 <template>
   <!-- main-row-container -->
-  <v-row justify="center">
+  <v-row class="comment-block-row" justify="center">
     <!-- dialog-block -->
     <v-dialog
       v-if="itemPost.post"
@@ -26,7 +26,7 @@ import { Item } from "../../utils/types";
 import CommentPublication from "./Comment-publication.vue";
 import CommentMessage from "./Comment-message.vue";
 export default Vue.extend({
-  name: "Comment-cpn",
+  name: "Comment-block",
   components: {
     CommentPublication,
     CommentMessage,

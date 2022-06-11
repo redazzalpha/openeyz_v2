@@ -1,7 +1,7 @@
 <template>
-  <v-tab-item>
+  <v-tab-item class="profile-password-tab-item">
     <!-- main-card -->
-    <v-card max-width="600" class="mx-auto mb-10" shaped raised outlined >
+    <v-card max-width="600" class="mx-auto mb-10" shaped raised outlined>
       <!-- header-title -->
       <v-card-title class="d-flex flex-column justify-center align-center">
         <!-- tile-avatar -->
@@ -11,7 +11,7 @@
           </v-avatar>
         </span>
       </v-card-title>
-      <!-- profile-tab-content -->
+      <!-- password-tab-content -->
       <v-card-text>
         <v-container grid-list-xs>
           <!-- title-row -->
@@ -52,15 +52,17 @@
                   <!-- modify-password-form -->
                   <v-form class="form" ref="form">
                     <v-container grid-list-xs>
-                      <!-- password-field-row -->
+                      <!-- current-password-field-row -->
                       <v-row>
                         <v-col class="pa-0">
                           <v-text-field
-                            placeholder="old password"
-                            :rules="passwordRules"
+                            placeholder="Current password"
+                            counter
                             :type="isSecret ? 'password' : 'text'"
                             name="password"
-                          > 
+                            :rules="passwordRules"
+                          >
+                            <!-- current-password-field-eye-icon -->
                             <template v-slot:append>
                               <v-btn
                                 icon
@@ -75,14 +77,17 @@
                           </v-text-field>
                         </v-col>
                       </v-row>
+                      <!-- new-password-field-row -->
                       <v-row>
                         <v-col class="pa-0">
                           <v-text-field
-                            placeholder="new password"
+                            placeholder="New password"
+                            counter
                             :rules="passwordRules"
                             :type="isSecret ? 'password' : 'text'"
                             name="password1"
                           >
+                            <!-- new-password-field-eye-icon -->
                             <template v-slot:append>
                               <v-btn
                                 icon
@@ -124,8 +129,8 @@ import Vue from "vue";
 import { mapState, mapActions, mapGetters } from "vuex";
 import { httpRequest } from "../../utils/http";
 import { VueElement, VueFunction, VueResponse } from "../../utils/types";
-import * as Defines from "../../utils/defines";
 import { rules } from "@/utils/rules";
+import * as Defines from "../../utils/defines";
 
 export default Vue.extend({
   name: "Profile-password",
@@ -136,6 +141,10 @@ export default Vue.extend({
       isSecret: true,
       passwordRules: [rules.requiredPasswd, rules.passwdValidator],
     };
+  },
+  computed: {
+    ...mapState(["currentUser"]),
+    ...mapGetters(["btnSize"]),
   },
   methods: {
     ...mapActions(["updateCurrentUser"]),
@@ -158,10 +167,6 @@ export default Vue.extend({
         }
       }
     },
-  },
-  computed: {
-    ...mapState(["currentUser"]),
-    ...mapGetters(["btnSize"]),
   },
 });
 </script>

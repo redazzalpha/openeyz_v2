@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer tag="nav"  v-model="$store.state.drawer" temporary app>
+  <v-navigation-drawer tag="nav" class="drawer-cpn-nav" v-model="$store.state.drawer" temporary app>
     <!-- item-list -->
     <v-list-item>
       <!-- user-vatara -->
@@ -49,7 +49,7 @@ import { mapState } from "vuex";
 import { httpRequest } from "../../utils/http";
 import * as Defines from "../../utils/defines";
 export default Vue.extend({
-  name: "Nav-drawer",
+  name: "Drawer-cpn",
   components: {
     Avatar,
   },

@@ -1,5 +1,5 @@
 <template>
-    <v-footer :color="$vuetify.theme.dark? '' : '#757575'" class="pt-5">
+    <v-footer :color="$vuetify.theme.dark? '' : '#757575'" class="footer-cpn-footer ck pt-5">
         <!--main-conatiner-->
         <v-container fluid grid-list-xs>
             <!--follow-us-row-->

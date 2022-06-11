@@ -4,7 +4,7 @@
     align-with-title
     v-model="$store.state.tabAccess"
     :background-color="$vuetify.theme.dark ? '#424242' : 'cyan darken-1'"
-    class="white-text"
+    class="access-tabs-tabs white-text"
   >
     <v-tab
       active-class="background-color: light-blue darken-2"

@@ -1,5 +1,5 @@
 <template>
-  <div class="notifications">
+  <div class="notification-page-block">
     <!-- toolbar -->
     <ToolbarCpn icon="fa-solid fa-bell" title="Notifications">
       <template v-slot:center>

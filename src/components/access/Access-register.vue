@@ -1,6 +1,6 @@
 <template>
   <!--register-tab-->
-  <v-tab-item>
+  <v-tab-item class="access-register-tab-item">
     <v-card>
       <!--register-title-->
       <v-card-title
@@ -78,11 +78,12 @@
                 <v-text-field
                   v-model="password"
                   required
+                  counter
                   :rules="passwordRules"
                   placeholder="Password"
                   name="password"
                   class="pt-0"
-            :type="isSecret? 'password' : 'text'"
+                  :type="isSecret ? 'password' : 'text'"
                 >
                   <template v-slot:append>
                     <v-btn

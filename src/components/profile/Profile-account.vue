@@ -1,5 +1,5 @@
 <template>
-  <v-tab-item>
+  <v-tab-item class="profile-account-tab-item">
     <!-- main-card -->
     <v-card max-width="600" class="mx-auto mb-10" shaped raised outlined>
       <!-- header-title -->
@@ -11,7 +11,7 @@
           </v-avatar>
         </span>
       </v-card-title>
-      <!-- profile-tab-content -->
+      <!-- account-tab-content -->
       <v-card-text>
         <v-container grid-list-xs>
           <!-- title-row -->
@@ -21,18 +21,18 @@
             </v-col>
           </v-row>
           <v-row>
-            <!-- main-card -->
+            <!-- delete-account-card -->
             <v-col>
               <v-card elevation="0">
                 <v-card-text>
-                  <!-- main-form -->
+                  <!-- delete-account-form -->
                   <v-form>
-                    <!-- main-container -->
+                    <!-- delete-account-container -->
                     <v-container grid-list-xs>
                       <!-- introduction-row -->
                       <v-row>
                         <v-col>
-                          <h3>Delete my account</h3>
+                          <h4 class="text-subtitle-1">Delete my account</h4>
                           <p>
                             This section is about deleting your account. <br />
                             We are interested to know why you want to delete
@@ -155,6 +155,10 @@ export default Vue.extend({
       confirm: false,
     };
   },
+    computed: {
+    ...mapState(["currentUser"]),
+    ...mapGetters(["btnSize"]),
+  },
   methods: {
     ...mapActions(["updateCurrentUser"]),
     async delAccount() {
@@ -162,10 +166,6 @@ export default Vue.extend({
       clearStorage();
       this.$router.push(Defines.ACCESS_PAGE_URL);
     },
-  },
-  computed: {
-    ...mapState(["currentUser"]),
-    ...mapGetters(["btnSize"]),
   },
 });
 </script>

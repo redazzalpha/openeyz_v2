@@ -5,6 +5,7 @@
     fullscreen
     hide-overlay
     transition="dialog-transition"
+    class="team-selected-dialog"
     @keydown="keyPressed"
   >
     <v-card
@@ -20,23 +21,14 @@
         xs
       >
         <template v-slot:end>
-          <!-- icon-links -->
-          <div v-if="show" class="d-flex flex-column flex-sm-row">
-            <v-btn
-              v-for="icon in icons"
-              :key="icon.title"
-              class="btn d-flex mx-5"
-              elevation="0"
-              color="transparent"
-              :title="icon.title"
-              :to="icon.title == 'Logout' ? '' : icon.href"
-              @click="icon.title == 'Logout' ? logout() : ''"
-            >
-              <i :class="icon.class + ' mr-1'"></i
-              ><span style="font-size: 13px">{{ icon.title }}</span>
-            </v-btn>
-          </div>
-
+          <LinksCpn
+            :show="
+              !(
+                $vuetify.breakpoint.name == 'xs' ||
+                $vuetify.breakpoint.name == 'sm'
+              )
+            "
+          />
           <!-- close-button -->
           <v-btn icon class="pa-0 ma-0" width="30" height="30">
             <v-icon @click="closeDialog">mdi-close</v-icon>
@@ -57,40 +49,30 @@
         <v-row>
           <v-col>
             <!-- publication component -->
-            <div v-for="(post, index) in userPosts" :key="index">
-              <PublicationCpn :item="post" @sent="sent" />
-            </div>
+            <PublicationCpn
+              v-for="(post, index) in userPosts"
+              :key="index"
+              :item="post"
+              @sent="sent"
+            />
           </v-col>
         </v-row>
       </v-container>
 
       <!-- alert part -->
       <div class="d-flex justify-center">
-        <!-- alert-btn-block -->
-        <v-btn class="btn" plain :ripple="false" @click="closeDialog">
-          <!-- empty-post-alert -->
-          <v-alert
-            v-if="!userPosts.length"
-            text
-            color="red"
-            :value="true"
-            max-width="700"
-            class="mx-auto text-center"
-          >
-            {{ author }} has no post at now !
-          </v-alert>
-          <!-- end-of-post-alert -->
-          <v-alert
-            v-else
-            text
-            color="primary"
-            :value="true"
-            max-width="700"
-            class="mx-auto text-center"
-          >
-            You have reach end of {{ author }} 's publications
-          </v-alert>
-        </v-btn>
+        <!-- empty-post-alert -->
+        <AlertCpn
+          v-if="!userPosts.length"
+          :message="`${author} has no post at now !`"
+          :action="closeDialog"
+        />
+        <!-- end-of-post-alert -->
+        <AlertCpn
+          v-else
+          :message="`You have reach end of ${author} 's publications`"
+          :action="closeDialog"
+        />
       </div>
     </v-card>
 
@@ -120,12 +102,15 @@ import { mapActions, mapState } from "vuex";
 import { getAllUserPosts } from "../../utils/functions";
 import PublicationCpn from "../cpn/Publication-cpn.vue";
 import ToolbarCpn from "../cpn/Toolbar-cpn.vue";
-import * as Defines from "../../utils/defines";
+import AlertCpn from "../cpn/Alert-cpn.vue";
+import LinksCpn from "../cpn/Links-cpn.vue";
 export default Vue.extend({
   name: "Team-selected",
   components: {
     ToolbarCpn,
     PublicationCpn,
+    AlertCpn,
+    LinksCpn,
   },
   props: {
     author: {
@@ -140,33 +125,6 @@ export default Vue.extend({
   data() {
     return {
       fab: false,
-      icons: [
-        {
-          title: "Home",
-          class: "fa-solid fa-house",
-          href: Defines.HOME_PAGE_URL,
-        },
-        {
-          title: "Profile",
-          class: "fa-solid fa-user",
-          href: Defines.PROFILE_PAGE_URL,
-        },
-        {
-          title: "Notifications",
-          class: "fa-solid fa-bell",
-          href: Defines.NOTIFICATION_PAGE_URL,
-        },
-        {
-          title: "Team",
-          class: "fa-solid fa-users",
-          href: Defines.TEAM_PAGE_URL,
-        },
-        {
-          title: "Logout",
-          class: "fa-solid fa-right-from-bracket",
-          href: "",
-        },
-      ],
     };
   },
   computed: {
@@ -220,6 +178,9 @@ export default Vue.extend({
           behavior: "smooth",
         });
     },
+    test() {
+      console.log("in this function man i dont want to see you any more bro");
+    },
   },
   watch: {
     teamSelectDialog(visible: boolean) {
@@ -231,12 +192,6 @@ export default Vue.extend({
           behavior: "smooth",
         });
       }
-    },
-    created() {
-      console.log("Team cards selected created");
-    },
-    updated() {
-      console.log("Team selected cards updated");
     },
   },
 });

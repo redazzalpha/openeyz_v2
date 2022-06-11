@@ -22,14 +22,10 @@ export default new Vuex.Store({
     userPosts: [] as Post[],
     comments: [] as Comment[],
     userNotifs: [] as Notif[],
-
     currentUser: null,
-
     teamSelectedUser: null,
     teamSelectDialog: false,
-
     drawer: null,
-
     tabAccess: 0,
     tabProfile: 0,
   },
@@ -84,24 +80,18 @@ export default new Vuex.Store({
 
 
     CLEAR_VUEX(state) {
-      state.currentUser = null;
       state.userListObj = [] as UserObj[];
       state.userCardList = [] as UserObj[];
       state.posts = [] as Post[];
       state.userPosts = [] as Post[];
       state.comments = [] as Comment [];
       state.userNotifs = [] as Notif[],
-
-
-
+      state.currentUser = null;
       state.teamSelectedUser = null,
       state.teamSelectDialog = false;
-
       state.drawer = null;
-  
       state.tabAccess = 0;
       state.tabProfile = 0;
-  
     }
   },
   actions: {

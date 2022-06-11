@@ -4,7 +4,7 @@
     center-active
     show-arrows
     centered
-    class="d-flex justify-center"
+    class="profile-tabs-tabs d-flex justify-center"
   >
     <v-tabs-slider color="#FF8124" centered />
     <v-tab v-for="item in items" :key="item">

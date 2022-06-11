@@ -1,5 +1,5 @@
 <template>
-    <v-avatar :size="size" class="mr-3">
+    <v-avatar :size="size" class="avatar-cpn-avatar mr-3">
         <!-- FIXME: got to fix bug that when sending publication or comment good img  appears only reload -->
         <v-img v-if="!avatarSrc && role == 'SUPERADMIN'" src="../../assets/suadmin.png" alt="alt" />
         <v-img v-else-if="!avatarSrc && role == 'ADMIN'" src="../../assets/admin.png" alt="alt" />

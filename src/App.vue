@@ -1,8 +1,8 @@
 <template>
   <!-- TODO: got to lock all access if not authentified cause there a bug user can access to profil page cause there no request to the server to reject request -->
-  <!--main-app-container-->
   <v-app
     id="wrapper"
+    class="app-container"
     :style="
       'background:  url(' +
       ($vuetify.theme.dark
@@ -11,7 +11,6 @@
       ') fixed no-repeat center; background-size: cover; '
     "
   >
-    <!--app-bar-header-->
     <AppbarCpn />
     <!--main-->
     <v-main>
@@ -21,9 +20,7 @@
         <router-view />
       </section>
     </v-main>
-    <!--nav-->
     <DrawerCpn />
-    <!--footer-->
     <FooterCpn />
     <!--scroll-top-button-->
     <v-hover v-slot="{ hover }">
@@ -50,7 +47,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapState } from "vuex";
-import {getAllNotifs} from  './utils/functions';
+import { getAllNotifs } from "./utils/functions";
 import FooterCpn from "@/components/cpn/Footer-cpn.vue";
 import AppbarCpn from "@/components/cpn/Appbar-cpn.vue";
 import DrawerCpn from "@/components/cpn/Drawer-cpn.vue";
@@ -84,7 +81,7 @@ export default Vue.extend({
     },
     async ckeThemeSwitcher() {
       const style = document.documentElement.style;
-      if (this.currentUser.dark) {
+      if (this.currentUser && this.currentUser.dark) {
         style.setProperty("--ck-color-base-foreground", "#424242");
         style.setProperty("--ck-color-base-background", "#424242");
         style.setProperty("--ck-color-base-text", "white");
@@ -103,11 +100,11 @@ export default Vue.extend({
     },
   },
   created() {
-    this.$vuetify.theme.dark = this.currentUser.dark;
+    if (this.currentUser) this.$vuetify.theme.dark = this.currentUser.dark;
     this.ckeThemeSwitcher();
   },
   updated() {
-    this.$vuetify.theme.dark = this.currentUser.dark;
+    if (this.currentUser) this.$vuetify.theme.dark = this.currentUser.dark;
     this.ckeThemeSwitcher();
     window.scrollTo({
       top: 0,

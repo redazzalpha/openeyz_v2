@@ -22,6 +22,7 @@ Vue.http.interceptors.push(function (request: VueRequest) {
     // TODO: look for solution to delet vuex correctly
     if (status === 0) {
       clearStorage();
+      if (router.currentRoute.path !== "/access")
       router.push(Defines.ACCESS_PAGE_URL);
     }
     // if (status === 401) {
@@ -30,6 +31,7 @@ Vue.http.interceptors.push(function (request: VueRequest) {
     // }
     if (status === 500) {
       clearStorage();
+      if (router.currentRoute.path !== "/access")
       router.push(Defines.ACCESS_PAGE_URL);
     }
 

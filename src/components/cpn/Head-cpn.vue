@@ -1,5 +1,5 @@
 <template>
-    <h2>
+    <h2 class="head-cpn-title">
         <v-container grid-list-xs>
             <v-row no-gutters class="text-center">
                 <v-col>
@@ -19,7 +19,7 @@
 import Vue from 'vue';
 import { mapState } from 'vuex';
 export default Vue.extend({
-    name: 'Title-cpn',
+    name: 'Head-cpn',
     props: {
         text: {
             type: String,

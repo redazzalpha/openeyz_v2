@@ -1,8 +1,7 @@
 <template>
   <!-- post-input-block -->
-  <div class="post-input">
-    <!-- editor-container -->
-    <v-container grid-list-xs fluid>
+    <!-- post-container -->
+    <v-container grid-list-xs fluid class="post-cpn-container">
       <v-row>
         <v-col>
           <!--card-container -->
@@ -71,7 +70,6 @@
         </v-col>
       </v-row>
     </v-container>
-  </div>
 </template>
 
 <script lang="ts">
@@ -85,7 +83,7 @@ import AvatarCpn from "../cpn/Avatar-cpn.vue";
 import * as Defines from "@/utils/defines";
 
 export default Vue.extend({
-  name: "Post-input",
+  name: "Post-cpn",
   components: {
     AvatarCpn,
   },
@@ -147,4 +145,3 @@ export default Vue.extend({
 }
 </style>
 
-// :color="$vuetify.theme.dark? '#212121' : 'cyan darken-1'"

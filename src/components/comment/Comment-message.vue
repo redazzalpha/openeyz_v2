@@ -1,6 +1,6 @@
 <template>
   <!-- main-container -->
-  <v-container grid-list-xs>
+  <v-container grid-list-xs class="comment-publication-container">
     <!-- leave-comment-area -->
     <v-row>
       <v-col class="d-flex align-center">
@@ -34,16 +34,8 @@
     <v-row>
       <v-col>
         <v-card elevation="0">
-          <!-- no comment-message -->
-          <v-alert
-            v-if="comments.length < 1"
-            text
-            color="red"
-            :value="true"
-            class="text-center"
-          >
-            This post has not comment be the first to leave one
-          </v-alert>
+          <!-- no-comment-alert -->
+          <AlertCpn v-if="comments.length < 1"  message="This post has not comment be the first to leave one" />
           <!-- comment-block -->
           <div v-else class="comment-block">
             <!-- comment-title -->
@@ -102,12 +94,14 @@ import { httpRequest } from "@/utils/http";
 import { Item } from "../../utils/types";
 import { translateDate } from "../../utils/functions";
 import {getAllComments} from '../../utils/functions';
+import AlertCpn from '../cpn/Alert-cpn.vue';
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
 import * as Defines from "@/utils/defines";
 export default Vue.extend({
   name: "Comment-msg",
   components: {
     AvatarCpn,
+    AlertCpn,
   },
   props: {
     itemPost: { type: Object as PropType<Item>, required: true },

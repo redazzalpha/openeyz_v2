@@ -1,5 +1,5 @@
 <template>
-  <div class="notification-item">
+  <div class="notification-item-block">
     <!-- {{ userNotifs[0] }} -->
 
     <!-- notification-container -->
@@ -54,24 +54,15 @@
                   }; border-radius: 15px;`"
                   class="mb-5 pa-3"
                 ></v-card-text>
-
+                <!-- // TODO: make post cntent in v-lazy to make images appear smoothly -->
                 <!-- publication-content -->
+                <div class="text-start">publication of {{translateDate(notif.comment.post.creation)}}</div>
                 <div v-html="notif.comment.post.content"></div>
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>
           <!-- alert-mesasge -->
-          <v-btn class="btn" plain :ripple="false" to="/">
-            <v-alert
-              v-if="userNotifs.length <= 0"
-              type="warning"
-              :color="$vuetify.theme.dark ? '#212121' : 'cyan darken-1'"
-              :value="true"
-              class="white--text mx-auto"
-            >
-              no notification
-            </v-alert>
-          </v-btn>
+            <AlertCpn v-if="userNotifs.length <= 0" message="no notification" :href="Defines.HOME_PAGE_URL" />
         </v-col>
       </v-row>
     </v-container>
@@ -86,12 +77,14 @@ import { httpRequest } from "../../utils/http";
 import { getAllNotifs } from "../../utils/functions";
 import { Notif } from "../../utils/types";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
+import AlertCpn from "../cpn/Alert-cpn.vue";
 import * as Defines from "../../utils/defines";
 
 export default Vue.extend({
   name: "Notification-item",
   components: {
     AvatarCpn,
+    AlertCpn,
   },
   props: {
     panel: {
@@ -105,6 +98,7 @@ export default Vue.extend({
   },
   data() {
     return {
+      Defines: Defines,
       translateDate: translateDate,
     };
   },
@@ -130,8 +124,3 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="scss" scoped>
-.btn:hover {
-  cursor: default;
-}
-</style>

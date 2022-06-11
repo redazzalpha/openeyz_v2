@@ -4,7 +4,7 @@
     color="transparent"
     max-width="800"
     flat
-    class="mx-auto"
+    class="container-cpn-card mx-auto"
     style="padding-top: 65px"
   >
     <!-- title -->
