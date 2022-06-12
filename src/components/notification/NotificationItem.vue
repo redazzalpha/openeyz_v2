@@ -68,7 +68,7 @@
           <AlertCpn
             v-if="userNotifs.length <= 0"
             message="no notification"
-            :href="Defines.HOME_PAGE_URL"
+            :href="HOME_PAGE_URL"
           />
         </v-col>
       </v-row>
@@ -79,13 +79,12 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapState } from "vuex";
-import { translateDate } from "../../utils/functions";
+import { translateDate, getAllNotifs } from "../../utils/functions";
 import { httpRequest } from "../../utils/http";
-import { getAllNotifs } from "../../utils/functions";
 import { Notif } from "../../utils/types";
+import { SERVER_USER_NOTIF_ONE_URL, HOME_PAGE_URL } from "../../utils/defines";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
 import AlertCpn from "../cpn/Alert-cpn.vue";
-import * as Defines from "../../utils/defines";
 
 export default Vue.extend({
   name: "Notification-item",
@@ -105,7 +104,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      Defines: Defines,
+      HOME_PAGE_URL: HOME_PAGE_URL,
       translateDate: translateDate,
     };
   },
@@ -117,12 +116,12 @@ export default Vue.extend({
       if (!notif.read) {
         const notifId: FormData = new FormData();
         notifId.append("notifId", notif.id.toString());
-        await httpRequest.patch(Defines.SERVER_USER_NOTIF_ONE_URL, notifId);
+        await httpRequest.patch(SERVER_USER_NOTIF_ONE_URL, notifId);
         await getAllNotifs();
       }
     },
     async deleteOne(notifId: number) {
-      await httpRequest.delete(Defines.SERVER_USER_NOTIF_ONE_URL, {
+      await httpRequest.delete(SERVER_USER_NOTIF_ONE_URL, {
         params: { notifId },
       });
       await getAllNotifs();

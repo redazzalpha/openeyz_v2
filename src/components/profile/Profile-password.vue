@@ -130,7 +130,7 @@ import { mapState, mapActions, mapGetters } from "vuex";
 import { httpRequest } from "../../utils/http";
 import { VueElement, VueFunction, VueResponse } from "../../utils/types";
 import { rules } from "@/utils/rules";
-import * as Defines from "../../utils/defines";
+import { ERROR_MESSAGE_DURATION, SERVER_USER_PASSWORD_URL } from "../../utils/defines";
 
 export default Vue.extend({
   name: "Profile-password",
@@ -156,12 +156,12 @@ export default Vue.extend({
             document.querySelector(".form");
           if (formElem != null) {
             httpRequest
-              .patch(Defines.SERVER_USER_PASSWORD_URL, new FormData(formElem))
+              .patch(SERVER_USER_PASSWORD_URL, new FormData(formElem))
               .catch((error: VueResponse): void => {
                 this.alertMessage = error.bodyText;
                 setTimeout(() => {
                   this.alertMessage = "";
-                }, Defines.ERROR_MESSAGE_DURATION);
+                }, ERROR_MESSAGE_DURATION);
               });
           }
         }

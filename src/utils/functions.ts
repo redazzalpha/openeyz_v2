@@ -2,10 +2,10 @@ import store from "@/store";
 import { httpRequest } from "./http";
 import { UserMap, VueResponse } from "./types";
 import { DateTime } from "luxon";
-import * as Defines from "./defines";
+import { SERVER_PUBLICATION_LIMIT_URL, SERVER_COMMENT_URL, SERVER_USER_NOTIF_URL, SERVER_USER_SIMPLE_URL } from './defines';
 
 export async function getSimpleUsers(): Promise<void> {
-  const res = await httpRequest.get(Defines.SERVER_USER_SIMPLE_URL);
+  const res = await httpRequest.get(SERVER_USER_SIMPLE_URL);
   const userListObj = (res.body as UserMap).map((e: string[]) => {
     const [name, avatarSrc, role, username] = e;
     return {
@@ -18,31 +18,33 @@ export async function getSimpleUsers(): Promise<void> {
   store.dispatch("updateUserListObj", userListObj);
   store.dispatch("updateUserCardList", userListObj);
 }
-export async function getAllPosts(): Promise<void | VueResponse> {
+export async function getAllPosts(limit: number): Promise<void | VueResponse> {
   const response: VueResponse | void = await httpRequest.get(
-    Defines.SERVER_PUBLICATION_URL
+    SERVER_PUBLICATION_LIMIT_URL,
+    { params: { limit } }
+
   );
   store.dispatch("updatePosts", JSON.parse(response.bodyText));
 }
 export async function getAllUserPosts(
-  authorId: string
+  authorId: string, limit: number
 ): Promise<void | VueResponse> {
   const response: VueResponse | void = await httpRequest.get(
-    Defines.SERVER_PUBLICATION_URL,
-    { params: { authorId } }
+    SERVER_PUBLICATION_LIMIT_URL,
+    { params: { authorId,  limit} }
   );
   store.dispatch("updateUserPosts", JSON.parse(response.bodyText));
 }
 export async function getAllComments(postId: number): Promise<void | VueResponse> {
   const response: VueResponse = await httpRequest.get(
-    Defines.SERVER_COMMENT_URL,
+    SERVER_COMMENT_URL,
     { params: { postId } }
   );
   store.dispatch("updateComments", response.body);
 }
 export async function getAllNotifs(): Promise<void | VueResponse> {
   const response: VueResponse = await httpRequest.get(
-    Defines.SERVER_USER_NOTIF_URL
+    SERVER_USER_NOTIF_URL
   );
   store.dispatch("updateUserNotifs", response.body);
 }

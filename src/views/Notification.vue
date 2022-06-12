@@ -54,10 +54,10 @@ import Vue from "vue";
 import { mapState } from "vuex";
 import { getAllNotifs } from "../utils/functions";
 import { httpRequest } from "../utils/http";
-import * as Defines from "../utils/defines";
 import ToolbarCpn from "../components/cpn/Toolbar-cpn.vue";
 import NotificationItem from "../components/notification/NotificationItem.vue";
 import ContainerCpn from "../components/cpn/Container-cpn.vue";
+import { SERVER_USER_NOTIF_URL } from "../utils/defines";
 export default Vue.extend({
   name: "Notificatione-page",
   components: {
@@ -91,12 +91,12 @@ export default Vue.extend({
       this.panel = [];
     },
     async readAll() {
-      await httpRequest.patch(Defines.SERVER_USER_NOTIF_URL);
+      await httpRequest.patch(SERVER_USER_NOTIF_URL);
       await getAllNotifs();
     },
 
     async deleteAll() {
-      await httpRequest.delete(Defines.SERVER_USER_NOTIF_URL);
+      await httpRequest.delete(SERVER_USER_NOTIF_URL);
       await getAllNotifs();
     },
   },

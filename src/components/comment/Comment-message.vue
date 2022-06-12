@@ -96,7 +96,7 @@ import { translateDate } from "../../utils/functions";
 import {getAllComments} from '../../utils/functions';
 import AlertCpn from '../cpn/Alert-cpn.vue';
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
-import * as Defines from "@/utils/defines";
+import  {SERVER_COMMENT_URL} from "@/utils/defines";
 export default Vue.extend({
   name: "Comment-msg",
   components: {
@@ -122,7 +122,7 @@ export default Vue.extend({
         const data: FormData = new FormData();
         data.append("comment", this.comment);
         data.append("postId", this.itemPost.post?.id.toString());
-        await httpRequest.post(Defines.SERVER_COMMENT_URL, data);
+        await httpRequest.post(SERVER_COMMENT_URL, data);
         this.comment = "";
         getAllComments(this.itemPost.post?.id);
         this.$emit("send", this.itemPost);

@@ -8,7 +8,7 @@ export const httpRequest = {
         return new Promise((resolve, reject) => {
             Vue.http.post(Defines.SERVER_ACCESS_URL, body)
             .then(
-                () => {              
+                () => {
                     router.push(Defines.HOME_PAGE_URL);
                 }, 
                 (error: VueResponse) => reject(error),

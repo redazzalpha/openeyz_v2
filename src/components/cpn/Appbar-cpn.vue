@@ -14,7 +14,7 @@
           <!--logo-->
           <v-col class="shrink">
             <router-link
-              :to="defines.HOME_PAGE_URL"
+              :to="HOME_PAGE_URL"
               class="d-block text-decoration-none"
             >
               <v-toolbar-title
@@ -39,7 +39,7 @@
 import Vue from "vue";
 import { mapActions, mapState } from "vuex";
 import { httpRequest } from "../../utils/http";
-import * as Defines from "../../utils/defines";
+import {SERVER_LOGOUT_URL, HOME_PAGE_URL}  from "../../utils/defines";
 import LinksCpn from "./Links-cpn.vue";
 export default Vue.extend({
   name: "Appbar-cpn",
@@ -48,7 +48,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      defines: Defines,
+      HOME_PAGE_URL: HOME_PAGE_URL,
     };
   },
   computed: {
@@ -78,7 +78,7 @@ export default Vue.extend({
   methods: {
     ...mapActions(["updateDrawer"]),
     logout(): void {
-      httpRequest.post(Defines.SERVER_LOGOUT_URL);
+      httpRequest.post(SERVER_LOGOUT_URL);
     },
   },
 });

@@ -47,7 +47,7 @@ import Vue from "vue";
 import Avatar from "./Avatar-cpn.vue";
 import { mapState } from "vuex";
 import { httpRequest } from "../../utils/http";
-import * as Defines from "../../utils/defines";
+import { HOME_PAGE_URL, NOTIFICATION_PAGE_URL, PROFILE_PAGE_URL, SERVER_LOGOUT_URL, TEAM_PAGE_URL, } from "../../utils/defines";
 export default Vue.extend({
   name: "Drawer-cpn",
   components: {
@@ -59,22 +59,22 @@ export default Vue.extend({
         {
           title: "Home",
           class: "fa-solid fa-house",
-          href: Defines.HOME_PAGE_URL,
+          href: HOME_PAGE_URL,
         },
         {
           title: "Profile",
           class: "fa-solid fa-user",
-          href: Defines.PROFILE_PAGE_URL,
+          href: PROFILE_PAGE_URL,
         },
         {
           title: "Notifications",
           class: "fa-solid fa-bell",
-          href: Defines.NOTIFICATION_PAGE_URL,
+          href: NOTIFICATION_PAGE_URL,
         },
         {
           title: "Team",
           class: "fa-solid fa-users",
-          href: Defines.TEAM_PAGE_URL,
+          href: TEAM_PAGE_URL,
         },
         {
           title: "Logout",
@@ -89,7 +89,7 @@ export default Vue.extend({
       return typeof this.currentUser != "function" && this.currentUser != null;
     },
     logout(): void {
-      httpRequest.post(Defines.SERVER_LOGOUT_URL);
+      httpRequest.post(SERVER_LOGOUT_URL);
     },
   },
   computed: {

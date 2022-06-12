@@ -168,7 +168,7 @@ import Vue from "vue";
 import { httpRequest } from "@/utils/http";
 import { rules } from "@/utils/rules";
 import { mapActions, mapGetters } from "vuex";
-import * as Defines from "@/utils/defines";
+import { ERROR_MESSAGE_DURATION } from "@/utils/defines";
 import { VueResponse, VueElement, VueFunction } from "../../utils/types";
 export default Vue.extend({
   name: "Access-register",
@@ -205,7 +205,7 @@ export default Vue.extend({
                 this.alertMessage = error.bodyText;
                 setTimeout(() => {
                   this.alertMessage = "";
-                }, Defines.ERROR_MESSAGE_DURATION);
+                }, ERROR_MESSAGE_DURATION);
               });
           }
         }

@@ -7,7 +7,7 @@ import vueResource from 'vue-resource';
 import CKEditor from '@ckeditor/ckeditor5-vue2';
 import { Body, VueRequest, VueResponse } from './utils/types';
 import {clearStorage} from './utils/functions';
-import * as Defines from './utils/defines';
+import { ACCESS_PAGE_URL } from './utils/defines';
 
 Vue.config.productionTip = false;
 Vue.use(vueResource);
@@ -23,7 +23,7 @@ Vue.http.interceptors.push(function (request: VueRequest) {
     if (status === 0) {
       clearStorage();
       if (router.currentRoute.path !== "/access")
-      router.push(Defines.ACCESS_PAGE_URL);
+      router.push(ACCESS_PAGE_URL);
     }
     // if (status === 401) {
     //   store.dispatch('clearVuex');
@@ -32,7 +32,7 @@ Vue.http.interceptors.push(function (request: VueRequest) {
     if (status === 500) {
       clearStorage();
       if (router.currentRoute.path !== "/access")
-      router.push(Defines.ACCESS_PAGE_URL);
+      router.push(ACCESS_PAGE_URL);
     }
 
     if (body && (body as Body).user != undefined) {

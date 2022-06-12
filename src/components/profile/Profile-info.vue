@@ -163,8 +163,8 @@ import Vue from "vue";
 import { mapState, mapActions } from "vuex";
 import { httpRequest } from "@/utils/http";
 import { VueElement, VueFunction, VueResponse } from '../../utils/types';
-import * as Defines from "../../utils/defines";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
+import { SERVER_USER_DESCRIPTION_URL, SERVER_USER_DARK_URL, SERVER_USER_IMG_URL, SERVER_USER_LNAME_URL, SERVER_USER_NAME_URL, SERVER_USER_USERNAME_URL } from "../../utils/defines";
 
 export default Vue.extend({
   name: "Profile-info",
@@ -193,7 +193,7 @@ export default Vue.extend({
     async sendDescription() {
       const description: FormData = new FormData();
       description.append("description", this.description);
-      await httpRequest.patch(Defines.SERVER_DESCRIPTION_URL, description);
+      await httpRequest.patch(SERVER_USER_DESCRIPTION_URL, description);
       this.currentUser.description = this.description;
       this.updateCurrentUser(this.currentUser);
       this.description = "";
@@ -237,13 +237,13 @@ export default Vue.extend({
     switchTarget() {
       switch (this.target) {
         case 0:
-          this.url = Defines.SERVER_USER_LNAME_URL;
+          this.url = SERVER_USER_LNAME_URL;
           break;
         case 1:
-          this.url = Defines.SERVER_USER_NAME_URL;
+          this.url = SERVER_USER_NAME_URL;
           break;
         case 2:
-          this.url = Defines.SERVER_USER_USERNAME_URL;
+          this.url = SERVER_USER_USERNAME_URL;
           break;
       }
     },
@@ -271,7 +271,7 @@ export default Vue.extend({
       const file = new FormData();
       if (input.files) file.append("file", input.files[0]);
       const response: VueResponse = await httpRequest.post(
-        Defines.SERVER_USER_IMG_URL,
+        SERVER_USER_IMG_URL,
         file
       );
       this.currentUser.avatarSrc = response.bodyText;
@@ -280,7 +280,7 @@ export default Vue.extend({
     async themeSwitcher(darkMode: boolean) {
       const data: FormData = new FormData();
       data.append("dark", darkMode.toString());
-      await httpRequest.patch(Defines.SERVER_USER_DARK_URL, data);
+      await httpRequest.patch(SERVER_USER_DARK_URL, data);
       this.currentUser.dark = darkMode;
       this.updateCurrentUser(this.currentUser);
       this.$vuetify.theme.dark = darkMode;

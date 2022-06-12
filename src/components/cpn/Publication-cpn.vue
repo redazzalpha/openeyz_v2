@@ -129,9 +129,9 @@ import { Item } from "../../utils/types";
 import { httpRequest } from "../../utils/http";
 import { translateDate } from "../../utils/functions";
 import { getAllPosts, getAllComments } from "../../utils/functions";
-import * as Defines from "../../utils/defines";
-import AvatarCpn from "@/components/cpn/Avatar-cpn.vue";
-import CommentBlock from "@/components/comment/Comment-block.vue";
+import AvatarCpn from "./Avatar-cpn.vue";
+import CommentBlock from "../comment/Comment-block.vue";
+import { POST_GET_LIMIT, SERVER_LIKE_URL, SERVER_PUBLICATION_LIMIT_URL } from "../../utils/defines";
 
 export default Vue.extend({
   name: "Publication-cpn",
@@ -170,20 +170,16 @@ export default Vue.extend({
     async like(item: Item) {
       const postId: FormData = new FormData();
       if (item.post) postId.append("postId", item.post.id.toString());
-      await httpRequest.post(Defines.SERVER_LIKE_URL, postId);
-      await getAllPosts();
+      await httpRequest.post(SERVER_LIKE_URL, postId);
+      await getAllPosts(POST_GET_LIMIT);
     },
     async deleteOne(postId: number) {
-      await httpRequest.delete(Defines.SERVER_PUBLICATION_URL, {
+      await httpRequest.delete(SERVER_PUBLICATION_LIMIT_URL, {
         params: { postId },
       });
-      await getAllPosts();
+      await getAllPosts(POST_GET_LIMIT);
       this.$emit("sent");
     },
-  },
-  created(): void {
-    //TODO:find a why to get posts cause posts is only refresh on created wich means only once
-    // this.getAllPosts();
   },
 });
 </script>

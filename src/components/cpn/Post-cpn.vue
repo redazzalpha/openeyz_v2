@@ -76,11 +76,11 @@
 import Vue from "vue";
 import ClassicEditor from "@/ckeditor5/ckeditor5";
 import { mapGetters, mapState } from "vuex";
-import { httpRequest } from "@/utils/http";
+import { httpRequest } from "../../utils/http";
 import { VueResponse } from "../../utils/types";
 import { getAllPosts } from "../../utils/functions";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
-import * as Defines from "@/utils/defines";
+import { ERROR_MESSAGE_DURATION, POST_GET_LIMIT, SERVER_PUBLICATION_URL } from "../../utils/defines";
 
 export default Vue.extend({
   name: "Post-cpn",
@@ -107,16 +107,16 @@ export default Vue.extend({
           "post",
           this.editorData.replace(/<img/g, "<img width=100%")
         );
-        httpRequest.post(Defines.SERVER_PUBLICATION_URL, data).then(
+        httpRequest.post(SERVER_PUBLICATION_URL, data).then(
           (): void => {
             this.editorData = "";
-            getAllPosts();
+            getAllPosts(POST_GET_LIMIT);
           },
           (error: VueResponse): void => {
             this.alertMessage = error.bodyText;
             setTimeout(() => {
               this.alertMessage = "";
-            }, Defines.ERROR_MESSAGE_DURATION);
+            }, ERROR_MESSAGE_DURATION);
           }
         );
       }

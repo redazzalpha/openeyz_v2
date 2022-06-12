@@ -1,4 +1,4 @@
-import * as Defines from '../utils/defines';
+import {SERVER_IMAGE_URL} from '../utils/defines';
 
 // TODO find a way to delete uploaded image when the image is not send into post 
 // TODO:   block max img send in a post need to do it in server side too
@@ -23,7 +23,7 @@ class UploadAdapter {
     _initRequest() {
         const xhr = this.xhr = new XMLHttpRequest();
 
-        xhr.open('POST', Defines.SERVER_IMAGE_URL, true);
+        xhr.open('POST', SERVER_IMAGE_URL, true);
         xhr.withCredentials = true;
         xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
         xhr.responseType = 'json';

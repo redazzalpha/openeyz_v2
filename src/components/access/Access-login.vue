@@ -90,11 +90,11 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { mapActions, mapGetters } from "vuex";
 import { rules } from "@/utils/rules";
 import { httpRequest } from "@/utils/http";
-import { mapActions, mapGetters } from "vuex";
 import { VueResponse, VueElement, VueFunction } from "../../utils/types";
-import * as Defines from "@/utils/defines";
+import { ERROR_MESSAGE_DURATION } from "@/utils/defines";
 
 // TODO: make in server side the refresh
 export default Vue.extend({
@@ -125,7 +125,7 @@ export default Vue.extend({
                 this.alertMessage = error.bodyText;
                 setTimeout(() => {
                   this.alertMessage = "";
-                }, Defines.ERROR_MESSAGE_DURATION);
+                }, ERROR_MESSAGE_DURATION);
               });
           }
         }

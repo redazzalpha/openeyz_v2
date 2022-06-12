@@ -112,6 +112,7 @@ import PublicationCpn from "../cpn/Publication-cpn.vue";
 import ToolbarCpn from "../cpn/Toolbar-cpn.vue";
 import AlertCpn from "../cpn/Alert-cpn.vue";
 import LinksCpn from "../cpn/Links-cpn.vue";
+import { POST_GET_LIMIT } from "../../utils/defines";
 export default Vue.extend({
   name: "Team-selected",
   components: {
@@ -169,7 +170,7 @@ export default Vue.extend({
       if (code === "Escape") this.closeDialog();
     },
     sent() {
-      getAllUserPosts(this.username);
+      getAllUserPosts(this.username, POST_GET_LIMIT);
     },
     onScroll(e: UIEvent) {
       if (typeof window === "undefined") return;
@@ -193,7 +194,7 @@ export default Vue.extend({
   },
   watch: {
     teamSelectDialog(visible: boolean) {
-      if (visible) getAllUserPosts(this.username);
+      if (visible) getAllUserPosts(this.username, POST_GET_LIMIT);
       else if (!visible) {
         window.scrollTo({
           top: 0,
