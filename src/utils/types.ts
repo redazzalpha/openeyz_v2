@@ -63,7 +63,7 @@ export interface Item {
 }
 
 export class Users {
-  username = String;
+  username = "";
   lname = String;
   name = String;
   password = String;

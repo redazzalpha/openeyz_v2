@@ -51,7 +51,7 @@
 import Vue from "vue";
 import { mapActions, mapState } from "vuex";
 import { UserObj } from "../utils/types";
-import { getSimpleUsers } from "../utils/functions";
+import { getAllUserPosts, getSimpleUsers } from "../utils/functions";
 import AvatarCpn from "../components/cpn/Avatar-cpn.vue";
 import ToolbarCpn from "../components/cpn/Toolbar-cpn.vue";
 import TeamCards from "../components/team/Team-cards.vue";

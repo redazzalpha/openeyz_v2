@@ -127,7 +127,7 @@ import Vue, { PropType } from "vue";
 import { mapActions, mapState} from "vuex";
 import { Item, VueResponse } from "../../utils/types";
 import { httpRequest } from "../../utils/http";
-import { translateDate } from "../../utils/functions";
+import { getAllUserPosts, translateDate } from "../../utils/functions";
 import { getAllPosts, getAllComments } from "../../utils/functions";
 import { POST_GET_LIMIT, SERVER_LIKE_COUNT_URL, SERVER_LIKE_URL, SERVER_PUBLICATION_URL } from "../../utils/defines";
 import AvatarCpn from "./Avatar-cpn.vue";
@@ -155,7 +155,8 @@ export default Vue.extend({
   },
   computed: {
     ...mapState([
-      'posts'
+      'posts', 
+      'userPosts'
     ]),
   },
   methods: {

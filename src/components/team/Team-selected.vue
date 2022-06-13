@@ -108,19 +108,16 @@
 import Vue from "vue";
 import { mapActions, mapState } from "vuex";
 import {
-  addAllPosts,
   addAllUserPosts,
   getAllUserPosts,
   translateDateToISO,
 } from "../../utils/functions";
-import {
-  POST_GET_LIMIT,
-  TEAM_PAGE_URL,
-} from "../../utils/defines";
+import { POST_GET_LIMIT, TEAM_PAGE_URL } from "../../utils/defines";
 import PublicationCpn from "../cpn/Publication-cpn.vue";
 import ToolbarCpn from "../cpn/Toolbar-cpn.vue";
 import AlertCpn from "../cpn/Alert-cpn.vue";
 import LinksCpn from "../cpn/Links-cpn.vue";
+import { Item, Post } from "../../utils/types";
 export default Vue.extend({
   name: "Team-selected",
   components: {
@@ -200,8 +197,6 @@ export default Vue.extend({
           const date = translateDateToISO(
             this.userPosts[this.userPosts.length - 1].post.creation
           );
-
-
           addAllUserPosts(this.username, POST_GET_LIMIT, date);
         }
       }
@@ -215,6 +210,9 @@ export default Vue.extend({
           behavior: "smooth",
         });
     },
+    like(item: Item) {
+      console.log("clicked here on team selected");
+    },
   },
   watch: {
     teamSelectDialog(visible: boolean) {
@@ -227,6 +225,9 @@ export default Vue.extend({
         });
       }
     },
+  },
+  created() {
+    this.updateTeamSelectDialog(false);
   },
   destroyed() {
     this.updateTeamSelectDialog(false);
