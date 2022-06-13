@@ -125,11 +125,11 @@
 <script lang="ts">
 import Vue, { PropType } from "vue";
 import { mapActions, mapState} from "vuex";
-import { Item } from "../../utils/types";
+import { Item, VueResponse } from "../../utils/types";
 import { httpRequest } from "../../utils/http";
 import { translateDate } from "../../utils/functions";
 import { getAllPosts, getAllComments } from "../../utils/functions";
-import { POST_GET_LIMIT, SERVER_LIKE_URL, SERVER_PUBLICATION_LIMIT_URL, SERVER_PUBLICATION_URL } from "../../utils/defines";
+import { POST_GET_LIMIT, SERVER_LIKE_COUNT_URL, SERVER_LIKE_URL, SERVER_PUBLICATION_URL } from "../../utils/defines";
 import AvatarCpn from "./Avatar-cpn.vue";
 import CommentBlock from "../comment/Comment-block.vue";
 
@@ -176,7 +176,9 @@ export default Vue.extend({
       const postId: FormData = new FormData();
       if (item.post) postId.append("postId", item.post.id.toString());
       await httpRequest.post(SERVER_LIKE_URL, postId);
-      await getAllPosts(POST_GET_LIMIT, this.posts[this.posts.length -1].creation);
+      const response: VueResponse = await httpRequest.get(SERVER_LIKE_COUNT_URL, {params: {postId: item.post.id}});
+      item.likeCount = response.body as unknown as number;
+      item.userLike = !item.userLike;
     },
     async deleteOne(postId: number) {
       await httpRequest.delete(SERVER_PUBLICATION_URL, {

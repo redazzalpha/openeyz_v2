@@ -4,7 +4,6 @@ import Vuetify from "@/plugins/vuetify";
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VuexPersistence from 'vuex-persist';
-import { DEFAULT_TIMESTAMP } from '../utils/defines';
 
 
 const vuexLocal = new VuexPersistence({
@@ -29,7 +28,6 @@ export default new Vuex.Store({
     drawer: null,
     tabAccess: 0,
     tabProfile: 0,
-    timestamp: DEFAULT_TIMESTAMP,
   },
   getters: {
     btnSize(): string {
@@ -54,6 +52,9 @@ export default new Vuex.Store({
     },
     UPDATE_USER_POSTS(state, payload): void {
       state.userPosts = payload;
+    },
+    ADD_USER_POSTS(state, payload): void {
+      state.userPosts.push(payload);
     },
     UPDATE_COMMENTS(state, payload): void {
       state.comments = payload;
@@ -82,9 +83,6 @@ export default new Vuex.Store({
     UPDATE_TAB_PROFILE(state, payload: number): void {
       state.tabProfile = payload;
     },
-    UPDATE_TIMESTAMP(state, payload: string): void {
-      state.timestamp = payload;
-    },
 
 
     CLEAR_VUEX(state) {
@@ -100,7 +98,6 @@ export default new Vuex.Store({
       state.drawer = null;
       state.tabAccess = 0;
       state.tabProfile = 0;
-      state.timestamp = DEFAULT_TIMESTAMP;
     }
   },
   actions: {
@@ -121,6 +118,9 @@ export default new Vuex.Store({
     },
     updateUserPosts(context, payload): void {
       context.commit('UPDATE_USER_POSTS', payload);
+    },
+    addUserPosts(context, payload) {
+      context.commit('ADD_USER_POSTS', payload);
     },
     updateComments(context, payload): void {
       context.commit('UPDATE_COMMENTS', payload);
@@ -148,10 +148,6 @@ export default new Vuex.Store({
     },
     updateTabProfile(context, payload: number): void {
       context.commit('UPDATE_TAB_PROFILE', payload);
-    },
-
-    updateTimestamp(context, payload) {
-      context.commit('UPDATE_TIMESTAMP', payload);
     },
 
     clearVuex(context) {

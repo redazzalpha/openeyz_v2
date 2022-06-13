@@ -107,8 +107,16 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapActions, mapState } from "vuex";
-import { getAllUserPosts } from "../../utils/functions";
-import { POST_GET_LIMIT } from "../../utils/defines";
+import {
+  addAllPosts,
+  addAllUserPosts,
+  getAllUserPosts,
+  translateDateToISO,
+} from "../../utils/functions";
+import {
+  POST_GET_LIMIT,
+  TEAM_PAGE_URL,
+} from "../../utils/defines";
 import PublicationCpn from "../cpn/Publication-cpn.vue";
 import ToolbarCpn from "../cpn/Toolbar-cpn.vue";
 import AlertCpn from "../cpn/Alert-cpn.vue";
@@ -172,11 +180,30 @@ export default Vue.extend({
     sent() {
       getAllUserPosts(this.username, POST_GET_LIMIT);
     },
+
     onScroll(e: UIEvent) {
+      let scroll: number =
+        (e.target as Element).clientHeight + (e.target as Element).scrollTop;
+      let bottom: number = (e.target as Element).scrollHeight;
+
       if (typeof window === "undefined") return;
       if (e.target != null) {
         const top = window.pageYOffset || (e.target as Element).scrollTop || 0;
         this.fab = top > 20;
+      }
+
+      if (bottom && scroll === bottom) {
+        if (
+          this.userPosts.length &&
+          this.$router.currentRoute.path === TEAM_PAGE_URL
+        ) {
+          const date = translateDateToISO(
+            this.userPosts[this.userPosts.length - 1].post.creation
+          );
+
+
+          addAllUserPosts(this.username, POST_GET_LIMIT, date);
+        }
       }
     },
     toTop() {

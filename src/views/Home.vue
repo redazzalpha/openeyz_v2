@@ -15,7 +15,7 @@
 import Vue from "vue";
 import { mapState } from "vuex";
 import { getAllPosts, getAllNotifs } from "../utils/functions";
-import { DEFAULT_TIMESTAMP, POST_GET_LIMIT } from '../utils/defines';
+import { POST_GET_LIMIT } from '../utils/defines';
 import HeadCpn from "@/components/cpn/Head-cpn.vue";
 import PostCpn from "@/components/cpn/Post-cpn.vue";
 import PublicationCpn from "@/components/cpn/Publication-cpn.vue";

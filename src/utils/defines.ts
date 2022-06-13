@@ -5,10 +5,11 @@ export const SERVER_ACCESS_URL = API_PATH + "/access";
 export const SERVER_PUBLICATION_URL = API_PATH + '/publication';
 export const SERVER_PUBLICATION_LIMIT_URL = SERVER_PUBLICATION_URL + '/limit';
 export const SERVER_COMMENT_URL = API_PATH + '/comment';
-export const SERVER_LIKE_URL = API_PATH + '/like';
 export const SERVER_USER_NOTIF_URL = API_PATH + '/notif';
 export const SERVER_USER_NOTIF_ONE_URL = SERVER_USER_NOTIF_URL + '/one';
 export const SERVER_IMAGE_URL = API_PATH + '/image';
+export const SERVER_LIKE_URL = API_PATH + '/like';
+export const SERVER_LIKE_COUNT_URL = SERVER_LIKE_URL + '/count';
 
 export const SERVER_USER_URL = API_PATH + '/user';
 export const SERVER_USER_SIMPLE_URL = SERVER_USER_URL + '/simple';
@@ -37,4 +38,4 @@ export const USER_IMG_URL = ROOT_URL + "@/assets/user.png";
 
 export const ERROR_MESSAGE_DURATION = 4000;
 export const  POST_GET_LIMIT = 2;
-export const  DEFAULT_TIMESTAMP = "1970-01-01T00:00:00.542+00:00";
+// export const  DEFAULT_TIMESTAMP = "1970-01-01T00:00:00.542+00:00";

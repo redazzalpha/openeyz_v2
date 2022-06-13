@@ -81,7 +81,6 @@ import { VueResponse } from "../../utils/types";
 import { getAllPosts } from "../../utils/functions";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
 import {
-  DEFAULT_TIMESTAMP,
   ERROR_MESSAGE_DURATION,
   POST_GET_LIMIT,
   SERVER_PUBLICATION_URL,
