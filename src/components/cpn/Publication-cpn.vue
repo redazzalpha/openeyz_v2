@@ -124,14 +124,14 @@
 
 <script lang="ts">
 import Vue, { PropType } from "vue";
-import { mapActions } from "vuex";
+import { mapActions, mapState} from "vuex";
 import { Item } from "../../utils/types";
 import { httpRequest } from "../../utils/http";
 import { translateDate } from "../../utils/functions";
 import { getAllPosts, getAllComments } from "../../utils/functions";
+import { POST_GET_LIMIT, SERVER_LIKE_URL, SERVER_PUBLICATION_LIMIT_URL, SERVER_PUBLICATION_URL } from "../../utils/defines";
 import AvatarCpn from "./Avatar-cpn.vue";
 import CommentBlock from "../comment/Comment-block.vue";
-import { POST_GET_LIMIT, SERVER_LIKE_URL, SERVER_PUBLICATION_LIMIT_URL } from "../../utils/defines";
 
 export default Vue.extend({
   name: "Publication-cpn",
@@ -153,6 +153,11 @@ export default Vue.extend({
       comments: [],
     };
   },
+  computed: {
+    ...mapState([
+      'posts'
+    ]),
+  },
   methods: {
     ...mapActions(["updateComments"]),
     async showComment(item: Item): Promise<void> {
@@ -171,13 +176,13 @@ export default Vue.extend({
       const postId: FormData = new FormData();
       if (item.post) postId.append("postId", item.post.id.toString());
       await httpRequest.post(SERVER_LIKE_URL, postId);
-      await getAllPosts(POST_GET_LIMIT);
+      await getAllPosts(POST_GET_LIMIT, this.posts[this.posts.length -1].creation);
     },
     async deleteOne(postId: number) {
-      await httpRequest.delete(SERVER_PUBLICATION_LIMIT_URL, {
+      await httpRequest.delete(SERVER_PUBLICATION_URL, {
         params: { postId },
       });
-      await getAllPosts(POST_GET_LIMIT);
+      await getAllPosts(POST_GET_LIMIT, this.posts[this.posts.length -1].creation);
       this.$emit("sent");
     },
   },

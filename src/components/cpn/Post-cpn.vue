@@ -1,75 +1,75 @@
 <template>
   <!-- post-input-block -->
-    <!-- post-container -->
-    <v-container grid-list-xs fluid class="post-cpn-container">
-      <v-row>
-        <v-col>
-          <!--card-container -->
-          <v-card
-            max-width="500"
-            class="mx-auto card mb-6 pb-2"
-            elevation="7"
-            style="position: relative; border-radius: 7px "
-            :color="$vuetify.theme.dark ? '#424242' : ''"
-          >
-            <!--error-alert-message-->
-            <Transition name="scale-transition">
-              <v-alert
-                v-show="alertMessage"
-                dense
-                outlined
-                type="error"
-                style="
-                  position: absolute;
-                  top: 40%;
-                  left: 10%;
-                  right: 10%;
-                  z-index: 1;
-                  word-break: keep-all;
-                "
-                text
-                elevation="5"
-                class="mt-3"
-                >{{ alertMessage }}</v-alert
-              >
-            </Transition>
-            <!-- header-title -->
-            <v-card-title
-              v-if="checkCurrentUser()"
-              primary-title
-              :style="`background-color: ${
-                $vuetify.theme.dark ? '#424242' : '#00acc1'
-              }`"
-              style="border-radius: 7px 7px 0 0"
-              class="font-italic white--text mb-4 pa-2"
+  <!-- post-container -->
+  <v-container grid-list-xs fluid class="post-cpn-container">
+    <v-row>
+      <v-col>
+        <!--card-container -->
+        <v-card
+          max-width="500"
+          class="mx-auto card mb-6 pb-2"
+          elevation="7"
+          style="position: relative; border-radius: 7px"
+          :color="$vuetify.theme.dark ? '#424242' : ''"
+        >
+          <!--error-alert-message-->
+          <Transition name="scale-transition">
+            <v-alert
+              v-show="alertMessage"
+              dense
+              outlined
+              type="error"
+              style="
+                position: absolute;
+                top: 40%;
+                left: 10%;
+                right: 10%;
+                z-index: 1;
+                word-break: keep-all;
+              "
+              text
+              elevation="5"
+              class="mt-3"
+              >{{ alertMessage }}</v-alert
             >
-              <v-btn :ripple="false" plain icon class="pa-7" to="/profile">
-                <AvatarCpn
-                  :avatarSrc="currentUser.avatarSrc"
-                  :role="currentUser.roles[0].roleName"
-                />
-              </v-btn>
-              Say what you want {{ currentUser.name }}
-            </v-card-title>
-            <!--editor -->
-            <v-card-text>
-              <ckeditor
-                :editor="editor"
-                v-model="editorData"
-                height="300"
-                tag-name="textarea"
-              ></ckeditor>
-            </v-card-text>
-            <!-- buttons -->
-            <v-card-actions class="d-flex justify-center">
-              <v-btn color="primary" :width="btnSize" @click="publish"
-                >Publish</v-btn
-              >
-            </v-card-actions>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
+          </Transition>
+          <!-- header-title -->
+          <v-card-title
+            v-if="checkCurrentUser()"
+            primary-title
+            :style="`background-color: ${
+              $vuetify.theme.dark ? '#424242' : '#00acc1'
+            }`"
+            style="border-radius: 7px 7px 0 0"
+            class="font-italic white--text mb-4 pa-2"
+          >
+            <v-btn :ripple="false" plain icon class="pa-7" to="/profile">
+              <AvatarCpn
+                :avatarSrc="currentUser.avatarSrc"
+                :role="currentUser.roles[0].roleName"
+              />
+            </v-btn>
+            Say what you want {{ currentUser.name }}
+          </v-card-title>
+          <!--editor -->
+          <v-card-text>
+            <ckeditor
+              :editor="editor"
+              v-model="editorData"
+              height="300"
+              tag-name="textarea"
+            ></ckeditor>
+          </v-card-text>
+          <!-- buttons -->
+          <v-card-actions class="d-flex justify-center">
+            <v-btn color="primary" :width="btnSize" @click="publish"
+              >Publish</v-btn
+            >
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -80,7 +80,12 @@ import { httpRequest } from "../../utils/http";
 import { VueResponse } from "../../utils/types";
 import { getAllPosts } from "../../utils/functions";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
-import { ERROR_MESSAGE_DURATION, POST_GET_LIMIT, SERVER_PUBLICATION_URL } from "../../utils/defines";
+import {
+  DEFAULT_TIMESTAMP,
+  ERROR_MESSAGE_DURATION,
+  POST_GET_LIMIT,
+  SERVER_PUBLICATION_URL,
+} from "../../utils/defines";
 
 export default Vue.extend({
   name: "Post-cpn",
@@ -93,6 +98,10 @@ export default Vue.extend({
       editor: ClassicEditor,
       editorData: "",
     };
+  },
+  computed: {
+    ...mapState(["posts", "currentUser"]),
+    ...mapGetters(["btnSize"]),
   },
   methods: {
     checkCurrentUser(): boolean {
@@ -125,10 +134,6 @@ export default Vue.extend({
       this.alertMessage = message;
     },
   },
-  computed: {
-    ...mapState(["posts", "currentUser"]),
-    ...mapGetters(["btnSize"]),
-  },
 });
 </script>
 
@@ -144,4 +149,3 @@ export default Vue.extend({
   opacity: 1 !important;
 }
 </style>
-

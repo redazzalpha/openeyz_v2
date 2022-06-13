@@ -22,23 +22,7 @@
       </v-main>
       <DrawerCpn />
       <FooterCpn />
-      <!--scroll-top-button-->
-      <v-hover v-slot="{ hover }">
-        <v-btn
-          v-scroll="onScroll"
-          v-show="fab"
-          fab
-          fixed
-          bottom
-          right
-          tab="button"
-          :color="$vuetify.theme.dark ? '#424242' : 'cyan darken-1'"
-          :class="hover ? 'on-hover' : ''"
-          @click="toTop"
-        >
-          <v-icon class="text-h3 white--text">mdi-chevron-up</v-icon>
-        </v-btn>
-      </v-hover>
+      <ScrollTopBtnCpn />
     </v-card>
   </v-app>
 </template>
@@ -48,10 +32,18 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapState } from "vuex";
-import { getAllNotifs } from "./utils/functions";
+import {
+  addAllPosts,
+  getAllNotifs,
+  getAllPosts,
+  translateDate,
+  translateDateToISO,
+} from "./utils/functions";
 import FooterCpn from "@/components/cpn/Footer-cpn.vue";
 import AppbarCpn from "@/components/cpn/Appbar-cpn.vue";
 import DrawerCpn from "@/components/cpn/Drawer-cpn.vue";
+import ScrollTopBtnCpn from "./components/cpn/ScrollTopBtn-cpn.vue";
+import { HOME_PAGE_URL, POST_GET_LIMIT } from "./utils/defines";
 
 export default Vue.extend({
   name: "App",
@@ -59,26 +51,28 @@ export default Vue.extend({
     AppbarCpn,
     FooterCpn,
     DrawerCpn,
-  },
-  data() {
-    return {
-      fab: false,
-    };
+    ScrollTopBtnCpn,
   },
 
   computed: {
-    ...mapState(["currentUser", "userNotifs"]),
+    ...mapState(["currentUser", "userNotifs", "posts"]),
   },
   methods: {
-    onScroll(e: UIEvent) {
-      if (typeof window === "undefined") return;
-      if (e.target != null) {
-        const top = window.pageYOffset || (e.target as Element).scrollTop || 0;
-        this.fab = top > 20;
-      }
-    },
-    toTop() {
-      this.$vuetify.goTo(0);
+    infiniteScroll() {
+      let scroll: number;
+      let bottom: number;
+      window.onscroll = async () => {
+        scroll = window.scrollY + window.innerHeight;
+        bottom = document.body.scrollHeight;
+        if (scroll === bottom) {
+          if (this.posts.length  && this.$router.currentRoute.path === HOME_PAGE_URL) {            
+            const date = translateDateToISO(
+              this.posts[this.posts.length - 1].post.creation
+            );
+            addAllPosts(POST_GET_LIMIT, date);
+          }
+        }
+      };
     },
     async ckeThemeSwitcher() {
       const style = document.documentElement.style;
@@ -113,6 +107,9 @@ export default Vue.extend({
       behavior: "smooth",
     });
     getAllNotifs();
+  },
+  mounted() {
+    this.infiniteScroll();
   },
 });
 </script>

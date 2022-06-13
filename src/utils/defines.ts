@@ -36,4 +36,5 @@ export const ADMIN_IMG_URL = ROOT_URL + "@/assets/admin.png";
 export const USER_IMG_URL = ROOT_URL + "@/assets/user.png";
 
 export const ERROR_MESSAGE_DURATION = 4000;
-export const  POST_GET_LIMIT = 10;
+export const  POST_GET_LIMIT = 2;
+export const  DEFAULT_TIMESTAMP = "1970-01-01T00:00:00.542+00:00";

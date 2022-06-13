@@ -1,6 +1,6 @@
 import store from "@/store";
 import { httpRequest } from "./http";
-import { UserMap, VueResponse } from "./types";
+import { UserMap, VueResponse, Post } from "./types";
 import { DateTime } from "luxon";
 import { SERVER_PUBLICATION_LIMIT_URL, SERVER_COMMENT_URL, SERVER_USER_NOTIF_URL, SERVER_USER_SIMPLE_URL } from './defines';
 
@@ -18,13 +18,19 @@ export async function getSimpleUsers(): Promise<void> {
   store.dispatch("updateUserListObj", userListObj);
   store.dispatch("updateUserCardList", userListObj);
 }
-export async function getAllPosts(limit: number): Promise<void | VueResponse> {
+export async function getAllPosts(limit: number, creation?: string): Promise<void | VueResponse> {
   const response: VueResponse | void = await httpRequest.get(
     SERVER_PUBLICATION_LIMIT_URL,
-    { params: { limit } }
-
+    { params: { limit, creation} }
   );
   store.dispatch("updatePosts", JSON.parse(response.bodyText));
+}
+export async function addAllPosts(limit: number, creation?: string): Promise<void | VueResponse> {
+  const response: VueResponse | void = await httpRequest.get(
+    SERVER_PUBLICATION_LIMIT_URL,
+    { params: { limit, creation} }
+    );
+    (response.body as []).forEach((e: Post) => {store.dispatch('addPosts', e)});
 }
 export async function getAllUserPosts(
   authorId: string, limit: number
@@ -59,4 +65,7 @@ export function clearStorage() {
 
 export function translateDate(timestamp: string): string {
   return DateTime.fromISO(timestamp).setLocale("en").toFormat("DD 'at' HH:mm");
+}
+export function translateDateToISO(timestamp: string): string {
+  return DateTime.fromISO(timestamp).setLocale("fr").toISO();
 }

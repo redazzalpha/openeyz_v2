@@ -11,7 +11,7 @@
   >
     <v-card
       v-scroll.self="onScroll"
-      class="overflow-y-auto test inscroll"
+      class="overflow-y-auto inscroll"
       max-height="400"
       :style="
         'background:  url(' +
@@ -84,7 +84,7 @@
       </div>
     </v-card>
 
-    <!--scroll-top-button-->
+    <!-- scroll-top-button -->
     <v-hover v-slot="{ hover }">
       <v-btn
         v-scroll="onScroll"
@@ -108,11 +108,11 @@
 import Vue from "vue";
 import { mapActions, mapState } from "vuex";
 import { getAllUserPosts } from "../../utils/functions";
+import { POST_GET_LIMIT } from "../../utils/defines";
 import PublicationCpn from "../cpn/Publication-cpn.vue";
 import ToolbarCpn from "../cpn/Toolbar-cpn.vue";
 import AlertCpn from "../cpn/Alert-cpn.vue";
 import LinksCpn from "../cpn/Links-cpn.vue";
-import { POST_GET_LIMIT } from "../../utils/defines";
 export default Vue.extend({
   name: "Team-selected",
   components: {
@@ -188,9 +188,6 @@ export default Vue.extend({
           behavior: "smooth",
         });
     },
-    test() {
-      console.log("in this function man i dont want to see you any more bro");
-    },
   },
   watch: {
     teamSelectDialog(visible: boolean) {
@@ -204,9 +201,9 @@ export default Vue.extend({
       }
     },
   },
-  destroyed(){
+  destroyed() {
     this.updateTeamSelectDialog(false);
-  }
+  },
 });
 </script>
 
