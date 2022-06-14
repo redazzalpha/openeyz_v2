@@ -45,7 +45,6 @@ export async function getAllUserPosts(
 export async function addAllUserPosts(authorId: string, limit: number, creation?: string): Promise<void | VueResponse> {
 
 
-  console.log("before request")
   const response: VueResponse | void = await httpRequest.get(
     SERVER_PUBLICATION_LIMIT_URL,
     { params: { authorId, limit, creation } }

@@ -118,18 +118,24 @@
       :itemPost="item"
       @stop="closeComment"
       @send="commentSent"
+      @delete="commentDelete"
     />
   </div>
 </template>
 
 <script lang="ts">
 import Vue, { PropType } from "vue";
-import { mapActions, mapState} from "vuex";
+import { mapActions, mapState } from "vuex";
 import { Item, VueResponse } from "../../utils/types";
 import { httpRequest } from "../../utils/http";
-import { getAllUserPosts, translateDate } from "../../utils/functions";
+import { translateDate } from "../../utils/functions";
 import { getAllPosts, getAllComments } from "../../utils/functions";
-import { POST_GET_LIMIT, SERVER_LIKE_COUNT_URL, SERVER_LIKE_URL, SERVER_PUBLICATION_URL } from "../../utils/defines";
+import {
+  POST_GET_LIMIT,
+  SERVER_LIKE_COUNT_URL,
+  SERVER_LIKE_URL,
+  SERVER_PUBLICATION_URL,
+} from "../../utils/defines";
 import AvatarCpn from "./Avatar-cpn.vue";
 import CommentBlock from "../comment/Comment-block.vue";
 
@@ -154,10 +160,7 @@ export default Vue.extend({
     };
   },
   computed: {
-    ...mapState([
-      'posts', 
-      'userPosts'
-    ]),
+    ...mapState(["posts", "userPosts"]),
   },
   methods: {
     ...mapActions(["updateComments"]),
@@ -173,11 +176,17 @@ export default Vue.extend({
     commentSent(itemPost: Item) {
       if (itemPost.commentCount != undefined) itemPost.commentCount++;
     },
+    commentDelete(itemPost: Item) {
+      if (itemPost.commentCount != undefined) itemPost.commentCount--;
+    },
     async like(item: Item) {
       const postId: FormData = new FormData();
       if (item.post) postId.append("postId", item.post.id.toString());
       await httpRequest.post(SERVER_LIKE_URL, postId);
-      const response: VueResponse = await httpRequest.get(SERVER_LIKE_COUNT_URL, {params: {postId: item.post.id}});
+      const response: VueResponse = await httpRequest.get(
+        SERVER_LIKE_COUNT_URL,
+        { params: { postId: item.post.id } }
+      );
       item.likeCount = response.body as unknown as number;
       item.userLike = !item.userLike;
     },
@@ -185,7 +194,10 @@ export default Vue.extend({
       await httpRequest.delete(SERVER_PUBLICATION_URL, {
         params: { postId },
       });
-      await getAllPosts(POST_GET_LIMIT, this.posts[this.posts.length -1].creation);
+      await getAllPosts(
+        POST_GET_LIMIT,
+        this.posts[this.posts.length - 1].creation
+      );
       this.$emit("sent");
     },
   },
@@ -193,8 +205,6 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-
-
 .fa-heart {
   font-size: 25px;
 }
@@ -209,8 +219,8 @@ p {
 
 } */
 .badge {
-    width: 32px!important;
-    height: 27px!important;
+  width: 32px !important;
+  height: 27px !important;
 }
 .v-btn--plain:not(.v-btn--active):not(.v-btn--loading):not(:focus):not(:hover)
   .v-btn__content {

@@ -35,7 +35,10 @@
       <v-col>
         <v-card elevation="0">
           <!-- no-comment-alert -->
-          <AlertCpn v-if="comments.length < 1"  message="This post has not comment be the first to leave one" />
+          <AlertCpn
+            v-if="comments.length < 1"
+            message="This post has not comment be the first to leave one"
+          />
           <!-- comment-block -->
           <div v-else class="comment-block">
             <!-- comment-title -->
@@ -70,6 +73,20 @@
                   {{ comment.author.name }}
                   said on
                   {{ translateDate(comment.creation) }}
+
+                  <!-- delete-button -->
+                  <v-btn
+                    color="error"
+                    absolute
+                    right
+                    icon
+                    title="delete"
+                    plain
+                    :ripple="false"
+                    @click.stop="deleteOne(comment.id)"
+                  >
+                    <v-icon color="white">mdi-close-circle</v-icon>
+                  </v-btn>
                 </v-card-title>
                 <!-- comment-content -->
                 <div class="message-arrowed"></div>
@@ -90,13 +107,14 @@
 <script lang="ts">
 import Vue, { PropType } from "vue";
 import { mapState } from "vuex";
-import { httpRequest } from "@/utils/http";
+import { httpRequest } from "../../utils/http";
 import { Item } from "../../utils/types";
 import { translateDate } from "../../utils/functions";
-import {getAllComments} from '../../utils/functions';
-import AlertCpn from '../cpn/Alert-cpn.vue';
+import { getAllComments } from "../../utils/functions";
+import AlertCpn from "../cpn/Alert-cpn.vue";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
-import  {SERVER_COMMENT_URL} from "@/utils/defines";
+import { SERVER_COMMENT_URL } from "@/utils/defines";
+import { SERVER_COMMENT_DELETE_URL } from "../../utils/defines";
 export default Vue.extend({
   name: "Comment-msg",
   components: {
@@ -128,6 +146,13 @@ export default Vue.extend({
         this.$emit("send", this.itemPost);
       }
     },
+    async deleteOne(commentId: number) {
+      await httpRequest.delete(SERVER_COMMENT_DELETE_URL, {
+        params: { commentId },
+      });
+      getAllComments(this.itemPost.post?.id);
+      this.$emit("delete", this.itemPost);
+    },
   },
 });
 </script>
@@ -149,7 +174,8 @@ export default Vue.extend({
 </style>
 
 <style lang="scss" scoped>
-.v-textarea.v-text-field--enclosed.v-text-field--outlined:not(.v-input--dense) textarea {
-  margin-top: 13px!important  ;
+.v-textarea.v-text-field--enclosed.v-text-field--outlined:not(.v-input--dense)
+  textarea {
+  margin-top: 13px !important  ;
 }
 </style>

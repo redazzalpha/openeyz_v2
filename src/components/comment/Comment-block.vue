@@ -13,7 +13,7 @@
       <!-- main-card -->
       <v-card>
         <CommentPublication :itemPost="itemPost" />
-        <CommentMessage :itemPost="itemPost" @send="send" />
+        <CommentMessage :itemPost="itemPost" @send="send" @delete="deleteOne" />
       </v-card>
     </v-dialog>
   </v-row>
@@ -42,6 +42,9 @@ export default Vue.extend({
     send(itemPost: Item) {
       this.$emit("send", itemPost);
     },
+    deleteOne(itemPost: Item) {
+      this.$emit("delete", itemPost);
+    }
   },
 });
 </script>
