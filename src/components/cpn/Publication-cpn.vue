@@ -79,12 +79,13 @@
                           >
                         </v-btn>
                       </v-col>
+                      {{item}}
                       <!-- // TODO: got to fix bug on like click cause nmber of like doesnt appaer -->
                       <!-- like-button -->
                       <v-col class="d-flex justify-center pa-0">
                         <v-badge
-                          :value="item.likeCount > 0"
-                          :content="item.likeCount"
+                          :value="count > 0"
+                          :content="count"
                           overlap
                           bottom
                           class="badge"
@@ -147,7 +148,7 @@ export default Vue.extend({
   },
   props: {
     item: {
-      type: Object as PropType<Item[]>,
+      type: Object as PropType<Item>,
       required: false,
     },
   },
@@ -157,6 +158,7 @@ export default Vue.extend({
       isActive: false,
       dialog: false,
       comments: [],
+      count: 0,
     };
   },
   computed: {
@@ -187,7 +189,8 @@ export default Vue.extend({
         SERVER_LIKE_COUNT_URL,
         { params: { postId: item.post.id } }
       );
-      item.likeCount = response.body as unknown as number;
+      this.count = response.body as unknown as number;
+      // item.likeCount = response.body as unknown as number;
       item.userLike = !item.userLike;
     },
     async deleteOne(postId: number) {
@@ -201,6 +204,14 @@ export default Vue.extend({
       this.$emit("sent");
     },
   },
+  async mounted() {
+          const response: VueResponse = await httpRequest.get(
+        SERVER_LIKE_COUNT_URL,
+        { params: { postId: this.item.post.id } }
+      );
+      this.count = response.body as unknown as number;
+      // this.item.likeCount = response.body as unknown as number;
+  }
 });
 </script>
 

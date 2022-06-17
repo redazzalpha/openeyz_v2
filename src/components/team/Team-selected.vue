@@ -112,12 +112,11 @@ import {
   getAllUserPosts,
   translateDateToISO,
 } from "../../utils/functions";
-import { POST_GET_LIMIT, TEAM_PAGE_URL } from "../../utils/defines";
+import { POST_GET_LIMIT, SERVER_LIKE_COUNT_URL, SERVER_LIKE_URL, TEAM_PAGE_URL } from "../../utils/defines";
 import PublicationCpn from "../cpn/Publication-cpn.vue";
 import ToolbarCpn from "../cpn/Toolbar-cpn.vue";
 import AlertCpn from "../cpn/Alert-cpn.vue";
 import LinksCpn from "../cpn/Links-cpn.vue";
-import { Item, Post } from "../../utils/types";
 export default Vue.extend({
   name: "Team-selected",
   components: {
@@ -209,9 +208,6 @@ export default Vue.extend({
           left: 0,
           behavior: "smooth",
         });
-    },
-    like(item: Item) {
-      console.log("clicked here on team selected");
     },
   },
   watch: {

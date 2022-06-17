@@ -1,5 +1,4 @@
 <template>
-
   <div class="home-page-block">
     <HeadCpn />
     <PostCpn />
@@ -13,9 +12,9 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { mapState } from "vuex";
+import { mapState, mapActions } from 'vuex';
 import { getAllPosts, getAllNotifs } from "../utils/functions";
-import { POST_GET_LIMIT } from '../utils/defines';
+import { POST_GET_LIMIT } from "../utils/defines";
 import HeadCpn from "@/components/cpn/Head-cpn.vue";
 import PostCpn from "@/components/cpn/Post-cpn.vue";
 import PublicationCpn from "@/components/cpn/Publication-cpn.vue";
@@ -31,12 +30,31 @@ export default Vue.extend({
   computed: {
     ...mapState(["currentUser", "posts"]),
   },
+  data() {
+    return {
+      loader: true,
+    };
+  },
+  methods: {
+    ...mapActions([
+      'updateLoader',
+    ])
+  },
   // TODO: got to find out a way to reload getallposts cause in this hook created it reloads only once when page is loaded or reloaded
-  async created() {
+  created() {
     getAllPosts(POST_GET_LIMIT);
+
+    console.log("-- home created")
+  },
+  mounted() {
+    console.log("-- home mounted")
+
+    this.updateLoader(false);
   },
   updated() {
     getAllNotifs();
+
+    console.log('-- home updated')
   },
 });
 </script>

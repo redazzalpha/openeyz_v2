@@ -22,6 +22,7 @@ export default new Vuex.Store({
     userPosts: [] as Post[],
     comments: [] as Comment[],
     userNotifs: [] as Notif[],
+    loader: true,
     currentUser: null,
     teamSelectedUser: null,
     teamSelectDialog: false,
@@ -63,7 +64,10 @@ export default new Vuex.Store({
       state.userNotifs = payload;
     },
 
-
+    UPDATE_LOADER(state, payload) {
+      state.loader = payload;
+    },
+    
     UPDATE_TEAM_SELECTED_USER(state, payload): void {
       state.teamSelectedUser = payload;
     },
@@ -92,6 +96,7 @@ export default new Vuex.Store({
       state.userPosts = [] as Post[];
       state.comments = [] as Comment [];
       state.userNotifs = [] as Notif[],
+      state.loader = true,
       state.currentUser = null;
       state.teamSelectedUser = null,
       state.teamSelectDialog = false;
@@ -129,6 +134,9 @@ export default new Vuex.Store({
       context.commit("UPDATE_USER_NOTIFS", payload);
     },
 
+    updateLoader(context, payload) {
+      context.commit("UPDATE_LOADER", payload);
+    },
 
     updateTeamSelectedUser(context, payload): void {
       context.commit("UPDATE_TEAM_SELECTED_USER", payload);

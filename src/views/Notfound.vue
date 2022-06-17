@@ -10,11 +10,15 @@
     "
   >
     <h2>404 Not found</h2>
+
+    <LoaderCpn :show="true" />
   </v-card>
 </template>
 
 <script>
+import LoaderCpn from '../components/cpn/Loader1-cpn.vue';
 export default {
+  components: { LoaderCpn },
   name: "Notfound-page",
 };
 </script>
