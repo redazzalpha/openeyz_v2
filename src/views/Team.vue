@@ -84,6 +84,7 @@ export default Vue.extend({
   methods: {
     ...mapActions([
       "updateUserCardList",
+      "updateUserListObj",
       "updateTeamSelectedUser",
       "updateTeamSelectedDialog",
     ]),
@@ -146,5 +147,9 @@ export default Vue.extend({
   created() {
     getSimpleUsers();
   },
+  destroyed() {
+    this.updateUserCardList([]);
+    this.updateUserListObj([]);
+  }
 });
 </script>

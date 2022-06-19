@@ -11,7 +11,7 @@
   >
     <!-- main-card -->
     <v-card>
-      <PublicationCpn  :item="currentItem"   :subline="false" />
+      <PublicationCpn :item="currentItem" :subline="false" />
       <CommentArea :item="currentItem" />
       <CommentMessage
         v-for="(comment, index) in comments"
@@ -28,7 +28,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions } from "vuex";
 import { getAllComments } from "../../utils/functions";
 import AlertCpn from "../cpn/Alert-cpn.vue";
 import PublicationCpn from "../cpn/Publication-cpn.vue";
@@ -47,20 +47,25 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions([
-      'updateCommentDialog',
+      "updateCommentDialog",
+      "updateComments",
+      "updateCurrentItem",
     ]),
     closeComment() {
       this.updateCommentDialog(false);
     },
-    keyPressed({code}: KeyboardEvent) {
+    keyPressed({ code }: KeyboardEvent) {
       if (code.match("Escape")) this.closeComment();
     },
   },
   watch: {
-    commentDialog(visible: boolean ) {
-      if(visible) getAllComments(this.currentItem.post.id);
-
-    }
-  }
+    commentDialog(visible: boolean) {
+      if (visible) getAllComments(this.currentItem.post.id);
+      else {
+        this.updateComments([]);
+        this.updateCurrentItem({});
+      }
+    },
+  },
 });
 </script>

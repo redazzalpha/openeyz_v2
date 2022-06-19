@@ -114,7 +114,6 @@ import {
   translateDateToISO,
 } from "../../utils/functions";
 import { POST_GET_LIMIT, TEAM_PAGE_URL } from "../../utils/defines";
-import { Item} from "../../utils/types";
 import PublicationCpn from "../cpn/Publication-cpn.vue";
 import ToolbarCpn from "../cpn/Toolbar-cpn.vue";
 import AlertCpn from "../cpn/Alert-cpn.vue";
@@ -176,45 +175,6 @@ export default Vue.extend({
       "updateCommentDialog",
       "updateTeamSelectedUser",
     ]),
-
-    open(item: Item) {
-      console.log(item);
-      this.updateCurrentItem(item);
-      this.updateCommentDialog(true);
-    },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     keyPressed({ code }: KeyboardEvent) {
       if (code.match("Escape")) this.closeDialog();
     },
