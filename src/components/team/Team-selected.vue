@@ -1,13 +1,13 @@
 <template>
   <!-- selected-user-dialog -->
   <v-dialog
-    :value="teamSelectDialog"
+    :value="teamSelectedDialog"
     fullscreen
     hide-overlay
     transition="dialog-transition"
     class="team-selected-dialog"
-    @keydown="keyPressed"
     @click:outside="closeDialog"
+    @keydown="keyPressed"
   >
     <v-card
       v-scroll.self="onScroll"
@@ -58,11 +58,12 @@
           <v-col>
             <!-- publication component -->
             <PublicationCpn
-              v-for="(post, index) in userPosts"
+              v-for="(post, index) in posts"
               :key="index"
               :item="post"
-              @sent="sent"
             />
+
+            <CommentBlock />
           </v-col>
         </v-row>
       </v-container>
@@ -71,7 +72,7 @@
       <div class="d-flex justify-center">
         <!-- empty-post-alert -->
         <AlertCpn
-          v-if="!userPosts.length"
+          v-if="!posts.length"
           :message="`${author} has no post at now !`"
           :action="closeDialog"
         />
@@ -108,15 +109,18 @@
 import Vue from "vue";
 import { mapActions, mapState } from "vuex";
 import {
-  addAllUserPosts,
-  getAllUserPosts,
+  addAllPosts,
+  getAllPosts,
   translateDateToISO,
 } from "../../utils/functions";
-import { POST_GET_LIMIT, SERVER_LIKE_COUNT_URL, SERVER_LIKE_URL, TEAM_PAGE_URL } from "../../utils/defines";
+import { POST_GET_LIMIT, TEAM_PAGE_URL } from "../../utils/defines";
+import { Item} from "../../utils/types";
 import PublicationCpn from "../cpn/Publication-cpn.vue";
 import ToolbarCpn from "../cpn/Toolbar-cpn.vue";
 import AlertCpn from "../cpn/Alert-cpn.vue";
 import LinksCpn from "../cpn/Links-cpn.vue";
+import CommentBlock from "../comment/Comment-block.vue";
+
 export default Vue.extend({
   name: "Team-selected",
   components: {
@@ -124,6 +128,7 @@ export default Vue.extend({
     PublicationCpn,
     AlertCpn,
     LinksCpn,
+    CommentBlock,
   },
   props: {
     author: {
@@ -141,7 +146,7 @@ export default Vue.extend({
     };
   },
   computed: {
-    ...mapState(["teamSelectDialog", "userPosts"]),
+    ...mapState(["teamSelectedDialog", "posts", "currentItem"]),
     show(): boolean {
       let show = true;
       switch (this.$vuetify.breakpoint.name) {
@@ -165,18 +170,59 @@ export default Vue.extend({
     },
   },
   methods: {
-    ...mapActions(["updateTeamSelectDialog"]),
-    closeDialog() {
-      this.updateTeamSelectDialog(false);
-      this.toTop();
-    },
-    keyPressed({ code }: KeyboardEvent): void {
-      if (code === "Escape") this.closeDialog();
-    },
-    sent() {
-      getAllUserPosts(this.username, POST_GET_LIMIT);
+    ...mapActions([
+      "updateTeamSelectedDialog",
+      "updateCurrentItem",
+      "updateCommentDialog",
+      "updateTeamSelectedUser",
+    ]),
+
+    open(item: Item) {
+      console.log(item);
+      this.updateCurrentItem(item);
+      this.updateCommentDialog(true);
     },
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    keyPressed({ code }: KeyboardEvent) {
+      if (code.match("Escape")) this.closeDialog();
+    },
+    closeDialog() {
+      this.updateTeamSelectedDialog(false);
+      this.updateTeamSelectedUser(null);
+      this.toTop();
+    },
     onScroll(e: UIEvent) {
       let scroll: number =
         (e.target as Element).clientHeight + (e.target as Element).scrollTop;
@@ -190,13 +236,13 @@ export default Vue.extend({
 
       if (bottom && scroll === bottom) {
         if (
-          this.userPosts.length &&
+          this.posts.length &&
           this.$router.currentRoute.path === TEAM_PAGE_URL
         ) {
           const date = translateDateToISO(
-            this.userPosts[this.userPosts.length - 1].post.creation
+            this.posts[this.posts.length - 1].post.creation
           );
-          addAllUserPosts(this.username, POST_GET_LIMIT, date);
+          addAllPosts(POST_GET_LIMIT, date, this.username);
         }
       }
     },
@@ -211,8 +257,8 @@ export default Vue.extend({
     },
   },
   watch: {
-    teamSelectDialog(visible: boolean) {
-      if (visible) getAllUserPosts(this.username, POST_GET_LIMIT);
+    teamSelectedDialog(visible: boolean) {
+      if (visible) getAllPosts(POST_GET_LIMIT, undefined, this.username);
       else if (!visible) {
         window.scrollTo({
           top: 0,
@@ -223,10 +269,10 @@ export default Vue.extend({
     },
   },
   created() {
-    this.updateTeamSelectDialog(false);
+    this.updateTeamSelectedDialog(false);
   },
   destroyed() {
-    this.updateTeamSelectDialog(false);
+    this.updateTeamSelectedDialog(false);
   },
 });
 </script>

@@ -12,7 +12,7 @@
             style="border: solid grey 1px"
             @click="toogle"
           >
-            {{ isAllHidden ? "show all" : "hide all" }}
+            {{ isAllClosed ? "show all" : "hide all" }}
           </v-btn>
           <v-btn
             plain
@@ -43,7 +43,7 @@
       subtitle="Stay tuned on user comments. Here you find all notifications about unread messages."
     >
       <template v-slot:content>
-        <NotificationItem :hidden="isAllHidden" :panel="panel" />
+        <NotificationItem :hidden="isAllClosed" :panel="panel" />
       </template>
     </ContainerCpn>
   </div>
@@ -68,7 +68,7 @@ export default Vue.extend({
   data() {
     return {
       panel: [] as number[],
-      isAllHidden: true,
+      isAllClosed: true,
     };
   },
   computed: {
@@ -77,8 +77,8 @@ export default Vue.extend({
 
   methods: {
     toogle() {
-      this.isAllHidden = !this.isAllHidden;
-      if (this.isAllHidden) this.hideAll();
+      this.isAllClosed = !this.isAllClosed;
+      if (this.isAllClosed) this.closeAll();
       else this.showAll();
     },
     showAll() {
@@ -87,7 +87,7 @@ export default Vue.extend({
       this.panel = tab;
       this.readAll();
     },
-    hideAll() {
+    closeAll() {
       this.panel = [];
     },
     async readAll() {

@@ -1,4 +1,4 @@
-import { Post } from '../utils/types';
+import { Post, Item } from '../utils/types';
 import { UserObj, Notif } from './../utils/types';
 import Vuetify from "@/plugins/vuetify";
 import Vue from 'vue';
@@ -19,13 +19,14 @@ export default new Vuex.Store({
     userListObj : [] as UserObj[],
     userCardList : [] as UserObj[],
     posts: [] as Post[],
-    userPosts: [] as Post[],
     comments: [] as Comment[],
     userNotifs: [] as Notif[],
     loader: true,
     currentUser: null,
+    currentItem: new Item,
     teamSelectedUser: null,
-    teamSelectDialog: false,
+    teamSelectedDialog: false,
+    commentDialog: false,
     drawer: null,
     tabAccess: 0,
     tabProfile: 0,
@@ -39,6 +40,9 @@ export default new Vuex.Store({
     UPDATE_CURRENT_USER(state, payload): void {
       state.currentUser = payload;
     },
+    UPDATE_CURRENT_ITEM(state, payload): void {
+      state.currentItem = payload;
+    },
     UPDATE_USER_LIST_OBJ(state, payload): void {
       state.userListObj = payload;
     },
@@ -50,12 +54,6 @@ export default new Vuex.Store({
     },
     ADD_POSTS(state, payload): void {
       state.posts.push(payload);
-    },
-    UPDATE_USER_POSTS(state, payload): void {
-      state.userPosts = payload;
-    },
-    ADD_USER_POSTS(state, payload): void {
-      state.userPosts.push(payload);
     },
     UPDATE_COMMENTS(state, payload): void {
       state.comments = payload;
@@ -71,8 +69,11 @@ export default new Vuex.Store({
     UPDATE_TEAM_SELECTED_USER(state, payload): void {
       state.teamSelectedUser = payload;
     },
-    UPDATE_TEAM_SELECT_DIALOG(state, payload: boolean): void {
-      state.teamSelectDialog = payload;
+    UPDATE_TEAM_SELECTED_DIALOG(state, payload: boolean): void {
+      state.teamSelectedDialog = payload;
+    },
+    UPDATE_COMMENT_DIALOG(state, payload: boolean): void {
+      state.commentDialog = payload;
     },
 
 
@@ -93,13 +94,15 @@ export default new Vuex.Store({
       state.userListObj = [] as UserObj[];
       state.userCardList = [] as UserObj[];
       state.posts = [] as Post[];
-      state.userPosts = [] as Post[];
       state.comments = [] as Comment [];
       state.userNotifs = [] as Notif[],
       state.loader = true,
       state.currentUser = null;
+      state.currentItem = new Item,
+
       state.teamSelectedUser = null,
-      state.teamSelectDialog = false;
+      state.teamSelectedDialog = false;
+      state.commentDialog = false;
       state.drawer = null;
       state.tabAccess = 0;
       state.tabProfile = 0;
@@ -108,6 +111,9 @@ export default new Vuex.Store({
   actions: {
     updateCurrentUser(context, payload): void {
       context.commit("UPDATE_CURRENT_USER", payload);
+    },
+    updateCurrentItem(context, payload): void {
+      context.commit("UPDATE_CURRENT_ITEM", payload);
     },
     updateUserListObj(context, payload): void {
       context.commit("UPDATE_USER_LIST_OBJ", payload);
@@ -120,12 +126,6 @@ export default new Vuex.Store({
     },
     addPosts(context, payload) {
       context.commit('ADD_POSTS', payload);
-    },
-    updateUserPosts(context, payload): void {
-      context.commit('UPDATE_USER_POSTS', payload);
-    },
-    addUserPosts(context, payload) {
-      context.commit('ADD_USER_POSTS', payload);
     },
     updateComments(context, payload): void {
       context.commit('UPDATE_COMMENTS', payload);
@@ -141,8 +141,11 @@ export default new Vuex.Store({
     updateTeamSelectedUser(context, payload): void {
       context.commit("UPDATE_TEAM_SELECTED_USER", payload);
     },
-    updateTeamSelectDialog(context, payload: boolean): void {
-      context.commit('UPDATE_TEAM_SELECT_DIALOG', payload);
+    updateTeamSelectedDialog(context, payload: boolean): void {
+      context.commit('UPDATE_TEAM_SELECTED_DIALOG', payload);
+    },
+    updateCommentDialog(context, payload: boolean): void {
+      context.commit('UPDATE_COMMENT_DIALOG', payload);
     },
 
 

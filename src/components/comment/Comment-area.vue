@@ -1,0 +1,94 @@
+<template>
+  <!-- main-container -->
+  <v-container grid-list-xs class="comment-area-container">
+    <!-- leave-comment-area -->
+    <v-row>
+      <v-col class="d-flex align-center">
+        <AvatarCpn
+          :avatarSrc="currentUser.avatarSrc"
+          :role="currentUser.roles[0].roleName"
+          size="40"
+        />
+        <v-textarea
+          v-model="comment"
+          placeholder="comment here"
+          auto-grow
+          outlined
+          rows="1"
+          row-height="15"
+          rounded
+          hide-details
+          autofocus
+        >
+          <!-- FIXME: fix btn bug sometimes does not appear - try to change with append directive -->
+          <!-- send-comment-button -->
+          <template v-slot:append>
+            <v-btn icon color="primary" @click="send">
+              <v-icon>mdi-send</v-icon>
+            </v-btn>
+          </template>
+        </v-textarea>
+      </v-col>
+    </v-row>
+  </v-container>
+</template>
+
+<script lang="ts">
+import Vue from "vue";
+import { mapState } from "vuex";
+import { getAllComments, translateDate } from "../../utils/functions";
+import AvatarCpn from "../cpn/Avatar-cpn.vue";
+import { SERVER_COMMENT_URL } from "../../utils/defines";
+import { httpRequest } from "../../utils/http";
+export default Vue.extend({
+  name: "Comment-area",
+  components: {
+    AvatarCpn,
+  },
+  data() {
+    return {
+      translateDate: translateDate,
+      comment: "",
+    };
+  },
+  computed: {
+    ...mapState(["currentUser", "currentItem"]),
+  },
+  methods: {
+    // TODO; block message length as 255 char max need to do it on server too
+    async send(): Promise<void> {
+      const data: FormData = new FormData();
+      data.append("comment", this.comment);
+      data.append("postId", this.currentItem.post.id.toString());
+      await httpRequest.post(SERVER_COMMENT_URL, data);
+      getAllComments(this.currentItem.post.id);
+      this.currentItem.commentCount++;
+      this.comment = "";
+    },
+
+  },
+});
+</script>
+
+<style lang="scss">
+.v-input__append-inner {
+  margin-top: 8px !important;
+}
+
+.message-arrowed::after {
+  content: "";
+  position: absolute;
+  left: -26px;
+  top: 28%;
+  border: solid transparent 15px;
+  border-left: solid transparent 15px;
+  border-right: solid #2196f3 15px;
+}
+</style>
+
+<style lang="scss" scoped>
+.v-textarea.v-text-field--enclosed.v-text-field--outlined:not(.v-input--dense)
+  textarea {
+  margin-top: 13px !important  ;
+}
+</style>

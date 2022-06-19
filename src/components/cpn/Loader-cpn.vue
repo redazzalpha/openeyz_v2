@@ -24,7 +24,6 @@
 
 <script>
 import Vue from "vue";
-import AppbarCpn from "@/components/cpn/Appbar-cpn.vue";
 export default Vue.extend({
   name: "Loader-cpn",
   components: {},

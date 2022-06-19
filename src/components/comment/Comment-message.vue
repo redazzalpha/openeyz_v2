@@ -1,60 +1,12 @@
 <template>
-  <!-- main-container -->
-  <v-container grid-list-xs class="comment-publication-container">
-    <!-- leave-comment-area -->
-    <v-row>
-      <v-col class="d-flex align-center">
-        <AvatarCpn
-          :avatarSrc="currentUser.avatarSrc"
-          :role="currentUser.roles[0].roleName"
-          size="40"
-        />
-        <v-textarea
-          v-model="comment"
-          placeholder="comment here"
-          auto-grow
-          outlined
-          rows="1"
-          row-height="15"
-          rounded
-          hide-details
-          autofocus
-        >
-          <!-- FIXME: fix btn bug sometimes does not appear - try to change with append directive -->
-          <!-- send-comment-button -->
-          <template v-slot:append>
-            <v-btn icon color="primary" @click="send">
-              <v-icon>mdi-send</v-icon>
-            </v-btn>
-          </template>
-        </v-textarea>
-      </v-col>
-    </v-row>
-    <!-- comment-message -->
-    <v-row>
+  <v-container class="comment-message-container py-0">
+    <v-row no-gutters>
       <v-col>
         <v-card elevation="0">
-          <!-- no-comment-alert -->
-          <AlertCpn
-            v-if="comments.length < 1"
-            message="This post has not comment be the first to leave one"
-          />
           <!-- comment-block -->
-          <div v-else class="comment-block">
-            <!-- comment-title -->
-            <v-card-title
-              primary-title
-              class="text-decoration-underline text-body-2 text-sm-body-1"
-            >
-              Comment:
-            </v-card-title>
+          <div class="comment-block">
             <!-- message-card -->
-            <v-card
-              v-for="(comment, index) in comments"
-              :key="index"
-              class="d-flex align-center mb-5"
-              elevation="0"
-            >
+            <v-card class="d-flex align-center mb-5" elevation="0">
               <AvatarCpn
                 :avatarSrc="comment.author.avatarSrc"
                 :role="comment.author.roles[0].roleName"
@@ -83,7 +35,7 @@
                     title="delete"
                     plain
                     :ripple="false"
-                    @click.stop="deleteOne(comment.id)"
+                    @click.stop="deleteComment"
                   >
                     <v-icon color="white">mdi-close-circle</v-icon>
                   </v-btn>
@@ -105,77 +57,42 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropType } from "vue";
-import { mapState } from "vuex";
-import { httpRequest } from "../../utils/http";
-import { Item } from "../../utils/types";
-import { translateDate } from "../../utils/functions";
-import { getAllComments } from "../../utils/functions";
-import AlertCpn from "../cpn/Alert-cpn.vue";
+import Vue from "vue";
+import { PropType } from "vue";
+import { Comment } from "../../utils/types";
+import { getAllComments, translateDate } from "../../utils/functions";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
-import { SERVER_COMMENT_URL } from "@/utils/defines";
+import { httpRequest } from "../../utils/http";
 import { SERVER_COMMENT_DELETE_URL } from "../../utils/defines";
+import { mapState } from "vuex";
 export default Vue.extend({
-  name: "Comment-msg",
+  name: "Comment-message",
   components: {
     AvatarCpn,
-    AlertCpn,
   },
   props: {
-    itemPost: { type: Object as PropType<Item>, required: true },
+    comment: {
+      type: Object as PropType<Comment>,
+      required: true,
+    },
   },
   data() {
     return {
       translateDate: translateDate,
-      comment: "",
     };
   },
   computed: {
-    ...mapState(["currentUser", "comments"]),
+    ...mapState(["currentItem"]),
   },
   methods: {
-    // TODO; block message length as 255 char max need to do it on server too
-    async send(): Promise<void> {
-      if (this.itemPost.post) {
-        const data: FormData = new FormData();
-        data.append("comment", this.comment);
-        data.append("postId", this.itemPost.post?.id.toString());
-        await httpRequest.post(SERVER_COMMENT_URL, data);
-        this.comment = "";
-        getAllComments(this.itemPost.post?.id);
-        this.$emit("send", this.itemPost);
-      }
-    },
-    async deleteOne(commentId: number) {
+    async deleteComment() {
       await httpRequest.delete(SERVER_COMMENT_DELETE_URL, {
-        params: { commentId },
+        params: { commentId: this.comment.id },
       });
-      getAllComments(this.itemPost.post?.id);
-      this.$emit("delete", this.itemPost);
+      // TODO: find out a way to replace currentItem by a recieved object
+      getAllComments(this.currentItem.post.id);
+      this.currentItem.commentCount--;
     },
   },
 });
 </script>
-
-<style lang="scss">
-.v-input__append-inner {
-  margin-top: 8px !important;
-}
-
-.message-arrowed::after {
-  content: "";
-  position: absolute;
-  left: -26px;
-  top: 28%;
-  border: solid transparent 15px;
-  border-left: solid transparent 15px;
-  border-right: solid #2196f3 15px;
-}
-</style>
-
-<style lang="scss" scoped>
-.v-textarea.v-text-field--enclosed.v-text-field--outlined:not(.v-input--dense)
-  textarea {
-  margin-top: 13px !important  ;
-}
-</style>

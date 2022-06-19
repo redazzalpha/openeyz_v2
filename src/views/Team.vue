@@ -41,7 +41,9 @@
       subtitle="Interact with other users from here. Search and select a user, access their publications, react by adding a comment."
     >
       <template v-slot:content>
-        <TeamCards />
+        <TeamCards @open="openSelected" />
+
+        <TeamSelected :author="author" :username="username" />
       </template>
     </ContainerCpn>
   </div>
@@ -51,11 +53,13 @@
 import Vue from "vue";
 import { mapActions, mapState } from "vuex";
 import { UserObj } from "../utils/types";
-import { getSimpleUsers } from "../utils/functions";
+import { getAllPosts, getSimpleUsers } from "../utils/functions";
+import { POST_GET_LIMIT } from "../utils/defines";
 import AvatarCpn from "../components/cpn/Avatar-cpn.vue";
 import ToolbarCpn from "../components/cpn/Toolbar-cpn.vue";
 import TeamCards from "../components/team/Team-cards.vue";
 import ContainerCpn from "../components/cpn/Container-cpn.vue";
+import TeamSelected from "../components/team/Team-selected.vue";
 
 export default Vue.extend({
   name: "Team-page",
@@ -64,15 +68,14 @@ export default Vue.extend({
     ToolbarCpn,
     TeamCards,
     AvatarCpn,
+    TeamSelected,
   },
   data() {
     return {
-      autoUpdate: true,
-      isUpdating: false,
-
-      select: [],
-      loading: false,
+      author: "",
+      username: "",
       search: null,
+      select: [],
     };
   },
   computed: {
@@ -80,15 +83,22 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions([
-      "updateUserListObj",
       "updateUserCardList",
       "updateTeamSelectedUser",
-      "updateTeamSelectDialog",
+      "updateTeamSelectedDialog",
     ]),
+
+    // TODO: i don't know what  is used for ?????
+    sent() {
+      getAllPosts(POST_GET_LIMIT, undefined, this.username);
+    },
+
     input(selectedUsername: string) {
-      const userObj: UserObj[] = this.userListObj.filter((e: UserObj) => {
-        return e.username == selectedUsername;
-      });
+      const userObj: UserObj[] = this.userListObj.filter(
+        (e: UserObj) => {
+          return e.username == selectedUsername;
+        }
+      );
       this.updateTeamSelectedUser(userObj[0]);
     },
     // TODO: check algo cause give bug on delete search field input after chip card remains only one , the one i searched
@@ -121,6 +131,16 @@ export default Vue.extend({
           break;
       }
       return show;
+    },
+    openSelected(userObj: UserObj) {
+      this.author = userObj.name;
+      this.username = userObj.username;
+      this.updateTeamSelectedDialog(true);
+    },
+  },
+  watch: {
+    teamSelectedUser(userObj: UserObj) {
+      if (userObj) this.openSelected(userObj);
     },
   },
   created() {

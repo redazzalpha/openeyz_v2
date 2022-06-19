@@ -55,11 +55,12 @@ export class UserObj {
   role = "";
   username = "";
 }
-export interface Item {
-  post: Post;
-  commentCount: number;
-  likeCount: number;
-  userLike: boolean;
+export class Item {
+  post : Post | null = null ;
+  commentCount = 0;
+  likeCount = 0;
+  userLike = false;
+  
 }
 
 export class Users {
@@ -96,4 +97,7 @@ export interface Likes {
   post: Post,
   author: Users,
 }
-
+export interface ComObj {
+  item: {post: Post},
+  comment: string,
+}

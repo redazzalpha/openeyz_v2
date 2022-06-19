@@ -37,6 +37,7 @@
                   </span>
                   <!-- delete-button -->
                   <v-btn
+                  v-if="subline"
                     color="error"
                     absolute
                     right
@@ -44,7 +45,7 @@
                     title="delete"
                     plain
                     :ripple="false"
-                    @click.stop="deleteOne(item.post.id)"
+                    @click.stop="deletePost"
                   >
                     <v-icon color="white">mdi-close-circle</v-icon>
                   </v-btn>
@@ -54,9 +55,8 @@
                   v-html="item.post.content"
                   class="pa-0"
                 ></v-card-text>
-
                 <!-- buttons -->
-                <v-card-actions>
+                <v-card-actions v-if="subline">
                   <v-container grid-list-xs fluid>
                     <v-row>
                       <!-- comment-button -->
@@ -70,7 +70,7 @@
                           :ripple="false"
                           title="see comments"
                           color="primary"
-                          @click="showComment(item)"
+                          @click="openComment(item)"
                         >
                           comments<i class="fa fa-comment-dots">
                             <span class="text-body-2">{{
@@ -79,13 +79,12 @@
                           >
                         </v-btn>
                       </v-col>
-                      {{item}}
                       <!-- // TODO: got to fix bug on like click cause nmber of like doesnt appaer -->
                       <!-- like-button -->
                       <v-col class="d-flex justify-center pa-0">
                         <v-badge
-                          :value="count > 0"
-                          :content="count"
+                          :value="item.likeCount > 0"
+                          :content="item.likeCount"
                           overlap
                           bottom
                           class="badge"
@@ -114,104 +113,77 @@
         </v-container>
       </div>
     </v-lazy>
-    <CommentBlock
-      :dialog="dialog"
-      :itemPost="item"
-      @stop="closeComment"
-      @send="commentSent"
-      @delete="commentDelete"
-    />
   </div>
 </template>
 
 <script lang="ts">
 import Vue, { PropType } from "vue";
-import { mapActions, mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import { Item, VueResponse } from "../../utils/types";
+import { getAllPosts, translateDate } from "../../utils/functions";
+import AvatarCpn from "./Avatar-cpn.vue";
 import { httpRequest } from "../../utils/http";
-import { translateDate } from "../../utils/functions";
-import { getAllPosts, getAllComments } from "../../utils/functions";
 import {
   POST_GET_LIMIT,
   SERVER_LIKE_COUNT_URL,
   SERVER_LIKE_URL,
   SERVER_PUBLICATION_URL,
 } from "../../utils/defines";
-import AvatarCpn from "./Avatar-cpn.vue";
-import CommentBlock from "../comment/Comment-block.vue";
-
 export default Vue.extend({
   name: "Publication-cpn",
   components: {
     AvatarCpn,
-    CommentBlock,
   },
   props: {
     item: {
       type: Object as PropType<Item>,
       required: false,
     },
+    subline: {
+      type: Boolean,
+      required: false,
+      default: true,
+    }
   },
   data() {
     return {
       translateDate: translateDate,
       isActive: false,
-      dialog: false,
       comments: [],
       count: 0,
     };
   },
   computed: {
-    ...mapState(["posts", "userPosts"]),
+    ...mapState(["posts"]),
   },
   methods: {
-    ...mapActions(["updateComments"]),
-    async showComment(item: Item): Promise<void> {
-      await getAllComments(item.post.id);
-      this.dialog = true;
-    },
-    closeComment() {
-      this.dialog = false;
-      this.updateComments([]);
-    },
-    // TODO: modify the way of value incrementation cause bad here need to get real value from the database at time need to make a request to the server
-    commentSent(itemPost: Item) {
-      if (itemPost.commentCount != undefined) itemPost.commentCount++;
-    },
-    commentDelete(itemPost: Item) {
-      if (itemPost.commentCount != undefined) itemPost.commentCount--;
-    },
+    ...mapActions(["updateCurrentItem", "updateCommentDialog"]),
     async like(item: Item) {
       const postId: FormData = new FormData();
       if (item.post) postId.append("postId", item.post.id.toString());
       await httpRequest.post(SERVER_LIKE_URL, postId);
+
       const response: VueResponse = await httpRequest.get(
         SERVER_LIKE_COUNT_URL,
-        { params: { postId: item.post.id } }
+        { params: { postId: item.post?.id } }
       );
-      this.count = response.body as unknown as number;
-      // item.likeCount = response.body as unknown as number;
+      item.likeCount = response.body as unknown as number;
       item.userLike = !item.userLike;
     },
-    async deleteOne(postId: number) {
+    async deletePost() {
       await httpRequest.delete(SERVER_PUBLICATION_URL, {
-        params: { postId },
+        params: { postId: this.item.post?.id },
       });
       await getAllPosts(
         POST_GET_LIMIT,
         this.posts[this.posts.length - 1].creation
       );
-      this.$emit("sent");
+    },
+    openComment(item: Item) {
+      this.updateCurrentItem(item);
+      this.updateCommentDialog(true);
     },
   },
-  async mounted() {
-          const response: VueResponse = await httpRequest.get(
-        SERVER_LIKE_COUNT_URL,
-        { params: { postId: this.item.post.id } }
-      );
-      this.count = response.body as unknown as number;
-      // this.item.likeCount = response.body as unknown as number;
-  }
 });
 </script>
 

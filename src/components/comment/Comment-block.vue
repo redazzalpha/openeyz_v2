@@ -1,50 +1,66 @@
 <template>
   <!-- main-row-container -->
-  <v-row class="comment-block-row" justify="center">
-    <!-- dialog-block -->
-    <v-dialog
-      v-if="itemPost.post"
-      :value="dialog"
-      dialog-transition
-      @click:outside="$emit('stop')"
-      @keydown="dialogStop"
-      max-width="800"
-    >
-      <!-- main-card -->
-      <v-card>
-        <CommentPublication :itemPost="itemPost" />
-        <CommentMessage :itemPost="itemPost" @send="send" @delete="deleteOne" />
-      </v-card>
-    </v-dialog>
-  </v-row>
+  <!-- dialog-block -->
+  <v-dialog
+    v-if="currentItem.post"
+    dialog-transition
+    :value="commentDialog"
+    @click:outside="closeComment"
+    @keydown="keyPressed"
+    max-width="800"
+  >
+    <!-- main-card -->
+    <v-card>
+      <PublicationCpn  :item="currentItem"   :subline="false" />
+      <CommentArea :item="currentItem" />
+      <CommentMessage
+        v-for="(comment, index) in comments"
+        :key="index"
+        :comment="comment"
+      />
+      <AlertCpn
+        v-if="comments.length < 1"
+        message="This post has not comment be the first to leave one"
+      />
+    </v-card>
+  </v-dialog>
 </template>
 
 <script lang="ts">
-import Vue, { PropType } from "vue";
-import { Item } from "../../utils/types";
-//TODO: this import cause error try to find out a way to fix this
-import CommentPublication from "./Comment-publication.vue";
+import Vue from "vue";
+import { mapState, mapActions } from 'vuex';
+import { getAllComments } from "../../utils/functions";
+import AlertCpn from "../cpn/Alert-cpn.vue";
+import PublicationCpn from "../cpn/Publication-cpn.vue";
+import CommentArea from "./Comment-area.vue";
 import CommentMessage from "./Comment-message.vue";
 export default Vue.extend({
   name: "Comment-block",
   components: {
-    CommentPublication,
+    PublicationCpn,
+    CommentArea,
     CommentMessage,
+    AlertCpn,
   },
-  props: {
-    dialog: { type: Boolean, required: true },
-    itemPost: { type: Object as PropType<Item>, required: true },
+  computed: {
+    ...mapState(["currentItem", "commentDialog", "comments"]),
   },
   methods: {
-    dialogStop({ code }: KeyboardEvent): void {
-      if (code.match("Escape")) this.$emit("stop");
+    ...mapActions([
+      'updateCommentDialog',
+    ]),
+    closeComment() {
+      this.updateCommentDialog(false);
     },
-    send(itemPost: Item) {
-      this.$emit("send", itemPost);
+    keyPressed({code}: KeyboardEvent) {
+      if (code.match("Escape")) this.closeComment();
     },
-    deleteOne(itemPost: Item) {
-      this.$emit("delete", itemPost);
-    }
   },
+  watch: {
+    commentDialog(visible: boolean ) {
+      if(visible) getAllComments(this.currentItem.post.id);
+
+    }
+  }
 });
 </script>
