@@ -75,12 +75,14 @@
           v-if="!posts.length"
           :message="`${author} has no post at now !`"
           :action="closeDialog"
+          class="pt-10"
         />
         <!-- end-of-post-alert -->
         <AlertCpn
           v-else
           :message="`You have reach end of ${author} 's publications`"
           :action="closeDialog"
+          class="pt-10"
         />
       </div>
     </v-card>

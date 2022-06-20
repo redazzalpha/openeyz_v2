@@ -69,6 +69,7 @@
             v-if="userNotifs.length <= 0"
             message="no notification"
             :href="HOME_PAGE_URL"
+            class="pt-10"
           />
         </v-col>
       </v-row>

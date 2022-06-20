@@ -2,11 +2,7 @@
   <v-container class="comment-message-container py-0">
     <v-row no-gutters>
       <v-col>
-        <v-card elevation="0">
-          <!-- comment-block -->
-          <div class="comment-block">
-            <!-- message-card -->
-            <v-card class="d-flex align-center mb-5" elevation="0">
+            <v-card class="d-flex align-center mb-5 mx-auto" elevation="0" style="background-color: transparent;" max-width=95%>
               <AvatarCpn
                 :avatarSrc="comment.author.avatarSrc"
                 :role="comment.author.roles[0].roleName"
@@ -15,7 +11,7 @@
               />
               <div
                 class="message-arrowed flex-grow-1 elevation-3"
-                style="background-color: #2196f3; position: relative"
+                style="background-color: #2196f3; position: relative; border-radius: 15px"
               >
                 <!-- comment-title-header -->
                 <v-card-title
@@ -49,8 +45,6 @@
                 </v-card-text>
               </div>
             </v-card>
-          </div>
-        </v-card>
       </v-col>
     </v-row>
   </v-container>
@@ -65,6 +59,7 @@ import AvatarCpn from "../cpn/Avatar-cpn.vue";
 import { httpRequest } from "../../utils/http";
 import { SERVER_COMMENT_DELETE_URL } from "../../utils/defines";
 import { mapState } from "vuex";
+import { StyleSheet } from 'react-native';
 export default Vue.extend({
   name: "Comment-message",
   components: {

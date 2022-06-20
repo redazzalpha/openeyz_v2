@@ -8,9 +8,18 @@
     @click:outside="closeComment"
     @keydown="keyPressed"
     max-width="800"
+    :scrollable="comments.length < 1"
   >
     <!-- main-card -->
-    <v-card>
+    <v-card
+    :style="
+      'background:  url(' +
+      ($vuetify.theme.dark
+        ? require('../../assets/bg-notfound-dark.webp')
+        : require('../../assets/bg-notfound.webp')) +
+      ') fixed no-repeat center; background-size: cover; '
+    "
+    >
       <PublicationCpn :item="currentItem" :subline="false" />
       <CommentArea :item="currentItem" />
       <CommentMessage
@@ -21,6 +30,8 @@
       <AlertCpn
         v-if="comments.length < 1"
         message="This post has not comment be the first to leave one"
+        class="mt-10"
+        :action="closeComment"
       />
     </v-card>
   </v-dialog>

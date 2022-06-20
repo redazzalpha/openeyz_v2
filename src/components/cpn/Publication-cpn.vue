@@ -82,13 +82,6 @@
                       <!-- // TODO: got to fix bug on like click cause nmber of like doesnt appaer -->
                       <!-- like-button -->
                       <v-col class="d-flex justify-center pa-0">
-                        <v-badge
-                          :value="item.likeCount > 0"
-                          :content="item.likeCount"
-                          overlap
-                          bottom
-                          class="badge"
-                        >
                           <v-btn
                             icon
                             plain
@@ -96,13 +89,20 @@
                             title="like this post"
                             @click="like(item)"
                           >
+                        <v-badge
+                          :value="item.likeCount > 0"
+                          :content="item.likeCount"
+                          overlap
+                          bottom
+                          class="badge"
+                        >
                             <i
                               class="fa fa-heart"
                               :style="`color: ${item.userLike ? 'red' : ''}`"
                             >
                             </i>
-                          </v-btn>
                         </v-badge>
+                          </v-btn>
                       </v-col>
                     </v-row>
                   </v-container>
@@ -150,7 +150,6 @@ export default Vue.extend({
       translateDate: translateDate,
       isActive: false,
       comments: [],
-      count: 0,
     };
   },
   computed: {
@@ -202,8 +201,8 @@ p {
 
 } */
 .badge {
-  width: 32px !important;
-  height: 27px !important;
+  width: 35px !important;
+  height: 20px !important;
 }
 .v-btn--plain:not(.v-btn--active):not(.v-btn--loading):not(:focus):not(:hover)
   .v-btn__content {

@@ -42,7 +42,6 @@
     >
       <template v-slot:content>
         <TeamCards @open="openSelected" />
-
         <TeamSelected :author="author" :username="username" />
       </template>
     </ContainerCpn>
@@ -95,12 +94,11 @@ export default Vue.extend({
     },
 
     input(selectedUsername: string) {
-      const userObj: UserObj[] = this.userListObj.filter(
-        (e: UserObj) => {
-          return e.username == selectedUsername;
-        }
-      );
+      const userObj: UserObj[] = this.userListObj.filter((e: UserObj) => {
+        return e.username == selectedUsername;
+      });
       this.updateTeamSelectedUser(userObj[0]);
+      this.select = [];
     },
     // TODO: check algo cause give bug on delete search field input after chip card remains only one , the one i searched
     searching(search: string) {
@@ -150,6 +148,6 @@ export default Vue.extend({
   destroyed() {
     this.updateUserCardList([]);
     this.updateUserListObj([]);
-  }
+  },
 });
 </script>
