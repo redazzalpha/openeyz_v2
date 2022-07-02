@@ -1,5 +1,4 @@
 <template>
-  <!-- post-input-block -->
   <!-- post-container -->
   <v-container grid-list-xs fluid class="post-cpn-container">
     <v-row>
@@ -62,7 +61,12 @@
           </v-card-text>
           <!-- buttons -->
           <v-card-actions class="d-flex justify-center">
-            <v-btn color="primary" :width="btnSize" @click="publish"
+            <v-btn
+              color="primary"
+              :width="btnSize"
+              @click="publish"
+              :loading="loading"
+              :disabled="disabled"
               >Publish</v-btn
             >
           </v-card-actions>
@@ -96,6 +100,8 @@ export default Vue.extend({
       alertMessage: "",
       editor: ClassicEditor,
       editorData: "",
+      loading: false,
+      disabled: true,
     };
   },
   computed: {
@@ -108,6 +114,9 @@ export default Vue.extend({
     },
     publish(): void {
       if (this.editorData) {
+        this.loading = true;
+        this.disabled = true;
+
         let data: FormData = new FormData();
         this.editorData = this.editorData.trim();
         // TODO: try to add src attribut to see imge on click and try to resize properly the image cause sometimes image is too big
@@ -127,10 +136,16 @@ export default Vue.extend({
             }, ERROR_MESSAGE_DURATION);
           }
         );
+        setTimeout(() => {
+          this.loading = false;
+        }, 1000);
       }
     },
-    showErrorMessage(message: string): void {
-      this.alertMessage = message;
+  },
+  watch: {
+    editorData(value: string) {
+      if (value) this.disabled = false;
+      else this.disabled = true;
     },
   },
 });
@@ -146,5 +161,12 @@ export default Vue.extend({
 }
 .v-btn__content {
   opacity: 1 !important;
+}
+</style>
+
+<style lang="scss" scoped>
+// AlertCpn icon
+.test .v-application .cyan--text.text--darken-1 {
+  position: absolute;
 }
 </style>

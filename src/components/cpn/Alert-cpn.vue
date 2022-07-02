@@ -1,7 +1,7 @@
 <template>
-  <v-container grid-list-xs class="alert-cpn-container" style="margin-bottom: 120px">
+  <v-container grid -list-xs class="alert-cpn-container">
     <v-row>
-      <v-col>
+      <v-col class="pa-0 ma-0">
         <router-link
           :to="href"
           @click.native="action"
@@ -19,6 +19,13 @@
             colored-border
             elevation="2"
           >
+            <template v-slot:prepend>
+              <v-icon
+                :color="$vuetify.theme.dark ? 'primary' : 'cyan darken-1'"
+                style="position: absolute; top: 20px"
+                >{{ icon }}</v-icon
+              >
+            </template>
             <span class="logo" style="font-size: 25px !important">OpenEyz</span>
             <br />
             <span>{{ message }}</span>
@@ -47,6 +54,11 @@ export default Vue.extend({
       type: Function,
       required: false,
       default: () => [],
+    },
+    icon: {
+      type: String,
+      required: false,
+      default: "mdi-alert-circle",
     },
   },
 });

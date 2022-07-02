@@ -1,6 +1,8 @@
 // vue types
 export interface VueFunction {
   validate(): boolean;
+  resetValidation(): void;
+  reset(): void;
 }
 export type VueElement = undefined | Vue | Element | (Vue | Element)[];
 export interface PPP extends VueFunction {
@@ -56,11 +58,11 @@ export class UserObj {
   username = "";
 }
 export class Item {
-  post : Post | null = null ;
+  post: Post | null = null;
   commentCount = 0;
   likeCount = 0;
   userLike = false;
-  
+
 }
 
 export class Users {
@@ -98,6 +100,6 @@ export interface Likes {
   author: Users,
 }
 export interface ComObj {
-  item: {post: Post},
+  item: { post: Post; },
   comment: string,
 }

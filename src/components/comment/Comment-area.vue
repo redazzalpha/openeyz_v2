@@ -23,7 +23,13 @@
           <!-- FIXME: fix btn bug sometimes does not appear - try to change with append directive -->
           <!-- send-comment-button -->
           <template v-slot:append>
-            <v-btn icon color="primary" @click="send">
+            <v-btn
+              icon
+              color="primary"
+              @click="send"
+              :loading="loading"
+              :disabled="disabled"
+            >
               <v-icon>mdi-send</v-icon>
             </v-btn>
           </template>
@@ -37,9 +43,9 @@
 import Vue from "vue";
 import { mapState } from "vuex";
 import { getAllComments, translateDate } from "../../utils/functions";
-import AvatarCpn from "../cpn/Avatar-cpn.vue";
-import { SERVER_COMMENT_URL } from "../../utils/defines";
+import { COMMENT_GET_LIMIT, SERVER_COMMENT_URL } from "../../utils/defines";
 import { httpRequest } from "../../utils/http";
+import AvatarCpn from "../cpn/Avatar-cpn.vue";
 export default Vue.extend({
   name: "Comment-area",
   components: {
@@ -49,6 +55,8 @@ export default Vue.extend({
     return {
       translateDate: translateDate,
       comment: "",
+      loading: false,
+      disabled: true,
     };
   },
   computed: {
@@ -57,15 +65,29 @@ export default Vue.extend({
   methods: {
     // TODO; block message length as 255 char max need to do it on server too
     async send(): Promise<void> {
-      const data: FormData = new FormData();
-      data.append("comment", this.comment);
-      data.append("postId", this.currentItem.post.id.toString());
-      await httpRequest.post(SERVER_COMMENT_URL, data);
-      getAllComments(this.currentItem.post.id);
-      this.currentItem.commentCount++;
-      this.comment = "";
-    },
+      if (this.comment != "") {
+        this.loading = true;
+        this.disabled = true;
 
+        const data: FormData = new FormData();
+        data.append("comment", this.comment);
+        data.append("postId", this.currentItem.post.id.toString());
+        await httpRequest.post(SERVER_COMMENT_URL, data);
+        await getAllComments(this.currentItem.post.id, COMMENT_GET_LIMIT);
+        this.currentItem.commentCount++;
+        this.comment = "";
+
+        setTimeout(() => {
+          this.loading = false;
+        }, 1000);
+      }
+    },
+  },
+  watch: {
+    comment(value: string) {
+      if (value) this.disabled = false;
+      else this.disabled = true;
+    },
   },
 });
 </script>

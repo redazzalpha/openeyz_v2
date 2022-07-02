@@ -27,13 +27,13 @@
                 style="height: 0; position: relative; width: 100%"
                 class="d-flex justify-center align-center"
               >
-                <!--error-alert-message-->
+                <!--alert-message-->
                 <Transition name="scale-transition">
                   <v-alert
                     v-show="alertMessage"
                     dense
                     outlined
-                    type="error"
+                    :type="alertType"
                     style="word-break: keep-all; position: absolute; z-index: 1"
                     text
                     elevation="5"
@@ -50,7 +50,7 @@
               <v-card elevation="0">
                 <v-card-text class="pa-0">
                   <!-- modify-password-form -->
-                  <v-form class="form" ref="form">
+                  <v-form class="form" ref="form" v-model="valid">
                     <v-container grid-list-xs>
                       <!-- current-password-field-row -->
                       <v-row>
@@ -108,6 +108,8 @@
                             :width="btnSize"
                             color="primary"
                             @click="sendPassword"
+                            :disabled="!valid"
+                            :loading="loading"
                             >Modify
                           </v-btn>
                         </v-col>
@@ -130,16 +132,24 @@ import { mapState, mapActions, mapGetters } from "vuex";
 import { httpRequest } from "../../utils/http";
 import { VueElement, VueFunction, VueResponse } from "../../utils/types";
 import { rules } from "@/utils/rules";
-import { ERROR_MESSAGE_DURATION, SERVER_USER_PASSWORD_URL } from "../../utils/defines";
+import {
+  ERROR_MESSAGE_DURATION,
+  SERVER_USER_PASSWORD_URL,
+} from "../../utils/defines";
 
 export default Vue.extend({
   name: "Profile-password",
   components: {},
   data() {
     return {
-      alertMessage: "",
       isSecret: true,
       passwordRules: [rules.requiredPasswd, rules.passwdValidator],
+      loading: false,
+      valid: false,
+      currentPasswd: "",
+      newPasswd: "",
+      alertType: "",
+      alertMessage: "",
     };
   },
   computed: {
@@ -149,6 +159,9 @@ export default Vue.extend({
   methods: {
     ...mapActions(["updateCurrentUser"]),
     async sendPassword(): Promise<void> {
+      this.loading = true;
+      this.valid = false;
+
       let form: VueElement = this.$refs.form;
       if (form != null) {
         if ((form as unknown as VueFunction).validate()) {
@@ -157,15 +170,32 @@ export default Vue.extend({
           if (formElem != null) {
             httpRequest
               .patch(SERVER_USER_PASSWORD_URL, new FormData(formElem))
-              .catch((error: VueResponse): void => {
-                this.alertMessage = error.bodyText;
-                setTimeout(() => {
-                  this.alertMessage = "";
-                }, ERROR_MESSAGE_DURATION);
+              .then(() => {
+                this.showAlert(
+                  "success",
+                  "Password has been successfully modified"
+                );
+                (form as unknown as VueFunction).reset();
+              })
+              .catch(async (error: VueResponse): Promise<void> => {
+                this.showAlert("error", error.bodyText);
               });
+            setTimeout(() => {
+              this.loading = false;
+            }, ERROR_MESSAGE_DURATION);
+            this.valid = true;
           }
         }
       }
+    },
+    showAlert(type: string, message: string): void {
+      this.alertType = type;
+      this.alertMessage = message;
+      setTimeout((resolve: () => void) => {
+        this.alertMessage = "";
+        this.alertType = "";
+        resolve();
+      }, ERROR_MESSAGE_DURATION);
     },
   },
 });

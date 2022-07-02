@@ -12,13 +12,16 @@
   >
     <!-- main-card -->
     <v-card
-    :style="
-      'background:  url(' +
-      ($vuetify.theme.dark
-        ? require('../../assets/bg-notfound-dark.webp')
-        : require('../../assets/bg-notfound.webp')) +
-      ') fixed no-repeat center; background-size: cover; '
-    "
+      v-scroll.self="onScroll"
+      class="overflow-y-auto inscroll"
+      max-height="600"
+      :style="
+        'background:  url(' +
+        ($vuetify.theme.dark
+          ? require('../../assets/bg-notfound-dark.webp')
+          : require('../../assets/bg-notfound.webp')) +
+        ') fixed no-repeat center; background-size: cover; '
+      "
     >
       <PublicationCpn :item="currentItem" :subline="false" />
       <CommentArea :item="currentItem" />
@@ -40,7 +43,16 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapState, mapActions } from "vuex";
-import { getAllComments } from "../../utils/functions";
+import {
+  COMMENT_GET_LIMIT,
+  HOME_PAGE_URL,
+  TEAM_PAGE_URL,
+} from "../../utils/defines";
+import {
+  addAllComments,
+  getAllComments,
+  translateDateToISO,
+} from "../../utils/functions";
 import AlertCpn from "../cpn/Alert-cpn.vue";
 import PublicationCpn from "../cpn/Publication-cpn.vue";
 import CommentArea from "./Comment-area.vue";
@@ -62,6 +74,30 @@ export default Vue.extend({
       "updateComments",
       "updateCurrentItem",
     ]),
+    onScroll(e: UIEvent) {
+      let scroll: number =
+        (e.target as Element).clientHeight + (e.target as Element).scrollTop;
+      let bottom: number = (e.target as Element).scrollHeight;
+
+      // if (typeof window === "undefined") return;
+      // if (e.target != null) {
+      //   const top = window.pageYOffset || (e.target as Element).scrollTop || 0;
+      //   this.fab = top > 20;
+      // }&
+
+      if (bottom && scroll === bottom) {
+        if (
+          this.comments.length &&
+          (this.$router.currentRoute.path === HOME_PAGE_URL ||
+            this.$router.currentRoute.path === TEAM_PAGE_URL)
+        ) {
+          const date = translateDateToISO(
+            this.comments[this.comments.length - 1].creation
+          );
+          addAllComments(this.currentItem.post.id, COMMENT_GET_LIMIT, date);
+        }
+      }
+    },
     closeComment() {
       this.updateCommentDialog(false);
     },
@@ -71,7 +107,7 @@ export default Vue.extend({
   },
   watch: {
     commentDialog(visible: boolean) {
-      if (visible) getAllComments(this.currentItem.post.id);
+      if (visible) getAllComments(this.currentItem.post.id, COMMENT_GET_LIMIT);
       else {
         this.updateComments([]);
         this.updateCurrentItem({});

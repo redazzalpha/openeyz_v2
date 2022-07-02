@@ -37,7 +37,7 @@
                   </span>
                   <!-- delete-button -->
                   <v-btn
-                  v-if="subline"
+                    v-if="subline"
                     color="error"
                     absolute
                     right
@@ -56,7 +56,9 @@
                   class="pa-0"
                 ></v-card-text>
                 <!-- buttons -->
-                <v-card-actions v-if="subline">
+                <v-card-actions
+                  :style="`visibility: ${subline ? 'visible' : 'hidden'} `"
+                >
                   <v-container grid-list-xs fluid>
                     <v-row>
                       <!-- comment-button -->
@@ -82,27 +84,29 @@
                       <!-- // TODO: got to fix bug on like click cause nmber of like doesnt appaer -->
                       <!-- like-button -->
                       <v-col class="d-flex justify-center pa-0">
-                          <v-btn
-                            icon
-                            plain
-                            :ripple="false"
-                            title="like this post"
-                            @click="like(item)"
-                          >
-                        <v-badge
-                          :value="item.likeCount > 0"
-                          :content="item.likeCount"
-                          overlap
-                          bottom
-                          class="badge"
+                        <v-btn
+                          icon
+                          plain
+                          :ripple="false"
+                          title="like this post"
+                          :loading="loading"
+                          :disabled="disabled"
+                          @click="like(item)"
                         >
+                          <v-badge
+                            :value="item.likeCount > 0"
+                            :content="item.likeCount"
+                            overlap
+                            bottom
+                            class="badge"
+                          >
                             <i
                               class="fa fa-heart"
                               :style="`color: ${item.userLike ? 'red' : ''}`"
                             >
                             </i>
-                        </v-badge>
-                          </v-btn>
+                          </v-badge>
+                        </v-btn>
                       </v-col>
                     </v-row>
                   </v-container>
@@ -143,13 +147,15 @@ export default Vue.extend({
       type: Boolean,
       required: false,
       default: true,
-    }
+    },
   },
   data() {
     return {
       translateDate: translateDate,
       isActive: false,
       comments: [],
+      loading: false,
+      disabled: false,
     };
   },
   computed: {
@@ -158,6 +164,9 @@ export default Vue.extend({
   methods: {
     ...mapActions(["updateCurrentItem", "updateCommentDialog"]),
     async like(item: Item) {
+      this.loading = true;
+      this.disabled = true;
+
       const postId: FormData = new FormData();
       if (item.post) postId.append("postId", item.post.id.toString());
       await httpRequest.post(SERVER_LIKE_URL, postId);
@@ -168,6 +177,11 @@ export default Vue.extend({
       );
       item.likeCount = response.body as unknown as number;
       item.userLike = !item.userLike;
+
+      setTimeout(() => {
+        this.loading = false;
+        this.disabled = false;
+      }, 1000);
     },
     async deletePost() {
       await httpRequest.delete(SERVER_PUBLICATION_URL, {

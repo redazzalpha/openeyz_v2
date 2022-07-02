@@ -52,14 +52,18 @@ export default new Vuex.Store({
     UPDATE_POSTS(state, payload): void {
       state.posts = payload;
     },
-    ADD_POSTS(state, payload): void {
-      state.posts.push(payload);
-    },
     UPDATE_COMMENTS(state, payload): void {
       state.comments = payload;
     },
     UPDATE_USER_NOTIFS(state, payload): void {
       state.userNotifs = payload;
+    },
+
+    ADD_POSTS(state, payload): void {
+      state.posts.push(payload);
+    },
+    ADD_COMMENTS(state, payload): void {
+      state.comments.push(payload);
     },
 
     UPDATE_LOADER(state, payload) {
@@ -76,11 +80,9 @@ export default new Vuex.Store({
       state.commentDialog = payload;
     },
 
-
     UPDATE_DRAWER(state, payload): void {
       state.drawer = payload;
     },
-
 
     UPDATE_TAB_ACCESS(state, payload: number): void {
       state.tabAccess = payload;
@@ -88,7 +90,6 @@ export default new Vuex.Store({
     UPDATE_TAB_PROFILE(state, payload: number): void {
       state.tabProfile = payload;
     },
-
 
     CLEAR_VUEX(state) {
       state.userListObj = [] as UserObj[];
@@ -124,14 +125,18 @@ export default new Vuex.Store({
     updatePosts(context, payload): void {
       context.commit('UPDATE_POSTS', payload);
     },
-    addPosts(context, payload) {
-      context.commit('ADD_POSTS', payload);
-    },
     updateComments(context, payload): void {
       context.commit('UPDATE_COMMENTS', payload);
     },
     updateUserNotifs(context, payload): void {
       context.commit("UPDATE_USER_NOTIFS", payload);
+    },
+
+    addPosts(context, payload) {
+      context.commit('ADD_POSTS', payload);
+    },
+    addComments(context, payload) {
+      context.commit('ADD_COMMENTS', payload);
     },
 
     updateLoader(context, payload) {
@@ -147,7 +152,6 @@ export default new Vuex.Store({
     updateCommentDialog(context, payload: boolean): void {
       context.commit('UPDATE_COMMENT_DIALOG', payload);
     },
-
 
     updateDrawer(context, payload): void {
       context.commit('UPDATE_DRAWER', payload);

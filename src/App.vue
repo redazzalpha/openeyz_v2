@@ -1,7 +1,7 @@
 <template>
   <!-- TODO: got to lock all access if not authentified cause there a bug user can access to profil page cause there no request to the server to reject request -->
   <v-app id="wrapper" class="app-container">
-<LoaderCpn :show="loader"/>
+    <LoaderCpn :show="loader" />
     <v-card
       class="app-container-card"
       :style="
@@ -32,8 +32,8 @@
 // TODO: add autofocuse on fields
 <script lang="ts">
 import Vue from "vue";
-import { mapState, mapActions } from 'vuex';
-  import { HOME_PAGE_URL, POST_GET_LIMIT } from "./utils/defines";
+import { mapState, mapActions } from "vuex";
+import { HOME_PAGE_URL, POST_GET_LIMIT } from "./utils/defines";
 import {
   addAllPosts,
   getAllNotifs,
@@ -44,7 +44,6 @@ import AppbarCpn from "@/components/cpn/Appbar-cpn.vue";
 import DrawerCpn from "@/components/cpn/Drawer-cpn.vue";
 import ScrollTopBtnCpn from "./components/cpn/ScrollTopBtn-cpn.vue";
 import LoaderCpn from "./components/cpn/Loader-cpn.vue";
-
 
 export default Vue.extend({
   name: "App",
@@ -59,9 +58,7 @@ export default Vue.extend({
     ...mapState(["currentUser", "userNotifs", "posts", "loader"]),
   },
   methods: {
-    ...mapActions([
-      'updateLoader'
-    ]),
+    ...mapActions(["updateLoader"]),
     infiniteScroll() {
       let scroll: number;
       let bottom: number;

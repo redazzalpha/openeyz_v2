@@ -131,17 +131,24 @@
       <v-dialog v-model="modifyDialog" width="500">
         <v-card>
           <!-- modify-title -->
-          <v-card-title class="text-h5 grey lighten-2">
+          <v-card-title
+            primary-title
+            class="text-body-1 white--text text-body-2 text-sm-subtitle-1 pa-2"
+            :style="`background-color: ${
+              $vuetify.theme.dark ? '#424242' : '#00acc1'
+            }`"
+          >
             {{ modifyTitle }}
           </v-card-title>
           <!-- modify-content -->
           <v-card-text>
-            <v-form ref="form" class="form">
+            <v-form ref="form" class="form" v-model="valid">
               <v-text-field
                 v-model="userData"
                 :placeholder="modifyPlaceholder"
                 required
                 name="data"
+                :rules="fieldRules"
               >
               </v-text-field>
             </v-form>
@@ -150,7 +157,15 @@
           <!-- proceed-button -->
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" plain @click="proceed"> Procced </v-btn>
+            <v-btn
+              color="primary"
+              plain
+              @click="proceed"
+              :loading="loading"
+              :disabled="!valid"
+            >
+              Procced
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -162,9 +177,18 @@
 import Vue from "vue";
 import { mapState, mapActions } from "vuex";
 import { httpRequest } from "@/utils/http";
-import { VueElement, VueFunction, VueResponse } from '../../utils/types';
+import { VueElement, VueFunction, VueResponse } from "../../utils/types";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
-import { SERVER_USER_DESCRIPTION_URL, SERVER_USER_DARK_URL, SERVER_USER_IMG_URL, SERVER_USER_LNAME_URL, SERVER_USER_NAME_URL, SERVER_USER_USERNAME_URL } from "../../utils/defines";
+import {
+  SERVER_USER_DESCRIPTION_URL,
+  SERVER_USER_DARK_URL,
+  SERVER_USER_IMG_URL,
+  SERVER_USER_LNAME_URL,
+  SERVER_USER_NAME_URL,
+  SERVER_USER_USERNAME_URL,
+} from "../../utils/defines";
+import { rules } from '../../utils/rules';
+
 
 export default Vue.extend({
   name: "Profile-info",
@@ -181,9 +205,22 @@ export default Vue.extend({
       modifyPlaceholder: "",
       target: 0,
       url: "",
+      loading: false,
+      disabled: true,
+      valid: false,
+      fieldRules: [
+        rules.requiredField,
+        rules.fieldValidator
+      ],
+        data() {
+    return {
+      
     };
   },
-    computed: {
+
+    };
+  },
+  computed: {
     ...mapState(["currentUser"]),
   },
   methods: {
@@ -201,16 +238,16 @@ export default Vue.extend({
     openModify(target: number) {
       switch (target) {
         case 0:
-          this.modifyTitle = "Modify last name";
+          this.modifyTitle = "Modify my  last name";
           this.modifyPlaceholder = "last name here...";
           break;
         case 1:
-          this.modifyTitle = "Modify name";
+          this.modifyTitle = "Modify my name";
           this.modifyPlaceholder = "name here...";
 
           break;
         case 2:
-          this.modifyTitle = "Modify username";
+          this.modifyTitle = "Modify my username";
           this.modifyPlaceholder = "e-mail here...";
           break;
       }
@@ -218,6 +255,9 @@ export default Vue.extend({
       this.modifyDialog = true;
     },
     async proceed() {
+      this.loading = true;
+      this.disabled = true;
+
       let form: VueElement = this.$refs.form;
       // TODO: got to check for username modification cause need change cookie from server according the new username
       if (form != null) {
@@ -228,11 +268,15 @@ export default Vue.extend({
             this.switchTarget();
             await httpRequest.patch(this.url, new FormData(formElem));
             this.updateUser();
-            this.modifyDialog = false;
             this.userData = "";
           }
         }
       }
+
+      setTimeout(() => {
+        this.loading = false;
+      }, 1000);
+      this.modifyDialog = false;
     },
     switchTarget() {
       switch (this.target) {
@@ -304,5 +348,12 @@ export default Vue.extend({
       }
     },
   },
+  watch: {
+    userData(value: string) {
+      if (value) this.disabled = false;
+      else this.disabled = true;
+    },
+  },
 });
 </script>
+val

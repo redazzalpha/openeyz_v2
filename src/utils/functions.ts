@@ -2,7 +2,7 @@ import store from "@/store";
 import { httpRequest } from "./http";
 import { UserMap, VueResponse, Post } from "./types";
 import { DateTime } from "luxon";
-import { SERVER_PUBLICATION_LIMIT_URL, SERVER_COMMENT_URL, SERVER_USER_NOTIF_URL, SERVER_USER_SIMPLE_URL } from './defines';
+import { SERVER_PUBLICATION_LIMIT_URL, SERVER_USER_NOTIF_URL, SERVER_USER_SIMPLE_URL, SERVER_COMMENT_LIMIT_URL } from './defines';
 
 export async function getSimpleUsers(): Promise<void> {
   const res = await httpRequest.get(SERVER_USER_SIMPLE_URL);
@@ -34,27 +34,10 @@ export async function getAllUserPosts(
   );
   store.dispatch("updateUserPosts", JSON.parse(response.bodyText));
 }
-export async function addAllPosts(limit: number, creation?: string, authorId?: string): Promise<void | VueResponse> {
-  const response: VueResponse | void = await httpRequest.get(
-    SERVER_PUBLICATION_LIMIT_URL,
-    { params: { limit, creation, authorId } }
-  );
-  (response.body as []).forEach((e: Post) => { store.dispatch('addPosts', e); });
-}
-export async function addAllUserPosts(authorId: string, limit: number, creation?: string): Promise<void | VueResponse> {
-
-
-  const response: VueResponse | void = await httpRequest.get(
-    SERVER_PUBLICATION_LIMIT_URL,
-    { params: { authorId, limit, creation } }
-  );
-  (response.body as []).forEach((e: Post) => { store.dispatch('addUserPosts', e); });
-}
-
-export async function getAllComments(postId: number | undefined): Promise<void | VueResponse> {
+export async function getAllComments(postId: number, limit: number, creation?: string): Promise<void | VueResponse> {
   const response: VueResponse = await httpRequest.get(
-    SERVER_COMMENT_URL,
-    { params: { postId } }
+    SERVER_COMMENT_LIMIT_URL,
+    { params: { postId, limit, creation } }
   );
   store.dispatch("updateComments", response.body);
 }
@@ -64,6 +47,24 @@ export async function getAllNotifs(): Promise<void | VueResponse> {
   );
   store.dispatch("updateUserNotifs", response.body);
 }
+
+
+export async function addAllPosts(limit: number, creation?: string, authorId?: string): Promise<void | VueResponse> {
+  const response: VueResponse | void = await httpRequest.get(
+    SERVER_PUBLICATION_LIMIT_URL,
+    { params: { limit, creation, authorId } }
+  );
+  (response.body as []).forEach((e: Post) => { store.dispatch('addPosts', e); });
+}
+export async function addAllComments(postId: number, limit: number, creation?: string): Promise<void | VueResponse> {
+
+  const response: VueResponse | void = await httpRequest.get(
+    SERVER_COMMENT_LIMIT_URL,
+    { params: { postId, limit, creation } }
+  );
+  (response.body as []).forEach((e: Post) => { store.dispatch('addComments', e); });
+}
+
 
 export function clearVuex() {
   store.dispatch("clearVuex");

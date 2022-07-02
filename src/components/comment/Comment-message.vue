@@ -57,9 +57,8 @@ import { Comment } from "../../utils/types";
 import { getAllComments, translateDate } from "../../utils/functions";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
 import { httpRequest } from "../../utils/http";
-import { SERVER_COMMENT_DELETE_URL } from "../../utils/defines";
+import { COMMENT_GET_LIMIT, SERVER_COMMENT_DELETE_URL } from "../../utils/defines";
 import { mapState } from "vuex";
-import { StyleSheet } from 'react-native';
 export default Vue.extend({
   name: "Comment-message",
   components: {
@@ -85,7 +84,7 @@ export default Vue.extend({
         params: { commentId: this.comment.id },
       });
       // TODO: find out a way to replace currentItem by a recieved object
-      getAllComments(this.currentItem.post.id);
+      getAllComments(this.currentItem.post.id, COMMENT_GET_LIMIT);
       this.currentItem.commentCount--;
     },
   },
