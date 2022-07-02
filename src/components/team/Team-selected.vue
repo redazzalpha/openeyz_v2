@@ -51,6 +51,10 @@
             <v-card-title primary-title class="d-flex justify-center">
               {{ author }} 's publications
             </v-card-title>
+            <v-card-subtitle style="opacity: 0.7">
+              Here you could find all {{author}} publications. From this place 
+              you can interact add comment or like publications.
+            </v-card-subtitle>
           </v-col>
         </v-row>
 
@@ -75,7 +79,6 @@
           v-if="!posts.length"
           :message="`${author} has no post at now !`"
           :action="closeDialog"
-          class="pt-10"
         />
         <!-- end-of-post-alert -->
         <AlertCpn

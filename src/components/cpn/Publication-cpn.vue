@@ -15,7 +15,7 @@
             <v-col>
               <!-- TODO: add cross icon to remove publication from user and superuser-->
               <!-- publication-card -->
-              <v-card max-width="700" class="mx-auto mb-8">
+              <v-card max-width="700" class="mx-auto">
                 <!-- header-title -->
                 <v-card-title
                   primary-title
