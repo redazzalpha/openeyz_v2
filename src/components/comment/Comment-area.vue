@@ -9,31 +9,35 @@
           :role="currentUser.roles[0].roleName"
           size="40"
         />
-        <v-textarea
-          v-model="comment"
-          placeholder="comment here"
-          auto-grow
-          outlined
-          rows="1"
-          row-height="15"
-          rounded
-          hide-details
-          autofocus
-        >
-          <!-- FIXME: fix btn bug sometimes does not appear - try to change with append directive -->
-          <!-- send-comment-button -->
-          <template v-slot:append>
-            <v-btn
-              icon
-              color="primary"
-              @click="send"
-              :loading="loading"
-              :disabled="disabled"
-            >
-              <v-icon>mdi-send</v-icon>
-            </v-btn>
-          </template>
-        </v-textarea>
+        <v-form v-model="valid" ref="form" style="width: 100%">
+          <v-textarea
+            v-model="comment"
+            placeholder="comment here"
+            auto-grow
+            outlined
+            rows="1"
+            row-height="15"
+            rounded
+            autofocus
+            counter
+            :rules="rules"
+          >
+            <!-- FIXME: fix btn bug sometimes does not appear - try to change with append directive -->
+            <!-- send-comment-button -->
+            <template v-slot:append>
+              <v-btn
+                icon
+                color="primary"
+                @click="send"
+                :loading="loading"
+                :disabled="disabled || !valid"
+                class="btn-send"
+              >
+                <v-icon>mdi-send</v-icon>
+              </v-btn>
+            </template>
+          </v-textarea>
+        </v-form>
       </v-col>
     </v-row>
   </v-container>
@@ -46,6 +50,7 @@ import { getAllComments, translateDate } from "../../utils/functions";
 import { COMMENT_GET_LIMIT, SERVER_COMMENT_URL } from "../../utils/defines";
 import { httpRequest } from "../../utils/http";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
+import { rules } from "../../utils/rules";
 export default Vue.extend({
   name: "Comment-area",
   components: {
@@ -53,10 +58,13 @@ export default Vue.extend({
   },
   data() {
     return {
+      test: false,
       translateDate: translateDate,
+      valid: false,
       comment: "",
       loading: false,
       disabled: true,
+      rules: [rules.max250],
     };
   },
   computed: {
@@ -65,7 +73,7 @@ export default Vue.extend({
   methods: {
     // TODO; block message length as 255 char max need to do it on server too
     async send(): Promise<void> {
-      if (this.comment != "") {
+      if (this.valid) {
         this.loading = true;
         this.disabled = true;
 
@@ -96,21 +104,16 @@ export default Vue.extend({
 .v-input__append-inner {
   margin-top: 8px !important;
 }
-
-.message-arrowed::after {
-  content: "";
-  position: absolute;
-  left: -26px;
-  top: 28%;
-  border: solid transparent 15px;
-  border-left: solid transparent 15px;
-  border-right: solid #2196f3 15px;
-}
 </style>
 
 <style lang="scss" scoped>
 .v-textarea.v-text-field--enclosed.v-text-field--outlined:not(.v-input--dense)
   textarea {
   margin-top: 13px !important  ;
+}
+.btn-send {
+  position: absolute;
+  bottom: 10px;
+  right: 0;
 }
 </style>

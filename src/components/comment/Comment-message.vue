@@ -18,28 +18,32 @@
                   primary-title
                   class="text-body-2 text-sm-subtitle-1 white--text pa-2 mb-2"
                 >
+                  <span>
                   {{ comment.author.name }}
                   said on
+
+                  </span>
+                  <span>
                   {{ translateDate(comment.creation) }}
+
+                  </span>
 
                   <!-- delete-button -->
                   <v-btn
                     color="error"
-                    absolute
-                    right
                     icon
                     title="delete"
                     plain
                     :ripple="false"
                     @click.stop="deleteComment"
+                    style="position: absolute; top: 0px; right: 0"
                   >
                     <v-icon color="white">mdi-close-circle</v-icon>
                   </v-btn>
                 </v-card-title>
                 <!-- comment-content -->
-                <div class="message-arrowed"></div>
                 <v-card-text class="white--text pt-0">
-                  <div class="d-flex">
+                  <div class="d-flex text-break" >
                     {{ comment.content }}
                   </div>
                 </v-card-text>
@@ -90,3 +94,17 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+.message-arrowed::after {
+  content: "";
+  position: absolute;
+  left: -26px;
+  top: 45%;
+  bottom: 50%;
+  border: solid transparent 15px;
+  border-left: solid transparent 15px;
+  border-right: solid #2196f3 15px;
+}
+
+</style>

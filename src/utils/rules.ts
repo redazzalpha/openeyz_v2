@@ -49,8 +49,8 @@ export const rules = {
     fieldValidator: (v: string): string | boolean => {
         return v != null && !!v.match(/^\s*[0-9a-zA-ZÀ-ÿ]{2,}([\s|-]?[0-9a-zA-ZÀ-ÿ]{1,})*\s*$/g) || "Le champs est invalide";
     },
-    max255: (v: string): string | boolean => {
-        return v != null && v.length <= 255 || '255 Caractères max.';
+    max250: (v: string): string | boolean => {
+        return v != null && v.length <= 250 || '250 Caractères max.';
     },
     checked: (v: string): string | boolean => {
         return !!v || "You must agree to continue";
