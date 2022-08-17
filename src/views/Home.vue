@@ -2,16 +2,15 @@
   <div class="home-page-block">
     <HeadCpn />
     <PostCpn />
-    <PublicationCpn
-      v-for="(post, index) in posts"
-      :key="index"
-      :item="post"
-    />
+    <PublicationCpn v-for="(post, index) in posts" :key="index" :item="post" />
     <CommentBlock />
-    <AlertCpn
-      v-if="posts.length <= 0"
-      message="just was born no publication is available"
-    />
+    <v-container grid-list-xs class="my-7">
+      <v-row v-if="!posts.length">
+        <v-col>
+          <AlertCpn message="just was born no publication is available" />
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
@@ -19,7 +18,7 @@
 import Vue from "vue";
 import { mapState, mapActions } from "vuex";
 import { getAllPosts, getAllNotifs } from "../utils/functions";
-import {POST_GET_LIMIT } from "../utils/defines";
+import { POST_GET_LIMIT } from "../utils/defines";
 import HeadCpn from "@/components/cpn/Head-cpn.vue";
 import PostCpn from "@/components/cpn/Post-cpn.vue";
 import PublicationCpn from "@/components/cpn/Publication-cpn.vue";

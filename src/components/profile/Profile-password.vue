@@ -148,7 +148,7 @@ export default Vue.extend({
       valid: false,
       currentPasswd: "",
       newPasswd: "",
-      alertType: "",
+      alertType: "error",
       alertMessage: "",
     };
   },

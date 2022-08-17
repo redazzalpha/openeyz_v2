@@ -1,5 +1,4 @@
 <template>
-  <!-- TODO: got to lock all access if not authentified cause there a bug user can access to profil page cause there no request to the server to reject request -->
   <v-app id="wrapper" class="app-container">
     <LoaderCpn :show="loader" />
     <v-card
@@ -27,9 +26,7 @@
     </v-card>
   </v-app>
 </template>
-//
-<!-- TODO: need to change code where i modify front end value without get server  response like in profile information field and like publication value has been modified without get server response-->
-// TODO: add autofocuse on fields
+
 <script lang="ts">
 import Vue from "vue";
 import { mapState, mapActions } from "vuex";

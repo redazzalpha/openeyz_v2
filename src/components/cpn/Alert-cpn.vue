@@ -1,5 +1,5 @@
 <template>
-  <v-container grid -list-xs class="alert-cpn-container">
+  <v-container grid-list-xs class="alert-cpn-container">
     <v-row>
       <v-col class="pa-0 ma-0">
         <router-link

@@ -1,4 +1,4 @@
-import {SERVER_IMAGE_URL} from '../utils/defines';
+import { SERVER_IMAGE_URL } from '../utils/defines';
 
 // TODO find a way to delete uploaded image when the image is not send into post 
 // TODO:   block max img send in a post need to do it in server side too
@@ -33,9 +33,9 @@ class UploadAdapter {
         const loader = this.loader;
         const genericErrorText = `Couldn't upload file: ${file.name}.`;
 
-        xhr.addEventListener('error', () => reject(genericErrorText));
-        xhr.addEventListener('abort', () => reject());
-        xhr.addEventListener('load', () => {
+        xhr?.addEventListener('error', () => reject(genericErrorText));
+        xhr?.addEventListener('abort', () => reject());
+        xhr?.addEventListener('load', () => {
             const response = xhr.response;
 
             if (!response || response.error) {
@@ -47,7 +47,7 @@ class UploadAdapter {
             });
         });
 
-        if (xhr.upload) {
+        if (xhr?.upload) {
             xhr.upload.addEventListener('progress', evt => {
                 if (evt.lengthComputable) {
                     loader.uploadTotal = evt.total;
@@ -60,7 +60,7 @@ class UploadAdapter {
         const data = new FormData();
         data.append('file', file);
 
-        this.xhr.send(data);
+        this.xhr?.send(data);
     }
 }
 

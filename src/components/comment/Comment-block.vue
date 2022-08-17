@@ -62,7 +62,7 @@
         <v-row>
           <v-col>
             <AlertCpn
-              v-if="comments.length < 1"
+              v-if="!comments.length"
               message="This post has not comment be the first to leave one"
               class="mt-1"
               :action="closeComment"
@@ -109,6 +109,7 @@ export default Vue.extend({
       "updateCurrentItem",
     ]),
     onScroll(e: UIEvent) {
+      console.log("onscroll here")
       let scroll: number =
         (e.target as Element).clientHeight + (e.target as Element).scrollTop;
       let bottom: number = (e.target as Element).scrollHeight;
@@ -127,6 +128,8 @@ export default Vue.extend({
     },
     closeComment() {
       this.updateCommentDialog(false);
+      this.updateComments([]);
+      this.updateCurrentItem({});
     },
     keyPressed({ code }: KeyboardEvent) {
       if (code.match("Escape")) this.closeComment();
@@ -135,10 +138,6 @@ export default Vue.extend({
   watch: {
     commentDialog(visible: boolean) {
       if (visible) getAllComments(this.currentItem.post.id, COMMENT_GET_LIMIT);
-      else {
-        this.updateComments([]);
-        this.updateCurrentItem({});
-      }
     },
   },
 });

@@ -22,7 +22,6 @@
             counter
             :rules="rules"
           >
-            <!-- FIXME: fix btn bug sometimes does not appear - try to change with append directive -->
             <!-- send-comment-button -->
             <template v-slot:append>
               <v-btn

@@ -103,7 +103,7 @@
               <v-col cols="12" class="py-0">
                 <v-text-field
                   v-model="description"
-                  :rules="fieldRules"
+                  :rules="descriptionRules"
                   placeholder="Description"
                   name="description"
                   class="pt-0"
@@ -187,6 +187,7 @@ export default Vue.extend({
       emailRules: [rules.requiredEmail, rules.emailValidator],
       passwordRules: [rules.requiredPasswd, rules.passwdValidator],
       fieldRules: [rules.requiredField, rules.fieldValidator],
+      descriptionRules: [rules.requiredField, rules.fieldValidator],
       checkBoxRule: [rules.checked],
     };
   },

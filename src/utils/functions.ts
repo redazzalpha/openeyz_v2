@@ -25,21 +25,13 @@ export async function getAllPosts(limit: number, creation?: string, authorId?: s
   );
   store.dispatch("updatePosts", JSON.parse(response.bodyText));
 }
-export async function getAllUserPosts(
-  authorId: string, limit: number
-): Promise<void | VueResponse> {
-  const response: VueResponse | void = await httpRequest.get(
-    SERVER_PUBLICATION_LIMIT_URL,
-    { params: { authorId, limit } }
-  );
-  store.dispatch("updateUserPosts", JSON.parse(response.bodyText));
-}
 export async function getAllComments(postId: number, limit: number, creation?: string): Promise<void | VueResponse> {
   const response: VueResponse = await httpRequest.get(
     SERVER_COMMENT_LIMIT_URL,
     { params: { postId, limit, creation } }
   );
-  store.dispatch("updateComments", response.body);
+  store.dispatch("updateComments", response.body as []);
+
 }
 export async function getAllNotifs(): Promise<void | VueResponse> {
   const response: VueResponse = await httpRequest.get(
@@ -54,7 +46,7 @@ export async function addAllPosts(limit: number, creation?: string, authorId?: s
     SERVER_PUBLICATION_LIMIT_URL,
     { params: { limit, creation, authorId } }
   );
-  (response.body as []).forEach((e: Post) => { store.dispatch('addPosts', e); });
+  (response.body  as  []).forEach((e: Post) => { store.dispatch('addPosts', e); });
 }
 export async function addAllComments(postId: number, limit: number, creation?: string): Promise<void | VueResponse> {
 

@@ -12,12 +12,11 @@ const vuexLocal = new VuexPersistence({
 
 Vue.use(Vuex);
 
-// FIXME:  try to fix bug on persistant vuex cause when server is off or empty data still remains and looks like working
 
 export default new Vuex.Store({
   state: {
-    userListObj : [] as UserObj[],
-    userCardList : [] as UserObj[],
+    userListObj: [] as UserObj[],
+    userCardList: [] as UserObj[],
     posts: [] as Post[],
     comments: [] as Comment[],
     userNotifs: [] as Notif[],
@@ -69,7 +68,7 @@ export default new Vuex.Store({
     UPDATE_LOADER(state, payload) {
       state.loader = payload;
     },
-    
+
     UPDATE_TEAM_SELECTED_USER(state, payload): void {
       state.teamSelectedUser = payload;
     },
@@ -79,7 +78,6 @@ export default new Vuex.Store({
     UPDATE_COMMENT_DIALOG(state, payload: boolean): void {
       state.commentDialog = payload;
     },
-
     UPDATE_DRAWER(state, payload): void {
       state.drawer = payload;
     },
@@ -95,14 +93,14 @@ export default new Vuex.Store({
       state.userListObj = [] as UserObj[];
       state.userCardList = [] as UserObj[];
       state.posts = [] as Post[];
-      state.comments = [] as Comment [];
+      state.comments = [] as Comment[];
       state.userNotifs = [] as Notif[],
-      state.loader = true,
-      state.currentUser = null;
+        state.loader = true,
+        state.currentUser = null;
       state.currentItem = new Item,
 
-      state.teamSelectedUser = null,
-      state.teamSelectedDialog = false;
+        state.teamSelectedUser = null,
+        state.teamSelectedDialog = false;
       state.commentDialog = false;
       state.drawer = null;
       state.tabAccess = 0;

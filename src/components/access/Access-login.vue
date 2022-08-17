@@ -96,7 +96,7 @@ import { httpRequest } from "@/utils/http";
 import { VueResponse, VueElement, VueFunction } from "../../utils/types";
 import { ERROR_MESSAGE_DURATION } from "@/utils/defines";
 
-// TODO: make in server side the refresh
+// TODO: make in server side the refresh token
 export default Vue.extend({
   name: "Access-login",
   data() {

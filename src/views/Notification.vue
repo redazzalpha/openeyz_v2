@@ -22,6 +22,7 @@
             style="border: solid grey 1px"
             @click="readAll"
           >
+            <!-- TODO: need to remove notification alert when it's currentuser who is writing the comment  -->
             all as read
           </v-btn>
           <v-btn
@@ -97,6 +98,7 @@ export default Vue.extend({
 
     async deleteAll() {
       await httpRequest.delete(SERVER_USER_NOTIF_URL);
+      this.$vuetify.goTo(0);
       await getAllNotifs();
     },
   },

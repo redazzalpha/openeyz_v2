@@ -52,7 +52,7 @@
               {{ author }} 's publications
             </v-card-title>
             <v-card-subtitle style="opacity: 0.7">
-              Here you could find all {{author}} publications. From this place 
+              Here you could find all {{ author }} publications. From this place
               you can interact add comment or like publications.
             </v-card-subtitle>
           </v-col>
@@ -66,30 +66,21 @@
               :key="index"
               :item="post"
             />
-
+            <!-- comment-component -->
             <CommentBlock />
           </v-col>
         </v-row>
-      </v-container>
-
-      <!-- alert part -->
-      <div class="d-flex justify-center">
         <!-- empty-post-alert -->
-        <AlertCpn
-          v-if="!posts.length"
-          :message="`${author} has no post at now !`"
-          :action="closeDialog"
-        />
-        <!-- end-of-post-alert -->
-        <AlertCpn
-          v-else
-          :message="`You have reach end of ${author} 's publications`"
-          :action="closeDialog"
-          class="pt-10"
-        />
-      </div>
+        <v-row v-if="!posts.length">
+          <v-col>
+            <AlertCpn
+              :message="`${author} has no post at now !`"
+              :action="closeDialog"
+            />
+          </v-col>
+        </v-row>
+      </v-container>
     </v-card>
-
     <!-- scroll-top-button -->
     <v-hover v-slot="{ hover }">
       <v-btn
@@ -247,3 +238,14 @@ export default Vue.extend({
   cursor: default;
 }
 </style>
+
+
+
+
+
+
+
+
+
+
+
