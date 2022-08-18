@@ -13,7 +13,7 @@
         <v-container grid-list-xs fluid>
           <v-row no-gutters>
             <v-col>
-              <!-- TODO: add cross icon to remove publication from user and superuser-->
+              <!-- TODO: add cross icon to remove publication from user and superuser : PS: already done on front end remains to do it on back end -->
               <!-- publication-card -->
               <v-card max-width="700" class="mx-auto">
                 <!-- header-title -->
@@ -37,7 +37,7 @@
                   </span>
                   <!-- delete-button -->
                   <v-btn
-                    v-if="subline"
+                    v-if="subline && isAuthorized()"
                     color="error"
                     absolute
                     right
@@ -159,7 +159,7 @@ export default Vue.extend({
     };
   },
   computed: {
-    ...mapState(["posts"]),
+    ...mapState(["posts", "currentUser"]),
   },
   methods: {
     ...mapActions(["updateCurrentItem", "updateCommentDialog"]),
@@ -195,6 +195,12 @@ export default Vue.extend({
     openComment(item: Item) {
       this.updateCurrentItem(item);
       this.updateCommentDialog(true);
+    },
+    isAuthorized(): boolean {
+      return (
+        this.currentUser.roles[0].roleName == "SUPERADMIN" ||
+        this.currentUser.username == this.item.post?.author.username
+      );
     },
   },
 });

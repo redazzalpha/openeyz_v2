@@ -109,7 +109,6 @@ export default Vue.extend({
       "updateCurrentItem",
     ]),
     onScroll(e: UIEvent) {
-      console.log("onscroll here")
       let scroll: number =
         (e.target as Element).clientHeight + (e.target as Element).scrollTop;
       let bottom: number = (e.target as Element).scrollHeight;

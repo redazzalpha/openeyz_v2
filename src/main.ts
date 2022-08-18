@@ -41,6 +41,9 @@ Vue.http.interceptors.push(function (request: VueRequest) {
         localStorage.setItem("token", token);
       if (user)
         store.dispatch('updateCurrentUser', user);
+
+
+        console.log(user);
     }
   };
 });
