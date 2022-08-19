@@ -199,6 +199,7 @@ export default Vue.extend({
     isAuthorized(): boolean {
       return (
         this.currentUser.roles[0].roleName == "SUPERADMIN" ||
+        this.currentUser.roles[0].roleName == "ADMIN" ||
         this.currentUser.username == this.item.post?.author.username
       );
     },

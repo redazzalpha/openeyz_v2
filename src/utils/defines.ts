@@ -17,6 +17,9 @@ export const SERVER_USER_URL = API_PATH + '/user';
 export const SERVER_USER_SIMPLE_URL = SERVER_USER_URL + '/simple';
 export const SERVER_USER_LNAME_URL = SERVER_USER_URL + '/lname';
 export const SERVER_USER_NAME_URL = SERVER_USER_URL + '/name';
+export const SERVER_USER_DATA_URL = SERVER_USER_URL + '/data';
+export const SERVER_USER_STATE_URL = SERVER_USER_URL + '/state';
+export const SERVER_USER_ROLE_URL = SERVER_USER_URL + '/role';
 
 export const SERVER_USER_USERNAME_URL = SERVER_USER_URL + '/username';
 export const SERVER_USER_PASSWORD_URL = SERVER_USER_URL + '/password';

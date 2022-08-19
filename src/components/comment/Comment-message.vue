@@ -65,7 +65,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { PropType } from "vue";
-import { Comment, Post } from "../../utils/types";
+import { Comment } from "../../utils/types";
 import { getAllComments, translateDate } from "../../utils/functions";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
 import { httpRequest } from "../../utils/http";
@@ -105,6 +105,7 @@ export default Vue.extend({
     isAuthorized(): boolean {
       return (
         this.currentUser.roles[0].roleName == "SUPERADMIN" ||
+        this.currentUser.roles[0].roleName == "ADMIN" ||
         this.currentUser.username == this.comment.author.username
       );
     },

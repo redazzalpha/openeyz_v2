@@ -58,6 +58,13 @@
           </v-col>
         </v-row>
 
+        <!-- Authorization menu  -->
+        <v-row>
+          <v-col class="text-center">
+            <authorizationCpn  :username="username"/>
+          </v-col>
+        </v-row>
+
         <v-row>
           <v-col>
             <!-- publication component -->
@@ -114,6 +121,7 @@ import PublicationCpn from "../cpn/Publication-cpn.vue";
 import ToolbarCpn from "../cpn/Toolbar-cpn.vue";
 import AlertCpn from "../cpn/Alert-cpn.vue";
 import LinksCpn from "../cpn/Links-cpn.vue";
+import AuthorizationCpn from "../cpn/AuthorizationCpn.vue";
 import CommentBlock from "../comment/Comment-block.vue";
 
 export default Vue.extend({
@@ -123,6 +131,7 @@ export default Vue.extend({
     PublicationCpn,
     AlertCpn,
     LinksCpn,
+    AuthorizationCpn,
     CommentBlock,
   },
   props: {
@@ -238,14 +247,3 @@ export default Vue.extend({
   cursor: default;
 }
 </style>
-
-
-
-
-
-
-
-
-
-
-
