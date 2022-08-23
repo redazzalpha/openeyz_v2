@@ -75,7 +75,7 @@ export default Vue.extend({
         }
       };
     },
-    async ckeThemeSwitcher() {
+    ckeThemeSwitcher() {
       const style = document.documentElement.style;
       if (this.currentUser && this.currentUser.dark) {
         style.setProperty("--ck-color-base-foreground", "#424242");

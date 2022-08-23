@@ -73,6 +73,7 @@ export class Users {
   state = Boolean;
   description = String;
   avatarSrc = String;
+  dark = Boolean;
   roles = Array<Role>();
 }
 export interface Post {

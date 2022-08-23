@@ -46,7 +46,7 @@ export async function addAllPosts(limit: number, creation?: string, authorId?: s
     SERVER_PUBLICATION_LIMIT_URL,
     { params: { limit, creation, authorId } }
   );
-  (response.body  as  []).forEach((e: Post) => { store.dispatch('addPosts', e); });
+  (response.body as []).forEach((e: Post) => { store.dispatch('addPosts', e); });
 }
 export async function addAllComments(postId: number, limit: number, creation?: string): Promise<void | VueResponse> {
 
