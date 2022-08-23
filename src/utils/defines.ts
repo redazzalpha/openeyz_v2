@@ -1,5 +1,6 @@
 const SERVER_DOMAIN = "http://localhost:8081";
 const API_PATH = SERVER_DOMAIN + "/api";
+const ADMIN_PATH = SERVER_DOMAIN + "/admin";
 
 export const SERVER_ACCESS_URL = API_PATH + "/access";
 export const SERVER_PUBLICATION_URL = API_PATH + '/publication';
@@ -18,8 +19,10 @@ export const SERVER_USER_SIMPLE_URL = SERVER_USER_URL + '/simple';
 export const SERVER_USER_LNAME_URL = SERVER_USER_URL + '/lname';
 export const SERVER_USER_NAME_URL = SERVER_USER_URL + '/name';
 export const SERVER_USER_DATA_URL = SERVER_USER_URL + '/data';
-export const SERVER_USER_STATE_URL = SERVER_USER_URL + '/state';
-export const SERVER_USER_ROLE_URL = SERVER_USER_URL + '/role';
+
+
+export const SERVER_USER_STATE_URL = ADMIN_PATH + '/state';
+export const SERVER_USER_ROLE_URL = ADMIN_PATH + '/role';
 
 export const SERVER_USER_USERNAME_URL = SERVER_USER_URL + '/username';
 export const SERVER_USER_PASSWORD_URL = SERVER_USER_URL + '/password';

@@ -91,6 +91,7 @@ export interface Comment {
 export interface Notif {
   id: number,
   owner: Users,
+  author: Users,
   comment: Comment,
   read: boolean,
 }

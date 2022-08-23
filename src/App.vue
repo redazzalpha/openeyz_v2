@@ -40,7 +40,7 @@ import FooterCpn from "@/components/cpn/Footer-cpn.vue";
 import AppbarCpn from "@/components/cpn/Appbar-cpn.vue";
 import DrawerCpn from "@/components/cpn/Drawer-cpn.vue";
 import ScrollTopBtnCpn from "./components/cpn/ScrollTopBtn-cpn.vue";
-import LoaderCpn from "./components/cpn/Loader-cpn.vue";
+import LoaderCpn from "./components/cpn/Loader1-cpn.vue";
 
 export default Vue.extend({
   name: "App",

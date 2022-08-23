@@ -3,7 +3,7 @@
   <v-container
     grid-list-xs
     class="team-cards-container"
-    style="max-width: 800px"
+    style="max-width: 800px;"
   >
     <v-row class="d-flex justify-center">
       <!-- TODO: CHANGE type of recieved object cu=ause deos not respect convention need get map<string, value> as json   -->

@@ -70,9 +70,6 @@
               >Publish</v-btn
             >
           </v-card-actions>
-          <span v-if="editorData.length > 255" class="red--text ml-5"
-            >The message exceeds the max size</span
-          >
         </v-card>
       </v-col>
     </v-row>
@@ -149,9 +146,6 @@ export default Vue.extend({
     editorData(value: string) {
       if (value.length > 0) this.disabled = false;
       else if (value.length < 1) this.disabled = true;
-      if (value.length > 255) {
-        this.disabled = true;
-      }
     },
   },
 });

@@ -61,7 +61,7 @@
         <!-- Authorization menu  -->
         <v-row>
           <v-col class="text-center">
-            <authorizationCpn  :username="username"/>
+            <authorizationCpn :user="user" @updated="updated" />
           </v-col>
         </v-row>
 
@@ -116,13 +116,19 @@ import {
   getAllPosts,
   translateDateToISO,
 } from "../../utils/functions";
-import { POST_GET_LIMIT, TEAM_PAGE_URL } from "../../utils/defines";
+import {
+  POST_GET_LIMIT,
+  TEAM_PAGE_URL,
+  SERVER_USER_DATA_URL,
+} from "../../utils/defines";
 import PublicationCpn from "../cpn/Publication-cpn.vue";
 import ToolbarCpn from "../cpn/Toolbar-cpn.vue";
 import AlertCpn from "../cpn/Alert-cpn.vue";
 import LinksCpn from "../cpn/Links-cpn.vue";
 import AuthorizationCpn from "../cpn/AuthorizationCpn.vue";
 import CommentBlock from "../comment/Comment-block.vue";
+import { Users, VueResponse } from "../../utils/types";
+import { httpRequest } from "../../utils/http";
 
 export default Vue.extend({
   name: "Team-selected",
@@ -147,6 +153,9 @@ export default Vue.extend({
   data() {
     return {
       fab: false,
+      user: new Users(),
+      role: "USER",
+      state: false,
     };
   },
   computed: {
@@ -211,6 +220,16 @@ export default Vue.extend({
         }
       }
     },
+    async getUser(): Promise<void> {
+      const response: VueResponse = await httpRequest.get(
+        SERVER_USER_DATA_URL,
+        { params: { username: this.username } }
+      );
+      this.user = response.body as Users;
+      // this.role = this.user.roles[0].roleName as string;
+      // if (typeof this.user.state != "function") this.state = this.user.state;
+    },
+
     toTop() {
       const container = document.querySelector(".inscroll");
       if (container)
@@ -220,11 +239,16 @@ export default Vue.extend({
           behavior: "smooth",
         });
     },
+    updated(payload: Users): void {
+      this.user = payload;
+    },
   },
   watch: {
     teamSelectedDialog(visible: boolean) {
-      if (visible) getAllPosts(POST_GET_LIMIT, undefined, this.username);
-      else if (!visible) {
+      if (visible) {
+        getAllPosts(POST_GET_LIMIT, undefined, this.username);
+        this.getUser();
+      } else if (!visible) {
         window.scrollTo({
           top: 0,
           left: 0,

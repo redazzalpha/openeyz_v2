@@ -5,7 +5,7 @@
     :close-on-content-click="false"
     :nudge-width="200"
     offset-x
-    @input="getUser()"
+    @input="onload"
   >
     <template v-slot:activator="{ on, attrs }">
       <v-btn color="red darken-3" dark v-bind="attrs" v-on="on">
@@ -21,7 +21,7 @@
           </v-list-item-avatar>
 
           <v-list-item-content>
-            <v-list-item-title>{{ username }}</v-list-item-title>
+            <v-list-item-title>{{ user.username }}</v-list-item-title>
             <v-list-item-subtitle>Authorizations</v-list-item-subtitle>
             <div v-if="user.roles[0] != undefined" class="pt-3">
               First name: {{ user.lname }} <br />
@@ -75,12 +75,13 @@ import Vue from "vue";
 import { httpRequest } from "../../utils/http";
 import * as Defines from "../../utils/defines";
 import { Users, VueResponse } from "../../utils/types";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
+import { PropType } from "vue";
 export default Vue.extend({
   name: "Authorization-cpn",
   props: {
-    username: {
-      type: String,
+    user: {
+      type: Object as PropType<Users>,
       required: true,
     },
   },
@@ -89,19 +90,10 @@ export default Vue.extend({
       role: "USER",
       state: true,
       menu: false,
-      user: new Users(),
     };
   },
   methods: {
-    async getUser(): Promise<void> {
-      const response: VueResponse = await httpRequest.get(
-        Defines.SERVER_USER_DATA_URL,
-        { params: { username: this.username } }
-      );
-      this.user = response.body as Users;
-      this.role = this.user.roles[0].roleName as string;
-      if (typeof this.user.state != "function") this.state = this.user.state;
-    },
+    ...mapActions(["updateCurrentUser"]),
     getUserImg(): string {
       const { avatarSrc, roles } = this.user;
 
@@ -116,32 +108,45 @@ export default Vue.extend({
       }
       return require("../../assets/user.png");
     },
-    async updateState(): Promise<void> {
+    async updateState(): Promise<Users> {
       const body: FormData = new FormData();
       if (this.state) body.append("state", "true");
       else body.append("state", "false");
       body.append("username", this.user.username);
-      const res: VueResponse = await httpRequest.post(
+      const res: VueResponse = await httpRequest.patch(
         Defines.SERVER_USER_STATE_URL,
         body
       );
+      return res.body as Users;
     },
-    async updateRole(): Promise<void> {
+    async updateRole(): Promise<Users> {
       const body: FormData = new FormData();
       body.append("roleName", this.role);
       body.append("username", this.user.username);
-      const res: VueResponse = await httpRequest.post(
+      const res: VueResponse = await httpRequest.patch(
         Defines.SERVER_USER_ROLE_URL,
         body
       );
+      return res.body as Users;
     },
-    saveChanges(): void {
-      this.updateRole();
-      this.updateState();
+    async saveChanges(): Promise<void> {
+      let user: Users;
+      user = await this.updateRole();
+      user = await this.updateState();
+      this.$emit("updated", user);
+
       this.menu = false;
     },
     isAuthorized(): boolean {
-      return this.currentUser.roles[0].roleName == "SUPERADMIN";
+      return (
+        this.currentUser.roles[0].roleName == "SUPERADMIN" &&
+        this.currentUser.username != this.user.username
+      );
+    },
+    onload(): void {
+      this.role = this.user.roles[0].roleName as string;
+      this.state =
+        typeof this.user.state != "function" ? this.user.state : true;
     },
   },
   computed: {

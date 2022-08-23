@@ -116,6 +116,8 @@
             stroke-opacity=".99213"
             paint-order="fill markers stroke"
           />
+
+          <text class="logo" x="85" y="40">OpenEyz</text>
           <text id="text" x="85" y="154">Please wait</text>
         </svg>
       </v-overlay>

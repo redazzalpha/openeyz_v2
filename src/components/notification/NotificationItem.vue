@@ -20,15 +20,16 @@
                 <span class="shrink">
                   <v-badge content="New" :value="!notif.read">
                     <AvatarCpn
-                      :avatarSrc="notif.owner.avatarSrc"
-                      :role="notif.owner.roles[0].roleName"
+                      :avatarSrc="notif.author.avatarSrc"
+                      :role="notif.author.roles[0].roleName"
                       size="50"
                     />
                   </v-badge>
                 </span>
                 <!-- notification-timestamp -->
                 <span>
-                  message from {{ notif.owner.name }} <br />
+                  message from {{ notif.author.name }} <br />
+                  <!-- message from {{ notif.owner.name }} <br /> -->
                   {{ translateDate(notif.comment.creation) }}
                 </span>
                 <!-- delete-button -->

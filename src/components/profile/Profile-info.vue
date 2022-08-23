@@ -65,6 +65,13 @@
               <span class="mr-3">E-mail: {{ currentUser.username }} </span>
             </v-col>
           </v-row>
+          <v-row v-if="isAuthorized()">
+            <v-col>
+              <span class="mr-3"
+                >Role: {{ currentUser.roles[0].roleName }}
+              </span>
+            </v-col>
+          </v-row>
           <!-- description-row -->
           <v-row>
             <v-col>
@@ -187,8 +194,7 @@ import {
   SERVER_USER_NAME_URL,
   SERVER_USER_USERNAME_URL,
 } from "../../utils/defines";
-import { rules } from '../../utils/rules';
-
+import { rules } from "../../utils/rules";
 
 export default Vue.extend({
   name: "Profile-info",
@@ -208,16 +214,10 @@ export default Vue.extend({
       loading: false,
       disabled: true,
       valid: false,
-      fieldRules: [
-        rules.requiredField,
-        rules.fieldValidator
-      ],
-        data() {
-    return {
-      
-    };
-  },
-
+      fieldRules: [rules.requiredField, rules.fieldValidator],
+      data() {
+        return {};
+      },
     };
   },
   computed: {
@@ -346,6 +346,12 @@ export default Vue.extend({
         style.removeProperty("--ck-color-button-default-hover-background");
         style.removeProperty("--ck-color-button-on-background");
       }
+    },
+    isAuthorized(): boolean {
+      return (
+        this.currentUser.roles[0].roleName == "SUPERADMIN" ||
+        this.currentUser.roles[0].roleName == "ADMIN"
+      );
     },
   },
   watch: {

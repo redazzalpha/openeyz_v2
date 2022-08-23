@@ -15,7 +15,6 @@ export const httpRequest = {
             );
         });
     }, 
-    
     post: function (url: string, body?: FormData | string | object | null): Promise<VueResponse>  {
         return new Promise((resolve, reject) => {
             Vue.http.post(url, body)
