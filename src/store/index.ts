@@ -94,13 +94,13 @@ export default new Vuex.Store({
       state.userCardList = [] as UserObj[];
       state.posts = [] as Post[];
       state.comments = [] as Comment[];
-      state.userNotifs = [] as Notif[],
-        state.loader = true,
-        state.currentUser = null;
-      state.currentItem = new Item,
+      state.userNotifs = [] as Notif[];
+      state.loader = true;
+      state.currentUser = null;
+      state.currentItem = new Item;
 
-        state.teamSelectedUser = null,
-        state.teamSelectedDialog = false;
+      state.teamSelectedUser = null;
+      state.teamSelectedDialog = false;
       state.commentDialog = false;
       state.drawer = null;
       state.tabAccess = 0;

@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import LoaderCpn from '../components/cpn/Loader1-cpn.vue';
+import LoaderCpn from '../components/cpn/Loader-cpn.vue';
 export default {
   components: { LoaderCpn },
   name: "Notfound-page",

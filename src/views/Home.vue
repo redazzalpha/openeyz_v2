@@ -38,13 +38,11 @@ export default Vue.extend({
   },
   data() {
     return {
-      loader: true,
     };
   },
   methods: {
     ...mapActions(["updateLoader"]),
   },
-  // TODO: got to find out a way to reload getallposts cause in this hook created it reloads only once when page is loaded or reloaded
   created() {
     getAllPosts(POST_GET_LIMIT);
   },

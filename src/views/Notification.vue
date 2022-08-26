@@ -22,7 +22,6 @@
             style="border: solid grey 1px"
             @click="readAll"
           >
-            <!-- TODO: need to remove notification alert when it's currentuser who is writing the comment  -->
             all as read
           </v-btn>
           <v-btn

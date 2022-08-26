@@ -98,7 +98,6 @@ export default Vue.extend({
       await httpRequest.delete(SERVER_COMMENT_DELETE_URL, {
         params: { commentId: this.comment.id },
       });
-      // TODO: find out a way to replace currentItem by a recieved object
       getAllComments(this.currentItem.post.id, COMMENT_GET_LIMIT);
       this.currentItem.commentCount--;
     },

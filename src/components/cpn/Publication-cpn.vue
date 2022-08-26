@@ -13,7 +13,6 @@
         <v-container grid-list-xs fluid>
           <v-row no-gutters>
             <v-col>
-              <!-- TODO: add cross icon to remove publication from user and superuser : PS: already done on front end remains to do it on back end -->
               <!-- publication-card -->
               <v-card max-width="700" class="mx-auto">
                 <!-- header-title -->
@@ -81,7 +80,6 @@
                           >
                         </v-btn>
                       </v-col>
-                      <!-- // TODO: got to fix bug on like click cause nmber of like doesnt appaer -->
                       <!-- like-button -->
                       <v-col class="d-flex justify-center pa-0">
                         <v-btn

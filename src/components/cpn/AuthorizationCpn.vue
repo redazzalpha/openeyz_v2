@@ -7,6 +7,7 @@
     offset-x
     @input="onload"
   >
+    <AlertCpn message="modification has been done successfully" v-if="false" />
     <template v-slot:activator="{ on, attrs }">
       <v-btn color="red darken-3" dark v-bind="attrs" v-on="on">
         Authorization
@@ -29,8 +30,12 @@
               Description:
               {{ user.description ? user.description : "no description" }}
               <br />
-              Role: {{ user.roles[0].roleName }} <br />
-              Account state: {{ user.state ? "Enabled" : "Disabled" }} <br />
+              Role: <span :class="roleClassColor">{{ user.roles[0].roleName }}</span> <br />
+              Account state:
+              <span :class="user.state ? 'success--text' : 'error--text'">{{
+                user.state ? "Enabled" : "Disabled"
+              }}</span>
+              <br />
             </div>
           </v-list-item-content>
         </v-list-item>
@@ -41,32 +46,61 @@
       <v-list>
         <v-list-item>
           <v-list-item-content>
-            <v-list-item-title>Set role</v-list-item-title>
-            <v-radio-group v-model="role" row>
-              <v-radio label="Super Admin" value="SUPERADMIN"></v-radio>
-              <v-radio label="Admin" value="ADMIN"></v-radio>
-              <v-radio label="User" value="USER"></v-radio>
+            <v-list-item-title>Role</v-list-item-title>
+            <v-radio-group v-model="role" row class="ml-5">
+              <v-radio
+                label="Super Admin"
+                value="SUPERADMIN"
+                color="error"
+              ></v-radio>
+              <v-radio label="Admin" value="ADMIN" color="warning"></v-radio>
+              <v-radio label="User" value="USER" color="primary"></v-radio>
             </v-radio-group>
           </v-list-item-content>
         </v-list-item>
 
         <v-list-item>
-          <v-list-item-action>
-            <v-switch v-model="state" color="purple"></v-switch>
+          <v-list-item-action class="d-flex">
+            <div class="d-flex flex-column">
+              <v-list-item-title style="align-self: start"
+                >Account</v-list-item-title
+              >
+
+              <div class="d-flex mt-5">
+                <v-switch
+                  v-model="state"
+                  class="pr-5 pl-5"
+                  color="purple"
+                ></v-switch>
+                <v-list-item-title
+                  :class="state ? 'success--text' : 'error--text'"
+                  >{{ state ? "enabled" : "disabled" }}</v-list-item-title
+                >
+              </div>
+            </div>
           </v-list-item-action>
-          <v-list-item-title>{{
-            "Account " + (state ? "enabled" : "disabled")
-          }}</v-list-item-title>
         </v-list-item>
       </v-list>
 
       <v-card-actions>
         <v-spacer></v-spacer>
-
         <v-btn text @click="menu = false"> Cancel </v-btn>
-        <v-btn color="primary" text @click="saveChanges"> Save </v-btn>
+        <v-btn color="primary" text @click="saveChanges" :loading="btnLoading" :disabled="btnLoading"> Save </v-btn>
       </v-card-actions>
+    <!-- snackbar message -->
+      <v-snackbar v-model="snackbar" :timeout="timeout" style="" class="test">
+        {{ snackbarMessage }}
+
+        <template v-slot:action="{ attrs }">
+          <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
+            Close
+          </v-btn>
+        </template>
+      </v-snackbar>
+
+      
     </v-card>
+
   </v-menu>
 </template>
 
@@ -77,6 +111,7 @@ import * as Defines from "../../utils/defines";
 import { Users, VueResponse } from "../../utils/types";
 import { mapState, mapActions } from "vuex";
 import { PropType } from "vue";
+import AlertCpn from "./Alert-cpn.vue";
 export default Vue.extend({
   name: "Authorization-cpn",
   props: {
@@ -85,20 +120,48 @@ export default Vue.extend({
       required: true,
     },
   },
+  components: {
+    AlertCpn,
+  },
   data() {
     return {
       role: "USER",
       state: true,
       menu: false,
+      snackbar: false,
+      snackbarMessage: "",
+      timeout: 2000,
+      btnLoading: false,
     };
+  },
+  computed: {
+        ...mapState(["currentUser"]),
+
+    roleClassColor(): string {
+      let color: string;
+
+      switch (this.user.roles[0].roleName) {
+        case "SUPERADMIN":
+          color = "error--text";
+          break;
+        case "ADMIN":
+          color = "warning--text";
+          break;
+        default:
+          color = "primary--text";
+      }
+      return color;
+    },
   },
   methods: {
     ...mapActions(["updateCurrentUser"]),
     getUserImg(): string {
-      const { avatarSrc, roles } = this.user;
+      const { avatarSrc, roles, state } = this.user;
 
-      if (typeof avatarSrc != "function") {
-        if (!avatarSrc && roles[0].roleName == "SUPERADMIN")
+      if (typeof avatarSrc != "function" && typeof state != "function") {
+        if (!state)
+          return require("../../assets/banned.png");
+        else if (!avatarSrc && roles[0].roleName == "SUPERADMIN")
           return require("../../assets/suadmin.png");
         else if (!avatarSrc && roles[0].roleName == "ADMIN")
           return require("../../assets/admin.png");
@@ -130,12 +193,16 @@ export default Vue.extend({
       return res.body as Users;
     },
     async saveChanges(): Promise<void> {
+      this.btnLoading = true;
       let user: Users;
       user = await this.updateRole();
       user = await this.updateState();
       this.$emit("updated", user);
-
-      this.menu = false;
+      this.snackbarMessage = "Modification has been done successfully";
+      this.snackbar = true;
+      setTimeout(() => {
+        this.btnLoading = false;
+      }, this.timeout);
     },
     isAuthorized(): boolean {
       return (
@@ -149,8 +216,11 @@ export default Vue.extend({
         typeof this.user.state != "function" ? this.user.state : true;
     },
   },
-  computed: {
-    ...mapState(["currentUser"]),
-  },
 });
 </script>
+
+<style lang="scss">
+.v-snack__wrapper {
+  min-width: unset;
+}
+</style>

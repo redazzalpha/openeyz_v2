@@ -49,6 +49,7 @@
                   placeholder="Last name"
                   name="lname"
                   class="pt-0"
+                  @keydown="enterPressed"
                 ></v-text-field>
               </v-col>
               <!--name-field-->
@@ -60,6 +61,7 @@
                   placeholder="First name"
                   name="name"
                   class="pt-0"
+                  @keydown="enterPressed"
                 ></v-text-field>
               </v-col>
               <!--email-field-->
@@ -71,6 +73,7 @@
                   placeholder="E-mail"
                   name="username"
                   class="pt-0"
+                  @keydown="enterPressed"
                 ></v-text-field>
               </v-col>
               <!--password-field-->
@@ -84,6 +87,7 @@
                   name="password"
                   class="pt-0"
                   :type="isSecret ? 'password' : 'text'"
+                  @keydown="enterPressed"
                 >
                   <template v-slot:append>
                     <v-btn
@@ -98,7 +102,6 @@
                   </template>
                 </v-text-field>
               </v-col>
-              <!-- // TODO: set description on database and user profile cause not done yet -->
               <!--description-field-->
               <v-col cols="12" class="py-0">
                 <v-text-field
@@ -107,6 +110,7 @@
                   placeholder="Description"
                   name="description"
                   class="pt-0"
+                  @keydown="enterPressed"
                 >
                 </v-text-field>
               </v-col>
@@ -193,7 +197,7 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions(["updateTabAccess"]),
-    register(): void {
+    async register(): Promise<void> {
       let form: VueElement = this.$refs.register;
       if (form != null) {
         if ((form as unknown as VueFunction).validate()) {
@@ -211,6 +215,10 @@ export default Vue.extend({
           }
         }
       }
+    },
+    enterPressed({ code }: KeyboardEvent): void {
+      const isEnter: boolean = code == "Enter" || code == "NumpadEnter";
+      if (isEnter) this.register();
     },
   },
   computed: {

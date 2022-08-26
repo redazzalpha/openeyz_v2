@@ -55,7 +55,6 @@
                   }; border-radius: 15px;`"
                   class="mb-5 pa-3"
                 ></v-card-text>
-                <!-- // TODO: make post cntent in v-lazy to make images appear smoothly -->
                 <!-- publication-content -->
                 <div class="text-start">
                   publication of
@@ -106,6 +105,8 @@ export default Vue.extend({
   },
   data() {
     return {
+      isActive: true,
+
       HOME_PAGE_URL: HOME_PAGE_URL,
       translateDate: translateDate,
     };

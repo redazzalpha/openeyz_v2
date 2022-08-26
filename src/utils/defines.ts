@@ -3,6 +3,7 @@ const API_PATH = SERVER_DOMAIN + "/api";
 const ADMIN_PATH = SERVER_DOMAIN + "/admin";
 
 export const SERVER_ACCESS_URL = API_PATH + "/access";
+export const SERVER_REFRESH_TOKEN_URL = API_PATH + "/refresh";
 export const SERVER_PUBLICATION_URL = API_PATH + '/publication';
 export const SERVER_PUBLICATION_LIMIT_URL = SERVER_PUBLICATION_URL + '/limit';
 export const SERVER_USER_NOTIF_URL = API_PATH + '/notif';

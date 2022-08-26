@@ -5,42 +5,32 @@ import store from '@/store';
 import vuetify from '@/plugins/vuetify';
 import vueResource from 'vue-resource';
 import CKEditor from '@ckeditor/ckeditor5-vue2';
-import { Body, VueRequest, VueResponse } from './utils/types';
-import {clearStorage} from './utils/functions';
-import { ACCESS_PAGE_URL } from './utils/defines';
+import { VueRequest, VueResponse } from './utils/types';
+import { unavailableServerHandler, defaulHandler, internalServerErrorHandler } from './utils/functions';
 
 Vue.config.productionTip = false;
 Vue.use(vueResource);
 Vue.use(CKEditor);
 
 Vue.http.interceptors.push(function (request: VueRequest) {
+
   request.credentials = true;
   request.headers.set('Authorization', 'Bearer ' + localStorage.getItem("token"));
 
   return (response: VueResponse) => {
-    const { status, body } = response;
-    // TODO: look for solution to delet vuex correctly
-    if (status === 0) {
-      clearStorage();
-      if (router.currentRoute.path !== "/access")
-      router.push(ACCESS_PAGE_URL);
-    }
-    // if (status === 401) {
-    //   store.dispatch('clearVuex');
-    //   router.push(Defines.ACCESS_PAGE_URL);
-    // }
-    if (status === 500) {
-      clearStorage();
-      if (router.currentRoute.path !== "/access")
-      router.push(ACCESS_PAGE_URL);
-    }
-
-    if (body && (body as Body).user != undefined) {
-      const { token, user } = body as Body;
-      if (token)
-        localStorage.setItem("token", token);
-      if (user)
-        store.dispatch('updateCurrentUser', user);
+    const { status } = response;
+    switch (status) {
+      case 0:
+        unavailableServerHandler(response);
+        break;
+      // case 401:
+      //   unauthorizedServerErrorHandler(request, response);
+        break;
+      case 500:
+        internalServerErrorHandler(response);
+        break;
+      default:
+        defaulHandler(response);
     }
   };
 });

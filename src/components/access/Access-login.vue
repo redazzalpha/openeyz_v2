@@ -48,6 +48,7 @@
             :rules="emailRules"
             placeholder="E-mail"
             name="username"
+            @keydown="enterPressed"
           ></v-text-field>
           <!--password-field-->
           <v-text-field
@@ -59,6 +60,7 @@
             placeholder="Password"
             :type="isSecret ? 'password' : 'text'"
             name="password"
+            @keydown="enterPressed"
           >
             <template v-slot:append>
               <v-btn icon plain :ripple="false" @click="isSecret = !isSecret"
@@ -96,7 +98,6 @@ import { httpRequest } from "@/utils/http";
 import { VueResponse, VueElement, VueFunction } from "../../utils/types";
 import { ERROR_MESSAGE_DURATION } from "@/utils/defines";
 
-// TODO: make in server side the refresh token
 export default Vue.extend({
   name: "Access-login",
   data() {
@@ -130,6 +131,10 @@ export default Vue.extend({
           }
         }
       }
+    },
+    enterPressed({ code }: KeyboardEvent): void {
+      const isEnter: boolean = code == "Enter" || code == "NumpadEnter";
+      if (isEnter) this.login();
     },
   },
   computed: {

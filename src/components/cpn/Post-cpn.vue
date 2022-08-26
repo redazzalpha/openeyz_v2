@@ -119,10 +119,9 @@ export default Vue.extend({
 
         let data: FormData = new FormData();
         this.editorData = this.editorData.trim();
-        // TODO: try to add src attribut to see imge on click and try to resize properly the image cause sometimes image is too big
         data.append(
           "post",
-          this.editorData.replace(/<img/g, "<img width=100%")
+          this.editorData.replace(/<img/g, "<img width=100% style='max-height: 465px; object-fit: cover'")
         );
         httpRequest.post(SERVER_PUBLICATION_URL, data).then(
           (): void => {

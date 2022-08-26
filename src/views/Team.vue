@@ -52,8 +52,7 @@
 import Vue from "vue";
 import { mapActions, mapState } from "vuex";
 import { UserObj } from "../utils/types";
-import { getAllPosts, getSimpleUsers } from "../utils/functions";
-import { POST_GET_LIMIT } from "../utils/defines";
+import { getSimpleUsers } from "../utils/functions";
 import AvatarCpn from "../components/cpn/Avatar-cpn.vue";
 import ToolbarCpn from "../components/cpn/Toolbar-cpn.vue";
 import TeamCards from "../components/team/Team-cards.vue";
@@ -87,12 +86,6 @@ export default Vue.extend({
       "updateTeamSelectedUser",
       "updateTeamSelectedDialog",
     ]),
-
-    // TODO: i don't know what  is used for ?????
-    sent() {
-      getAllPosts(POST_GET_LIMIT, undefined, this.username);
-    },
-
     input(selectedUsername: string) {
       const userObj: UserObj[] = this.userListObj.filter((e: UserObj) => {
         return e.username == selectedUsername;
@@ -100,7 +93,6 @@ export default Vue.extend({
       this.updateTeamSelectedUser(userObj[0]);
       this.select = [];
     },
-    // TODO: check algo cause give bug on delete search field input after chip card remains only one , the one i searched
     searching(search: string) {
       const regexp = new RegExp(search, "gi");
       const found = this.userListObj.filter((e: UserObj) => {

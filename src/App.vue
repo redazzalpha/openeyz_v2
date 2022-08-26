@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { mapState, mapActions } from "vuex";
+import { mapState } from "vuex";
 import { HOME_PAGE_URL, POST_GET_LIMIT } from "./utils/defines";
 import {
   addAllPosts,
@@ -40,7 +40,7 @@ import FooterCpn from "@/components/cpn/Footer-cpn.vue";
 import AppbarCpn from "@/components/cpn/Appbar-cpn.vue";
 import DrawerCpn from "@/components/cpn/Drawer-cpn.vue";
 import ScrollTopBtnCpn from "./components/cpn/ScrollTopBtn-cpn.vue";
-import LoaderCpn from "./components/cpn/Loader1-cpn.vue";
+import LoaderCpn from "./components/cpn/Loader-cpn.vue";
 
 export default Vue.extend({
   name: "App",
@@ -55,7 +55,6 @@ export default Vue.extend({
     ...mapState(["currentUser", "userNotifs", "posts", "loader"]),
   },
   methods: {
-    ...mapActions(["updateLoader"]),
     infiniteScroll() {
       let scroll: number;
       let bottom: number;

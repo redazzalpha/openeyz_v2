@@ -70,7 +70,6 @@ export default Vue.extend({
     ...mapState(["currentUser", "currentItem"]),
   },
   methods: {
-    // TODO; block message length as 255 char max need to do it on server too
     async send(): Promise<void> {
       if (this.valid) {
         this.loading = true;

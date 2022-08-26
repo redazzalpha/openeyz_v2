@@ -21,13 +21,13 @@
 import Vue from "vue";
 export default Vue.extend({
   name: "ScrollTopBtn-cpn",
-    data() {
+  data() {
     return {
       fab: false,
     };
-    },
-    methods: {
-            onScroll(e: UIEvent) {
+  },
+  methods: {
+    onScroll(e: UIEvent) {
       if (typeof window === "undefined") return;
       if (e.target != null) {
         const top = window.pageYOffset || (e.target as Element).scrollTop || 0;
@@ -37,8 +37,7 @@ export default Vue.extend({
     toTop() {
       this.$vuetify.goTo(0);
     },
-
-    } 
+  },
 });
 </script>
 

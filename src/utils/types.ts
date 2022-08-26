@@ -44,6 +44,7 @@ export interface VueRequest {
 // http types
 export interface Body {
   token: string;
+  refreshToken: string;
   user: object;
 }
 

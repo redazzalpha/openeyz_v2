@@ -1,5 +1,5 @@
 <template>
-  <v-tab-item class="profile-info-tab-item">
+  <v-tab-item class="profile-info-tab-item" >
     <!-- main-card -->
     <v-card max-width="600" class="mx-auto mb-10" shaped raised outlined>
       <!-- header-title -->
@@ -225,8 +225,6 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions(["updateCurrentUser"]),
-    // TODO: GOT to reload current user cause vuex is not affected on reload
-    // TODO:  got to get the real value from de server insted of fale incrmentation here
     async sendDescription() {
       const description: FormData = new FormData();
       description.append("description", this.description);
@@ -324,7 +322,7 @@ export default Vue.extend({
     async themeSwitcher(darkMode: boolean) {
       const data: FormData = new FormData();
       data.append("dark", darkMode.toString());
-      await httpRequest.patch(SERVER_USER_DARK_URL, data);
+      const res : VueResponse = await httpRequest.patch(SERVER_USER_DARK_URL, data);
       this.currentUser.dark = darkMode;
       this.updateCurrentUser(this.currentUser);
       this.$vuetify.theme.dark = darkMode;

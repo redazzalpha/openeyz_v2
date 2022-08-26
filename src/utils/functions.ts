@@ -1,8 +1,9 @@
+import router from '../router';
 import store from "@/store";
-import { httpRequest } from "./http";
-import { UserMap, VueResponse, Post } from "./types";
+import { UserMap, VueResponse, Post, Body, VueRequest } from './types';
 import { DateTime } from "luxon";
-import { SERVER_PUBLICATION_LIMIT_URL, SERVER_USER_NOTIF_URL, SERVER_USER_SIMPLE_URL, SERVER_COMMENT_LIMIT_URL } from './defines';
+import { SERVER_PUBLICATION_LIMIT_URL, SERVER_USER_NOTIF_URL, SERVER_USER_SIMPLE_URL, SERVER_COMMENT_LIMIT_URL, ACCESS_PAGE_URL, SERVER_REFRESH_TOKEN_URL } from './defines';
+import { httpRequest } from '@/utils/http';
 
 export async function getSimpleUsers(): Promise<void> {
   const res = await httpRequest.get(SERVER_USER_SIMPLE_URL);
@@ -71,4 +72,31 @@ export function translateDate(timestamp: string): string {
 }
 export function translateDateToISO(timestamp: string): string {
   return DateTime.fromISO(timestamp).setLocale("fr").toISO();
+}
+
+
+
+export function unavailableServerHandler(response: VueResponse): void {
+  response.bodyText = "server is unavailable";
+  pushAccessUrl();
+}
+export function internalServerErrorHandler(response: VueResponse): void {
+  response.bodyText = "internal server error";
+  pushAccessUrl();
+}
+export function defaulHandler({ body }: VueResponse): void {
+  if (body && (body as Body).user != undefined) {
+    const { token, refreshToken, user } = body as Body;
+    if (token && refreshToken && user) {
+      localStorage.setItem("token", token);
+      localStorage.setItem("refreshToken", refreshToken);
+      store.dispatch('updateCurrentUser', user);
+    }
+  }
+}
+
+export function pushAccessUrl(): void {
+  clearStorage();
+  if (router.currentRoute.path !== "/access")
+    router.push(ACCESS_PAGE_URL);
 }

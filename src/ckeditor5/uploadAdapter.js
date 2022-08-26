@@ -1,7 +1,8 @@
 import { SERVER_IMAGE_URL } from '../utils/defines';
+import {httpRequest} from '../utils/http';
 
 // TODO find a way to delete uploaded image when the image is not send into post 
-// TODO:   block max img send in a post need to do it in server side too
+// TODO try to had refresh token request for ckeditor posts
 class UploadAdapter {
     constructor(loader) {
         this.loader = loader;
