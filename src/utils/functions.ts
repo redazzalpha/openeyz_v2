@@ -63,7 +63,9 @@ export function clearVuex() {
   store.dispatch("clearVuex");
 }
 export function clearStorage() {
-  store.dispatch("clearVuex"), localStorage.removeItem("token");
+  store.dispatch("clearVuex"), 
+  localStorage.removeItem("token");
+  localStorage.removeItem("refreshToken");
   localStorage.removeItem("vuex");
 }
 
@@ -85,6 +87,9 @@ export function internalServerErrorHandler(response: VueResponse): void {
   pushAccessUrl();
 }
 export function defaulHandler({ body }: VueResponse): void {
+
+
+
   if (body && (body as Body).user != undefined) {
     const { token, refreshToken, user } = body as Body;
     if (token && refreshToken && user) {
