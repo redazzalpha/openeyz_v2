@@ -1,8 +1,8 @@
 import router from '../router';
 import store from "@/store";
-import { UserMap, VueResponse, Post, Body, VueRequest } from './types';
+import { UserMap, VueResponse, Post, Users } from './types';
 import { DateTime } from "luxon";
-import { SERVER_PUBLICATION_LIMIT_URL, SERVER_USER_NOTIF_URL, SERVER_USER_SIMPLE_URL, SERVER_COMMENT_LIMIT_URL, ACCESS_PAGE_URL, SERVER_REFRESH_TOKEN_URL } from './defines';
+import { SERVER_PUBLICATION_LIMIT_URL, SERVER_USER_NOTIF_URL, SERVER_USER_SIMPLE_URL, SERVER_COMMENT_LIMIT_URL, ACCESS_PAGE_URL } from './defines';
 import { httpRequest } from '@/utils/http';
 
 export async function getSimpleUsers(): Promise<void> {
@@ -63,8 +63,8 @@ export function clearVuex() {
   store.dispatch("clearVuex");
 }
 export function clearStorage() {
-  store.dispatch("clearVuex"), 
-  localStorage.removeItem("token");
+  store.dispatch("clearVuex"),
+    localStorage.removeItem("token");
   localStorage.removeItem("refreshToken");
   localStorage.removeItem("vuex");
 }
@@ -86,17 +86,15 @@ export function internalServerErrorHandler(response: VueResponse): void {
   response.bodyText = "internal server error";
   pushAccessUrl();
 }
-export function defaulHandler({ body }: VueResponse): void {
-
-
-
-  if (body && (body as Body).user != undefined) {
-    const { token, refreshToken, user } = body as Body;
-    if (token && refreshToken && user) {
-      localStorage.setItem("token", token);
-      localStorage.setItem("refreshToken", refreshToken);
-      store.dispatch('updateCurrentUser', user);
-    }
+export function defaulHandler({ body, headers }: VueResponse): void {
+  const token: string | null = headers.get("x-auth-token");
+  const refreshToken : string | null = headers.get("x-refresh-token");
+  const user: Users = body as Users;
+  
+  if (token && refreshToken && user) {
+    localStorage.setItem("token", token);
+    localStorage.setItem("refreshToken", refreshToken);
+    store.dispatch('updateCurrentUser', user);
   }
 }
 

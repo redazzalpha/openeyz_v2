@@ -14,17 +14,28 @@ Vue.use(CKEditor);
 
 Vue.http.interceptors.push(function (request: VueRequest) {
 
+  // const xhr: XMLHttpRequest = new XMLHttpRequest();
+  // xhr.open("get", "http://localhost:8081/api?username=max@gmail.com");
+  // xhr.onload = (e) => {
+  //   console.log(xhr.getAllResponseHeaders());
+  // };
+  // xhr.send();
+
+
+
+
   request.credentials = true;
   request.headers.set('Authorization', 'Bearer ' + localStorage.getItem("token"));
 
   return (response: VueResponse) => {
+
     const { status } = response;
     switch (status) {
       case 0:
         unavailableServerHandler(response);
         break;
-      // case 401:
-      //   unauthorizedServerErrorHandler(request, response);
+        // case 401:
+        //   unauthorizedServerErrorHandler(request, response);
         break;
       case 500:
         internalServerErrorHandler(response);
