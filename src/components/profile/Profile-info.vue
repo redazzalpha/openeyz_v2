@@ -322,7 +322,7 @@ export default Vue.extend({
     async themeSwitcher(darkMode: boolean) {
       const data: FormData = new FormData();
       data.append("dark", darkMode.toString());
-      const res : VueResponse = await httpRequest.patch(SERVER_USER_DARK_URL, data);
+       await httpRequest.patch(SERVER_USER_DARK_URL, data);
       this.currentUser.dark = darkMode;
       this.updateCurrentUser(this.currentUser);
       this.$vuetify.theme.dark = darkMode;
