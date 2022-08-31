@@ -1,4 +1,4 @@
-import { SERVER_IMAGE_URL } from '../utils/defines';
+import { SERVER_IMG_URL } from '../utils/defines';
 import { httpRequest } from '../utils/http';
 
 // TODO find a way to delete uploaded image when the image is not send into post 
@@ -18,11 +18,11 @@ class UploadAdapter {
         const data = new FormData();
         data.append('file', file);
 
-        httpRequest.post(SERVER_IMAGE_URL, data).then(
+        httpRequest.post(SERVER_IMG_URL, data).then(
             response => {
                 resolve({ default: response.body.url });
             },
-            error => reject(error),
+            error => reject(error.body.message),
         );
     }
 }

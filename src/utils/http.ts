@@ -22,8 +22,6 @@ export const httpRequest = {
             Vue.http.post(url, body).then(
                 (response: VueResponse) => resolve(response),
                 (error: VueResponse) => {
-                    // const regexp = new RegExp("JWT expired");
-                    // if (regexp.test(error.bodyText)) {
                     if (error.status == 401) {
                         const refreshTokenForm: FormData = new FormData();
                         refreshTokenForm.append("refreshToken", localStorage.getItem("refreshToken") as string);
@@ -47,8 +45,6 @@ export const httpRequest = {
             Vue.http.put(url, body).then(
                 (response: VueResponse) => resolve(response),
                 (error: VueResponse) => {
-                    // const regexp = new RegExp("JWT expired");
-                    // if (regexp.test(error.bodyText)) {
                     if (error.status == 401) {
                         const refreshTokenForm: FormData = new FormData();
                         refreshTokenForm.append("refreshToken", localStorage.getItem("refreshToken") as string);
@@ -72,8 +68,6 @@ export const httpRequest = {
             Vue.http.patch(url, body).then(
                 (response: VueResponse) => resolve(response),
                 (error: VueResponse) => {
-                    // const regexp = new RegExp("JWT expired");
-                    // if (regexp.test(error.bodyText)) {
                     if (error.status == 401) {
                         const refreshTokenForm: FormData = new FormData();
                         refreshTokenForm.append("refreshToken", localStorage.getItem("refreshToken") as string);
@@ -97,8 +91,6 @@ export const httpRequest = {
             Vue.http.get(url, { ...config }).then(
                 (response: VueResponse) => resolve(response),
                 (error: VueResponse) => {
-                    // const regexp = new RegExp("JWT expired");
-                    // if (regexp.test(error.bodyText)) {
                     if (error.status == 401) {
                         const refreshTokenForm: FormData = new FormData();
                         refreshTokenForm.append("refreshToken", localStorage.getItem("refreshToken") as string);
@@ -122,8 +114,6 @@ export const httpRequest = {
             Vue.http.head(url, { ...config }).then(
                 (response: VueResponse) => resolve(response),
                 (error: VueResponse) => {
-                    // const regexp = new RegExp("JWT expired");
-                    // if (regexp.test(error.bodyText)) {
                     if (error.status == 401) {
                         const refreshTokenForm: FormData = new FormData();
                         refreshTokenForm.append("refreshToken", localStorage.getItem("refreshToken") as string);
@@ -147,8 +137,6 @@ export const httpRequest = {
             Vue.http.delete(url, { ...config }).then(
                 (response: VueResponse) => resolve(response),
                 (error: VueResponse) => {
-                    // const regexp = new RegExp("JWT expired");
-                    // if (regexp.test(error.bodyText)) {
                     if (error.status == 401) {
                         const refreshTokenForm: FormData = new FormData();
                         refreshTokenForm.append("refreshToken", localStorage.getItem("refreshToken") as string);

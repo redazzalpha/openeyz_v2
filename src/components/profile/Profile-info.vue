@@ -188,8 +188,8 @@ import { VueElement, VueFunction, VueResponse } from "../../utils/types";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
 import {
   SERVER_USER_DESCRIPTION_URL,
-  SERVER_USER_DARK_URL,
-  SERVER_USER_IMG_URL,
+  SERVER_USER_THEME_URL,
+  SERVER_USER_AVATAR_URL,
   SERVER_USER_LNAME_URL,
   SERVER_USER_NAME_URL,
   SERVER_USER_USERNAME_URL,
@@ -312,8 +312,8 @@ export default Vue.extend({
       const input = this.$refs.input as HTMLInputElement;
       const file = new FormData();
       if (input.files) file.append("file", input.files[0]);
-      const response: VueResponse = await httpRequest.post(
-        SERVER_USER_IMG_URL,
+      const response: VueResponse = await httpRequest.patch(
+        SERVER_USER_AVATAR_URL,
         file
       );
       this.currentUser.avatarSrc = response.bodyText;
@@ -322,7 +322,7 @@ export default Vue.extend({
     async themeSwitcher(darkMode: boolean) {
       const data: FormData = new FormData();
       data.append("dark", darkMode.toString());
-       await httpRequest.patch(SERVER_USER_DARK_URL, data);
+       await httpRequest.patch(SERVER_USER_THEME_URL, data);
       this.currentUser.dark = darkMode;
       this.updateCurrentUser(this.currentUser);
       this.$vuetify.theme.dark = darkMode;
