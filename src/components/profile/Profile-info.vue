@@ -312,7 +312,7 @@ export default Vue.extend({
       const input = this.$refs.input as HTMLInputElement;
       const file = new FormData();
       if (input.files) file.append("file", input.files[0]);
-      const response: VueResponse = await httpRequest.patch(
+      const response: VueResponse = await httpRequest.post(
         SERVER_USER_AVATAR_URL,
         file
       );

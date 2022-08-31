@@ -2,7 +2,6 @@ import { SERVER_IMG_URL } from '../utils/defines';
 import { httpRequest } from '../utils/http';
 
 // TODO find a way to delete uploaded image when the image is not send into post 
-// TODO try to had refresh token request for ckeditor posts
 class UploadAdapter {
     constructor(loader) {
         this.loader = loader;
