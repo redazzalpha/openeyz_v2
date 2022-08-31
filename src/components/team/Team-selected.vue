@@ -60,7 +60,7 @@
 
         <!-- Authorization menu  -->
         <v-row>
-          <v-col class="text-center">
+          <v-col class="text-center" v-if="isAuthorized()">
             <authorizationCpn :user="user" @updated="updated" />
           </v-col>
         </v-row>
@@ -159,7 +159,7 @@ export default Vue.extend({
     };
   },
   computed: {
-    ...mapState(["teamSelectedDialog", "posts", "currentItem"]),
+    ...mapState(["teamSelectedDialog", "posts", "currentItem", "currentUser"]),
     show(): boolean {
       let show = true;
       switch (this.$vuetify.breakpoint.name) {
@@ -241,6 +241,12 @@ export default Vue.extend({
     },
     updated(payload: Users): void {
       this.user = payload;
+    },
+    isAuthorized(): boolean {
+      return (
+        this.currentUser.roles[0].roleName == "SUPERADMIN" &&
+        this.currentUser.username != this.user.username
+      );
     },
   },
   watch: {

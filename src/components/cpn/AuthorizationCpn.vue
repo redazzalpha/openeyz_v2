@@ -1,6 +1,5 @@
 <template>
   <v-menu
-    v-if="isAuthorized()"
     v-model="menu"
     :close-on-content-click="false"
     :nudge-width="200"
