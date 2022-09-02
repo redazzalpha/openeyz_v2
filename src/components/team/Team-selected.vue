@@ -112,14 +112,14 @@
 import Vue from "vue";
 import { mapActions, mapState } from "vuex";
 import {
-  addAllPosts,
-  getAllPosts,
+  addPosts,
+  getPosts,
+  getUserData,
   translateDateToISO,
 } from "../../utils/functions";
 import {
   POST_GET_LIMIT,
   TEAM_PAGE_URL,
-  SERVER_USER_DATA_URL,
 } from "../../utils/defines";
 import PublicationCpn from "../cpn/Publication-cpn.vue";
 import ToolbarCpn from "../cpn/Toolbar-cpn.vue";
@@ -128,7 +128,6 @@ import LinksCpn from "../cpn/Links-cpn.vue";
 import AuthorizationCpn from "../cpn/AuthorizationCpn.vue";
 import CommentBlock from "../comment/Comment-block.vue";
 import { Users, VueResponse } from "../../utils/types";
-import { httpRequest } from "../../utils/http";
 
 export default Vue.extend({
   name: "Team-selected",
@@ -216,18 +215,13 @@ export default Vue.extend({
           const date = translateDateToISO(
             this.posts[this.posts.length - 1].post.creation
           );
-          addAllPosts(POST_GET_LIMIT, date, this.username);
+          addPosts(POST_GET_LIMIT, date, this.username);
         }
       }
     },
     async getUser(): Promise<void> {
-      const response: VueResponse = await httpRequest.get(
-        SERVER_USER_DATA_URL,
-        { params: { username: this.username } }
-      );
+      const response: VueResponse = await getUserData(this.username);
       this.user = response.body as Users;
-      // this.role = this.user.roles[0].roleName as string;
-      // if (typeof this.user.state != "function") this.state = this.user.state;
     },
 
     toTop() {
@@ -252,7 +246,7 @@ export default Vue.extend({
   watch: {
     teamSelectedDialog(visible: boolean) {
       if (visible) {
-        getAllPosts(POST_GET_LIMIT, undefined, this.username);
+        getPosts(POST_GET_LIMIT, undefined, this.username);
         this.getUser();
       } else if (!visible) {
         window.scrollTo({

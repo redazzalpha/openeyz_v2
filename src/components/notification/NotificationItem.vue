@@ -39,7 +39,7 @@
                   right
                   icon
                   title="delete"
-                  @click.stop="deleteOne(notif.id)"
+                  @click.stop="deleteOne(notif)"
                   class="ma-5"
                 >
                   <v-icon>mdi-close-circle</v-icon>
@@ -80,10 +80,9 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapState } from "vuex";
-import { translateDate, getAllNotifs } from "../../utils/functions";
-import { httpRequest } from "../../utils/http";
+import { translateDate, readNotif, deleteNotif } from "../../utils/functions";
 import { Notif } from "../../utils/types";
-import { SERVER_USER_NOTIF_ONE_URL, HOME_PAGE_URL } from "../../utils/defines";
+import { HOME_PAGE_URL } from "../../utils/defines";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
 import AlertCpn from "../cpn/Alert-cpn.vue";
 
@@ -116,18 +115,10 @@ export default Vue.extend({
   },
   methods: {
     async readOne(notif: Notif) {
-      if (!notif.read) {
-        const notifId: FormData = new FormData();
-        notifId.append("notifId", notif.id.toString());
-        await httpRequest.patch(SERVER_USER_NOTIF_ONE_URL, notifId);
-        await getAllNotifs();
-      }
+      readNotif(notif);
     },
-    async deleteOne(notifId: number) {
-      await httpRequest.delete(SERVER_USER_NOTIF_ONE_URL, {
-        params: { notifId },
-      });
-      await getAllNotifs();
+    async deleteOne(notif: Notif) {
+      deleteNotif(notif);
     },
   },
 });

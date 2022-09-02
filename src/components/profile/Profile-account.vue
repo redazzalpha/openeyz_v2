@@ -141,9 +141,7 @@
 import Vue from "vue";
 import { mapState } from "vuex";
 import { mapActions, mapGetters } from "vuex";
-import { httpRequest } from "../../utils/http";
-import { clearStorage } from "../../utils/functions";
-import { ACCESS_PAGE_URL, SERVER_USER_DELETE_URL } from "../../utils/defines";
+import { deleteUserAccount } from "../../utils/functions";
 export default Vue.extend({
   name: "Profile-account",
   components: {},
@@ -161,10 +159,8 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions(["updateCurrentUser"]),
-    async delAccount() {
-      await httpRequest.delete(SERVER_USER_DELETE_URL);
-      clearStorage();
-      this.$router.push(ACCESS_PAGE_URL);
+    delAccount() {
+      deleteUserAccount();
     },
   },
 });

@@ -45,9 +45,8 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapState } from "vuex";
-import { getAllComments, translateDate } from "../../utils/functions";
-import { COMMENT_GET_LIMIT, SERVER_COMMENT_URL } from "../../utils/defines";
-import { httpRequest } from "../../utils/http";
+import { getAllComments, sendComment, translateDate } from "../../utils/functions";
+import { COMMENT_GET_LIMIT } from "../../utils/defines";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
 import { rules } from "../../utils/rules";
 export default Vue.extend({
@@ -74,15 +73,10 @@ export default Vue.extend({
       if (this.valid) {
         this.loading = true;
         this.disabled = true;
-
-        const data: FormData = new FormData();
-        data.append("comment", this.comment);
-        data.append("postId", this.currentItem.post.id.toString());
-        await httpRequest.post(SERVER_COMMENT_URL, data);
-        await getAllComments(this.currentItem.post.id, COMMENT_GET_LIMIT);
+        await sendComment(this.currentItem, this.comment);
+        await getAllComments(this.currentItem, COMMENT_GET_LIMIT);
         this.currentItem.commentCount++;
         this.comment = "";
-
         setTimeout(() => {
           this.loading = false;
         }, 1000);

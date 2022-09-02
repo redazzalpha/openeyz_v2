@@ -66,13 +66,9 @@
 import Vue from "vue";
 import { PropType } from "vue";
 import { Comment } from "../../utils/types";
-import { getAllComments, translateDate } from "../../utils/functions";
+import { deleteComment, getAllComments, translateDate } from "../../utils/functions";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
-import { httpRequest } from "../../utils/http";
-import {
-  COMMENT_GET_LIMIT,
-  SERVER_COMMENT_DELETE_URL,
-} from "../../utils/defines";
+import { COMMENT_GET_LIMIT } from "../../utils/defines";
 import { mapState } from "vuex";
 export default Vue.extend({
   name: "Comment-message",
@@ -95,10 +91,8 @@ export default Vue.extend({
   },
   methods: {
     async deleteComment() {
-      await httpRequest.delete(SERVER_COMMENT_DELETE_URL, {
-        params: { commentId: this.comment.id },
-      });
-      getAllComments(this.currentItem.post.id, COMMENT_GET_LIMIT);
+      await deleteComment(this.comment);
+      await getAllComments(this.currentItem, COMMENT_GET_LIMIT);
       this.currentItem.commentCount--;
     },
     isAuthorized(): boolean {

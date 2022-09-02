@@ -105,12 +105,11 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { httpRequest } from "../../utils/http";
-import * as Defines from "../../utils/defines";
-import { Users, VueResponse } from "../../utils/types";
+import { Users } from "../../utils/types";
 import { mapState, mapActions } from "vuex";
 import { PropType } from "vue";
 import AlertCpn from "./Alert-cpn.vue";
+import { updateUserRole, updateUserState } from "@/utils/functions";
 export default Vue.extend({
   name: "Authorization-cpn",
   props: {
@@ -170,32 +169,11 @@ export default Vue.extend({
       }
       return require("../../assets/user.png");
     },
-    async updateState(): Promise<Users> {
-      const body: FormData = new FormData();
-      if (this.state) body.append("state", "true");
-      else body.append("state", "false");
-      body.append("username", this.user.username);
-      const res: VueResponse = await httpRequest.patch(
-        Defines.SERVER_USER_STATE_URL,
-        body
-      );
-      return res.body as Users;
-    },
-    async updateRole(): Promise<Users> {
-      const body: FormData = new FormData();
-      body.append("roleName", this.role);
-      body.append("username", this.user.username);
-      const res: VueResponse = await httpRequest.patch(
-        Defines.SERVER_USER_ROLE_URL,
-        body
-      );
-      return res.body as Users;
-    },
     async saveChanges(): Promise<void> {
       this.btnLoading = true;
       let user: Users;
-      user = await this.updateRole();
-      user = await this.updateState();
+      user = await updateUserRole(this.user, this.role);
+      user = await updateUserState(this.user, this.state);
       this.$emit("updated", user);
       this.snackbarMessage = "Modification has been done successfully";
       this.snackbar = true;

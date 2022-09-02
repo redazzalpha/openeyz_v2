@@ -32,8 +32,8 @@ import Vue from "vue";
 import { mapState } from "vuex";
 import { HOME_PAGE_URL, POST_GET_LIMIT } from "./utils/defines";
 import {
-  addAllPosts,
-  getAllNotifs,
+  addPosts,
+  getNotifs,
   translateDateToISO,
 } from "./utils/functions";
 import FooterCpn from "@/components/cpn/Footer-cpn.vue";
@@ -69,7 +69,7 @@ export default Vue.extend({
             const date = translateDateToISO(
               this.posts[this.posts.length - 1].post.creation
             );
-            addAllPosts(POST_GET_LIMIT, date);
+            addPosts(POST_GET_LIMIT, date);
           }
         }
       };
@@ -106,7 +106,7 @@ export default Vue.extend({
       left: 0,
       behavior: "smooth",
     });
-    getAllNotifs();
+    getNotifs();
   },
   async mounted() {
     this.infiniteScroll();

@@ -17,7 +17,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapState, mapActions } from "vuex";
-import { getAllPosts, getAllNotifs } from "../utils/functions";
+import { getPosts, getNotifs } from "../utils/functions";
 import { POST_GET_LIMIT } from "../utils/defines";
 import HeadCpn from "@/components/cpn/Head-cpn.vue";
 import PostCpn from "@/components/cpn/Post-cpn.vue";
@@ -44,13 +44,10 @@ export default Vue.extend({
     ...mapActions(["updateLoader"]),
   },
   created() {
-    getAllPosts(POST_GET_LIMIT);
+    getPosts(POST_GET_LIMIT);
   },
   mounted() {
     this.updateLoader(false);
-  },
-  updated() {
-    getAllNotifs();
   },
 });
 </script>

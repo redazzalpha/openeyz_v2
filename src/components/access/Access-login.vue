@@ -94,9 +94,9 @@
 import Vue from "vue";
 import { mapActions, mapGetters } from "vuex";
 import { rules } from "@/utils/rules";
-import { httpRequest } from "@/utils/http";
 import { VueResponse, VueElement, VueFunction } from "../../utils/types";
 import { ERROR_MESSAGE_DURATION } from "@/utils/defines";
+import { login } from "@/utils/functions";
 
 export default Vue.extend({
   name: "Access-login",
@@ -120,8 +120,7 @@ export default Vue.extend({
           const formElem: HTMLFormElement | null =
             document.querySelector(".login");
           if (formElem != null) {
-            httpRequest
-              .login(new FormData(formElem))
+              login(new FormData(formElem))
               .catch((error: VueResponse): void => {
                 this.alertMessage = error.bodyText;
                 setTimeout(() => {

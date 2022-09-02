@@ -38,8 +38,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapActions, mapState } from "vuex";
-import { httpRequest } from "../../utils/http";
-import {SERVER_LOGOUT_URL, HOME_PAGE_URL}  from "../../utils/defines";
+import {HOME_PAGE_URL}  from "../../utils/defines";
 import LinksCpn from "./Links-cpn.vue";
 export default Vue.extend({
   name: "Appbar-cpn",
@@ -77,9 +76,6 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions(["updateDrawer"]),
-    logout(): void {
-      httpRequest.post(SERVER_LOGOUT_URL);
-    },
   },
 });
 </script>

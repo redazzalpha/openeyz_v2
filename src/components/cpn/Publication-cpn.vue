@@ -122,15 +122,8 @@
 import Vue, { PropType } from "vue";
 import { mapState, mapActions } from "vuex";
 import { Item, VueResponse } from "../../utils/types";
-import { getAllPosts, translateDate } from "../../utils/functions";
+import { deletePost, likePost, translateDate } from "../../utils/functions";
 import AvatarCpn from "./Avatar-cpn.vue";
-import { httpRequest } from "../../utils/http";
-import {
-  POST_GET_LIMIT,
-  SERVER_LIKE_COUNT_URL,
-  SERVER_LIKE_URL,
-  SERVER_PUBLICATION_URL,
-} from "../../utils/defines";
 export default Vue.extend({
   name: "Publication-cpn",
   components: {
@@ -164,31 +157,16 @@ export default Vue.extend({
     async like(item: Item) {
       this.loading = true;
       this.disabled = true;
-
-      const postId: FormData = new FormData();
-      if (item.post) postId.append("postId", item.post.id.toString());
-      await httpRequest.post(SERVER_LIKE_URL, postId);
-
-      const response: VueResponse = await httpRequest.get(
-        SERVER_LIKE_COUNT_URL,
-        { params: { postId: item.post?.id } }
-      );
+      const response: VueResponse = await likePost(item);
       item.likeCount = response.body as unknown as number;
       item.userLike = !item.userLike;
-
       setTimeout(() => {
         this.loading = false;
         this.disabled = false;
       }, 1000);
     },
     async deletePost() {
-      await httpRequest.delete(SERVER_PUBLICATION_URL, {
-        params: { postId: this.item.post?.id },
-      });
-      await getAllPosts(
-        POST_GET_LIMIT,
-        this.posts[this.posts.length - 1].creation
-      );
+      deletePost(this.item, this.posts);
     },
     openComment(item: Item) {
       this.updateCurrentItem(item);

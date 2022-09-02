@@ -59,7 +59,7 @@
                             placeholder="Current password"
                             counter
                             :type="isSecret ? 'password' : 'text'"
-                            name="password"
+                            name="currentPassword"
                             :rules="passwordRules"
                           >
                             <!-- current-password-field-eye-icon -->
@@ -85,7 +85,7 @@
                             counter
                             :rules="passwordRules"
                             :type="isSecret ? 'password' : 'text'"
-                            name="password1"
+                            name="newPassword"
                           >
                             <!-- new-password-field-eye-icon -->
                             <template v-slot:append>
@@ -129,13 +129,10 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapState, mapActions, mapGetters } from "vuex";
-import { httpRequest } from "../../utils/http";
 import { VueElement, VueFunction, VueResponse } from "../../utils/types";
 import { rules } from "@/utils/rules";
-import {
-  ERROR_MESSAGE_DURATION,
-  SERVER_USER_PASSWORD_URL,
-} from "../../utils/defines";
+import { ERROR_MESSAGE_DURATION } from "../../utils/defines";
+import { modifyUserPassword } from "@/utils/functions";
 
 export default Vue.extend({
   name: "Profile-password",
@@ -158,6 +155,7 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions(["updateCurrentUser"]),
+
     async sendPassword(): Promise<void> {
       this.loading = true;
       this.valid = false;
@@ -168,8 +166,7 @@ export default Vue.extend({
           const formElem: HTMLFormElement | null =
             document.querySelector(".form");
           if (formElem != null) {
-            httpRequest
-              .patch(SERVER_USER_PASSWORD_URL, new FormData(formElem))
+            modifyUserPassword(new FormData(formElem))
               .then(() => {
                 this.showAlert(
                   "success",
@@ -191,10 +188,8 @@ export default Vue.extend({
     showAlert(type: string, message: string): void {
       this.alertType = type;
       this.alertMessage = message;
-      setTimeout((resolve: () => void) => {
+      setTimeout(() => {
         this.alertMessage = "";
-        this.alertType = "";
-        resolve();
       }, ERROR_MESSAGE_DURATION);
     },
   },

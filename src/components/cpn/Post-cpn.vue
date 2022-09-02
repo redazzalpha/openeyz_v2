@@ -79,16 +79,11 @@
 <script lang="ts">
 import Vue from "vue";
 import ClassicEditor from "@/ckeditor5/ckeditor5";
-import { mapGetters, mapState } from "vuex";
-import { httpRequest } from "../../utils/http";
-import { VueResponse } from "../../utils/types";
-import { getAllPosts } from "../../utils/functions";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
-import {
-  ERROR_MESSAGE_DURATION,
-  POST_GET_LIMIT,
-  SERVER_PUBLICATION_URL,
-} from "../../utils/defines";
+import { mapGetters, mapState } from "vuex";
+import { VueResponse } from "../../utils/types";
+import { publishPost } from "../../utils/functions";
+import { ERROR_MESSAGE_DURATION } from "../../utils/defines";
 
 export default Vue.extend({
   name: "Post-cpn",
@@ -116,23 +111,14 @@ export default Vue.extend({
       if (this.editorData) {
         this.loading = true;
         this.disabled = true;
-
-        let data: FormData = new FormData();
-        this.editorData = this.editorData.trim();
-        data.append(
-          "post",
-          this.editorData.replace(/<img/g, "<img width=100% style='max-height: 465px; object-fit: cover'")
-        );
-        httpRequest.post(SERVER_PUBLICATION_URL, data).then(
-          (): void => {
-            this.editorData = "";
-            getAllPosts(POST_GET_LIMIT);
-          },
-          (error: VueResponse): void => {
+        publishPost(this.editorData).then(
+          () => {this.editorData = "";},
+          (error: VueResponse) => {
             this.alertMessage = error.bodyText;
             setTimeout(() => {
               this.alertMessage = "";
             }, ERROR_MESSAGE_DURATION);
+
           }
         );
         setTimeout(() => {

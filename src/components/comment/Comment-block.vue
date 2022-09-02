@@ -136,7 +136,7 @@ export default Vue.extend({
   },
   watch: {
     commentDialog(visible: boolean) {
-      if (visible) getAllComments(this.currentItem.post.id, COMMENT_GET_LIMIT);
+      if (visible) getAllComments(this.currentItem, COMMENT_GET_LIMIT);
     },
   },
 });

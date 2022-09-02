@@ -1,5 +1,5 @@
 <template>
-  <v-tab-item class="profile-info-tab-item" >
+  <v-tab-item class="profile-info-tab-item">
     <!-- main-card -->
     <v-card max-width="600" class="mx-auto mb-10" shaped raised outlined>
       <!-- header-title -->
@@ -12,6 +12,7 @@
             :role="currentUser.roles[0].roleName"
             size="170"
           />
+
           <v-btn
             icon
             color="primary"
@@ -27,6 +28,15 @@
               @change="pickFile"
             />
             <i class="fa-solid fa-camera" style="font-size: 20px"></i>
+          </v-btn>
+          <v-btn
+            icon
+            color="error"
+            style="position: absolute; top: 145px; right: calc(100% - 35px)"
+            @click="removeAvatar"
+            title="remove image"
+          >
+            <i class="fa-solid fa-times-circle" style="font-size: 20px"></i>
           </v-btn>
         </span>
       </v-card-title>
@@ -183,18 +193,21 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapState, mapActions } from "vuex";
-import { httpRequest } from "@/utils/http";
 import { VueElement, VueFunction, VueResponse } from "../../utils/types";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
 import {
-  SERVER_USER_DESCRIPTION_URL,
-  SERVER_USER_THEME_URL,
-  SERVER_USER_AVATAR_URL,
   SERVER_USER_LNAME_URL,
   SERVER_USER_NAME_URL,
   SERVER_USER_USERNAME_URL,
 } from "../../utils/defines";
 import { rules } from "../../utils/rules";
+import {
+  modifyUserDescription,
+  modifyUserField,
+  modifyUserTheme,
+  removeUserAvatar,
+  sendUserAvatar,
+} from "@/utils/functions";
 
 export default Vue.extend({
   name: "Profile-info",
@@ -226,9 +239,7 @@ export default Vue.extend({
   methods: {
     ...mapActions(["updateCurrentUser"]),
     async sendDescription() {
-      const description: FormData = new FormData();
-      description.append("description", this.description);
-      await httpRequest.patch(SERVER_USER_DESCRIPTION_URL, description);
+      await modifyUserDescription(this.description);
       this.currentUser.description = this.description;
       this.updateCurrentUser(this.currentUser);
       this.description = "";
@@ -264,7 +275,7 @@ export default Vue.extend({
             document.querySelector(".form");
           if (formElem != null) {
             this.switchTarget();
-            await httpRequest.patch(this.url, new FormData(formElem));
+            await modifyUserField(this.url, new FormData(formElem));
             this.updateUser();
             this.userData = "";
           }
@@ -307,22 +318,14 @@ export default Vue.extend({
       const input = this.$refs.input as HTMLInputElement;
       input.click();
     },
-    // TODO: try to find a solution to give possibility to user to remove his user image
     async pickFile() {
       const input = this.$refs.input as HTMLInputElement;
-      const file = new FormData();
-      if (input.files) file.append("file", input.files[0]);
-      const response: VueResponse = await httpRequest.post(
-        SERVER_USER_AVATAR_URL,
-        file
-      );
+      const response: VueResponse = await sendUserAvatar(input);
       this.currentUser.avatarSrc = response.bodyText;
       this.updateCurrentUser(this.currentUser);
     },
     async themeSwitcher(darkMode: boolean) {
-      const data: FormData = new FormData();
-      data.append("dark", darkMode.toString());
-       await httpRequest.patch(SERVER_USER_THEME_URL, data);
+      await modifyUserTheme(darkMode);
       this.currentUser.dark = darkMode;
       this.updateCurrentUser(this.currentUser);
       this.$vuetify.theme.dark = darkMode;
@@ -350,6 +353,11 @@ export default Vue.extend({
         this.currentUser.roles[0].roleName == "SUPERADMIN" ||
         this.currentUser.roles[0].roleName == "ADMIN"
       );
+    },
+    async removeAvatar() {
+      await removeUserAvatar();
+      this.currentUser.avatarSrc = null;
+      this.updateCurrentUser(this.currentUser);
     },
   },
   watch: {

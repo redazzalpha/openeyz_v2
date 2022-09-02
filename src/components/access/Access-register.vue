@@ -169,11 +169,11 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { httpRequest } from "@/utils/http";
 import { rules } from "@/utils/rules";
 import { mapActions, mapGetters } from "vuex";
 import { ERROR_MESSAGE_DURATION } from "@/utils/defines";
 import { VueResponse, VueElement, VueFunction } from "../../utils/types";
+import { register } from "@/utils/functions";
 export default Vue.extend({
   name: "Access-register",
   data() {
@@ -204,8 +204,7 @@ export default Vue.extend({
           const formElem: HTMLFormElement | null =
             document.querySelector(".register");
           if (formElem != null) {
-            httpRequest
-              .login(new FormData(formElem))
+            register(new FormData(formElem))
               .catch((error: VueResponse): void => {
                 this.alertMessage = error.bodyText;
                 setTimeout(() => {

@@ -46,9 +46,8 @@
 import Vue from "vue";
 import Avatar from "./Avatar-cpn.vue";
 import { mapState } from "vuex";
-import { httpRequest } from "../../utils/http";
-import { HOME_PAGE_URL, NOTIFICATION_PAGE_URL, PROFILE_PAGE_URL, SERVER_LOGOUT_URL, TEAM_PAGE_URL, } from "../../utils/defines";
-import { clearStorage } from '../../utils/functions';
+import { HOME_PAGE_URL, NOTIFICATION_PAGE_URL, PROFILE_PAGE_URL, TEAM_PAGE_URL, } from "../../utils/defines";
+import { logout } from "@/utils/functions";
 export default Vue.extend({
   name: "Drawer-cpn",
   components: {
@@ -56,6 +55,7 @@ export default Vue.extend({
   },
   data() {
     return {
+      logout: logout,
       icons: [
         {
           title: "Home",
@@ -88,10 +88,6 @@ export default Vue.extend({
   methods: {
     checkCurrentUser(): boolean {
       return typeof this.currentUser != "function" && this.currentUser != null;
-    },
-    logout(): void {
-      clearStorage();
-      httpRequest.post(SERVER_LOGOUT_URL);
     },
   },
   computed: {
