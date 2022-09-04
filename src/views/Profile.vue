@@ -11,7 +11,8 @@
     <!-- tabs-items -->
     <v-tabs-items
       v-model="$store.state.tabProfile"
-      style="background-color: transparent; padding-top: 65px;"
+      style="background-color: transparent; padding-top: 65px"
+      touchless
     >
       <!-- title -->
       <v-card flat color="transparent">
@@ -21,11 +22,20 @@
           <span v-if="tabProfile == 2">My account</span>
         </v-card-title>
         <v-card-subtitle class="text-center">
-          <span v-if="tabProfile == 0">Take a look to your account informations and settings from here.</span>
-          <span v-if="tabProfile == 1">Password secures your account informations this is the right place to modify it if you need to </span>
-          <span v-if="tabProfile == 2">This section is about deleting your account and all stored informations</span>
+          <span v-if="tabProfile == 0"
+            >Take a look to your account informations and settings from
+            here.</span
+          >
+          <span v-if="tabProfile == 1"
+            >Password secures your account informations this is the right place
+            to modify it if you need to
+          </span>
+          <span v-if="tabProfile == 2"
+            >This section is about deleting your account and all stored
+            informations</span
+          >
         </v-card-subtitle>
-      </v-card >
+      </v-card>
       <ProfileInfo />
       <ProfilePassword />
       <ProfileAccount />
@@ -54,10 +64,16 @@ export default Vue.extend({
     ...mapState(["currentUser", "tabProfile"]),
   },
   methods: {
-    ...mapActions(["updateTabProfile"]),
+    ...mapActions(["updateTabProfile", "updateLoader"]),
   },
   created() {
     this.updateTabProfile(0);
+  },
+  mounted() {
+    this.updateLoader(false);
+  },
+  destroyed() {
+    this.updateLoader(true);
   },
 });
 </script>

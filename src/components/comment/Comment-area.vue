@@ -5,6 +5,8 @@
     <v-row>
       <v-col class="d-flex align-center pt-0">
         <AvatarCpn
+        style="position: relative; bottom: 10px;"
+          align-self="start"
           :avatarSrc="currentUser.avatarSrc"
           :role="currentUser.roles[0].roleName"
           size="40"

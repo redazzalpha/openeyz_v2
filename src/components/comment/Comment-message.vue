@@ -1,11 +1,11 @@
 <template>
-  <v-container class="comment-message-container py-0">
+  <v-container class="comment-message-container pa-0 pb-5">
     <v-row no-gutters>
       <v-col>
         <v-card
-          class="d-flex align-center mb-5 mx-auto"
+          class="d-flex align-center mx-auto"
           elevation="0"
-          style="background-color: transparent"
+          style="background-color: transparent;"
           max-width="95%"
         >
           <AvatarCpn
@@ -27,11 +27,11 @@
               primary-title
               class="text-body-2 text-sm-subtitle-1 white--text pa-2 mb-2"
             >
-              <span>
+              <span class="mr-1">
                 {{ comment.author.name }}
                 said on
               </span>
-              <span>
+              <span class="mr-5">
                 {{ translateDate(comment.creation) }}
               </span>
 

@@ -85,6 +85,7 @@ export default Vue.extend({
       "updateUserListObj",
       "updateTeamSelectedUser",
       "updateTeamSelectedDialog",
+      "updateLoader",
     ]),
     input(selectedUsername: string) {
       const userObj: UserObj[] = this.userListObj.filter((e: UserObj) => {
@@ -137,7 +138,12 @@ export default Vue.extend({
   created() {
     getSimpleUsers();
   },
+  mounted() {
+    this.updateLoader(false);
+  },
   destroyed() {
+    this.updateLoader(true);
+
     this.updateUserCardList([]);
     this.updateUserListObj([]);
   },

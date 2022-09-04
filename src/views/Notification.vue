@@ -51,7 +51,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 import { deleteNotifs, readNotifs } from "../utils/functions";
 import ToolbarCpn from "../components/cpn/Toolbar-cpn.vue";
 import NotificationItem from "../components/notification/NotificationItem.vue";
@@ -74,6 +74,7 @@ export default Vue.extend({
   },
 
   methods: {
+    ...mapActions(["updateLoader"]),
     toogle() {
       this.isAllClosed = !this.isAllClosed;
       if (this.isAllClosed) this.closeAll();
@@ -96,6 +97,12 @@ export default Vue.extend({
       deleteNotifs();
       this.$vuetify.goTo(0);
     },
+  },
+  mounted() {
+    this.updateLoader(false);
+  },
+  destroyed() {
+    this.updateLoader(true);
   },
 });
 </script>

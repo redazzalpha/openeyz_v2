@@ -10,6 +10,7 @@
     max-width="900"
     :scrollable="comments.length < 1"
     overlay-opacity="0.7"
+    :fullscreen="$vuetify.breakpoint.name == 'xs' ? true : false"
   >
     <!-- main-card -->
     <v-card
@@ -22,7 +23,7 @@
           : require('../../assets/bg-notfound.webp')) +
         ') fixed no-repeat center; background-size: cover; '
       "
-      max-height="800"
+      max-height="600"
       style="border: solid white 3px"
     >
       <v-btn icon plain fixed @click="closeComment"
@@ -51,7 +52,7 @@
           </v-col>
         </v-row>
         <v-row v-if="comments.length > 0">
-          <v-col>
+          <v-col class="pa-0">
             <CommentMessage
               v-for="(comment, index) in comments"
               :key="index"

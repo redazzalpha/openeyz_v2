@@ -1,5 +1,5 @@
-// const SERVER_DOMAIN = "https://openeyz-v2.herokuapp.com";
-const SERVER_DOMAIN = "http://localhost:8081";
+const SERVER_DOMAIN = "https://openeyz-v2.herokuapp.com";
+// const SERVER_DOMAIN = "http://localhost:8081";
 
 const API_PATH = SERVER_DOMAIN + "/api";
 const ADMIN_PATH = SERVER_DOMAIN + "/admin";
@@ -54,4 +54,4 @@ export const USER_IMG_URL = ROOT_URL + "@/assets/user.png";
 
 export const ERROR_MESSAGE_DURATION = 4000;
 export const POST_GET_LIMIT = 2;
-export const COMMENT_GET_LIMIT = 2;
+export const COMMENT_GET_LIMIT = 3;

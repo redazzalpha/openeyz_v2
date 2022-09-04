@@ -17,7 +17,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapState, mapActions } from "vuex";
-import { getPosts, getNotifs } from "../utils/functions";
+import { getPosts } from "../utils/functions";
 import { POST_GET_LIMIT } from "../utils/defines";
 import HeadCpn from "@/components/cpn/Head-cpn.vue";
 import PostCpn from "@/components/cpn/Post-cpn.vue";
@@ -37,8 +37,7 @@ export default Vue.extend({
     ...mapState(["currentUser", "posts"]),
   },
   data() {
-    return {
-    };
+    return {};
   },
   methods: {
     ...mapActions(["updateLoader"]),
@@ -48,6 +47,9 @@ export default Vue.extend({
   },
   mounted() {
     this.updateLoader(false);
+  },
+  destroyed() {
+    this.updateLoader(true);
   },
 });
 </script>

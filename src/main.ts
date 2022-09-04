@@ -17,7 +17,6 @@ Vue.http.interceptors.push(function (request: VueRequest) {
   request.headers.set('Authorization', 'Bearer ' + localStorage.getItem("token"));
 
   return (response: VueResponse) => {
-
     const { status } = response;
     switch (status) {
       case 0:

@@ -268,7 +268,6 @@ export default Vue.extend({
       this.disabled = true;
 
       let form: VueElement = this.$refs.form;
-      // TODO: got to check for username modification cause need change cookie from server according the new username
       if (form != null) {
         if ((form as unknown as VueFunction).validate()) {
           const formElem: HTMLFormElement | null =

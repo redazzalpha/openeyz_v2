@@ -24,7 +24,10 @@ export const httpRequest = {
                             (error: VueResponse) => { pushAccessUrl(); reject(error); }
                         );
                     }
-                    else reject(error);
+                    else {
+                        pushAccessUrl();
+                        reject(error);
+                    } 
                 },
             );
         });
@@ -47,7 +50,10 @@ export const httpRequest = {
                             (error: VueResponse) => { pushAccessUrl(); reject(error); }
                         );
                     }
-                    else reject(error);
+                    else {
+                        pushAccessUrl();
+                        reject(error);
+                    } 
                 },
             );
         });
@@ -70,7 +76,10 @@ export const httpRequest = {
                             (error: VueResponse) => { pushAccessUrl(); reject(error); }
                         );
                     }
-                    else reject(error);
+                    else {
+                        pushAccessUrl();
+                        reject(error);
+                    } 
                 },
             );
         });
@@ -93,7 +102,10 @@ export const httpRequest = {
                             (error: VueResponse) => { pushAccessUrl(); reject(error); }
                         );
                     }
-                    else reject(error);
+                    else {
+                        pushAccessUrl();
+                        reject(error);
+                    } 
                 },
             );
         });
@@ -116,7 +128,10 @@ export const httpRequest = {
                             (error: VueResponse) => { pushAccessUrl(); reject(error); }
                         );
                     }
-                    else reject(error);
+                    else {
+                        pushAccessUrl();
+                        reject(error);
+                    } 
                 },
             );
         });
@@ -139,7 +154,10 @@ export const httpRequest = {
                             (error: VueResponse) => { pushAccessUrl(); reject(error); }
                         );
                     }
-                    else reject(error);
+                    else {
+                        pushAccessUrl();
+                        reject(error);
+                    } 
                 },
             );
         });

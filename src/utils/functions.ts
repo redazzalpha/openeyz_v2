@@ -78,12 +78,12 @@ export async function modifyUserDescription(description: string): Promise<void> 
   body.append("description", description);
   await httpRequest.patch(defines.SERVER_USER_DESCRIPTION_URL, body);
 }
-export async function modifyUserField(url : string, body: FormData): Promise<void> {
+export async function modifyUserField(url: string, body: FormData): Promise<void> {
   await httpRequest.patch(url, body);
 }
 export async function sendUserAvatar(input: HTMLInputElement): Promise<VueResponse> {
   return new Promise((resolve, reject) => {
-    if(input.files) {
+    if (input.files) {
       const file = new FormData();
       file.append("file", input.files[0]);
       httpRequest.post(defines.SERVER_USER_AVATAR_URL, file).then(
@@ -201,14 +201,14 @@ export async function deleteComment({ id }: Comment): Promise<void> {
 
 
 export async function getNotifs(): Promise<void | VueResponse> {
-  if(localStorage.getItem("token")) {
+  if (localStorage.getItem("token")) {
     const response: VueResponse = await httpRequest.get(
       defines.SERVER_USER_NOTIF_URL
     );
     store.dispatch("updateUserNotifs", response.body);
   }
 }
-export async function readNotif({read, id}: Notif): Promise<void> {
+export async function readNotif({ read, id }: Notif): Promise<void> {
   if (!read) {
     const notifId: FormData = new FormData();
     notifId.append("notifId", id.toString());
@@ -216,18 +216,18 @@ export async function readNotif({read, id}: Notif): Promise<void> {
     await getNotifs();
   }
 }
-export async function deleteNotif({id}: Notif): Promise<void> {
+export async function deleteNotif({ id }: Notif): Promise<void> {
   await httpRequest.delete(defines.SERVER_USER_NOTIF_ONE_URL, {
     params: { notifId: id },
   });
   await getNotifs();
 }
-export async function readNotifs() : Promise<void> {
+export async function readNotifs(): Promise<void> {
   await httpRequest.patch(defines.SERVER_USER_NOTIF_URL);
   await getNotifs();
 
 }
-export async function deleteNotifs() : Promise<void> {
+export async function deleteNotifs(): Promise<void> {
   await httpRequest.delete(defines.SERVER_USER_NOTIF_URL);
   await getNotifs();
 
@@ -270,6 +270,8 @@ export function translateDateToISO(timestamp: string): string {
 
 export function unavailableServerHandler(response: VueResponse): void {
   response.bodyText = "server is unavailable";
+  // if(router.currentRoute.name != "access")
+
   pushAccessUrl();
 }
 export function internalServerErrorHandler(response: VueResponse): void {
@@ -288,9 +290,9 @@ export function defaulHandler({ body, headers }: VueResponse): void {
   }
 }
 
-
 export function pushAccessUrl(): void {
-  clearStorage();
-  if (router.currentRoute.path !== "/access")
+  if (router.currentRoute.name != "access") {
+    clearStorage();
     router.push(defines.ACCESS_PAGE_URL);
+  }
 }

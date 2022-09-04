@@ -117,8 +117,8 @@
             paint-order="fill markers stroke"
           />
 
-          <text class="logo" x="85" y="40">OpenEyz</text>
-          <text id="text" x="85" y="154">Please wait</text>
+          <text class="logo" x="91" y="145" style="font-size: 35">OpenEyz</text>
+          <text id="text" x="97" y="180" style="font-size: 20">Please wait</text>
         </svg>
       </v-overlay>
     </div>

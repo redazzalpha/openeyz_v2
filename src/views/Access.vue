@@ -36,10 +36,16 @@ export default Vue.extend({
     };
   },
   methods: {
-    ...mapActions(["updateTabAccess"]),
+    ...mapActions(["updateTabAccess", "updateLoader"]),
   },
   created() {
     this.updateTabAccess(0);
+  },
+  mounted(){
+    this.updateLoader(false);
+  },
+   destroyed() {
+    this.updateLoader(true);
   },
 });
 </script>

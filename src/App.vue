@@ -1,16 +1,7 @@
 <template>
   <v-app id="wrapper" class="app-container">
     <LoaderCpn :show="loader" />
-    <v-card
-      class="app-container-card"
-      :style="
-        'background:  url(' +
-        ($vuetify.theme.dark
-          ? require('./assets/bg-home-dark.webp')
-          : require('./assets/bg-home.webp')) +
-        ') no-repeat fixed center'
-      "
-    >
+    <div class="app-container-block" :style="background">
       <AppbarCpn />
       <!--main-->
       <v-main>
@@ -23,7 +14,7 @@
       <DrawerCpn />
       <FooterCpn />
       <ScrollTopBtnCpn />
-    </v-card>
+    </div>
   </v-app>
 </template>
 
@@ -31,11 +22,7 @@
 import Vue from "vue";
 import { mapState } from "vuex";
 import { HOME_PAGE_URL, POST_GET_LIMIT } from "./utils/defines";
-import {
-  addPosts,
-  getNotifs,
-  translateDateToISO,
-} from "./utils/functions";
+import { addPosts, getNotifs, translateDateToISO } from "./utils/functions";
 import FooterCpn from "@/components/cpn/Footer-cpn.vue";
 import AppbarCpn from "@/components/cpn/Appbar-cpn.vue";
 import DrawerCpn from "@/components/cpn/Drawer-cpn.vue";
@@ -53,6 +40,31 @@ export default Vue.extend({
   },
   computed: {
     ...mapState(["currentUser", "userNotifs", "posts", "loader"]),
+    background(): string {
+      const backgroundBase: string = this.$vuetify.theme.dark
+        ? require("./assets/bg-home-dark.webp")
+        : require("./assets/bg-home.webp");
+      const backgroundXs: string = this.$vuetify.theme.dark
+        ? require("./assets/bg-home-xs-dark.png")
+        : require("./assets/bg-home-xs.png");
+      const backgroundType: string =
+        this.$vuetify.breakpoint.name == "xs" ? backgroundXs : backgroundBase;
+      const backgroundImage: string =
+        "background-image:  url(" + backgroundType + ");";
+      const backgroundRepeat = "background-repeat:  no-repeat;";
+      const backgroundPosition = "background-position: center;";
+      const backgroundSize = "background-size: cover;";
+      const backgroundAttachment = "background-attachment: fixed;";
+      const backgroundColor = " background-color: #cccccc;";
+      const background: string =
+        backgroundImage +
+        backgroundRepeat +
+        backgroundPosition +
+        backgroundSize +
+        backgroundColor +
+        backgroundAttachment;
+      return background;
+    },
   },
   methods: {
     infiniteScroll() {
@@ -117,7 +129,7 @@ export default Vue.extend({
 <style lang="scss">
 #wrapper {
   scroll-behavior: smooth;
-  background-size: 100vw 100vh !important;
+  /* background-size: 100vw 100vh !important; */
 }
 
 .logo {
@@ -138,5 +150,9 @@ export default Vue.extend({
 
 .on-hover {
   color: red !important;
+}
+
+.app-container-block {
+  transition: background-image 0.7s linear;
 }
 </style>

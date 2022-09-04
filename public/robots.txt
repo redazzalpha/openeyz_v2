@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://openeyz.netlify.app/sitemap.xml
+
