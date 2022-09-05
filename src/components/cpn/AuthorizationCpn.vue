@@ -181,12 +181,6 @@ export default Vue.extend({
         this.btnLoading = false;
       }, this.timeout);
     },
-    isAuthorized(): boolean {
-      return (
-        this.currentUser.roles[0].roleName == "SUPERADMIN" &&
-        this.currentUser.username != this.user.username
-      );
-    },
     onload(): void {
       this.role = this.user.roles[0].roleName as string;
       this.state =

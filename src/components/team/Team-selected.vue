@@ -60,7 +60,7 @@
 
         <!-- Authorization menu  -->
         <v-row>
-          <v-col class="text-center" v-if="isAuthorized()">
+          <v-col class="text-center" v-if="showAuth">
             <authorizationCpn :user="user" @updated="updated" />
           </v-col>
         </v-row>
@@ -117,10 +117,7 @@ import {
   getUserData,
   translateDateToISO,
 } from "../../utils/functions";
-import {
-  POST_GET_LIMIT,
-  TEAM_PAGE_URL,
-} from "../../utils/defines";
+import { POST_GET_LIMIT, TEAM_PAGE_URL } from "../../utils/defines";
 import PublicationCpn from "../cpn/Publication-cpn.vue";
 import ToolbarCpn from "../cpn/Toolbar-cpn.vue";
 import AlertCpn from "../cpn/Alert-cpn.vue";
@@ -155,6 +152,7 @@ export default Vue.extend({
       user: new Users(),
       role: "USER",
       state: false,
+      showAuth: false,
     };
   },
   computed: {
@@ -219,11 +217,6 @@ export default Vue.extend({
         }
       }
     },
-    async getUser(): Promise<void> {
-      const response: VueResponse = await getUserData(this.username);
-      this.user = response.body as Users;
-    },
-
     toTop() {
       const container = document.querySelector(".inscroll");
       if (container)
@@ -247,8 +240,12 @@ export default Vue.extend({
     teamSelectedDialog(visible: boolean) {
       if (visible) {
         getPosts(POST_GET_LIMIT, undefined, this.username);
-        this.getUser();
-      } else if (!visible) {
+        getUserData(this.username).then((response: VueResponse) => {
+          this.user = response.body as Users;
+          this.showAuth = this.isAuthorized();
+        });
+      } else {
+        this.showAuth = false;
         window.scrollTo({
           top: 0,
           left: 0,

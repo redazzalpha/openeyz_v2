@@ -33,7 +33,6 @@ export const SERVER_USER_NOTIF_ONE_URL = SERVER_USER_NOTIF_URL + '/one';
 
 export const SERVER_LIKE_URL = API_PATH + '/like';
 export const SERVER_LIKE_COUNT_URL = SERVER_LIKE_URL + '/count';
-import vuetify from '@/plugins/vuetify';
 
 export const SERVER_IMG_URL = API_PATH + '/img';
 
@@ -54,5 +53,5 @@ export const USER_IMG_URL = ROOT_URL + "@/assets/user.png";
 
 
 export const ERROR_MESSAGE_DURATION = 4000;
-export const POST_GET_LIMIT = 2;
+export const POST_GET_LIMIT = 5;
 export const COMMENT_GET_LIMIT = 3;

@@ -1,12 +1,11 @@
 <template>
-  <v-app id="wrapper" class="app-container">
+  <v-app id="wrapper" class="app-container" :style="background">
     <LoaderCpn :show="loader" />
-    <div class="app-container-block" :style="background">
+    <div class="app-container-block">
       <AppbarCpn />
       <!--main-->
       <v-main>
         <!--main-section-->
-        <!-- <section style="min-height: 100vh"> -->
         <section :style="minHeight">
           <!--views-->
           <router-view />
@@ -135,7 +134,6 @@ export default Vue.extend({
 <style lang="scss">
 #wrapper {
   scroll-behavior: smooth;
-  /* background-size: 100vw 100vh !important; */
 }
 
 .logo {
