@@ -6,7 +6,8 @@
       <!--main-->
       <v-main>
         <!--main-section-->
-        <section style="min-height: 100vh">
+        <!-- <section style="min-height: 100vh"> -->
+        <section :style="minHeight">
           <!--views-->
           <router-view />
         </section>
@@ -41,16 +42,16 @@ export default Vue.extend({
   computed: {
     ...mapState(["currentUser", "userNotifs", "posts", "loader"]),
     background(): string {
-      const backgroundBase: string = this.$vuetify.theme.dark
+      const backgroundUrl: string = this.$vuetify.theme.dark
         ? require("./assets/bg-home-dark.webp")
         : require("./assets/bg-home.webp");
-      const backgroundXs: string = this.$vuetify.theme.dark
-        ? require("./assets/bg-home-xs-dark.png")
-        : require("./assets/bg-home-xs.png");
-      const backgroundType: string =
-        this.$vuetify.breakpoint.name == "xs" ? backgroundXs : backgroundBase;
+      // const backgroundXsUrl: string = this.$vuetify.theme.dark
+      //   ? require("./assets/bg-home-xs-dark.png")
+      //   : require("./assets/bg-home-xs.png");
+      // const backgroundType: string =
+      //   this.$vuetify.breakpoint.name == "xs" ? backgroundXsUrl : backgroundUrl;
       const backgroundImage: string =
-        "background-image:  url(" + backgroundType + ");";
+        "background-image:  url(" + backgroundUrl + ");";
       const backgroundRepeat = "background-repeat:  no-repeat;";
       const backgroundPosition = "background-position: center;";
       const backgroundSize = "background-size: cover;";
@@ -65,6 +66,11 @@ export default Vue.extend({
         backgroundAttachment;
       return background;
     },
+    minHeight(): string {
+      if(this.$vuetify.breakpoint.name == "xs")
+        return "";
+        else return "min-height: 100vh";
+    }
   },
   methods: {
     infiniteScroll() {

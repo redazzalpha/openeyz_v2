@@ -106,7 +106,7 @@
                 placeholder="New description here"
                 rows="1"
                 append="mdi-send"
-                autofocus
+                :autofocus="$vuetify.breakpoint.name == 'xs' ? false : true"
               >
                 <template v-slot:append>
                   <v-btn

@@ -5,7 +5,7 @@
     <v-row>
       <v-col class="d-flex align-center pt-0">
         <AvatarCpn
-        style="position: relative; bottom: 10px;"
+          style="position: relative; bottom: 10px"
           align-self="start"
           :avatarSrc="currentUser.avatarSrc"
           :role="currentUser.roles[0].roleName"
@@ -20,7 +20,7 @@
             rows="1"
             row-height="15"
             rounded
-            autofocus
+            :autofocus="$vuetify.breakpoint.name == 'xs' ? false : true"
             counter
             :rules="rules"
           >
@@ -47,7 +47,11 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapState } from "vuex";
-import { getAllComments, sendComment, translateDate } from "../../utils/functions";
+import {
+  getAllComments,
+  sendComment,
+  translateDate,
+} from "../../utils/functions";
 import { COMMENT_GET_LIMIT } from "../../utils/defines";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
 import { rules } from "../../utils/rules";

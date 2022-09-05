@@ -56,7 +56,9 @@
                             placeholder="Let us know why?..."
                             rows="1"
                             append="mdi-send"
-                            autofocus
+                            :autofocus="
+                              $vuetify.breakpoint.name == 'xs' ? false : true
+                            "
                           >
                           </v-textarea>
                         </v-col>
@@ -153,7 +155,7 @@ export default Vue.extend({
       confirm: false,
     };
   },
-    computed: {
+  computed: {
     ...mapState(["currentUser"]),
     ...mapGetters(["btnSize"]),
   },

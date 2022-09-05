@@ -14,7 +14,7 @@
   >
     <!-- main-card -->
     <v-card
-      v-scroll.self="onScroll"
+      v-scroll.self="infiniteScroll"
       class="overflow-y-auto inscroll"
       :style="
         'background:  url(' +
@@ -109,7 +109,7 @@ export default Vue.extend({
       "updateComments",
       "updateCurrentItem",
     ]),
-    onScroll(e: UIEvent) {
+    infiniteScroll(e: UIEvent) {
       let scroll: number =
         (e.target as Element).clientHeight + (e.target as Element).scrollTop;
       let bottom: number = (e.target as Element).scrollHeight;

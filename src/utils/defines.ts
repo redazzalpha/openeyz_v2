@@ -33,6 +33,7 @@ export const SERVER_USER_NOTIF_ONE_URL = SERVER_USER_NOTIF_URL + '/one';
 
 export const SERVER_LIKE_URL = API_PATH + '/like';
 export const SERVER_LIKE_COUNT_URL = SERVER_LIKE_URL + '/count';
+import vuetify from '@/plugins/vuetify';
 
 export const SERVER_IMG_URL = API_PATH + '/img';
 

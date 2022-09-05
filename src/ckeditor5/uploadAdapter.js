@@ -8,9 +8,8 @@ class UploadAdapter {
     upload() {
         return this.loader.file.then(file => uploaderSend(file));
     }
-    abort() {
-        console.log("on arbort here")
-    }
+    // abort() {
+    // }
 }
 
 export default function UploadAdapterPlugin(editor) {

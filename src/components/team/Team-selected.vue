@@ -10,7 +10,7 @@
     @keydown="keyPressed"
   >
     <v-card
-      v-scroll.self="onScroll"
+      v-scroll.self="infiniteScroll"
       class="overflow-y-auto inscroll"
       max-height="400"
       :style="
@@ -91,7 +91,7 @@
     <!-- scroll-top-button -->
     <v-hover v-slot="{ hover }">
       <v-btn
-        v-scroll="onScroll"
+        v-scroll="infiniteScroll"
         v-show="fab"
         fab
         fixed
@@ -196,7 +196,7 @@ export default Vue.extend({
       this.updateTeamSelectedUser(null);
       this.toTop();
     },
-    onScroll(e: UIEvent) {
+    infiniteScroll(e: UIEvent) {
       let scroll: number =
         (e.target as Element).clientHeight + (e.target as Element).scrollTop;
       let bottom: number = (e.target as Element).scrollHeight;

@@ -7,7 +7,7 @@
     class="profile-tabs-tabs d-flex justify-center"
   >
     <v-tabs-slider color="#FF8124" centered />
-    <v-tab v-for="item in items" :key="item" @click="$vuetify.goTo(0)" @change="test">
+    <v-tab v-for="item in items" :key="item" @click="$vuetify.goTo(0)">
       {{ item }}
     </v-tab>
   </v-tabs>
@@ -23,9 +23,6 @@ export default Vue.extend({
     };
   },
   methods: {
-    test() {
-      console.log("in on change ")
-    }
   },
 });
 </script>
