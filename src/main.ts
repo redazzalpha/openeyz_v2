@@ -6,7 +6,7 @@ import vuetify from '@/plugins/vuetify';
 import vueResource from 'vue-resource';
 import CKEditor from '@ckeditor/ckeditor5-vue2';
 import { VueRequest, VueResponse } from './utils/types';
-import { unavailableServerHandler, defaulHandler, internalServerErrorHandler } from './utils/functions';
+import { unavailableServerHandler, defaultHandler, internalServerErrorHandler } from './utils/functions';
 
 Vue.config.productionTip = false;
 Vue.use(vueResource);
@@ -26,7 +26,7 @@ Vue.http.interceptors.push(function (request: VueRequest) {
         internalServerErrorHandler(response);
         break;
       default:
-        defaulHandler(response);
+        defaultHandler(response);
     }
   };
 });

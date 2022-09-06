@@ -37,7 +37,7 @@
         </v-card-subtitle>
       </v-card>
       <ProfileInfo />
-      <ProfilePassword />
+      <ProfilePassword @failed="failed" @success="success" />
       <ProfileAccount />
     </v-tabs-items>
   </div>
@@ -51,6 +51,7 @@ import ProfileInfo from "../components/profile/Profile-info.vue";
 import ProfilePassword from "../components/profile/Profile-password.vue";
 import ProfileAccount from "../components/profile/Profile-account.vue";
 import ToolbarCpn from "../components/cpn/Toolbar-cpn.vue";
+
 export default Vue.extend({
   name: "Profile-page",
   components: {
@@ -60,11 +61,34 @@ export default Vue.extend({
     ProfileAccount,
     ToolbarCpn,
   },
+  data: function () {
+    return {
+      show: false,
+      type: "",
+      message: "",
+    };
+  },
   computed: {
     ...mapState(["currentUser", "tabProfile"]),
   },
   methods: {
     ...mapActions(["updateTabProfile", "updateLoader"]),
+    success(message: string): void {
+      this.type = "success";
+      this.message = message;
+      this.show = true;
+      setTimeout(() => {
+        this.show = false;
+      }, 5000);
+    },
+    failed(message: string): void {
+      this.type = "error";
+      this.message = message;
+      this.show = true;
+      setTimeout(() => {
+        this.show = false;
+      }, 5000);
+    },
   },
   created() {
     this.updateTabProfile(0);

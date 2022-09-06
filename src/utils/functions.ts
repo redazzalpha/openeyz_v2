@@ -253,8 +253,8 @@ export function clearVuex() {
   store.dispatch("clearVuex");
 }
 export function clearStorage() {
-  store.dispatch("clearVuex"),
-    localStorage.removeItem("token");
+  store.dispatch("clearVuex");
+  localStorage.removeItem("token");
   localStorage.removeItem("refreshToken");
   localStorage.removeItem("vuex");
 }
@@ -270,7 +270,6 @@ export function translateDateToISO(timestamp: string): string {
 
 export function unavailableServerHandler(response: VueResponse): void {
   response.bodyText = "server is unavailable";
-  // if(router.currentRoute.name != "access")
 
   pushAccessUrl();
 }
@@ -278,7 +277,7 @@ export function internalServerErrorHandler(response: VueResponse): void {
   response.bodyText = "internal server error";
   pushAccessUrl();
 }
-export function defaulHandler({ body, headers }: VueResponse): void {
+export function defaultHandler({ body, headers }: VueResponse): void {
   const token: string | null = headers.get("x-auth-token");
   const refreshToken: string | null = headers.get("x-refresh-token");
   const user: Users = body as Users;
@@ -291,8 +290,26 @@ export function defaulHandler({ body, headers }: VueResponse): void {
 }
 
 export function pushAccessUrl(): void {
-  if (router.currentRoute.name != "access") {
-    clearStorage();
-    router.push(defines.ACCESS_PAGE_URL);
-  }
+  // if (router.currentRoute.name != "access") {
+  //   clearStorage();
+  //   router.push(defines.ACCESS_PAGE_URL);
+  // }
+}
+
+export function success(message: string): void {
+  store.dispatch("updateAlertType", "success");
+  store.dispatch("updateAlertMessage", message);
+  store.dispatch("updateAlertShow", true);
+  setTimeout(() => {
+    store.dispatch("updateAlertShow", false);
+  }, 5000);
+}
+export function failed(message: string): void {
+  store.dispatch("updateAlertType", "error");
+  store.dispatch("updateAlertMessage", message);
+  store.dispatch("updateAlertShow", true);
+  setTimeout(() => {
+    store.dispatch("updateAlertShow", false);
+  }, 5000);
+
 }

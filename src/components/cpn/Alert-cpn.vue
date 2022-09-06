@@ -1,71 +1,43 @@
 <template>
-  <v-container grid-list-xs class="alert-cpn-container">
-    <v-row>
-      <v-col class="pa-0 ma-0">
-        <router-link
-          :to="href"
-          @click.native="action"
-          class="text-decoration-none secret"
-        >
-          <v-alert
-            :class="`text-center mx-auto ${
-              $vuetify.theme.dark ? 'white--text' : 'black--text'
-            }`"
-            max-width="700"
-            :color="$vuetify.theme.dark ? 'primary' : 'cyan darken-1'"
-            :style="`background-color: ${$vuetify.theme.dark ? '#424242' : ''}`"
-            type="info"
-            border="top"
-            colored-border
-            elevation="2"
-          >
-            <template v-slot:prepend>
-              <v-icon
-                :color="$vuetify.theme.dark ? 'primary' : 'cyan darken-1'"
-                style="position: absolute; top: 20px"
-                >{{ icon }}</v-icon
-              >
-            </template>
-            <span class="logo" style="font-size: 25px !important">OpenEyz</span>
-            <br />
-            <span>{{ message }}</span>
-          </v-alert>
-        </router-link>
-      </v-col>
-    </v-row>
-  </v-container>
+    <v-dialog :value="show" max-width="290" hide-overlay >
+      <v-alert
+        dense
+        :type="type"
+        elevation="5"
+        class="mt-5"
+        >{{ message }}</v-alert
+      >
+
+    </v-dialog>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from "vue";
 export default Vue.extend({
-  name: "AlertCpn",
+  name: "Alert-cpn",
   props: {
+    show: {
+      type: Boolean,
+      required: true,
+    },
+    type: {
+      type: String,
+      required: true,
+    },
     message: {
       type: String,
       required: true,
     },
-    href: {
-      type: String,
-      required: false,
-      default: "",
-    },
-    action: {
-      type: Function,
-      required: false,
-      default: () => [],
-    },
-    icon: {
-      type: String,
-      required: false,
-      default: "mdi-alert-circle",
-    },
   },
+  data() {
+    return {
+    };
+  }
 });
 </script>
 
-<style lang="scss" scoped>
-.secret:hover {
-  cursor: default;
+<style lang="scss">
+.v-dialog {
+    box-shadow: unset!important;
 }
 </style>

@@ -62,7 +62,7 @@
         </v-row>
         <v-row>
           <v-col>
-            <AlertCpn
+            <InfoCpn
               v-if="!comments.length"
               message="This post has not comment be the first to leave one"
               class="mt-1"
@@ -88,7 +88,7 @@ import {
   getAllComments,
   translateDateToISO,
 } from "../../utils/functions";
-import AlertCpn from "../cpn/Alert-cpn.vue";
+import InfoCpn from "../cpn/Info-cpn.vue";
 import PublicationCpn from "../cpn/Publication-cpn.vue";
 import CommentArea from "./Comment-area.vue";
 import CommentMessage from "./Comment-message.vue";
@@ -98,7 +98,7 @@ export default Vue.extend({
     PublicationCpn,
     CommentArea,
     CommentMessage,
-    AlertCpn,
+    InfoCpn,
   },
   computed: {
     ...mapState(["currentItem", "commentDialog", "comments"]),

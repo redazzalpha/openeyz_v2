@@ -1,6 +1,7 @@
 <template>
   <v-app id="wrapper" class="app-container" :style="background">
     <LoaderCpn :show="loader" />
+    <AlertCpn :show="alertShow" :message="alertMessage" :type="alertType" />
     <div class="app-container-block">
       <AppbarCpn />
       <!--main-->
@@ -28,6 +29,7 @@ import AppbarCpn from "@/components/cpn/Appbar-cpn.vue";
 import DrawerCpn from "@/components/cpn/Drawer-cpn.vue";
 import ScrollTopBtnCpn from "./components/cpn/ScrollTopBtn-cpn.vue";
 import LoaderCpn from "./components/cpn/Loader-cpn.vue";
+import AlertCpn from "@/components/cpn/Alert-cpn.vue";
 
 export default Vue.extend({
   name: "App",
@@ -37,9 +39,18 @@ export default Vue.extend({
     DrawerCpn,
     ScrollTopBtnCpn,
     LoaderCpn,
+    AlertCpn,
   },
   computed: {
-    ...mapState(["currentUser", "userNotifs", "posts", "loader"]),
+    ...mapState([
+      "currentUser",
+      "userNotifs",
+      "posts",
+      "loader",
+      "alertShow",
+      "alertType",
+      "alertMessage",
+    ]),
     background(): string {
       const backgroundUrl: string = this.$vuetify.theme.dark
         ? require("./assets/bg-home-dark.webp")
@@ -66,10 +77,9 @@ export default Vue.extend({
       return background;
     },
     minHeight(): string {
-      if(this.$vuetify.breakpoint.name == "xs")
-        return "";
-        else return "min-height: 100vh";
-    }
+      if (this.$vuetify.breakpoint.name == "xs") return "";
+      else return "min-height: 100vh";
+    },
   },
   methods: {
     infiniteScroll() {

@@ -64,8 +64,8 @@
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>
-          <!-- alert-mesasge -->
-          <AlertCpn
+          <!-- info-mesasge -->
+          <InfoCpn
             v-if="userNotifs.length <= 0"
             message="no notification"
             :href="HOME_PAGE_URL"
@@ -84,13 +84,13 @@ import { translateDate, readNotif, deleteNotif } from "../../utils/functions";
 import { Notif } from "../../utils/types";
 import { HOME_PAGE_URL } from "../../utils/defines";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
-import AlertCpn from "../cpn/Alert-cpn.vue";
+import InfoCpn from "../cpn/Info-cpn.vue";
 
 export default Vue.extend({
   name: "Notification-item",
   components: {
     AvatarCpn,
-    AlertCpn,
+    InfoCpn,
   },
   props: {
     panel: {

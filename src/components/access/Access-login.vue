@@ -9,31 +9,8 @@
         class="d-flex flex-column justify-center align-center mt-2"
       >
         <div class="logo mb-2">OpenEyz</div>
-        <!-- subtitle-alert -->
-        <div
-          style="min-height: 70px; position: relative; width: 100%"
-          class="d-flex justify-center align-center"
-        >
-          <Transition name="scale-transition">
-            <div v-show="!alertMessage" style="position: absolute">
-              Connection
-            </div>
-          </Transition>
-          <!--error-alert-message-->
-          <Transition name="scale-transition">
-            <v-alert
-              v-show="alertMessage"
-              dense
-              outlined
-              type="error"
-              style="word-break: keep-all; position: absolute"
-              text
-              elevation="5"
-              class="mt-5"
-              >{{ alertMessage }}</v-alert
-            >
-          </Transition>
-        </div>
+        <!-- subtitle -->
+        <div>Connection</div>
       </v-card-title>
       <v-divider class="mb-7"></v-divider>
       <!-- acces-login-card-content -->
@@ -95,8 +72,7 @@ import Vue from "vue";
 import { mapActions, mapGetters } from "vuex";
 import { rules } from "@/utils/rules";
 import { VueResponse, VueElement, VueFunction } from "../../utils/types";
-import { ERROR_MESSAGE_DURATION } from "@/utils/defines";
-import { login } from "@/utils/functions";
+import { failed, login } from "@/utils/functions";
 
 export default Vue.extend({
   name: "Access-login",
@@ -105,7 +81,6 @@ export default Vue.extend({
       valid: false,
       email: "",
       password: "",
-      alertMessage: "",
       isSecret: true,
       emailRules: [rules.requiredEmail, rules.emailValidator],
       passwordRules: [rules.requiredPasswd, rules.passwdValidator],
@@ -120,13 +95,9 @@ export default Vue.extend({
           const formElem: HTMLFormElement | null =
             document.querySelector(".login");
           if (formElem != null) {
-              login(new FormData(formElem))
-              .catch((error: VueResponse): void => {
-                this.alertMessage = error.bodyText;
-                setTimeout(() => {
-                  this.alertMessage = "";
-                }, ERROR_MESSAGE_DURATION);
-              });
+            login(new FormData(formElem)).catch((error: VueResponse): void =>
+              failed(error.bodyText)
+            );
           }
         }
       }

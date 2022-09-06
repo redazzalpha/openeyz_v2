@@ -22,30 +22,6 @@
           </v-row>
           <v-row>
             <v-col>
-              <!--error-alert-message-->
-              <div
-                style="height: 0; position: relative; width: 100%"
-                class="d-flex justify-center align-center"
-              >
-                <!--alert-message-->
-                <Transition name="scale-transition">
-                  <v-alert
-                    v-show="alertMessage"
-                    dense
-                    outlined
-                    :type="alertType"
-                    style="word-break: keep-all; position: absolute; z-index: 1"
-                    text
-                    elevation="5"
-                    class="mt-5"
-                    >{{ alertMessage }}</v-alert
-                  >
-                </Transition>
-              </div>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
               <!-- modify-password-card -->
               <v-card elevation="0">
                 <v-card-text class="pa-0">
@@ -132,7 +108,7 @@ import { mapState, mapActions, mapGetters } from "vuex";
 import { VueElement, VueFunction, VueResponse } from "../../utils/types";
 import { rules } from "@/utils/rules";
 import { ERROR_MESSAGE_DURATION } from "../../utils/defines";
-import { modifyUserPassword } from "@/utils/functions";
+import { failed, modifyUserPassword, success } from "@/utils/functions";
 
 export default Vue.extend({
   name: "Profile-password",
@@ -145,8 +121,6 @@ export default Vue.extend({
       valid: false,
       currentPasswd: "",
       newPasswd: "",
-      alertType: "error",
-      alertMessage: "",
     };
   },
   computed: {
@@ -166,17 +140,15 @@ export default Vue.extend({
           const formElem: HTMLFormElement | null =
             document.querySelector(".form");
           if (formElem != null) {
-            modifyUserPassword(new FormData(formElem))
-              .then(() => {
-                this.showAlert(
-                  "success",
-                  "Password has been successfully modified"
-                );
+            modifyUserPassword(new FormData(formElem)).then(
+              () => {
+                success("Modification successfull");
                 (form as unknown as VueFunction).reset();
-              })
-              .catch(async (error: VueResponse): Promise<void> => {
-                this.showAlert("error", error.bodyText);
-              });
+              },
+              (error: VueResponse): void => {
+                failed(error.bodyText);
+              }
+            );
             setTimeout(() => {
               this.loading = false;
             }, ERROR_MESSAGE_DURATION);
@@ -184,13 +156,6 @@ export default Vue.extend({
           }
         }
       }
-    },
-    showAlert(type: string, message: string): void {
-      this.alertType = type;
-      this.alertMessage = message;
-      setTimeout(() => {
-        this.alertMessage = "";
-      }, ERROR_MESSAGE_DURATION);
     },
   },
 });

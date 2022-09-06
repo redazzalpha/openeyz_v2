@@ -20,6 +20,7 @@ export default new Vuex.Store({
     posts: [] as Post[],
     comments: [] as Comment[],
     userNotifs: [] as Notif[],
+
     loader: true,
     currentUser: null,
     currentItem: new Item,
@@ -29,6 +30,11 @@ export default new Vuex.Store({
     drawer: null,
     tabAccess: 0,
     tabProfile: 0,
+
+    alertShow: false,
+    alertType: "",
+    alertMessage: "",
+
   },
   getters: {
     btnSize(): string {
@@ -89,6 +95,16 @@ export default new Vuex.Store({
       state.tabProfile = payload;
     },
 
+    UPDATE_ALERT_SHOW(state, payload: boolean): void {
+      state.alertShow = payload;
+    },
+    UPDATE_ALERT_TYPE(state, payload: string): void {
+      state.alertType = payload;
+    },
+    UPDATE_ALERT_MESSAGE(state, payload: string): void {
+      state.alertMessage= payload;
+    },
+
     CLEAR_VUEX(state) {
       state.userListObj = [] as UserObj[];
       state.userCardList = [] as UserObj[];
@@ -105,6 +121,11 @@ export default new Vuex.Store({
       state.drawer = null;
       state.tabAccess = 0;
       state.tabProfile = 0;
+
+      state.alertShow = false;
+      state.alertType =  "";
+      state.alertMessage = "";
+  
     }
   },
   actions: {
@@ -161,6 +182,16 @@ export default new Vuex.Store({
     },
     updateTabProfile(context, payload: number): void {
       context.commit('UPDATE_TAB_PROFILE', payload);
+    },
+
+    updateAlertShow(context, payload: boolean) : void {
+      context.commit("UPDATE_ALERT_SHOW", payload);
+    },
+    updateAlertType(context, payload: string) : void {
+      context.commit("UPDATE_ALERT_TYPE", payload);
+    },
+    updateAlertMessage(context, payload: string) : void {
+      context.commit("UPDATE_ALERT_MESSAGE", payload);
     },
 
     clearVuex(context) {

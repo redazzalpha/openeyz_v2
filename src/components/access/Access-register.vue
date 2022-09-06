@@ -8,31 +8,8 @@
         class="d-flex flex-column justify-center align-center my-2"
       >
         <div class="logo mb-2">OpenEyz</div>
-        <!-- subtitle-alert -->
-        <div
-          style="min-height: 70px; position: relative; width: 100%"
-          class="d-flex justify-center align-center"
-        >
-          <Transition name="scale-transition">
-            <div v-show="!alertMessage" style="position: absolute">
-              Create account
-            </div>
-          </Transition>
-          <!--error-alert-message-->
-          <Transition name="scale-transition">
-            <v-alert
-              v-show="alertMessage"
-              dense
-              outlined
-              type="error"
-              style="word-break: keep-all; position: absolute"
-              text
-              elevation="5"
-              class="mt-5"
-              >{{ alertMessage }}</v-alert
-            >
-          </Transition>
-        </div>
+        <!-- subtitle -->
+        <div>Create account</div>
       </v-card-title>
       <v-divider class="mb-7"></v-divider>
       <v-card-text class="pa-0">
@@ -171,15 +148,13 @@
 import Vue from "vue";
 import { rules } from "@/utils/rules";
 import { mapActions, mapGetters } from "vuex";
-import { ERROR_MESSAGE_DURATION } from "@/utils/defines";
 import { VueResponse, VueElement, VueFunction } from "../../utils/types";
-import { register } from "@/utils/functions";
+import { failed, register } from "@/utils/functions";
 export default Vue.extend({
   name: "Access-register",
   data() {
     return {
       response: "",
-      alertMessage: "",
       lname: "",
       name: "",
       email: "",
@@ -204,13 +179,9 @@ export default Vue.extend({
           const formElem: HTMLFormElement | null =
             document.querySelector(".register");
           if (formElem != null) {
-            register(new FormData(formElem))
-              .catch((error: VueResponse): void => {
-                this.alertMessage = error.bodyText;
-                setTimeout(() => {
-                  this.alertMessage = "";
-                }, ERROR_MESSAGE_DURATION);
-              });
+            register(new FormData(formElem)).catch((error: VueResponse): void =>
+              failed(error.bodyText)
+            );
           }
         }
       }

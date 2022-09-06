@@ -11,27 +11,6 @@
           style="position: relative; border-radius: 7px"
           :color="$vuetify.theme.dark ? '#424242' : ''"
         >
-          <!--error-alert-message-->
-          <Transition name="scale-transition">
-            <v-alert
-              v-show="alertMessage"
-              dense
-              outlined
-              type="error"
-              style="
-                position: absolute;
-                top: 40%;
-                left: 10%;
-                right: 10%;
-                z-index: 1;
-                word-break: keep-all;
-              "
-              text
-              elevation="5"
-              class="mt-3"
-              >{{ alertMessage }}</v-alert
-            >
-          </Transition>
           <!-- header-title -->
           <v-card-title
             v-if="checkCurrentUser()"
@@ -82,7 +61,7 @@ import ClassicEditor from "@/ckeditor5/ckeditor5";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
 import { mapGetters, mapState } from "vuex";
 import { VueResponse } from "../../utils/types";
-import { publishPost } from "../../utils/functions";
+import { failed, publishPost } from "../../utils/functions";
 import { ERROR_MESSAGE_DURATION } from "../../utils/defines";
 
 export default Vue.extend({
@@ -92,7 +71,6 @@ export default Vue.extend({
   },
   data() {
     return {
-      alertMessage: "",
       editor: ClassicEditor,
       editorData: "",
       loading: false,
@@ -112,14 +90,8 @@ export default Vue.extend({
         this.loading = true;
         this.disabled = true;
         publishPost(this.editorData).then(
-          () => {this.editorData = "";},
-          (error: VueResponse) => {
-            this.alertMessage = error.bodyText;
-            setTimeout(() => {
-              this.alertMessage = "";
-            }, ERROR_MESSAGE_DURATION);
-
-          }
+          () => (this.editorData = ""),
+          (error: VueResponse) => failed(error.bodyText)
         );
         setTimeout(() => {
           this.loading = false;
@@ -146,12 +118,5 @@ export default Vue.extend({
 }
 .v-btn__content {
   opacity: 1 !important;
-}
-</style>
-
-<style lang="scss" scoped>
-// AlertCpn icon
-.test .v-application .cyan--text.text--darken-1 {
-  position: absolute;
 }
 </style>

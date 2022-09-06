@@ -77,10 +77,10 @@
             <CommentBlock />
           </v-col>
         </v-row>
-        <!-- empty-post-alert -->
+        <!-- empty-post-info -->
         <v-row v-if="!posts.length">
           <v-col>
-            <AlertCpn
+            <InfoCpn
               :message="`${author} has no post at now !`"
               :action="closeDialog"
             />
@@ -120,7 +120,7 @@ import {
 import { POST_GET_LIMIT, TEAM_PAGE_URL } from "../../utils/defines";
 import PublicationCpn from "../cpn/Publication-cpn.vue";
 import ToolbarCpn from "../cpn/Toolbar-cpn.vue";
-import AlertCpn from "../cpn/Alert-cpn.vue";
+import InfoCpn from "../cpn/Info-cpn.vue";
 import LinksCpn from "../cpn/Links-cpn.vue";
 import AuthorizationCpn from "../cpn/AuthorizationCpn.vue";
 import CommentBlock from "../comment/Comment-block.vue";
@@ -131,7 +131,7 @@ export default Vue.extend({
   components: {
     ToolbarCpn,
     PublicationCpn,
-    AlertCpn,
+    InfoCpn,
     LinksCpn,
     AuthorizationCpn,
     CommentBlock,

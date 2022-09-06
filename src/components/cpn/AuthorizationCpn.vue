@@ -6,7 +6,7 @@
     offset-x
     @input="onload"
   >
-    <AlertCpn message="modification has been done successfully" v-if="false" />
+    <InfoCpn message="modification has been done successfully" v-if="false" />
     <template v-slot:activator="{ on, attrs }">
       <v-btn color="red darken-3" dark v-bind="attrs" v-on="on">
         Authorization
@@ -108,7 +108,7 @@ import Vue from "vue";
 import { Users } from "../../utils/types";
 import { mapState, mapActions } from "vuex";
 import { PropType } from "vue";
-import AlertCpn from "./Alert-cpn.vue";
+import InfoCpn from "./Info-cpn.vue";
 import { updateUserRole, updateUserState } from "@/utils/functions";
 export default Vue.extend({
   name: "Authorization-cpn",
@@ -119,7 +119,7 @@ export default Vue.extend({
     },
   },
   components: {
-    AlertCpn,
+    InfoCpn,
   },
   data() {
     return {
