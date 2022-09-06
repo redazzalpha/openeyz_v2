@@ -37,7 +37,7 @@
         </v-card-subtitle>
       </v-card>
       <ProfileInfo />
-      <ProfilePassword @failed="failed" @success="success" />
+      <ProfilePassword />
       <ProfileAccount />
     </v-tabs-items>
   </div>
@@ -73,22 +73,6 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions(["updateTabProfile", "updateLoader"]),
-    success(message: string): void {
-      this.type = "success";
-      this.message = message;
-      this.show = true;
-      setTimeout(() => {
-        this.show = false;
-      }, 5000);
-    },
-    failed(message: string): void {
-      this.type = "error";
-      this.message = message;
-      this.show = true;
-      setTimeout(() => {
-        this.show = false;
-      }, 5000);
-    },
   },
   created() {
     this.updateTabProfile(0);

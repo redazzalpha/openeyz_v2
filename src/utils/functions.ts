@@ -277,6 +277,14 @@ export function internalServerErrorHandler(response: VueResponse): void {
   response.bodyText = "internal server error";
   pushAccessUrl();
 }
+export function badRequestHandler(response: VueResponse): void {
+  response.bodyText = "internal server error";
+  pushAccessUrl();
+}
+export function forbiddentHandler(response: VueResponse): void {
+  response.bodyText = "internal server error";
+  pushAccessUrl();
+}
 export function defaultHandler({ body, headers }: VueResponse): void {
   const token: string | null = headers.get("x-auth-token");
   const refreshToken: string | null = headers.get("x-refresh-token");
@@ -290,10 +298,10 @@ export function defaultHandler({ body, headers }: VueResponse): void {
 }
 
 export function pushAccessUrl(): void {
-  // if (router.currentRoute.name != "access") {
-  //   clearStorage();
-  //   router.push(defines.ACCESS_PAGE_URL);
-  // }
+  if (router.currentRoute.name != "access") {
+    clearStorage();
+    router.push(defines.ACCESS_PAGE_URL);
+  }
 }
 
 export function success(message: string): void {
