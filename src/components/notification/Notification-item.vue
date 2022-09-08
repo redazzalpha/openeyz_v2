@@ -1,13 +1,15 @@
 <template>
   <div class="notification-item-block">
-    <!-- {{ userNotifs[0] }} -->
-
     <!-- notification-container -->
     <v-container grid-list-xs>
       <v-row class="justify-center">
         <v-col class="text-center col-sm-7">
           <!-- notifications -->
-          <v-expansion-panels :value="panel" multiple>
+          <v-expansion-panels
+            :value="notifPanel"
+            @change="updatePanel"
+            multiple
+          >
             <v-expansion-panel
               v-for="(notif, i) in userNotifs"
               :key="i"
@@ -79,7 +81,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 import { translateDate, readNotif, deleteNotif } from "../../utils/functions";
 import { Notif } from "../../utils/types";
 import { HOME_PAGE_URL } from "../../utils/defines";
@@ -92,28 +94,24 @@ export default Vue.extend({
     AvatarCpn,
     InfoCpn,
   },
-  props: {
-    panel: {
-      type: [],
-      required: true,
-    },
-    hidden: {
-      type: Boolean,
-      required: true,
-    },
-  },
   data() {
     return {
       isActive: true,
-
       HOME_PAGE_URL: HOME_PAGE_URL,
       translateDate: translateDate,
     };
   },
   computed: {
-    ...mapState(["userNotifs"]),
+    ...mapState(["userNotifs", "notifPanel"]),
   },
   methods: {
+    ...mapActions(["updateNotifPanel"]),
+    updatePanel(panel: number[]) {
+      this.updateNotifPanel(panel);
+      if (this.notifPanel.length == this.userNotifs.length)
+        this.$emit("allOpen");
+      else if (this.notifPanel.length == 0) this.$emit("allClose");
+    },
     async readOne(notif: Notif) {
       readNotif(notif);
     },

@@ -17,6 +17,7 @@ export default new Vuex.Store({
     posts: [] as Post[],
     comments: [] as Comment[],
     userNotifs: [] as Notif[],
+    notifPanel: []  as number[],
 
     loader: true,
     currentUser: null,
@@ -56,6 +57,9 @@ export default new Vuex.Store({
     },
     UPDATE_USER_NOTIFS(state, payload): void {
       state.userNotifs = payload;
+    },
+    UPDATE_NOTIF_PANEL(state, payload): void {
+      state.notifPanel = payload;
     },
 
     ADD_POSTS(state, payload): void {
@@ -109,6 +113,7 @@ export default new Vuex.Store({
       state.posts = [] as Post[];
       state.comments = [] as Comment[];
       state.userNotifs = [] as Notif[];
+      state.notifPanel = [] as number[];
       state.loader = true;
       state.currentUser = null;
       state.currentItem = new Item;
@@ -147,6 +152,9 @@ export default new Vuex.Store({
     },
     updateUserNotifs(context, payload): void {
       context.commit("UPDATE_USER_NOTIFS", payload);
+    },
+    updateNotifPanel(context, payload): void {
+      context.commit("UPDATE_NOTIF_PANEL", payload);
     },
 
     addPosts(context, payload) {

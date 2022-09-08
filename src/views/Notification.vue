@@ -43,7 +43,7 @@
       subtitle="Stay tuned on user comments. Here you find all notifications about unread messages."
     >
       <template v-slot:content>
-        <NotificationItem :hidden="isAllClosed" :panel="panel" />
+        <NotificationItem @allClose="allClose" @allOpen="allOpen" />
       </template>
     </ContainerCpn>
   </div>
@@ -54,7 +54,7 @@ import Vue from "vue";
 import { mapActions, mapState } from "vuex";
 import { deleteNotifs, readNotifs } from "../utils/functions";
 import ToolbarCpn from "../components/cpn/Toolbar-cpn.vue";
-import NotificationItem from "../components/notification/NotificationItem.vue";
+import NotificationItem from "../components/notification/Notification-item.vue";
 import ContainerCpn from "../components/cpn/Container-cpn.vue";
 export default Vue.extend({
   name: "Notificatione-page",
@@ -65,16 +65,15 @@ export default Vue.extend({
   },
   data() {
     return {
-      panel: [] as number[],
       isAllClosed: true,
     };
   },
   computed: {
-    ...mapState(["userNotifs"]),
+    ...mapState(["userNotifs", "notifPanel"]),
   },
 
   methods: {
-    ...mapActions(["updateLoader"]),
+    ...mapActions(["updateLoader", "updateNotifPanel"]),
     toogle() {
       this.isAllClosed = !this.isAllClosed;
       if (this.isAllClosed) this.closeAll();
@@ -83,20 +82,26 @@ export default Vue.extend({
     showAll() {
       let tab: number[] = [];
       for (let i = 0; i < this.userNotifs.length; i++) tab[i] = i;
-      this.panel = tab;
+      this.updateNotifPanel(tab);
       this.readAll();
     },
     closeAll() {
-      this.panel = [];
+      this.updateNotifPanel([]);
     },
-    async readAll() {
+    readAll() {
       readNotifs();
     },
 
-    async deleteAll() {
+    deleteAll() {
       deleteNotifs();
       this.$vuetify.goTo(0);
     },
+    allClose() {
+      this.isAllClosed = true;
+    },
+    allOpen() {
+      this.isAllClosed = false;
+    }
   },
   mounted() {
     this.updateLoader(false);

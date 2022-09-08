@@ -48,7 +48,7 @@ export default Vue.extend({
   mounted() {
     setTimeout(() => {
       this.updateLoader(false);
-    }, 4000);
+    }, 3000);
   },
   destroyed() {
     this.updateLoader(true);

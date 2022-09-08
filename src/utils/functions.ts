@@ -210,7 +210,7 @@ export function getPosts(limit: number, creation?: string, authorId?: string): P
 
   });
 }
-export function   addPosts(limit: number, creation?: string, authorId?: string): Promise<VueResponse> {
+export function addPosts(limit: number, creation?: string, authorId?: string): Promise<VueResponse> {
   return new Promise((resolve, reject) => {
     httpRequest.get(
       defines.SERVER_PUBLICATION_LIMIT_URL,
@@ -339,7 +339,6 @@ export function sendComment({ post }: Item, comment: string): Promise<VueRespons
         },
       );
     }
-    else reject("post is empty");
   });
 }
 export function deleteComment({ id }: Comment): Promise<VueResponse> {
@@ -397,7 +396,6 @@ export function readNotif({ read, id }: Notif): Promise<VueResponse> {
         },
       );
     }
-    else reject("notitfication is already read");
   });
 }
 export function deleteNotif({ id }: Notif): Promise<VueResponse> {
