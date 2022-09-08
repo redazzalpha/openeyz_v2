@@ -42,7 +42,7 @@
           <v-card-actions class="d-flex justify-center">
             <v-btn
               color="primary"
-              :width="btnSize"
+              :width="btnSize()"
               @click="publish"
               :loading="loading"
               :disabled="disabled"
@@ -59,10 +59,10 @@
 import Vue from "vue";
 import ClassicEditor from "@/ckeditor5/ckeditor5";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
-import { mapGetters, mapState } from "vuex";
+import { mapState } from "vuex";
 import { VueResponse } from "../../utils/types";
-import { failed, publishPost } from "../../utils/functions";
-import { ERROR_MESSAGE_DURATION } from "../../utils/defines";
+import { alert, btnSize, publishPost } from "../../utils/functions";
+import {  } from "../../utils/defines";
 
 export default Vue.extend({
   name: "Post-cpn",
@@ -75,11 +75,11 @@ export default Vue.extend({
       editorData: "",
       loading: false,
       disabled: true,
+      btnSize: btnSize,
     };
   },
   computed: {
     ...mapState(["posts", "currentUser"]),
-    ...mapGetters(["btnSize"]),
   },
   methods: {
     checkCurrentUser(): boolean {
@@ -91,7 +91,7 @@ export default Vue.extend({
         this.disabled = true;
         publishPost(this.editorData).then(
           () => (this.editorData = ""),
-          (error: VueResponse) => failed(error.bodyText)
+          (error: VueResponse) => alert("error", error.bodyText)
         );
         setTimeout(() => {
           this.loading = false;

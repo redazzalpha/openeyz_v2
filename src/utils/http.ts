@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import { VueResponse } from './types';
 import { SERVER_REFRESH_TOKEN_URL } from './defines';
-import { pushAccessUrl } from '../utils/functions';
 
 const tokenExpired = new RegExp("JWT expired");
 
@@ -21,13 +20,12 @@ export const httpRequest = {
                                     (error: VueResponse) => reject(error)
                                 );
                             },
-                            (error: VueResponse) => { pushAccessUrl(); reject(error); }
+                            (error: VueResponse) => { reject(error); }
                         );
                     }
                     else {
-                        pushAccessUrl();
                         reject(error);
-                    } 
+                    }
                 },
             );
         });
@@ -47,13 +45,12 @@ export const httpRequest = {
                                     (error: VueResponse) => reject(error)
                                 );
                             },
-                            (error: VueResponse) => { pushAccessUrl(); reject(error); }
+                            (error: VueResponse) => { reject(error); }
                         );
                     }
                     else {
-                        pushAccessUrl();
                         reject(error);
-                    } 
+                    }
                 },
             );
         });
@@ -73,13 +70,12 @@ export const httpRequest = {
                                     (error: VueResponse) => reject(error)
                                 );
                             },
-                            (error: VueResponse) => { pushAccessUrl(); reject(error); }
+                            (error: VueResponse) => { reject(error); }
                         );
                     }
                     else {
-                        pushAccessUrl();
                         reject(error);
-                    } 
+                    }
                 },
             );
         });
@@ -99,13 +95,12 @@ export const httpRequest = {
                                     (error: VueResponse) => reject(error)
                                 );
                             },
-                            (error: VueResponse) => { pushAccessUrl(); reject(error); }
+                            (error: VueResponse) => { reject(error); }
                         );
                     }
                     else {
-                        pushAccessUrl();
                         reject(error);
-                    } 
+                    }
                 },
             );
         });
@@ -125,13 +120,12 @@ export const httpRequest = {
                                     (error: VueResponse) => reject(error)
                                 );
                             },
-                            (error: VueResponse) => { pushAccessUrl(); reject(error); }
+                            (error: VueResponse) => { reject(error); }
                         );
                     }
                     else {
-                        pushAccessUrl();
                         reject(error);
-                    } 
+                    }
                 },
             );
         });
@@ -151,13 +145,12 @@ export const httpRequest = {
                                     (error: VueResponse) => reject(error)
                                 );
                             },
-                            (error: VueResponse) => { pushAccessUrl(); reject(error); }
+                            (error: VueResponse) => { reject(error); }
                         );
                     }
                     else {
-                        pushAccessUrl();
                         reject(error);
-                    } 
+                    }
                 },
             );
         });

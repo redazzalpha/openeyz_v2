@@ -81,7 +81,7 @@
                       <v-row>
                         <v-col class="d-flex justify-center">
                           <v-btn
-                            :width="btnSize"
+                            :width="btnSize()"
                             color="primary"
                             @click="sendPassword"
                             :disabled="!valid"
@@ -104,11 +104,12 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { mapState, mapActions, mapGetters } from "vuex";
-import { VueElement, VueFunction, VueResponse } from "../../utils/types";
+import { mapState, mapActions } from "vuex";
+import { VueElement, VueFunction } from "../../utils/types";
 import { rules } from "@/utils/rules";
 import { ERROR_MESSAGE_DURATION } from "../../utils/defines";
-import { failed, modifyUserPassword, success } from "@/utils/functions";
+import { modifyUserPassword } from "@/utils/functions";
+import { btnSize } from '../../utils/functions';
 
 export default Vue.extend({
   name: "Profile-password",
@@ -121,11 +122,11 @@ export default Vue.extend({
       valid: false,
       currentPasswd: "",
       newPasswd: "",
+      btnSize: btnSize,
     };
   },
   computed: {
     ...mapState(["currentUser"]),
-    ...mapGetters(["btnSize"]),
   },
   methods: {
     ...mapActions(["updateCurrentUser"]),
@@ -141,13 +142,7 @@ export default Vue.extend({
             document.querySelector(".form");
           if (formElem != null) {
             modifyUserPassword(new FormData(formElem)).then(
-              () => {
-                success("Modification successfull");
-                (form as unknown as VueFunction).reset();
-              },
-              (error: VueResponse): void => {
-                failed(error.bodyText);
-              }
+              () => (form as unknown as VueFunction).reset(),
             );
             setTimeout(() => {
               this.loading = false;

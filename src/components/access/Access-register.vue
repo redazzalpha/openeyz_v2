@@ -123,7 +123,7 @@
                 </v-col>
                 <!--register-button-->
                 <v-col class="d-flex justify-center my-0 pb-0">
-                  <v-btn color="primary" :width="btnSize" @click="register()"
+                  <v-btn color="primary" :width="btnSize()" @click="register()"
                     >REGISTER</v-btn
                   >
                 </v-col>
@@ -147,9 +147,10 @@
 <script lang="ts">
 import Vue from "vue";
 import { rules } from "@/utils/rules";
-import { mapActions, mapGetters } from "vuex";
-import { VueResponse, VueElement, VueFunction } from "../../utils/types";
-import { failed, register } from "@/utils/functions";
+import { mapActions } from "vuex";
+import { VueElement, VueFunction } from "../../utils/types";
+import { register } from "@/utils/functions";
+import { btnSize } from '../../utils/functions';
 export default Vue.extend({
   name: "Access-register",
   data() {
@@ -163,6 +164,7 @@ export default Vue.extend({
       valid: false,
       checkbox: false,
       isSecret: true,
+      btnSize: btnSize,
       emailRules: [rules.requiredEmail, rules.emailValidator],
       passwordRules: [rules.requiredPasswd, rules.passwdValidator],
       fieldRules: [rules.requiredField, rules.fieldValidator],
@@ -179,9 +181,7 @@ export default Vue.extend({
           const formElem: HTMLFormElement | null =
             document.querySelector(".register");
           if (formElem != null) {
-            register(new FormData(formElem)).catch((error: VueResponse): void =>
-              failed(error.bodyText)
-            );
+            register(new FormData(formElem));
           }
         }
       }
@@ -190,9 +190,6 @@ export default Vue.extend({
       const isEnter: boolean = code == "Enter" || code == "NumpadEnter";
       if (isEnter) this.register();
     },
-  },
-  computed: {
-    ...mapGetters(["btnSize"]),
   },
 });
 </script>

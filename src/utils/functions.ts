@@ -1,134 +1,233 @@
 import router from '../router';
 import store from "@/store";
-import { UserMap, VueResponse, Post, Users, Item, Comment, Notif } from './types';
+import { UserMap, VueResponse, Post, Users, Item, Comment, Notif, Body } from './types';
 import { DateTime } from "luxon";
 import * as defines from './defines';
 import { httpRequest } from '@/utils/http';
+import vuetify from '@/plugins/vuetify';
 
-export async function register(formElem: FormData): Promise<void> {
-  await login(formElem);
-}
 export function login(body: FormData): Promise<void | VueResponse> {
   return new Promise((resolve, reject) => {
     httpRequest.post(defines.SERVER_ACCESS_URL, body).then(
       () => router.push(defines.HOME_PAGE_URL),
-      (error: VueResponse) => reject(error),
+      (error: VueResponse) => { alert("error", error.bodyText); reject(error); },
+    );
+  });
+}
+export function register(formElem: FormData): Promise<void | VueResponse> {
+  return new Promise((resolve, reject) => {
+    login(formElem).then(
+      () => resolve(),
+      (error: VueResponse) => { alert("error", error.bodyText); reject(error); },
     );
   });
 }
 export async function logout(): Promise<void> {
-  await httpRequest.post(defines.SERVER_LOGOUT_URL);
-  clearStorage();
-  pushAccessUrl();
+  try {
+    await httpRequest.post(defines.SERVER_LOGOUT_URL);
+  }
+  finally {
+    clearStorage();
+    pushAccessUrl();
+  }
 }
 
 
-export async function getSimpleUsers(): Promise<void> {
-  const res = await httpRequest.get(defines.SERVER_USER_SIMPLE_URL);
-  const userListObj = (res.body as UserMap).map((e: string[]) => {
-    const [name, avatarSrc, role, username] = e;
-    return {
-      name: name,
-      avatarSrc: avatarSrc,
-      role: role,
-      username: username,
-    };
+export function getSimpleUsers(): Promise<VueResponse> {
+  return new Promise((resolve, reject) => {
+    httpRequest.get(defines.SERVER_USER_SIMPLE_URL).then(
+      (response: VueResponse) => {
+        const userListObj = (response.body as UserMap).map((e: string[]) => {
+          const [name, avatarSrc, role, username] = e;
+          return {
+            name: name,
+            avatarSrc: avatarSrc,
+            role: role,
+            username: username,
+          };
+        });
+        store.dispatch("updateUserListObj", userListObj);
+        store.dispatch("updateUserCardList", userListObj);
+        resolve(response);
+      },
+      (error: VueResponse) => {
+        failed(error.bodyText);
+        reject(error);
+      },
+    );
   });
-  store.dispatch("updateUserListObj", userListObj);
-  store.dispatch("updateUserCardList", userListObj);
 }
 export function getUserData(username: string): Promise<VueResponse> {
   return new Promise((resolve, reject) => {
     httpRequest.get(defines.SERVER_USER_DATA_URL, { params: { username } }).then(
       (response: VueResponse) => resolve(response),
-      (error: VueResponse) => reject(error)
+      (error: VueResponse) => {
+        failed(error.bodyText);
+        reject(error);
+      },
     );
   });
 
 }
-export async function updateUserState({ username }: Users, state: boolean): Promise<Users> {
-  const body: FormData = new FormData();
-  if (state) body.append("state", "true");
-  else body.append("state", "false");
-  body.append("username", username);
-  const res: VueResponse = await httpRequest.patch(
-    defines.SERVER_USER_STATE_URL,
-    body
-  );
-  return res.body as Users;
+export function updateUserState({ username }: Users, state: boolean): Promise<Users> {
+  return new Promise((resolve, reject) => {
+    const body: FormData = new FormData();
+    if (state) body.append("state", "true");
+    else body.append("state", "false");
+    body.append("username", username);
+    httpRequest.patch(defines.SERVER_USER_STATE_URL, body).then(
+      (response: VueResponse) => resolve(response.body as Users),
+      (error: VueResponse) => {
+        failed(error.bodyText);
+        reject(error);
+      },
+    );
+  });
 }
-export async function updateUserRole({ username }: Users, role: string): Promise<Users> {
-  const body: FormData = new FormData();
-  body.append("roleName", role);
-  body.append("username", username);
-  const res: VueResponse = await httpRequest.patch(
-    defines.SERVER_USER_ROLE_URL,
-    body
-  );
-  return res.body as Users;
-
+export function updateUserRole({ username }: Users, role: string): Promise<Users> {
+  return new Promise((resolve, reject) => {
+    const body: FormData = new FormData();
+    body.append("roleName", role);
+    body.append("username", username);
+    httpRequest.patch(defines.SERVER_USER_ROLE_URL, body).then(
+      (response: VueResponse) => resolve(response.body as Users),
+      (error: VueResponse) => {
+        failed(error.bodyText);
+        reject(error);
+      },
+    );
+  });
 }
-export async function deleteUserAccount(): Promise<void> {
-  await httpRequest.delete(defines.SERVER_USER_DELETE_URL);
-  clearStorage();
-  router.push(defines.ACCESS_PAGE_URL);
+export function modifyUserField(url: string, body: FormData): Promise<VueResponse> {
+  return new Promise((resolve, reject) => {
+    httpRequest.patch(url, body).then(
+      (response: VueResponse) => { success("modification done"); resolve(response); },
+      (error: VueResponse) => {
+        failed(error.bodyText);
+        reject(error);
+      },
+    );
+  });
 }
-export async function modifyUserDescription(description: string): Promise<void> {
-  const body: FormData = new FormData();
-  body.append("description", description);
-  await httpRequest.patch(defines.SERVER_USER_DESCRIPTION_URL, body);
+export function modifyUserDescription(description: string): Promise<VueResponse> {
+  return new Promise((resolve, reject) => {
+    const body: FormData = new FormData();
+    body.append("description", description);
+    httpRequest.patch(defines.SERVER_USER_DESCRIPTION_URL, body).then(
+      (response: VueResponse) => { success("modification done"); resolve(response); },
+      (error: VueResponse) => {
+        failed(error.bodyText);
+        reject(error);
+      },
+    );
+  });
 }
-export async function modifyUserField(url: string, body: FormData): Promise<void> {
-  await httpRequest.patch(url, body);
+export function modifyUserTheme(darkMode: boolean): Promise<VueResponse> {
+  return new Promise((resolve, reject) => {
+    const data: FormData = new FormData();
+    data.append("dark", darkMode.toString());
+    httpRequest.patch(defines.SERVER_USER_THEME_URL, data).then(
+      (response: VueResponse) => resolve(response),
+      (error: VueResponse) => {
+        failed(error.bodyText);
+        reject(error);
+      },
+    );
+  });
 }
-export async function sendUserAvatar(input: HTMLInputElement): Promise<VueResponse> {
+export function modifyUserPassword(body: FormData): Promise<VueResponse> {
+  return new Promise((resolve, reject) => {
+    httpRequest.patch(defines.SERVER_USER_PASSWORD_URL, body).then(
+      (response: VueResponse) => { success("modification done"); resolve(response); },
+      (error: VueResponse) => {
+        failed(error.bodyText);
+        reject(error);
+      },
+    );
+  });
+}
+export function sendUserAvatar(input: HTMLInputElement): Promise<VueResponse> {
   return new Promise((resolve, reject) => {
     if (input.files) {
       const file = new FormData();
       file.append("file", input.files[0]);
       httpRequest.post(defines.SERVER_USER_AVATAR_URL, file).then(
         (response: VueResponse) => resolve(response),
-        (error: VueResponse) => reject(error)
+        (error: VueResponse) => {
+          failed(error.bodyText);
+          reject(error);
+        },
       );
     }
   });
-
 }
-export async function removeUserAvatar(): Promise<void> {
-  await httpRequest.post(defines.SERVER_USER_AVATAR_URL);
-
-}
-export async function modifyUserTheme(darkMode: boolean): Promise<void> {
-  const data: FormData = new FormData();
-  data.append("dark", darkMode.toString());
-  await httpRequest.patch(defines.SERVER_USER_THEME_URL, data);
-}
-export function modifyUserPassword(body: FormData): Promise<VueResponse> {
+export function removeUserAvatar(): Promise<VueResponse> {
   return new Promise((resolve, reject) => {
-    httpRequest.patch(defines.SERVER_USER_PASSWORD_URL, body).then(
+    httpRequest.post(defines.SERVER_USER_AVATAR_URL).then(
       (response: VueResponse) => resolve(response),
-      (error: VueResponse) => reject(error)
+      (error: VueResponse) => {
+        failed(error.bodyText);
+        reject(error);
+      },
     );
   });
-
+}
+export function deleteUserAccount(): Promise<VueResponse> {
+  return new Promise((resolve, reject) => {
+    httpRequest.delete(defines.SERVER_USER_DELETE_URL).then(
+      (response: VueResponse) => {
+        clearStorage();
+        store.dispatch("updateLoader", false);
+        success("account  successfully deleted");
+        setTimeout(() => {
+          store.dispatch("updateLoader", true);
+        }, 4000);
+        setTimeout(() => {
+          pushAccessUrl();
+          resolve(response);
+        }, 8000);
+      },
+      (error: VueResponse) => {
+        failed(error.bodyText);
+        reject(error);
+      },
+    );
+  });
 }
 
+export function getPosts(limit: number, creation?: string, authorId?: string): Promise<VueResponse> {
+  return new Promise((resolve, reject) => {
+    httpRequest.get(
+      defines.SERVER_PUBLICATION_LIMIT_URL,
+      { params: { limit, creation, authorId } }
+    ).then(
+      (response: VueResponse) => { store.dispatch("updatePosts", JSON.parse(response.bodyText)); resolve(response); },
+      (error: VueResponse) => {
+        failed(error.bodyText);
+        reject(error);
+      },
+    );
 
-export async function getPosts(limit: number, creation?: string, authorId?: string): Promise<void | VueResponse> {
-  const response: VueResponse | void = await httpRequest.get(
-    defines.SERVER_PUBLICATION_LIMIT_URL,
-    { params: { limit, creation, authorId } }
-  );
-  store.dispatch("updatePosts", JSON.parse(response.bodyText));
+  });
 }
-export async function addPosts(limit: number, creation?: string, authorId?: string): Promise<void | VueResponse> {
-  const response: VueResponse | void = await httpRequest.get(
-    defines.SERVER_PUBLICATION_LIMIT_URL,
-    { params: { limit, creation, authorId } }
-  );
-  (response.body as []).forEach((e: Post) => { store.dispatch('addPosts', e); });
+export function   addPosts(limit: number, creation?: string, authorId?: string): Promise<VueResponse> {
+  return new Promise((resolve, reject) => {
+    httpRequest.get(
+      defines.SERVER_PUBLICATION_LIMIT_URL,
+      { params: { limit, creation, authorId } }
+    ).then(
+      (response: VueResponse) => {
+        (response.body as []).forEach((e: Post) => { store.dispatch('addPosts', e); });
+        resolve(response);
+      },
+      (error: VueResponse) => {
+        failed(error.bodyText);
+        reject(error);
+      },
+    );
+  });
 }
-export async function publishPost(post: string): Promise<void | VueResponse> {
+export function publishPost(post: string): Promise<void | VueResponse> {
   return new Promise((resolve, reject) => {
     const data: FormData = new FormData();
     post = post.trim();
@@ -136,16 +235,34 @@ export async function publishPost(post: string): Promise<void | VueResponse> {
     data.append("post", post);
 
     httpRequest.post(defines.SERVER_PUBLICATION_URL, data).then(
-      (): void => { getPosts(defines.POST_GET_LIMIT), resolve(); },
-      (error: VueResponse) => reject(error)
+      (response: VueResponse): void => { getPosts(defines.POST_GET_LIMIT), resolve(response); },
+      (error: VueResponse) => {
+        failed(error.bodyText);
+        reject(error);
+      },
     );
   });
 }
-export async function deletePost({ post }: Item, posts: Post[]): Promise<void> {
-  await httpRequest.delete(defines.SERVER_PUBLICATION_URL, {
-    params: { postId: post?.id },
+export function deletePost({ post }: Item, posts: Post[]): Promise<VueResponse> {
+  return new Promise((resolve, reject) => {
+    httpRequest.delete(defines.SERVER_PUBLICATION_URL, {
+      params: { postId: post?.id },
+    }).then(
+      () => {
+        getPosts(defines.POST_GET_LIMIT, posts[posts.length - 1].creation).then(
+          (response: VueResponse) => resolve(response),
+          (error: VueResponse) => {
+            failed(error.bodyText);
+            reject(error);
+          },
+        );
+      },
+      (error: VueResponse) => {
+        failed(error.bodyText);
+        reject(error);
+      },
+    );
   });
-  await getPosts(defines.POST_GET_LIMIT, posts[posts.length - 1].creation);
 }
 export function likePost({ post }: Item): Promise<VueResponse> {
   return new Promise((resolve, reject) => {
@@ -156,80 +273,193 @@ export function likePost({ post }: Item): Promise<VueResponse> {
         () => {
           httpRequest.get(defines.SERVER_LIKE_COUNT_URL, { params: { postId: post?.id } }).then(
             (response: VueResponse) => resolve(response),
-            (error: VueResponse) => reject(error),
+            (error: VueResponse) => {
+              failed(error.bodyText);
+              reject(error);
+            },
           );
         },
-        (error: VueResponse) => reject(error)
+        (error: VueResponse) => {
+          failed(error.bodyText);
+          reject(error);
+        },
       );
     }
   });
 }
 
 
-export async function getAllComments({ post }: Item, limit: number, creation?: string): Promise<void | VueResponse> {
-  const response: VueResponse = await httpRequest.get(
-    defines.SERVER_COMMENT_LIMIT_URL,
-    { params: { postId: post?.id, limit, creation } }
-  );
-  store.dispatch("updateComments", response.body as []);
-
-}
-export async function addAllComments(postId: number, limit: number, creation?: string): Promise<void | VueResponse> {
-
-  const response: VueResponse | void = await httpRequest.get(
-    defines.SERVER_COMMENT_LIMIT_URL,
-    { params: { postId, limit, creation } }
-  );
-  (response.body as []).forEach((e: Post) => { store.dispatch('addComments', e); });
-}
-export async function sendComment({ post }: Item, comment: string): Promise<void> {
-
-  if (post) {
-    const data: FormData = new FormData();
-    data.append("comment", comment);
-    data.append("postId", post.id.toString());
-    await httpRequest.post(defines.SERVER_COMMENT_URL, data);
-  }
-
-}
-export async function deleteComment({ id }: Comment): Promise<void> {
-  await httpRequest.delete(defines.SERVER_COMMENT_DELETE_URL, {
-    params: { commentId: id },
-  });
-
-}
-
-
-export async function getNotifs(): Promise<void | VueResponse> {
-  if (localStorage.getItem("token")) {
-    const response: VueResponse = await httpRequest.get(
-      defines.SERVER_USER_NOTIF_URL
+export function getAllComments({ post }: Item, limit: number, creation?: string): Promise<VueResponse> {
+  return new Promise((resolve, reject) => {
+    httpRequest.get(
+      defines.SERVER_COMMENT_LIMIT_URL,
+      { params: { postId: post?.id, limit, creation } }
+    ).then(
+      (response: VueResponse) => {
+        store.dispatch("updateComments", response.body as []);
+        resolve(response);
+      },
+      (error: VueResponse) => {
+        failed(error.bodyText);
+        reject(error);
+      },
     );
-    store.dispatch("updateUserNotifs", response.body);
-  }
-}
-export async function readNotif({ read, id }: Notif): Promise<void> {
-  if (!read) {
-    const notifId: FormData = new FormData();
-    notifId.append("notifId", id.toString());
-    await httpRequest.patch(defines.SERVER_USER_NOTIF_ONE_URL, notifId);
-    await getNotifs();
-  }
-}
-export async function deleteNotif({ id }: Notif): Promise<void> {
-  await httpRequest.delete(defines.SERVER_USER_NOTIF_ONE_URL, {
-    params: { notifId: id },
   });
-  await getNotifs();
 }
-export async function readNotifs(): Promise<void> {
-  await httpRequest.patch(defines.SERVER_USER_NOTIF_URL);
-  await getNotifs();
+export function addAllComments(postId: number, limit: number, creation?: string): Promise<VueResponse> {
+  return new Promise((resolve, reject) => {
+    httpRequest.get(
+      defines.SERVER_COMMENT_LIMIT_URL,
+      { params: { postId, limit, creation } }
+    ).then(
+      (response: VueResponse) => {
+        (response.body as []).forEach((e: Post) => { store.dispatch('addComments', e); });
+        resolve(response);
+      },
+      (error: VueResponse) => {
+        failed(error.bodyText);
+        reject(error);
+      },
+    );
+  });
+}
+export function sendComment({ post }: Item, comment: string): Promise<VueResponse> {
+  return new Promise((resolve, reject) => {
+    if (post) {
+      const data: FormData = new FormData();
+      data.append("comment", comment);
+      data.append("postId", post.id.toString());
+      httpRequest.post(defines.SERVER_COMMENT_URL, data).then(
+        (response: VueResponse) => {
+          resolve(response);
+        },
+        (error: VueResponse) => {
+          failed(error.bodyText);
+          reject(error);
+        },
+      );
+    }
+    else reject("post is empty");
+  });
+}
+export function deleteComment({ id }: Comment): Promise<VueResponse> {
+  return new Promise((resolve, reject) => {
+    httpRequest.delete(defines.SERVER_COMMENT_DELETE_URL, {
+      params: { commentId: id },
+    }).then(
+      (response: VueResponse) => resolve(response),
+      (error: VueResponse) => {
+        failed(error.bodyText);
+        reject(error);
+      },
+    );
+  });
+}
+
+
+export function getNotifs(): Promise<VueResponse> {
+  return new Promise((resolve, reject) => {
+    if (localStorage.getItem("token")) {
+      httpRequest.get(
+        defines.SERVER_USER_NOTIF_URL
+      ).then(
+        (response: VueResponse) => {
+          store.dispatch("updateUserNotifs", response.body);
+          resolve(response);
+        },
+        (error: VueResponse) => {
+          failed(error.bodyText);
+          reject(error);
+        },
+      );
+    }
+  });
+}
+export function readNotif({ read, id }: Notif): Promise<VueResponse> {
+  return new Promise((resolve, reject) => {
+    if (!read) {
+      const notifId: FormData = new FormData();
+      notifId.append("notifId", id.toString());
+      httpRequest.patch(defines.SERVER_USER_NOTIF_ONE_URL, notifId).then(
+        () => {
+          getNotifs().then(
+            (response: VueResponse) => resolve(response),
+            (error: VueResponse) => {
+              failed(error.bodyText);
+              reject(error);
+            },
+
+          );
+        },
+        (error: VueResponse) => {
+          failed(error.bodyText);
+          reject(error);
+        },
+      );
+    }
+    else reject("notitfication is already read");
+  });
+}
+export function deleteNotif({ id }: Notif): Promise<VueResponse> {
+  return new Promise((resolve, reject) => {
+    httpRequest.delete(defines.SERVER_USER_NOTIF_ONE_URL, {
+      params: { notifId: id },
+    }).then(
+      () => {
+        getNotifs().then(
+          (response: VueResponse) => resolve(response),
+          (error: VueResponse) => {
+            failed(error.bodyText);
+            reject(error);
+          },
+        );
+      },
+      (error: VueResponse) => {
+        failed(error.bodyText);
+        reject(error);
+      },
+    );
+  });
+}
+export async function readNotifs(): Promise<VueResponse> {
+  return new Promise((resolve, reject) => {
+    httpRequest.patch(defines.SERVER_USER_NOTIF_URL).then(
+      () => {
+        getNotifs().then(
+          (response: VueResponse) => resolve(response),
+          (error: VueResponse) => {
+            failed(error.bodyText);
+            reject(error);
+          },
+        );
+      },
+      (error: VueResponse) => {
+        failed(error.bodyText);
+        reject(error);
+      },
+    );
+  });
 
 }
-export async function deleteNotifs(): Promise<void> {
-  await httpRequest.delete(defines.SERVER_USER_NOTIF_URL);
-  await getNotifs();
+export function deleteNotifs(): Promise<VueResponse> {
+  return new Promise((resolve, reject) => {
+    httpRequest.delete(defines.SERVER_USER_NOTIF_URL).then(
+      () => {
+        getNotifs().then(
+          (response: VueResponse) => resolve(response),
+          (error: VueResponse) => {
+            failed(error.bodyText);
+            reject(error);
+          },
+
+        );
+      },
+      (error: VueResponse) => {
+        failed(error.bodyText);
+        reject(error);
+      },
+    );
+  });
 
 }
 
@@ -241,7 +471,9 @@ export async function uploaderSend(file: File) {
 
     httpRequest.post(defines.SERVER_IMG_URL, data).then(
       (response: VueResponse) => {
-        resolve({ default: (response.body as any).url });
+
+        const body: Body = response.body as Body;
+        resolve({ default: body.url });
       },
       error => reject(error.body.message),
     );
@@ -259,6 +491,9 @@ export function clearStorage() {
   localStorage.removeItem("vuex");
 }
 
+export function btnSize(): string {
+  return vuetify.framework.breakpoint.name == 'xs' ? '100%' : '50%';
+}
 
 export function translateDate(timestamp: string): string {
   return DateTime.fromISO(timestamp).setLocale("en").toFormat("DD 'at' HH:mm");
@@ -267,24 +502,10 @@ export function translateDateToISO(timestamp: string): string {
   return DateTime.fromISO(timestamp).setLocale("fr").toISO();
 }
 
-
 export function unavailableServerHandler(response: VueResponse): void {
   response.bodyText = "server is unavailable";
+}
 
-  pushAccessUrl();
-}
-export function internalServerErrorHandler(response: VueResponse): void {
-  response.bodyText = "internal server error";
-  pushAccessUrl();
-}
-export function badRequestHandler(response: VueResponse): void {
-  response.bodyText = "internal server error";
-  pushAccessUrl();
-}
-export function forbiddentHandler(response: VueResponse): void {
-  response.bodyText = "internal server error";
-  pushAccessUrl();
-}
 export function defaultHandler({ body, headers }: VueResponse): void {
   const token: string | null = headers.get("x-auth-token");
   const refreshToken: string | null = headers.get("x-refresh-token");
@@ -304,20 +525,26 @@ export function pushAccessUrl(): void {
   }
 }
 
-export function success(message: string): void {
-  store.dispatch("updateAlertType", "success");
+export function alert(type: string, message: string): void {
+  store.dispatch("updateAlertType", type);
   store.dispatch("updateAlertMessage", message);
-  store.dispatch("updateAlertShow", true);
+  store.dispatch("updateAlert", true);
   setTimeout(() => {
-    store.dispatch("updateAlertShow", false);
-  }, 5000);
+    store.dispatch("updateAlert", false);
+  }, 4000);
+}
+export function alertPersist(type: string, message: string): void {
+  clearStorage();
+  store.dispatch("updateLoader", false);
+  store.dispatch("updateAlertType", type);
+  store.dispatch("updateAlertMessage", message);
+  store.dispatch("updateAlertPersist", true);
+}
+export function success(message: string): void {
+  alert("success", message);
 }
 export function failed(message: string): void {
-  store.dispatch("updateAlertType", "error");
-  store.dispatch("updateAlertMessage", message);
-  store.dispatch("updateAlertShow", true);
-  setTimeout(() => {
-    store.dispatch("updateAlertShow", false);
-  }, 5000);
-
+  if (/^(.*JWT.*)|(.*Unauthorized.*)$/gi.test(message))
+    alertPersist("error", "auth. error please connect !");
+  else alert("error", message);
 }

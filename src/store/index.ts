@@ -1,6 +1,5 @@
 import { Post, Item } from '../utils/types';
 import { UserObj, Notif } from './../utils/types';
-import Vuetify from "@/plugins/vuetify";
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VuexPersistence from 'vuex-persist';
@@ -9,9 +8,7 @@ import VuexPersistence from 'vuex-persist';
 const vuexLocal = new VuexPersistence({
   storage: window.localStorage
 });
-
 Vue.use(Vuex);
-
 
 export default new Vuex.Store({
   state: {
@@ -31,15 +28,12 @@ export default new Vuex.Store({
     tabAccess: 0,
     tabProfile: 0,
 
-    alertShow: false,
-    alertType: "",
-    alertMessage: "",
-
+    alert: false,
+    alertPersist: false,
+    alertType: "error",
+    alertMessage: "error",
   },
   getters: {
-    btnSize(): string {
-      return Vuetify.framework.breakpoint.name == 'xs' ? '100%' : '50%';
-    },
   },
   mutations: {
     UPDATE_CURRENT_USER(state, payload): void {
@@ -95,15 +89,19 @@ export default new Vuex.Store({
       state.tabProfile = payload;
     },
 
-    UPDATE_ALERT_SHOW(state, payload: boolean): void {
-      state.alertShow = payload;
+    UPDATE_ALERT(state, payload: boolean): void {
+      state.alert = payload;
+    },
+    UPDATE_ALERT_PERSIST(state, payload: boolean): void {
+      state.alertPersist = payload;
     },
     UPDATE_ALERT_TYPE(state, payload: string): void {
       state.alertType = payload;
     },
     UPDATE_ALERT_MESSAGE(state, payload: string): void {
-      state.alertMessage= payload;
+      state.alertMessage = payload;
     },
+
 
     CLEAR_VUEX(state) {
       state.userListObj = [] as UserObj[];
@@ -122,10 +120,10 @@ export default new Vuex.Store({
       state.tabAccess = 0;
       state.tabProfile = 0;
 
-      state.alertShow = false;
-      state.alertType =  "";
-      state.alertMessage = "";
-  
+      state.alert = false;
+      state.alertPersist = false;
+      state.alertMessage = "error";
+      state.alertType = "error";
     }
   },
   actions: {
@@ -184,15 +182,19 @@ export default new Vuex.Store({
       context.commit('UPDATE_TAB_PROFILE', payload);
     },
 
-    updateAlertShow(context, payload: boolean) : void {
-      context.commit("UPDATE_ALERT_SHOW", payload);
+    updateAlert(context, payload: boolean): void {
+      context.commit("UPDATE_ALERT", payload);
     },
-    updateAlertType(context, payload: string) : void {
+    updateAlertPersist(context, payload: boolean): void {
+      context.commit("UPDATE_ALERT_PERSIST", payload);
+    },
+    updateAlertType(context, payload: string): void {
       context.commit("UPDATE_ALERT_TYPE", payload);
     },
-    updateAlertMessage(context, payload: string) : void {
+    updateAlertMessage(context, payload: string): void {
       context.commit("UPDATE_ALERT_MESSAGE", payload);
     },
+
 
     clearVuex(context) {
       context.commit("CLEAR_VUEX");

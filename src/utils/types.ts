@@ -8,9 +8,6 @@ export type VueElement = undefined | Vue | Element | (Vue | Element)[];
 export interface PPP extends VueFunction {
   name: string,
 }
-export class Body {
-  url = ""
-}
 export interface VueResponse {
   body: object | Blob | string | Body | object[];
   bodyText: string;
@@ -49,6 +46,7 @@ export interface Body {
   token: string;
   refreshToken: string;
   user: object;
+  url: string;
 }
 
 // model types
@@ -109,3 +107,4 @@ export interface ComObj {
   item: { post: Post; },
   comment: string,
 }
+

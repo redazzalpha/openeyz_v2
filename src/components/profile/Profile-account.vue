@@ -67,7 +67,7 @@
                       <v-row>
                         <v-col class="d-flex justify-center">
                           <v-btn
-                            :width="btnSize"
+                            :width="btnSize()"
                             color="#ba1c1e"
                             class="white--text"
                             @click.stop="dialog = !dialog"
@@ -142,8 +142,8 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapState } from "vuex";
-import { mapActions, mapGetters } from "vuex";
-import { deleteUserAccount } from "../../utils/functions";
+import { mapActions } from "vuex";
+import { deleteUserAccount, btnSize } from '../../utils/functions';
 export default Vue.extend({
   name: "Profile-account",
   components: {},
@@ -153,11 +153,11 @@ export default Vue.extend({
       confirmModel: "",
       dialog: false,
       confirm: false,
+      btnSize: btnSize,
     };
   },
   computed: {
     ...mapState(["currentUser"]),
-    ...mapGetters(["btnSize"]),
   },
   methods: {
     ...mapActions(["updateCurrentUser"]),

@@ -55,7 +55,7 @@
         <v-btn
           class="mx-auto mb-1"
           color="primary"
-          :width="btnSize"
+          :width="btnSize()"
           @click="login()"
           >CONNECT</v-btn
         >
@@ -69,10 +69,11 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 import { rules } from "@/utils/rules";
-import { VueResponse, VueElement, VueFunction } from "../../utils/types";
-import { failed, login } from "@/utils/functions";
+import { VueElement, VueFunction } from "../../utils/types";
+import { login } from "@/utils/functions";
+import { btnSize } from '../../utils/functions';
 
 export default Vue.extend({
   name: "Access-login",
@@ -82,6 +83,7 @@ export default Vue.extend({
       email: "",
       password: "",
       isSecret: true,
+      btnSize: btnSize,
       emailRules: [rules.requiredEmail, rules.emailValidator],
       passwordRules: [rules.requiredPasswd, rules.passwdValidator],
     };
@@ -94,11 +96,7 @@ export default Vue.extend({
         if ((form as unknown as VueFunction).validate()) {
           const formElem: HTMLFormElement | null =
             document.querySelector(".login");
-          if (formElem != null) {
-            login(new FormData(formElem)).catch((error: VueResponse): void =>
-              failed(error.bodyText)
-            );
-          }
+          if (formElem != null) login(new FormData(formElem));
         }
       }
     },
@@ -106,9 +104,6 @@ export default Vue.extend({
       const isEnter: boolean = code == "Enter" || code == "NumpadEnter";
       if (isEnter) this.login();
     },
-  },
-  computed: {
-    ...mapGetters(["btnSize"]),
   },
 });
 </script>

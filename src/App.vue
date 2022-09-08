@@ -1,7 +1,8 @@
 <template>
   <v-app id="wrapper" class="app-container" :style="background">
     <LoaderCpn :show="loader" />
-    <AlertCpn :show="alertShow" :message="alertMessage" :type="alertType" />
+    <AlertCpn />
+    <AlertPersistCpn />
     <div class="app-container-block">
       <AppbarCpn />
       <!--main-->
@@ -30,6 +31,7 @@ import DrawerCpn from "@/components/cpn/Drawer-cpn.vue";
 import ScrollTopBtnCpn from "./components/cpn/ScrollTopBtn-cpn.vue";
 import LoaderCpn from "./components/cpn/Loader-cpn.vue";
 import AlertCpn from "@/components/cpn/Alert-cpn.vue";
+import AlertPersistCpn from "@/components/cpn/Alert-persist-cpn.vue";
 
 export default Vue.extend({
   name: "App",
@@ -40,6 +42,7 @@ export default Vue.extend({
     ScrollTopBtnCpn,
     LoaderCpn,
     AlertCpn,
+    AlertPersistCpn,
   },
   computed: {
     ...mapState([
@@ -47,9 +50,6 @@ export default Vue.extend({
       "userNotifs",
       "posts",
       "loader",
-      "alertShow",
-      "alertType",
-      "alertMessage",
     ]),
     background(): string {
       const backgroundUrl: string = this.$vuetify.theme.dark
