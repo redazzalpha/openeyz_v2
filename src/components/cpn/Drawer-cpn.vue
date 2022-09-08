@@ -1,5 +1,11 @@
 <template>
-  <v-navigation-drawer tag="nav" class="drawer-cpn-nav" v-model="$store.state.drawer" temporary app>
+  <v-navigation-drawer
+    tag="nav"
+    class="drawer-cpn-nav"
+    v-model="$store.state.drawer"
+    temporary
+    app
+  >
     <!-- item-list -->
     <v-list-item>
       <!-- user-vatara -->
@@ -33,9 +39,26 @@
         <v-list-item-icon class="cyan--text text--darken-1">
           <i :class="icon.class"></i>
         </v-list-item-icon>
+
         <!-- content-item -->
         <v-list-item-content>
-          <v-list-item-title>{{ icon.title }}</v-list-item-title>
+          <v-hover v-slot="{ hover }">
+            <v-list-item-title>
+              <v-badge
+                :value="
+                  icon.title == 'Notifications' && unreadNotif ? true : false
+                "
+                :dot="!hover"
+                overlap
+                :content="unreadNotif"
+                :color="$vuetify.theme.dark ? 'error' : '#293fa3'"
+                style="position: relative; left: 94px; top: -8px"
+                class="zombif"
+              >
+              </v-badge>
+              {{ icon.title }}
+            </v-list-item-title>
+          </v-hover>
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -46,8 +69,14 @@
 import Vue from "vue";
 import Avatar from "./Avatar-cpn.vue";
 import { mapState } from "vuex";
-import { HOME_PAGE_URL, NOTIFICATION_PAGE_URL, PROFILE_PAGE_URL, TEAM_PAGE_URL, } from "../../utils/defines";
+import {
+  HOME_PAGE_URL,
+  NOTIFICATION_PAGE_URL,
+  PROFILE_PAGE_URL,
+  TEAM_PAGE_URL,
+} from "../../utils/defines";
 import { logout } from "@/utils/functions";
+import { Notif } from "@/utils/types";
 export default Vue.extend({
   name: "Drawer-cpn",
   components: {
@@ -85,13 +114,18 @@ export default Vue.extend({
       ],
     };
   },
+  computed: {
+    ...mapState(["currentUser", "userNotifs"]),
+    unreadNotif() {
+      return this.userNotifs.filter((e: Notif) => {
+        return !e.read;
+      }).length;
+    },
+  },
   methods: {
     checkCurrentUser(): boolean {
       return typeof this.currentUser != "function" && this.currentUser != null;
     },
-  },
-  computed: {
-    ...mapState(["currentUser"]),
   },
 });
 </script>
