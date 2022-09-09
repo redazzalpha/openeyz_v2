@@ -1,5 +1,10 @@
 <template>
-  <div class="access-page-block">
+  <div
+    class="access-page-block"
+    style="min-height: 100vh"
+  >
+    <v-img src="../assets/logo-title.png" width="350" class="mx-auto" />
+
     <v-dialog
       class="access-page-dialog"
       v-model="dialog"
@@ -41,10 +46,10 @@ export default Vue.extend({
   created() {
     this.updateTabAccess(0);
   },
-  mounted(){
+  mounted() {
     this.updateLoader(false);
   },
-   destroyed() {
+  destroyed() {
     this.updateLoader(true);
   },
 });
