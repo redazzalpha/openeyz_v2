@@ -4,6 +4,8 @@
       class="notfound-page-card d-flex flex-column align-center"
       style="position: relative; top: 20%"
     >
+      <v-img src="../assets/logo-title.png" width="350" class="mx-auto" />
+
       <v-img src="../assets/404-notfound.png" width="300px"></v-img>
       <div class="" style="font-size: 50px; font-family: serif">Not Found</div>
       <div>

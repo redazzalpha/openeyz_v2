@@ -1,6 +1,12 @@
 <template>
   <div>
-    <v-app-bar tag="header" class="appbar-cpn-container" :color="$vuetify.theme.dark? '#212121' : 'cyan darken-1'" elevation="1" app>
+    <v-app-bar
+      tag="header"
+      class="appbar-cpn-container"
+      :color="$vuetify.theme.dark ? '#212121' : 'cyan darken-1'"
+      elevation="1"
+      app
+    >
       <v-container fluid grid-list-xs>
         <v-row class="d-flex">
           <!--navigation-drawer-icon-->
@@ -38,7 +44,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapActions, mapState } from "vuex";
-import {HOME_PAGE_URL}  from "../../utils/defines";
+import { HOME_PAGE_URL } from "../../utils/defines";
 import LinksCpn from "./Links-cpn.vue";
 export default Vue.extend({
   name: "Appbar-cpn",
