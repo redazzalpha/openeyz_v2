@@ -4,7 +4,7 @@
       class="notfound-page-card d-flex flex-column align-center"
       style="position: relative; top: 20%"
     >
-      <v-img src="../assets/404-notfound-1.png" width="300px"></v-img>
+      <v-img src="../assets/404-notfound.png" width="300px"></v-img>
       <div class="" style="font-size: 50px; font-family: serif">Not Found</div>
       <div>
         <p>Sorry, the page you are looking for does not exist.</p>
