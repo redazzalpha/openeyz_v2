@@ -503,6 +503,14 @@ export function translateDateToISO(timestamp: string): string {
 export function unavailableServerHandler(response: VueResponse): void {
   response.bodyText = "server is unavailable";
 }
+export function internalServerError(response: VueResponse): void {
+  let message = "internal server error";
+  const regexp = new RegExp(".*Maximum upload size.*", "gi");
+  if (regexp.test(response.bodyText))
+    message = "image file too big";
+
+  response.bodyText = message;
+}
 
 export function defaultHandler({ body, headers }: VueResponse): void {
   const token: string | null = headers.get("x-auth-token");

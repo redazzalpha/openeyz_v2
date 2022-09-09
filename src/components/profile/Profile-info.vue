@@ -317,11 +317,14 @@ export default Vue.extend({
       const input = this.$refs.input as HTMLInputElement;
       input.click();
     },
-    async pickFile() {
+    pickFile() {
       const input = this.$refs.input as HTMLInputElement;
-      const response: VueResponse = await sendUserAvatar(input);
-      this.currentUser.avatarSrc = response.bodyText;
-      this.updateCurrentUser(this.currentUser);
+      sendUserAvatar(input).then(
+        (response: VueResponse) => {
+          this.currentUser.avatarSrc = response.bodyText;
+          this.updateCurrentUser(this.currentUser);
+        },
+      );
     },
     async themeSwitcher(darkMode: boolean) {
       await modifyUserTheme(darkMode);

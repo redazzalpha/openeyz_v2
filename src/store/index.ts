@@ -117,7 +117,7 @@ export default new Vuex.Store({
       state.loader = true;
       state.currentUser = null;
       state.currentItem = new Item;
-
+      
       state.teamSelectedUser = null;
       state.teamSelectedDialog = false;
       state.commentDialog = false;
