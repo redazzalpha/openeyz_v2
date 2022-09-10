@@ -3,9 +3,9 @@
   <v-container grid-list-xs class="comment-area-container">
     <!-- leave-comment-area -->
     <v-row>
-      <v-col class="d-flex align-center pt-0">
+      <v-col class="d-flex align-center py-0">
         <AvatarCpn
-          style="position: relative; bottom: 10px"
+          style="position: relative; bottom: 15px"
           align-self="start"
           :avatarSrc="currentUser.avatarSrc"
           :role="currentUser.roles[0].roleName"

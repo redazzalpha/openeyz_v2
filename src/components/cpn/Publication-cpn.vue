@@ -5,7 +5,6 @@
       :options="{
         threshold: 0.5,
       }"
-      min-height="200"
       transition="fade-transition"
     >
       <div class="publication">
@@ -51,12 +50,12 @@
                 </v-card-title>
                 <!-- publication-content -->
                 <v-card-text
-                  v-html="item.post.content"
+                  v-html="getPostContent"
                   class="pa-0"
                 ></v-card-text>
                 <!-- buttons -->
                 <v-card-actions
-                  :style="`visibility: ${subline ? 'visible' : 'hidden'} `"
+                  :style="`visibility: ${subline ? 'visible' : 'hidden; height: 15px;'} `"
                 >
                   <v-container grid-list-xs fluid>
                     <v-row>
@@ -132,7 +131,7 @@ export default Vue.extend({
   props: {
     item: {
       type: Object as PropType<Item>,
-      required: false,
+      required: true,
     },
     subline: {
       type: Boolean,
@@ -151,6 +150,9 @@ export default Vue.extend({
   },
   computed: {
     ...mapState(["posts", "currentUser"]),
+    getPostContent(): string | undefined {
+      return this.item.post?.content.replace("<p>", "<p style='padding-left: 15px;'>");
+    },
   },
   methods: {
     ...mapActions(["updateCurrentItem", "updateCommentDialog"]),
@@ -205,4 +207,11 @@ p {
   .v-btn__content {
   opacity: 1 !important;
 }
+</style>
+<style lang="scss" scoped>
+p {
+  border: solid red 3px;
+  padding-left: 5px;
+}
+
 </style>

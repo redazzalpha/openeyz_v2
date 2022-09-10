@@ -61,7 +61,7 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col>
+          <v-col class="pt-0">
             <InfoCpn
               v-if="!comments.length"
               message="This post has not comment be the first to leave one"

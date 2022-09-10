@@ -11,7 +11,7 @@
     <!-- tabs-items -->
     <v-tabs-items
       v-model="$store.state.tabProfile"
-      style="background-color: transparent; padding-top: 65px"
+      style="background-color: transparent;"
       touchless
     >
       <!-- title -->
