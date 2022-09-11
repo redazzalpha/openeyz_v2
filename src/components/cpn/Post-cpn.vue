@@ -62,7 +62,6 @@ import AvatarCpn from "../cpn/Avatar-cpn.vue";
 import { mapState } from "vuex";
 import { VueResponse } from "../../utils/types";
 import { alert, btnSize, publishPost } from "../../utils/functions";
-import {  } from "../../utils/defines";
 
 export default Vue.extend({
   name: "Post-cpn",
@@ -85,7 +84,7 @@ export default Vue.extend({
     checkCurrentUser(): boolean {
       return typeof this.currentUser != "function" && this.currentUser != null;
     },
-    publish(): void {
+    publish(): void {      
       if (this.editorData) {
         this.loading = true;
         this.disabled = true;
@@ -97,7 +96,7 @@ export default Vue.extend({
           this.loading = false;
         }, 1000);
       }
-    },
+    },  
   },
   watch: {
     editorData(value: string) {
