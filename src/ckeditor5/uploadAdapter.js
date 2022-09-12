@@ -1,4 +1,3 @@
-import { uploaderSend } from '../utils/functions';
 
 class UploadAdapter {
 
@@ -6,12 +5,11 @@ class UploadAdapter {
         this.loader = loader;
     }
     upload() {
-        return this.loader.file.then(
-            file => uploaderSend(file),
-        );
+        return this.loader.file;
+        // return this.loader.file.then(
+        //      file => uploaderSend(file),
+        // );
     }
-    // abort() {
-    // }
 }
 
 export default function UploadAdapterPlugin(editor) {

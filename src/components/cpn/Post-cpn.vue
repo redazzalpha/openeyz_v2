@@ -60,9 +60,7 @@ import Vue from "vue";
 import ClassicEditor from "@/ckeditor5/ckeditor5";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
 import { mapState } from "vuex";
-import { VueResponse } from "../../utils/types";
-import { alert, btnSize, publishPost } from "../../utils/functions";
-import { v4 as uuidv4 } from "uuid";
+import { btnSize, publishPost } from "../../utils/functions";
 
 export default Vue.extend({
   name: "Post-cpn",
@@ -92,32 +90,14 @@ export default Vue.extend({
         this.disabled = true;
         publishPost(this.editorData).then(
           () => (this.editorData = ""),
-          () => {/**/}
+          () => {
+            /**/
+          }
         );
         setTimeout(() => {
           this.loading = false;
         }, 1000);
       }
-    },
-    generateFiles(): File[] {
-      const fileList: Array<File> = new Array<File>();
-      const imageTags: HTMLImageElement[] = document.querySelectorAll(
-        "figure.image.ck-widget img"
-      ) as unknown as HTMLImageElement[];
-
-      imageTags.forEach((img) => {
-        const dataUrlTab = img.currentSrc.split(",");
-        const match = dataUrlTab[0].match(/:(.*?);/);
-        if (match) {
-          const mimeType = match[1];
-          const data = atob(dataUrlTab[1]);
-          let dataSize = data.length;
-          const buffer = new Uint8Array(dataSize);
-          while (dataSize--) buffer[dataSize] = data.charCodeAt(dataSize);
-          fileList.push(new File([buffer], uuidv4(), { type: mimeType }));
-        }
-      });
-      return fileList;
     },
   },
   watch: {

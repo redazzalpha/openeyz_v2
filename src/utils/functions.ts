@@ -1,10 +1,12 @@
 import router from '../router';
 import store from "@/store";
-import { UserMap, VueResponse, Post, Users, Item, Comment, Notif, Body } from './types';
+import { UserMap, VueResponse, Post, Users, Item, Comment, Notif } from './types';
 import { DateTime } from "luxon";
 import * as defines from './defines';
 import { httpRequest } from '@/utils/http';
 import vuetify from '@/plugins/vuetify';
+import { v4 as uuidv4 } from "uuid";
+
 
 export function login(body: FormData): Promise<void | VueResponse> {
   return new Promise((resolve, reject) => {
@@ -230,6 +232,7 @@ export function addPosts(limit: number, creation?: string, authorId?: string): P
 export function publishPost(post: string): Promise<void | VueResponse> {
   return new Promise((resolve, reject) => {
     const data: FormData = new FormData();
+    generateFiles().forEach(file => data.append("images", file));
     post = post.trim();
     post = post.replace(/<img/g, "<img width=100% style='max-height: 465px; object-fit: cover'");
     data.append("post", post);
@@ -327,6 +330,7 @@ export function sendComment({ post }: Item, comment: string): Promise<VueRespons
   return new Promise((resolve, reject) => {
     if (post) {
       const data: FormData = new FormData();
+      comment = comment.trim();
       data.append("comment", comment);
       data.append("postId", post.id.toString());
       httpRequest.post(defines.SERVER_COMMENT_URL, data).then(
@@ -461,16 +465,16 @@ export function deleteNotifs(): Promise<VueResponse> {
 
 }
 
-
+// this function became useless due to the upload image update
 export async function uploaderSend(file: File) {
   return new Promise((resolve, reject) => {
     const data = new FormData();
     data.append('file', file);
 
     httpRequest.post(defines.SERVER_IMG_URL, data).then(
-      (response: VueResponse) => {
+      () => {
 
-        const body: Body = response.body as Body;
+        // const body: Body = response.body as Body;
         resolve("");
         // resolve({ default: body.url });
       },
@@ -555,3 +559,25 @@ export function failed(message: string): void {
     alertPersist("error", "auth. error please connect !");
   else alert("error", message);
 }
+
+export function generateFiles(): File[] {
+  const fileList: Array<File> = new Array<File>();
+  const imageTags: HTMLImageElement[] = document.querySelectorAll(
+    "figure.image.ck-widget img"
+  ) as unknown as HTMLImageElement[];
+
+  imageTags.forEach((img) => {
+    const dataUrlTab = img.currentSrc.split(",");
+    const match = dataUrlTab[0].match(/:(.*?);/);
+    if (match) {
+      const mimeType = match[1];
+      const data = atob(dataUrlTab[1]);
+      const dataSize = data.length;
+      const buffer = new Uint8Array(dataSize);
+      for (let i = 0; i < dataSize; i++) buffer[i] = data.charCodeAt(i);
+      fileList.push(new File([buffer], uuidv4() + "." + mimeType.split("/")[1], { type: mimeType }));
+    }
+  });
+  return fileList;
+}
+
