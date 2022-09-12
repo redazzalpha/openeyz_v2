@@ -471,7 +471,8 @@ export async function uploaderSend(file: File) {
       (response: VueResponse) => {
 
         const body: Body = response.body as Body;
-        resolve({ default: body.url });
+        resolve("");
+        // resolve({ default: body.url });
       },
       error => reject(error.body.message),
     );

@@ -8,7 +8,6 @@ class UploadAdapter {
     upload() {
         return this.loader.file.then(
             file => uploaderSend(file),
-            error => console.log("this is error from uploader: " + error)
         );
     }
     // abort() {
