@@ -508,7 +508,10 @@ export function translateDateToISO(timestamp: string): string {
 export function unavailableServerHandler(response: VueResponse): void {
   response.bodyText = "server is unavailable";
 }
-export function internalServerError(response: VueResponse): void {
+export function forbiddenHandler(response: VueResponse): void {
+  response.bodyText = "you are not authorized to do this action";
+}
+export function internalServerErrorHandler(response: VueResponse): void {
   let message = "internal server error";
   const regexp = new RegExp(".*Maximum upload size.*", "gi");
   if (regexp.test(response.bodyText))
@@ -555,8 +558,14 @@ export function success(message: string): void {
   alert("success", message);
 }
 export function failed(message: string): void {
-  if (/^(.*JWT.*)|(.*Unauthorized.*)$/gi.test(message))
+  const jwtError: boolean = new RegExp("(.*JWT.*)|(.*Unauthorized.*)", "gi").test(message);
+  const forbiddenError: boolean = new RegExp(".*forbidden.*", "gi").test(message);
+  const isAccesPage: boolean = router.currentRoute.name == "access";
+
+  if (jwtError)
     alertPersist("error", "auth. error please connect !");
+  else if (forbiddenError && !isAccesPage)
+    alertPersist("error", "your account has been disabled");
   else alert("error", message);
 }
 
