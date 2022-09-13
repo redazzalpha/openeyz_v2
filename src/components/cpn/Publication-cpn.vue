@@ -49,13 +49,12 @@
                   </v-btn>
                 </v-card-title>
                 <!-- publication-content -->
-                <v-card-text
-                  v-html="getPostContent"
-                  class="pa-0"
-                ></v-card-text>
+                <v-card-text v-html="getPostContent" class="pa-0"></v-card-text>
                 <!-- buttons -->
                 <v-card-actions
-                  :style="`visibility: ${subline ? 'visible' : 'hidden; height: 15px;'} `"
+                  :style="`visibility: ${
+                    subline ? 'visible' : 'hidden; height: 15px;'
+                  } `"
                 >
                   <v-container grid-list-xs fluid>
                     <v-row>
@@ -123,6 +122,7 @@ import { mapState, mapActions } from "vuex";
 import { Item, VueResponse } from "../../utils/types";
 import { deletePost, likePost, translateDate } from "../../utils/functions";
 import AvatarCpn from "./Avatar-cpn.vue";
+
 export default Vue.extend({
   name: "Publication-cpn",
   components: {
@@ -151,7 +151,17 @@ export default Vue.extend({
   computed: {
     ...mapState(["posts", "currentUser"]),
     getPostContent(): string | undefined {
-      return this.item.post?.content.replace("<p>", "<p style='padding-left: 15px;'>");
+      const isXs : boolean = this.$vuetify.breakpoint.name == "xs";
+      const maxHeight: string = isXs? "195px" : "465px";
+      const paragraph = "<p>";
+      const paragraphReplace = "<p style='padding-left: 15px;'>";
+      const img = "<img";
+      const imgReplace = "<img width=100% style='max-height: " + maxHeight +  "; object-fit: cover'"; 
+
+      return this.item.post?.content
+      .replace(paragraph, paragraphReplace)
+      .replace(img, imgReplace);
+      
     },
   },
   methods: {
@@ -193,12 +203,6 @@ export default Vue.extend({
 p {
   margin: 10px 10px !important;
 }
-
-/* .v-badge__badge{
-    min-width: 15px!important;
-    height: 15px!important;
-
-} */
 .badge {
   width: 35px !important;
   height: 20px !important;
@@ -213,5 +217,4 @@ p {
   border: solid red 3px;
   padding-left: 5px;
 }
-
 </style>

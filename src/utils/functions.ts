@@ -234,7 +234,6 @@ export function publishPost(post: string): Promise<void | VueResponse> {
     const data: FormData = new FormData();
     generateFiles().forEach(file => data.append("images", file));
     post = post.trim();
-    post = post.replace(/<img/g, "<img width=100% style='max-height: 465px; object-fit: cover'");
     data.append("post", post);
 
     httpRequest.post(defines.SERVER_PUBLICATION_URL, data).then(
@@ -507,9 +506,6 @@ export function translateDateToISO(timestamp: string): string {
 
 export function unavailableServerHandler(response: VueResponse): void {
   response.bodyText = "server is unavailable";
-}
-export function forbiddenHandler(response: VueResponse): void {
-  response.bodyText = "you are not authorized to do this action";
 }
 export function internalServerErrorHandler(response: VueResponse): void {
   let message = "internal server error";

@@ -57,7 +57,9 @@
 
 <script lang="ts">
 import Vue from "vue";
-import ClassicEditor from "@/ckeditor5/ckeditor5";
+// import ClassicEditor from "@/ckeditor5/ckeditor5";
+import ClassicEditor from "../../ckeditor5/ckeditor5";
+
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
 import { mapState } from "vuex";
 import { btnSize, publishPost } from "../../utils/functions";
