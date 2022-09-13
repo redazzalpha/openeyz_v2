@@ -4,6 +4,7 @@
         <v-img v-else-if="!avatarSrc && role == 'ADMIN'" src="../../assets/admin.png" alt="alt" />
         <v-img v-else-if="!avatarSrc && role == 'USER'" src="../../assets/user.png" alt="alt" />
         <v-img v-else-if="avatarSrc" :src="avatarSrc" alt="alt" />
+        <v-img v-else src="../../assets/user.png" alt="alt" />
     </v-avatar>
 </template>
 
@@ -25,7 +26,7 @@ export default Vue.extend({
             default: "55",
             required: false,
         }
-    }
+    },
 });
 </script>
 

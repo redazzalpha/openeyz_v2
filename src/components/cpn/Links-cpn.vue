@@ -22,7 +22,9 @@
           :ripple="plain"
           :plain="!plain"
         >
-          <i :class="icon.class + ' mr-1'"></i>
+
+          <AvatarCpn v-if="icon.title == 'Profile' && currentUser != null" :avatarSrc="currentUser.avatarSrc" :role="currentUser.roles[0].roleName" size="30" />
+          <i v-if="icon.title != 'Profile'" :class="icon.class + ' mr-1'"></i>
           <span style="font-size: 13px">{{ icon.title }}</span>
         </v-btn>
       </v-badge>
@@ -36,8 +38,12 @@ import { mapState } from 'vuex';
 import { Notif } from "../../utils/types";
 import { HOME_PAGE_URL, NOTIFICATION_PAGE_URL, PROFILE_PAGE_URL, TEAM_PAGE_URL } from "../../utils/defines";
 import { logout } from '../../utils/functions';
+import AvatarCpn from "../cpn/Avatar-cpn.vue";
 export default Vue.extend({
   name: "Links-cpn",
+  components: {
+    AvatarCpn,
+  },
   props: {
     show: {
       type: Boolean,

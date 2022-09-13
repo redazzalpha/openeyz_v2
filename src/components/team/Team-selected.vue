@@ -49,6 +49,7 @@
         <v-row class="mt-15">
           <v-col class="text-center">
             <v-card-title primary-title class="d-flex justify-center">
+              <avatarCpn :avatarSrc="getUserImg()" :role="role" />
               {{ author }} 's publications
             </v-card-title>
             <v-card-subtitle style="opacity: 0.7">
@@ -125,6 +126,7 @@ import LinksCpn from "../cpn/Links-cpn.vue";
 import AuthorizationCpn from "../cpn/AuthorizationCpn.vue";
 import CommentBlock from "../comment/Comment-block.vue";
 import { Users, VueResponse } from "../../utils/types";
+import AvatarCpn from "../cpn/Avatar-cpn.vue";
 
 export default Vue.extend({
   name: "Team-selected",
@@ -135,6 +137,7 @@ export default Vue.extend({
     LinksCpn,
     AuthorizationCpn,
     CommentBlock,
+    AvatarCpn,
   },
   props: {
     author: {
@@ -234,6 +237,20 @@ export default Vue.extend({
         this.currentUser.roles[0].roleName == "SUPERADMIN" &&
         this.currentUser.username != this.user.username
       );
+    },
+    getUserImg(): string {
+      const { avatarSrc, roles, state } = this.user;
+      if (typeof avatarSrc != "function" && typeof state != "function") {
+        if (!state) return require("../../assets/banned.png");
+        else if (!avatarSrc && roles[0].roleName == "SUPERADMIN")
+          return require("../../assets/suadmin.png");
+        else if (!avatarSrc && roles[0].roleName == "ADMIN")
+          return require("../../assets/admin.png");
+        else if (!avatarSrc && roles[0].roleName == "USER")
+          return require("../../assets/user.png");
+        else if (avatarSrc) return avatarSrc;
+      }
+      return require("../../assets/user.png");
     },
   },
   watch: {
