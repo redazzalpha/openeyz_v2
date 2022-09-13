@@ -50,8 +50,15 @@
           <v-col class="text-center">
             <v-card-title primary-title class="d-flex justify-center">
               <avatarCpn :avatarSrc="getUserImg()" :role="role" />
-              {{ author }} 's publications
+              <div class="d-flex flex-column">
+                <span> {{ author }} 's publications </span>
+                <span class="text-body-2">
+                  {{ user.username }}
+                </span>
+              </div>
             </v-card-title>
+
+            <v-card-subtitle class="text-center; pb-0"> </v-card-subtitle>
             <v-card-subtitle style="opacity: 0.7">
               Here you could find all {{ author }} publications. From this place
               you can interact add comment or like publications.

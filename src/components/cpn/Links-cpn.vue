@@ -23,7 +23,7 @@
           :plain="!plain"
         >
 
-          <AvatarCpn v-if="icon.title == 'Profile' && currentUser != null" :avatarSrc="currentUser.avatarSrc" :role="currentUser.roles[0].roleName" size="30" />
+          <AvatarCpn  v-if="icon.title == 'Profile' && currentUser != null" :avatarSrc="currentUser.avatarSrc" :role="currentUser.roles[0].roleName" size="30" />
           <i v-if="icon.title != 'Profile'" :class="icon.class + ' mr-1'"></i>
           <span style="font-size: 13px">{{ icon.title }}</span>
         </v-btn>
