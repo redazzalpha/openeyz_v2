@@ -585,3 +585,10 @@ export function generateFiles(): File[] {
   });
   return fileList;
 }
+
+export function getCurrent(value: string) : string {
+  return store.state.currentUser ? store.state.currentUser[value] : "";
+}
+export function getCurrentRole() : string {
+  return store.state.currentUser ? (store.state.currentUser as Users).roles[0].roleName as string: "";
+}

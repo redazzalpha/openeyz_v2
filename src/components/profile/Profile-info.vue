@@ -1,15 +1,15 @@
 <template>
   <v-tab-item class="profile-info-tab-item">
     <!-- main-card -->
-    <v-card max-width="600" class="mx-auto mb-10" shaped raised outlined >
+    <v-card max-width="600" class="mx-auto mb-10" shaped raised outlined>
       <!-- header-title -->
       <v-card-title class="d-flex flex-column justify-center align-center">
         <!-- user-avatar -->
-        <span>{{ currentUser.name }}</span>
+        <span>{{ current("name") }}</span>
         <span style="position: relative">
           <AvatarCpn
-            :avatarSrc="currentUser.avatarSrc"
-            :role="currentUser.roles[0].roleName"
+            :avatarSrc="current('avatarSrc')"
+            :role="currentRole()"
             size="170"
           />
 
@@ -52,7 +52,7 @@
           <!-- last-name-row -->
           <v-row>
             <v-col>
-              <span class="mr-3">Last name: {{ currentUser.lname }} </span>
+              <span class="mr-3">Last name: {{ current("lname") }} </span>
             </v-col>
             <v-col class="shrink">
               <v-btn small color="primary" @click="openModify(0)">Modify</v-btn>
@@ -62,7 +62,7 @@
           <!-- name-row -->
           <v-row>
             <v-col>
-              <span class="mr-3">First name: {{ currentUser.name }} </span>
+              <span class="mr-3">First name: {{ current("name") }} </span>
             </v-col>
             <v-col class="shrink">
               <v-btn small color="primary" @click="openModify(1)">Modify</v-btn>
@@ -72,14 +72,12 @@
           <!-- email-row -->
           <v-row>
             <v-col>
-              <span class="mr-3">E-mail: {{ currentUser.username }} </span>
+              <span class="mr-3">E-mail: {{ current("username") }} </span>
             </v-col>
           </v-row>
           <v-row v-if="isAuthorized()">
             <v-col>
-              <span class="mr-3"
-                >Role: {{ currentUser.roles[0].roleName }}
-              </span>
+              <span class="mr-3">Role: {{ currentRole() }} </span>
             </v-col>
           </v-row>
           <!-- description-row -->
@@ -88,8 +86,8 @@
               <span class="mr-3">
                 Description:
                 {{
-                  currentUser.description
-                    ? currentUser.description
+                  current("description")
+                    ? current("description")
                     : "No description"
                 }}
               </span>
@@ -202,6 +200,8 @@ import {
 } from "../../utils/defines";
 import { rules } from "../../utils/rules";
 import {
+  getCurrent,
+  getCurrentRole,
   modifyUserDescription,
   modifyUserField,
   modifyUserTheme,
@@ -238,6 +238,13 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions(["updateCurrentUser"]),
+    current(value: string): string {
+      return getCurrent(value);
+    },
+    currentRole(): string {
+      return getCurrentRole();
+    },
+
     async sendDescription() {
       await modifyUserDescription(this.description);
       this.currentUser.description = this.description;
@@ -319,12 +326,10 @@ export default Vue.extend({
     },
     pickFile() {
       const input = this.$refs.input as HTMLInputElement;
-      sendUserAvatar(input).then(
-        (response: VueResponse) => {
-          this.currentUser.avatarSrc = response.bodyText;
-          this.updateCurrentUser(this.currentUser);
-        },
-      );
+      sendUserAvatar(input).then((response: VueResponse) => {
+        this.currentUser.avatarSrc = response.bodyText;
+        this.updateCurrentUser(this.currentUser);
+      });
     },
     async themeSwitcher(darkMode: boolean) {
       await modifyUserTheme(darkMode);
@@ -351,6 +356,7 @@ export default Vue.extend({
       }
     },
     isAuthorized(): boolean {
+      if (this.currentUser == null) return false;
       return (
         this.currentUser.roles[0].roleName == "SUPERADMIN" ||
         this.currentUser.roles[0].roleName == "ADMIN"

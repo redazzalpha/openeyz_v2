@@ -109,7 +109,7 @@
           <!-- confirm-action -->
           <div class="mt-5">
             Please insert
-            <span class="font-weight-bold">{{ currentUser.username }}</span> to
+            <span class="font-weight-bold">{{ current("username") }}</span> to
             confirm.
           </div>
           <!-- confirm-field -->
@@ -129,7 +129,7 @@
             color="error"
             text
             @click="delAccount"
-            :disabled="!(confirmModel === currentUser.username)"
+            :disabled="!(confirmModel === current('username'))"
           >
             Procced
           </v-btn>
@@ -143,7 +143,12 @@
 import Vue from "vue";
 import { mapState } from "vuex";
 import { mapActions } from "vuex";
-import { deleteUserAccount, btnSize } from '../../utils/functions';
+import {
+  deleteUserAccount,
+  btnSize,
+  getCurrentRole,
+  getCurrent,
+} from "../../utils/functions";
 export default Vue.extend({
   name: "Profile-account",
   components: {},
@@ -161,6 +166,12 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions(["updateCurrentUser"]),
+    current(value: string): string {
+      return getCurrent(value);
+    },
+    currentRole(): string {
+      return getCurrentRole();
+    },
     delAccount() {
       deleteUserAccount();
     },
