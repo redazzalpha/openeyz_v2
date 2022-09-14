@@ -1,3 +1,4 @@
+
 export const rules = {
     isNotEmpty: (v: string): boolean => {
         return !/^\s*$/gi.test(v);
@@ -47,7 +48,7 @@ export const rules = {
         return errMsg || true;     
     },
     fieldValidator: (v: string): string | boolean => {
-        return v != null && !!v.match(/^\s*[0-9a-zA-ZÀ-ÿ]{2,}([\s|-]?[0-9a-zA-ZÀ-ÿ]{1,})*\s*$/g) || "Le champs est invalide";
+        return v != null && !!v.match(/^\s*[0-9a-zA-ZÀ-ÿ']{2,}([\s|-]?[0-9a-zA-ZÀ-ÿ']{1,})*\s*$/g) || "Le champs est invalide";
     },
     max250: (v: string): string | boolean => {
         return v != null && v.length <= 250 || '250 Caractères max.';

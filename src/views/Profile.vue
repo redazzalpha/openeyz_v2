@@ -11,12 +11,11 @@
     <!-- tabs-items -->
     <v-tabs-items
       v-model="$store.state.tabProfile"
-      style="background-color: transparent;"
-      touchless
+      style="background-color: transparent"
     >
       <!-- title -->
-      <v-card flat color="transparent">
-        <v-card-title primary-title class="justify-center">
+      <v-card flat color="transparent" style="margin-top: 65px">
+        <v-card-title primary-title class="justify-center" style="">
           <span v-if="tabProfile == 0">My informations</span>
           <span v-if="tabProfile == 1">My password</span>
           <span v-if="tabProfile == 2">My account</span>
@@ -36,9 +35,11 @@
           >
         </v-card-subtitle>
       </v-card>
-      <ProfileInfo />
-      <ProfilePassword />
-      <ProfileAccount />
+      <v-card flat color="transparent">
+        <ProfileInfo />
+        <ProfilePassword />
+        <ProfileAccount />
+      </v-card>
     </v-tabs-items>
   </div>
 </template>

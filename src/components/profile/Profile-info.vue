@@ -1,7 +1,7 @@
 <template>
   <v-tab-item class="profile-info-tab-item">
     <!-- main-card -->
-    <v-card max-width="600" class="mx-auto mb-10" shaped raised outlined>
+    <v-card max-width="600" class="mx-auto mb-10" shaped raised outlined >
       <!-- header-title -->
       <v-card-title class="d-flex flex-column justify-center align-center">
         <!-- user-avatar -->

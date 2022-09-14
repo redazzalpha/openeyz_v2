@@ -13,7 +13,7 @@
           <v-row no-gutters>
             <v-col>
               <!-- publication-card -->
-              <v-card max-width="700" class="mx-auto">
+              <v-card max-width="700" class="mx-auto" :style="background">
                 <!-- header-title -->
                 <v-card-title
                   primary-title
@@ -155,13 +155,33 @@ export default Vue.extend({
       const paragraph = "<p>";
       const paragraphReplace = "<p style='padding-left: 15px;'>";
       const cover = "cover";
-      const coverReplace = `${isXs?'cover; max-height: 1000px' : 'contain; max-height: 775px'}`; 
+      const coverReplace = `${isXs?'cover; max-height: 1000px' : 'contain; max-height: 700px'}`; 
 
       return this.item.post?.content
       .replace(paragraph, paragraphReplace)
       .replace(cover, coverReplace);
-      
     },
+        background(): string {
+      const backgroundUrl: string = this.$vuetify.theme.dark
+        ? require("../../assets/bg-notfound-dark.webp")
+        : require("../../assets/bg-notfound.webp");
+      const backgroundImage: string =
+        "background-image:  url(" + backgroundUrl + ");";
+      const backgroundRepeat = "background-repeat:  no-repeat;";
+      const backgroundPosition = "background-position: center;";
+      const backgroundSize = "background-size: cover;";
+      const backgroundAttachment = "background-attachment: fixed;";
+      const backgroundColor = " background-color: #cccccc;";
+      const background: string =
+        backgroundImage +
+        backgroundRepeat +
+        backgroundPosition +
+        backgroundSize +
+        backgroundColor +
+        backgroundAttachment;
+      return background;
+    },
+
   },
   methods: {
     ...mapActions(["updateCurrentItem", "updateCommentDialog"]),

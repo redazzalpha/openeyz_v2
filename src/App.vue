@@ -55,11 +55,6 @@ export default Vue.extend({
       const backgroundUrl: string = this.$vuetify.theme.dark
         ? require("./assets/bg-home-dark.webp")
         : require("./assets/bg-home.webp");
-      // const backgroundXsUrl: string = this.$vuetify.theme.dark
-      //   ? require("./assets/bg-home-xs-dark.png")
-      //   : require("./assets/bg-home-xs.png");
-      // const backgroundType: string =
-      //   this.$vuetify.breakpoint.name == "xs" ? backgroundXsUrl : backgroundUrl;
       const backgroundImage: string =
         "background-image:  url(" + backgroundUrl + ");";
       const backgroundRepeat = "background-repeat:  no-repeat;";
