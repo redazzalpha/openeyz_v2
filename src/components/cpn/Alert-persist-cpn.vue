@@ -6,7 +6,7 @@
     overlay-opacity="1"
     max-width="390"
   >
-    <v-img src="../../assets/logo-title1.png" width="350" class="mx-auto mb-5" />
+    <v-img src="../../assets/logos/secondary-title.png" width="350" class="mx-auto mb-5" />
     <v-alert dense elevation="5" class="d-flex justify-center" :type="alertType"
       >{{ alertMessage }} <br />
       <div

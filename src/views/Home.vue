@@ -46,9 +46,7 @@ export default Vue.extend({
     getPosts(POST_GET_LIMIT);
   },
   mounted() {
-    setTimeout(() => {
-      this.updateLoader(false);
-    }, 3000);
+    this.updateLoader(false);
   },
   destroyed() {
     this.updateLoader(true);

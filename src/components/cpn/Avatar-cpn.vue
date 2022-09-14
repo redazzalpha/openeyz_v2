@@ -1,10 +1,10 @@
 <template>
     <v-avatar :size="size" class="avatar-cpn-avatar mr-3">
-        <v-img v-if="!avatarSrc && role == 'SUPERADMIN'" src="../../assets/suadmin.png" alt="alt" />
-        <v-img v-else-if="!avatarSrc && role == 'ADMIN'" src="../../assets/admin.png" alt="alt" />
-        <v-img v-else-if="!avatarSrc && role == 'USER'" src="../../assets/user.png" alt="alt" />
+        <v-img v-if="!avatarSrc && role == 'SUPERADMIN'" src="../../assets/users/suadmin.png" alt="alt" />
+        <v-img v-else-if="!avatarSrc && role == 'ADMIN'" src="../../assets/users/admin.png" alt="alt" />
+        <v-img v-else-if="!avatarSrc && role == 'USER'" src="../../assets/users/user.png" alt="alt" />
         <v-img v-else-if="avatarSrc" :src="avatarSrc" alt="alt" />
-        <v-img v-else src="../../assets/user.png" alt="alt" />
+        <v-img v-else src="../../assets/users/user.png" alt="alt" />
     </v-avatar>
 </template>
 

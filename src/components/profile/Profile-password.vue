@@ -7,7 +7,7 @@
         <!-- tile-avatar -->
         <span style="position: relative">
           <v-avatar size="200">
-            <v-img src="../../assets/password.png" alt="alt" />
+            <v-img src="../../assets/heads/password.png" alt="alt" />
           </v-avatar>
         </span>
       </v-card-title>

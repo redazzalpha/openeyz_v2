@@ -53,8 +53,8 @@ export default Vue.extend({
     ]),
     background(): string {
       const backgroundUrl: string = this.$vuetify.theme.dark
-        ? require("./assets/bg-home-dark.webp")
-        : require("./assets/bg-home.webp");
+        ? require("./assets/backgrounds/primary-dark.webp")
+        : require("./assets/backgrounds/primary.webp");
       const backgroundImage: string =
         "background-image:  url(" + backgroundUrl + ");";
       const backgroundRepeat = "background-repeat:  no-repeat;";

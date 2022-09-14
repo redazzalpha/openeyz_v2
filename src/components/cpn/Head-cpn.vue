@@ -9,7 +9,7 @@
       <v-row no-gutters class="text-center">
         <v-col class="d-flex flex-column justify-center">
           <v-img
-            src="../../assets/logo-title.png"
+            src="../../assets/logos/primary-title.png"
             width="350"
             class="mx-auto"
           />

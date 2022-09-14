@@ -151,20 +151,22 @@ export default Vue.extend({
   computed: {
     ...mapState(["posts", "currentUser"]),
     getPostContent(): string | undefined {
-      const isXs : boolean = this.$vuetify.breakpoint.name == "xs";
+      const isXs: boolean = this.$vuetify.breakpoint.name == "xs";
       const paragraph = "<p>";
       const paragraphReplace = "<p style='padding-left: 15px;'>";
       const cover = "cover";
-      const coverReplace = `${isXs?'cover; max-height: 1000px' : 'contain; max-height: 700px'}`; 
+      const coverReplace = `${
+        isXs ? "cover; max-height: 1000px" : "contain; max-height: 700px"
+      }`;
 
       return this.item.post?.content
-      .replace(paragraph, paragraphReplace)
-      .replace(cover, coverReplace);
+        .replace(paragraph, paragraphReplace)
+        .replace(cover, coverReplace);
     },
-        background(): string {
+    background(): string {
       const backgroundUrl: string = this.$vuetify.theme.dark
-        ? require("../../assets/bg-notfound-dark.webp")
-        : require("../../assets/bg-notfound.webp");
+      ? require("../../assets/backgrounds/tertiary-dark.webp")
+      : require("../../assets/backgrounds/tertiary.webp");
       const backgroundImage: string =
         "background-image:  url(" + backgroundUrl + ");";
       const backgroundRepeat = "background-repeat:  no-repeat;";
@@ -181,7 +183,6 @@ export default Vue.extend({
         backgroundAttachment;
       return background;
     },
-
   },
   methods: {
     ...mapActions(["updateCurrentItem", "updateCommentDialog"]),

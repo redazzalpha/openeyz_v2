@@ -3,7 +3,7 @@
     class="access-page-block"
     style="min-height: 100vh"
   >
-    <v-img src="../assets/logo-title.png" width="350" class="mx-auto" />
+    <v-img src="../assets/logos/primary-title.png" width="350" class="mx-auto" />
 
     <v-dialog
       class="access-page-dialog"

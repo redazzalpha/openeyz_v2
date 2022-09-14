@@ -7,7 +7,7 @@
         <!-- title-avatar -->
         <span style="position: relative">
           <v-avatar size="175" tile>
-            <v-img src="../../assets/account.png" alt="alt" />
+            <v-img src="../../assets/heads/account.png" alt="alt" />
           </v-avatar>
         </span>
       </v-card-title>

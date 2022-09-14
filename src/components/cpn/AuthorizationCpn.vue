@@ -158,16 +158,16 @@ export default Vue.extend({
 
       if (typeof avatarSrc != "function" && typeof state != "function") {
         if (!state)
-          return require("../../assets/banned.png");
+          return require("../../assets/users/banned.png");
         else if (!avatarSrc && roles[0].roleName == "SUPERADMIN")
-          return require("../../assets/suadmin.png");
+          return require("../../assets/users/suadmin.png");
         else if (!avatarSrc && roles[0].roleName == "ADMIN")
-          return require("../../assets/admin.png");
+          return require("../../assets/users/admin.png");
         else if (!avatarSrc && roles[0].roleName == "USER")
-          return require("../../assets/user.png");
+          return require("../../assets/users/user.png");
         else if (avatarSrc) return avatarSrc;
       }
-      return require("../../assets/user.png");
+      return require("../../assets/users/user.png");
     },
     async saveChanges(): Promise<void> {
       this.btnLoading = true;

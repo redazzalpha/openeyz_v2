@@ -19,8 +19,8 @@
       :style="
         'background:  url(' +
         ($vuetify.theme.dark
-          ? require('../../assets/bg-notfound-dark.webp')
-          : require('../../assets/bg-notfound.webp')) +
+          ? require('../../assets/backgrounds/tertiary-dark.webp')
+          : require('../../assets/backgrounds/tertiary.webp')) +
         ') fixed no-repeat center; background-size: cover; '
       "
       max-height="600"

@@ -16,8 +16,8 @@
       :style="
         'background:  url(' +
         ($vuetify.theme.dark
-          ? require('../../assets/bg-team-selected-dark.webp')
-          : require('../../assets/bg-team-selected.webp')) +
+          ? require('../../assets/backgrounds/secondary-dark.webp')
+          : require('../../assets/backgrounds/secondary.webp')) +
         ') no-repeat fixed center'
       "
     >
@@ -248,16 +248,16 @@ export default Vue.extend({
     getUserImg(): string {
       const { avatarSrc, roles, state } = this.user;
       if (typeof avatarSrc != "function" && typeof state != "function") {
-        if (!state) return require("../../assets/banned.png");
+        if (!state) return require("../../assets/users/banned.png");
         else if (!avatarSrc && roles[0].roleName == "SUPERADMIN")
-          return require("../../assets/suadmin.png");
+          return require("../../assets/users/suadmin.png");
         else if (!avatarSrc && roles[0].roleName == "ADMIN")
-          return require("../../assets/admin.png");
+          return require("../../assets/users/admin.png");
         else if (!avatarSrc && roles[0].roleName == "USER")
-          return require("../../assets/user.png");
+          return require("../../assets/users/user.png");
         else if (avatarSrc) return avatarSrc;
       }
-      return require("../../assets/user.png");
+      return require("../../assets/users/user.png");
     },
   },
   watch: {
