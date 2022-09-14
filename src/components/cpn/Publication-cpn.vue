@@ -152,15 +152,14 @@ export default Vue.extend({
     ...mapState(["posts", "currentUser"]),
     getPostContent(): string | undefined {
       const isXs : boolean = this.$vuetify.breakpoint.name == "xs";
-      const maxHeight: string = isXs? "195px" : "465px";
       const paragraph = "<p>";
       const paragraphReplace = "<p style='padding-left: 15px;'>";
-      const img = "<img";
-      const imgReplace = "<img width=100% style='max-height: " + maxHeight +  "; object-fit: cover'"; 
+      const cover = "cover";
+      const coverReplace = `${isXs?'cover; max-height: 1000px' : 'contain; max-height: 775px'}`; 
 
       return this.item.post?.content
       .replace(paragraph, paragraphReplace)
-      .replace(img, imgReplace);
+      .replace(cover, coverReplace);
       
     },
   },

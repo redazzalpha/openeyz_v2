@@ -585,4 +585,3 @@ export function generateFiles(): File[] {
   });
   return fileList;
 }
-
