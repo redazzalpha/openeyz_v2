@@ -59,6 +59,17 @@ export function getSimpleUsers(): Promise<VueResponse> {
     );
   });
 }
+export function getUser(): Promise<VueResponse> {
+  return new Promise((resolve, reject) => {
+    httpRequest.get(defines.SERVER_USER_URL).then(
+      (response: VueResponse) => resolve(response),
+      (error: VueResponse) => {
+        failed(error.bodyText);
+        reject(error);
+      },
+    );
+  });
+}
 export function getUserData(username: string): Promise<VueResponse> {
   return new Promise((resolve, reject) => {
     httpRequest.get(defines.SERVER_USER_DATA_URL, { params: { username } }).then(
@@ -69,7 +80,6 @@ export function getUserData(username: string): Promise<VueResponse> {
       },
     );
   });
-
 }
 export function updateUserState({ username }: Users, state: boolean): Promise<Users> {
   return new Promise((resolve, reject) => {
@@ -556,12 +566,15 @@ export function success(message: string): void {
 export function failed(message: string): void {
   const jwtError: boolean = new RegExp("(.*JWT.*)|(.*Unauthorized.*)", "gi").test(message);
   const forbiddenError: boolean = new RegExp(".*forbidden.*", "gi").test(message);
+  const unavailableServerError: boolean = new RegExp(".*server is unavailable.*", "gi").test(message);
   const isAccesPage: boolean = router.currentRoute.name == "access";
 
   if (jwtError)
     alertPersist("error", "auth. error please connect !");
   else if (forbiddenError && !isAccesPage)
     alertPersist("error", "your account has been disabled");
+  else if (unavailableServerError && !isAccesPage)
+    alertPersist("error", message);
   else alert("error", message);
 }
 
@@ -586,9 +599,29 @@ export function generateFiles(): File[] {
   return fileList;
 }
 
-export function getCurrent(value: string) : string {
+export function getCurrent(value: string): string {
   return store.state.currentUser ? store.state.currentUser[value] : "";
 }
-export function getCurrentRole() : string {
-  return store.state.currentUser ? (store.state.currentUser as Users).roles[0].roleName as string: "";
+export function getCurrentRole(): string {
+  return store.state.currentUser ? (store.state.currentUser as Users).roles[0].roleName as string : "";
+}
+
+export function initialize(callback?: () => void): Promise<VueResponse | void> {
+  return new Promise((resolve, reject) => {
+    getUser().then(
+      (response: VueResponse) => {
+        store.dispatch("updateCurrentUser", response.body);
+        getNotifs();
+        resolve(response);
+      },
+      (error: VueResponse) => reject(error)
+    );
+    store.dispatch("updateLoader", false);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+    if (callback) callback();
+  });
 }

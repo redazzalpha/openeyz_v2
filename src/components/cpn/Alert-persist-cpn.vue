@@ -6,13 +6,24 @@
     overlay-opacity="1"
     max-width="390"
   >
-    <v-img src="../../assets/logos/secondary-title.png" width="350" class="mx-auto mb-5" />
-    <v-alert dense elevation="5" class="d-flex justify-center" :type="alertType"
-      >{{ alertMessage }} <br />
+    <v-img
+      src="../../assets/logos/secondary-title.png"
+      width="350"
+      class="mx-auto mb-5"
+    />
+    <v-alert
+      dense
+      elevation="5"
+      class="d-flex justify-center"
+      :type="alertType"
+    >
+    <div class="text-center">
+      {{ alertMessage }} <br />
+    </div>
       <div
         @click="accessPage"
-        style="text-decoration: unset"
-        class="white--text alert-access-btn"
+        style="text-decoration: unset;"
+        class="white--text text-center alert-access-btn"
       >
         <i class="fa-solid fa-right-to-bracket"></i> access to login page
       </div>

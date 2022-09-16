@@ -52,6 +52,7 @@ import ProfileInfo from "../components/profile/Profile-info.vue";
 import ProfilePassword from "../components/profile/Profile-password.vue";
 import ProfileAccount from "../components/profile/Profile-account.vue";
 import ToolbarCpn from "../components/cpn/Toolbar-cpn.vue";
+import { initialize } from "@/utils/functions";
 
 export default Vue.extend({
   name: "Profile-page",
@@ -79,7 +80,7 @@ export default Vue.extend({
     this.updateTabProfile(0);
   },
   mounted() {
-    this.updateLoader(false);
+    initialize();
   },
   destroyed() {
     this.updateLoader(true);

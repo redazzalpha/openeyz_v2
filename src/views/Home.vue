@@ -17,7 +17,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapState, mapActions } from "vuex";
-import { getPosts } from "../utils/functions";
+import { getPosts, initialize } from "../utils/functions";
 import { POST_GET_LIMIT } from "../utils/defines";
 import HeadCpn from "@/components/cpn/Head-cpn.vue";
 import PostCpn from "@/components/cpn/Post-cpn.vue";
@@ -46,7 +46,7 @@ export default Vue.extend({
     getPosts(POST_GET_LIMIT);
   },
   mounted() {
-    this.updateLoader(false);
+    initialize();
   },
   destroyed() {
     this.updateLoader(true);

@@ -245,13 +245,6 @@ export default Vue.extend({
     currentRole(): string {
       return getCurrentRole();
     },
-
-    async sendDescription() {
-      await modifyUserDescription(this.description);
-      this.currentUser.description = this.description;
-      this.updateCurrentUser(this.currentUser);
-      this.description = "";
-    },
     openModify(target: number) {
       switch (target) {
         case 0:
@@ -270,29 +263,6 @@ export default Vue.extend({
       }
       this.target = target;
       this.modifyDialog = true;
-    },
-    async proceed() {
-      this.loading = true;
-      this.disabled = true;
-
-      let form: VueElement = this.$refs.form;
-      if (form != null) {
-        if ((form as unknown as VueFunction).validate()) {
-          const formElem: HTMLFormElement | null =
-            document.querySelector(".form");
-          if (formElem != null) {
-            this.switchTarget();
-            await modifyUserField(this.url, new FormData(formElem));
-            this.updateUser();
-            this.userData = "";
-          }
-        }
-      }
-
-      setTimeout(() => {
-        this.loading = false;
-      }, 1000);
-      this.modifyDialog = false;
     },
     switchTarget() {
       switch (this.target) {
@@ -327,10 +297,46 @@ export default Vue.extend({
     },
     pickFile() {
       const input = this.$refs.input as HTMLInputElement;
-      sendUserAvatar(input).then((response: VueResponse) => {
-        this.currentUser.avatarSrc = response.bodyText;
-        this.updateCurrentUser(this.currentUser);
-      });
+      sendUserAvatar(input).then(
+        (response: VueResponse) => {
+          this.currentUser.avatarSrc = response.bodyText;
+          this.updateCurrentUser(this.currentUser);
+        }
+      );
+    },
+    async proceed() {
+      this.loading = true;
+      this.disabled = true;
+
+      let form: VueElement = this.$refs.form;
+      if (form != null) {
+        if ((form as unknown as VueFunction).validate()) {
+          const formElem: HTMLFormElement | null =
+            document.querySelector(".form");
+          if (formElem != null) {
+            this.switchTarget();
+            await modifyUserField(this.url, new FormData(formElem));
+            this.updateUser();
+            this.userData = "";
+          }
+        }
+      }
+
+      setTimeout(() => {
+        this.loading = false;
+      }, 1000);
+      this.modifyDialog = false;
+    },
+    async sendDescription() {
+      await modifyUserDescription(this.description);
+      this.currentUser.description = this.description;
+      this.updateCurrentUser(this.currentUser);
+      this.description = "";
+    },
+    async removeAvatar() {
+      await removeUserAvatar();
+      this.currentUser.avatarSrc = null;
+      this.updateCurrentUser(this.currentUser);
     },
     async themeSwitcher(darkMode: boolean) {
       await modifyUserTheme(darkMode);
@@ -362,11 +368,6 @@ export default Vue.extend({
         this.currentUser.roles[0].roleName == "SUPERADMIN" ||
         this.currentUser.roles[0].roleName == "ADMIN"
       );
-    },
-    async removeAvatar() {
-      await removeUserAvatar();
-      this.currentUser.avatarSrc = null;
-      this.updateCurrentUser(this.currentUser);
     },
     keypressed(e: KeyboardEvent): void {
       const isEnterPressed: boolean =

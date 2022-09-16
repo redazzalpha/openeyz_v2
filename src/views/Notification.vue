@@ -52,7 +52,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapActions, mapState } from "vuex";
-import { deleteNotifs, readNotifs } from "../utils/functions";
+import { deleteNotifs, initialize, readNotifs } from "../utils/functions";
 import ToolbarCpn from "../components/cpn/Toolbar-cpn.vue";
 import NotificationItem from "../components/notification/Notification-item.vue";
 import ContainerCpn from "../components/cpn/Container-cpn.vue";
@@ -104,7 +104,7 @@ export default Vue.extend({
     }
   },
   mounted() {
-    this.updateLoader(false);
+    initialize();
   },
   destroyed() {
     this.updateLoader(true);

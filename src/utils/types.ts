@@ -5,9 +5,6 @@ export interface VueFunction {
   reset(): void;
 }
 export type VueElement = undefined | Vue | Element | (Vue | Element)[];
-export interface PPP extends VueFunction {
-  name: string,
-}
 export interface VueResponse {
   body: object | Blob | string | Body | object[];
   bodyText: string;

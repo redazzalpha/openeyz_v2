@@ -22,9 +22,8 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { mapState } from "vuex";
 import { HOME_PAGE_URL, POST_GET_LIMIT } from "./utils/defines";
-import { addPosts, getNotifs, translateDateToISO } from "./utils/functions";
+import { addPosts, translateDateToISO } from "./utils/functions";
 import FooterCpn from "@/components/cpn/Footer-cpn.vue";
 import AppbarCpn from "@/components/cpn/Appbar-cpn.vue";
 import DrawerCpn from "@/components/cpn/Drawer-cpn.vue";
@@ -32,6 +31,7 @@ import ScrollTopBtnCpn from "./components/cpn/ScrollTopBtn-cpn.vue";
 import LoaderCpn from "./components/cpn/Loader-cpn.vue";
 import AlertCpn from "@/components/cpn/Alert-cpn.vue";
 import AlertPersistCpn from "@/components/cpn/Alert-persist-cpn.vue";
+import { mapActions, mapState } from "vuex";
 
 export default Vue.extend({
   name: "App",
@@ -45,12 +45,7 @@ export default Vue.extend({
     AlertPersistCpn,
   },
   computed: {
-    ...mapState([
-      "currentUser",
-      "userNotifs",
-      "posts",
-      "loader",
-    ]),
+    ...mapState(["currentUser", "userNotifs", "posts", "loader"]),
     background(): string {
       const backgroundUrl: string = this.$vuetify.theme.dark
         ? require("./assets/backgrounds/primary-dark.webp")
@@ -77,6 +72,7 @@ export default Vue.extend({
     },
   },
   methods: {
+    ...mapActions(["updateCurrentUser"]),
     infiniteScroll() {
       let scroll: number;
       let bottom: number;
@@ -97,6 +93,7 @@ export default Vue.extend({
       };
     },
     ckeThemeSwitcher() {
+      if (this.currentUser) this.$vuetify.theme.dark = this.currentUser.dark;
       const style = document.documentElement.style;
       if (this.currentUser && this.currentUser.dark) {
         style.setProperty("--ck-color-base-foreground", "#424242");
@@ -117,18 +114,10 @@ export default Vue.extend({
     },
   },
   created() {
-    if (this.currentUser) this.$vuetify.theme.dark = this.currentUser.dark;
     this.ckeThemeSwitcher();
   },
   updated() {
-    if (this.currentUser) this.$vuetify.theme.dark = this.currentUser.dark;
     this.ckeThemeSwitcher();
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "smooth",
-    });
-    getNotifs();
   },
   async mounted() {
     this.infiniteScroll();

@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { initialize } from '@/utils/functions';
 import { mapActions } from "vuex";
 export default {
   name: "Notfound-page",
@@ -29,7 +30,7 @@ export default {
     ...mapActions(["updateLoader"]),
   },
   mounted() {
-    this.updateLoader(false);
+    initialize();
   },
   destroyed() {
     this.updateLoader(true);
