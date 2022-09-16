@@ -7,24 +7,24 @@
     app
   >
     <!-- item-list -->
-    <v-list-item>
-      <!-- user-vatara -->
-      <v-list-item-avatar>
+    <v-list-item class="my-2 align-center justify-center">
+      <!-- user-avatara -->
+      <div class="">
         <div v-if="checkCurrentUser()">
-          <Avatar
+          <AvatarCpn
             :avatarSrc="currentUser.avatarSrc"
             :role="currentUser.roles[0].roleName"
-            size="40"
+            size="60"
           />
         </div>
-      </v-list-item-avatar>
+      </div>
       <v-list-item-content>
         <v-list-item-title v-if="checkCurrentUser()">{{
           currentUser.name
         }}</v-list-item-title>
       </v-list-item-content>
     </v-list-item>
-    <v-divider></v-divider>
+    <v-divider ></v-divider>
     <!-- links -->
     <v-list dense rounded>
       <!-- item-list -->
@@ -67,7 +67,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import Avatar from "./Avatar-cpn.vue";
+import AvatarCpn from "./Avatar-cpn.vue";
 import { mapState } from "vuex";
 import {
   HOME_PAGE_URL,
@@ -80,7 +80,7 @@ import { Notif } from "@/utils/types";
 export default Vue.extend({
   name: "Drawer-cpn",
   components: {
-    Avatar,
+    AvatarCpn,
   },
   data() {
     return {

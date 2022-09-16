@@ -18,16 +18,21 @@
             :style="`background-color: ${
               $vuetify.theme.dark ? '#424242' : '#00acc1'
             }`"
-            style="border-radius: 7px 7px 0 0"
+            style="border-radius: 7px 7px 0 0; display: block"
             class="font-italic white--text mb-4 pa-2"
           >
-            <v-btn :ripple="false" plain icon class="pa-7" to="/profile">
-              <AvatarCpn
-                :avatarSrc="currentUser.avatarSrc"
-                :role="currentUser.roles[0].roleName"
-              />
-            </v-btn>
-            Say what you want {{ currentUser.name }}
+            <div class="d-flex align-center">
+              <v-btn :ripple="false" plain icon class="pa-7 mx-2" to="/profile">
+                <AvatarCpn
+                  :avatarSrc="currentUser.avatarSrc"
+                  :role="currentUser.roles[0].roleName"
+                />
+              </v-btn>
+              <div class="d-flex flex-column flex-sm-row">
+                <span class="text-subtitle-1 mr-2">{{ currentUser.name }}</span>
+                <span class="text-subtitle-1 "> say what you want </span>
+              </div>
+            </div>
           </v-card-title>
           <!--editor -->
           <v-card-text>
@@ -57,7 +62,6 @@
 
 <script lang="ts">
 import Vue from "vue";
-// import ClassicEditor from "@/ckeditor5/ckeditor5";
 import ClassicEditor from "../../ckeditor5/ckeditor5";
 
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
@@ -76,7 +80,6 @@ export default Vue.extend({
       loading: false,
       disabled: true,
       btnSize: btnSize,
-      // inputFile: inputFile,
     };
   },
   computed: {

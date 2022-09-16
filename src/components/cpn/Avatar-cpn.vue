@@ -1,10 +1,10 @@
 <template>
-    <v-avatar :size="size" class="avatar-cpn-avatar mr-3">
-        <v-img v-if="!avatarSrc && role == 'SUPERADMIN'" src="../../assets/users/suadmin.png" alt="alt" />
-        <v-img v-else-if="!avatarSrc && role == 'ADMIN'" src="../../assets/users/admin.png" alt="alt" />
-        <v-img v-else-if="!avatarSrc && role == 'USER'" src="../../assets/users/user.png" alt="alt" />
-        <v-img v-else-if="avatarSrc" :src="avatarSrc" alt="alt" />
-        <v-img v-else src="../../assets/users/user.png" alt="alt" />
+    <v-avatar :size="size" class="avatar-cpn-avatar mr-3" style="">
+        <img v-if="!avatarSrc && role == 'SUPERADMIN'" src="../../assets/users/suadmin.png" alt="alt" style="object-fit: cover;"/>
+        <img v-else-if="!avatarSrc && role == 'ADMIN'" src="../../assets/users/admin.png" alt="alt" style="object-fit: cover;"/>
+        <img v-else-if="!avatarSrc && role == 'USER'" src="../../assets/users/user.png" alt="alt" style="object-fit: cover;"/>
+        <img v-else-if="avatarSrc" :src="avatarSrc" alt="alt" style="object-fit: cover;"/>
+        <img v-else src="../../assets/users/user.png" alt="alt" style="object-fit: cover;"/>
     </v-avatar>
 </template>
 
@@ -19,12 +19,13 @@ export default Vue.extend({
         },
         role: {
             type: String,
-            required: true,
+            required: false,
+            default: null,
         },
         size: {
             type: String,
-            default: "55",
             required: false,
+            default: "65",
         }
     },
 });

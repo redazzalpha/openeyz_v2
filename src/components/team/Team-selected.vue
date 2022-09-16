@@ -48,10 +48,10 @@
       <v-container grid-list-xs fluid>
         <v-row class="mt-15">
           <v-col class="text-center">
-            <v-card-title primary-title class="d-flex justify-center">
-              <avatarCpn :avatarSrc="getUserImg()" :role="role" />
+            <v-card-title primary-title class="d-flex flex-column justify-center">
+              <span> {{user.name}} {{user.lname}}</span>
+              <AvatarCpn :avatarSrc="getUserImg()" :role="role" size="175"  />
               <div class="d-flex flex-column">
-                <span> {{ author }} 's publications </span>
                 <span class="text-body-2">
                   {{ user.username }}
                 </span>

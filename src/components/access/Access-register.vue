@@ -83,7 +83,6 @@
               <v-col cols="12" class="py-0">
                 <v-text-field
                   v-model="description"
-                  :rules="descriptionRules"
                   placeholder="Description"
                   name="description"
                   class="pt-0"

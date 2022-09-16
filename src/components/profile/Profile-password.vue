@@ -20,6 +20,18 @@
               <h3 class="text-decoration-underline">Password</h3>
             </v-col>
           </v-row>
+
+          <v-row>
+            <v-col>
+              <h4 class="text-subtitle-1">Modify my password</h4>
+              <p>
+                Password modification requires the current one.<br />
+                Please insert your actual password and set the new one
+                through<br />
+                the new password field.
+              </p>
+            </v-col>
+          </v-row>
           <v-row>
             <v-col>
               <!-- modify-password-card -->
@@ -109,11 +121,12 @@ import { VueElement, VueFunction } from "../../utils/types";
 import { rules } from "@/utils/rules";
 import { ERROR_MESSAGE_DURATION } from "../../utils/defines";
 import { modifyUserPassword } from "@/utils/functions";
-import { btnSize } from '../../utils/functions';
+import { btnSize } from "../../utils/functions";
 
 export default Vue.extend({
   name: "Profile-password",
-  components: {},
+  components: {
+  },
   data() {
     return {
       isSecret: true,
@@ -141,8 +154,8 @@ export default Vue.extend({
           const formElem: HTMLFormElement | null =
             document.querySelector(".form");
           if (formElem != null) {
-            modifyUserPassword(new FormData(formElem)).then(
-              () => (form as unknown as VueFunction).reset(),
+            modifyUserPassword(new FormData(formElem)).then(() =>
+              (form as unknown as VueFunction).reset()
             );
             setTimeout(() => {
               this.loading = false;

@@ -9,7 +9,7 @@
           align-self="start"
           :avatarSrc="currentUser.avatarSrc"
           :role="currentUser.roles[0].roleName"
-          size="40"
+          size="45"
         />
         <v-form v-model="valid" ref="form" style="width: 100%">
           <v-textarea

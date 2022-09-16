@@ -19,13 +19,15 @@
             :ripple="false"
             active-class="border: solid red 3px"
           >
-            <v-card-text class="text-center">
+            <v-card-text class="d-flex align-center">
               <AvatarCpn
                 v-if="user.role"
                 :avatarSrc="user.avatarSrc"
                 :role="user.role"
               />
-              {{ user.name }}
+              <span class="text-center mx-auto" style="">
+                {{ user.name }}
+              </span>
             </v-card-text>
           </v-card>
         </v-hover>

@@ -22,64 +22,56 @@
           </v-row>
           <v-row>
             <!-- delete-account-card -->
-            <v-col>
-              <v-card elevation="0">
-                <v-card-text>
-                  <!-- delete-account-form -->
-                  <v-form>
-                    <!-- delete-account-container -->
-                    <v-container grid-list-xs>
-                      <!-- introduction-row -->
-                      <v-row>
-                        <v-col>
-                          <h4 class="text-subtitle-1">Delete my account</h4>
-                          <p>
-                            This section is about deleting your account. <br />
-                            We are interested to know why you want to delete
-                            your account.
-                            <br />
-                            Please leave us feedback in order to continue to
-                            improve the application <br />
-                            and maybe see you come back with us. <br />
-                            Thank you.
-                          </p>
-                        </v-col>
-                      </v-row>
-                      <!-- area-row -->
-                      <v-row>
-                        <v-col>
-                          <v-textarea
-                            outlined
-                            no-resize
-                            autoGrow
-                            v-model="areaModel"
-                            placeholder="Let us know why?..."
-                            rows="1"
-                            append="mdi-send"
-                            :autofocus="
-                              $vuetify.breakpoint.name == 'xs' ? false : true
-                            "
-                          >
-                          </v-textarea>
-                        </v-col>
-                      </v-row>
-                      <!-- button-row -->
-                      <v-row>
-                        <v-col class="d-flex justify-center">
-                          <v-btn
-                            :width="btnSize()"
-                            color="#ba1c1e"
-                            class="white--text"
-                            @click.stop="dialog = !dialog"
-                          >
-                            Delete my account</v-btn
-                          >
-                        </v-col>
-                      </v-row>
-                    </v-container>
-                  </v-form>
-                </v-card-text>
-              </v-card>
+            <v-col class="pt-0 px-0">
+              <v-form>
+                <!-- delete-account-container -->
+                <v-container grid-list-xs>
+                  <!-- introduction-row -->
+                  <v-row>
+                    <v-col>
+                      <h4 class="text-subtitle-1">Delete my account</h4>
+                      <p>
+                        This section is about deleting your account. <br />
+                        We are interested to know why you want to delete your
+                        account.
+                        <br />
+                        Please leave us feedback in order to continue to improve
+                        the application <br />
+                        and maybe see you come back with us. <br />
+                        Thank you.
+                      </p>
+                    </v-col>
+                  </v-row>
+                  <!-- area-row -->
+                  <v-row>
+                    <v-col>
+                      <v-textarea
+                        outlined
+                        no-resize
+                        autoGrow
+                        v-model="areaModel"
+                        placeholder="Let us know why?..."
+                        rows="1"
+                        append="mdi-send"
+                      >
+                      </v-textarea>
+                    </v-col>
+                  </v-row>
+                  <!-- button-row -->
+                  <v-row>
+                    <v-col class="d-flex justify-center">
+                      <v-btn
+                        :width="btnSize()"
+                        color="#ba1c1e"
+                        class="white--text"
+                        @click.stop="dialog = !dialog"
+                      >
+                        Delete my account</v-btn
+                      >
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-form>
             </v-col>
           </v-row>
         </v-container>
@@ -151,7 +143,8 @@ import {
 } from "../../utils/functions";
 export default Vue.extend({
   name: "Profile-account",
-  components: {},
+  components: {
+  },
   data() {
     return {
       areaModel: "",

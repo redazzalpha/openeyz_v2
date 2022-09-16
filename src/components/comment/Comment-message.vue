@@ -11,7 +11,7 @@
           <AvatarCpn
             :avatarSrc="comment.author.avatarSrc"
             :role="comment.author.roles[0].roleName"
-            size="40"
+            size="50"
             class="flex-shrink-1"
           />
           <div

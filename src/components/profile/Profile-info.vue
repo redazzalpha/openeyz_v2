@@ -16,7 +16,7 @@
           <v-btn
             icon
             color="primary"
-            style="position: absolute; top: 145px; right: 18px"
+            style="position: absolute; top: 145px; left: calc(100% - 55px)"
             @click="openFolder"
             title="modify image"
           >
@@ -27,12 +27,12 @@
               ref="input"
               @change="pickFile"
             />
-            <i class="fa-solid fa-camera" style="font-size: 20px"></i>
+            <i class="fa-solid fa-camera" style="font-size: 22px"></i>
           </v-btn>
           <v-btn
             icon
             color="error"
-            style="position: absolute; top: 145px; right: calc(100% - 35px)"
+            style="position: absolute; top: 145px; right: calc(100% - 43px)"
             @click="removeAvatar"
             title="remove image"
           >
@@ -104,7 +104,7 @@
                 placeholder="New description here"
                 rows="1"
                 append="mdi-send"
-                :autofocus="$vuetify.breakpoint.name == 'xs' ? false : true"
+                @keydown="textarePressed"
               >
                 <template v-slot:append>
                   <v-btn
@@ -143,7 +143,7 @@
     </v-card>
     <!-- modify-dialog -->
     <v-card>
-      <v-dialog v-model="modifyDialog" width="500">
+      <v-dialog v-model="modifyDialog" width="500" @click:outside="closeModify">
         <v-card>
           <!-- modify-title -->
           <v-card-title
@@ -164,6 +164,7 @@
                 required
                 name="data"
                 :rules="fieldRules"
+                @keydown="keypressed"
               >
               </v-text-field>
             </v-form>
@@ -366,6 +367,25 @@ export default Vue.extend({
       await removeUserAvatar();
       this.currentUser.avatarSrc = null;
       this.updateCurrentUser(this.currentUser);
+    },
+    keypressed(e: KeyboardEvent): void {
+      const isEnterPressed: boolean =
+        e.code == "NumpadEnter" || e.code == "Enter";
+      if (isEnterPressed && this.valid) {
+        e.preventDefault();
+        this.proceed();
+      }
+    },
+    closeModify(): void {
+      this.$refs.form.reset();
+    },
+    textarePressed(e: KeyboardEvent) {
+      const isEnterPressed: boolean =
+        e.code == "NumpadEnter" || e.code == "Enter";
+      if (isEnterPressed) {
+        e.preventDefault();
+        this.sendDescription();
+      }
     },
   },
   watch: {
