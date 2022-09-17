@@ -166,7 +166,7 @@ export default Vue.extend({
       btnSize: btnSize,
       emailRules: [rules.requiredEmail, rules.emailValidator],
       passwordRules: [rules.requiredPasswd, rules.passwdValidator],
-      fieldRules: [rules.requiredField, rules.fieldValidator],
+      fieldRules: [rules.requiredField, rules.max20, rules.fieldValidator],
       descriptionRules: [rules.requiredField, rules.fieldValidator],
       checkBoxRule: [rules.checked],
     };

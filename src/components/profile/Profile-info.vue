@@ -164,6 +164,7 @@
                 required
                 name="data"
                 :rules="fieldRules"
+                counter
                 @keydown="keypressed"
               >
               </v-text-field>
@@ -228,7 +229,7 @@ export default Vue.extend({
       loading: false,
       disabled: true,
       valid: false,
-      fieldRules: [rules.requiredField, rules.fieldValidator],
+      fieldRules: [rules.requiredField, rules.max20, rules.fieldValidator],
       data() {
         return {};
       },

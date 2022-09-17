@@ -53,6 +53,9 @@ export const rules = {
     max250: (v: string): string | boolean => {
         return v != null && v.length <= 250 || '250 Caractères max.';
     },
+    max20: (v: string): string | boolean => {
+        return v != null && v.length <= 20 || '20 Caractères max.';
+    },
     checked: (v: string): string | boolean => {
         return !!v || "You must agree to continue";
     }
