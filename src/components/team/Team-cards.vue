@@ -38,6 +38,8 @@
 </template>
 
 <script lang="ts">
+import { getUser, getUserData } from "@/utils/functions";
+import { VueResponse } from "@/utils/types";
 import Vue from "vue";
 import { mapState, mapActions } from "vuex";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
@@ -52,6 +54,16 @@ export default Vue.extend({
   methods: {
     ...mapActions(["updateTeamSelectedUser"]),
   },
+  mounted() {
+    if(this.$route.params.username) {
+      getUserData(this.$route.params.username).then(
+        (response : VueResponse) => {
+          this.updateTeamSelectedUser(response.body);
+        }
+      );
+
+    }
+  }
 });
 </script>
 

@@ -32,6 +32,11 @@ const routes: Array<RouteConfig> = [
     component: Team,
   },
   {
+    name: 'teamId',
+    path: TEAM_PAGE_URL + "/:username",
+    component: Team,
+  },
+  {
     name: 'notification',
     path: NOTIFICATION_PAGE_URL,
     component: Notification,

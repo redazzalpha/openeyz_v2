@@ -24,10 +24,12 @@
                 >
                   <!-- author-avatar -->
                   <span class="shrink">
-                    <AvatarCpn
-                      :avatarSrc="item.post.author.avatarSrc"
-                      :role="item.post.author.roles[0].roleName"
-                    />
+                    <router-link :to="'/team/' + item.post.author.username">
+                      <AvatarCpn
+                        :avatarSrc="item.post.author.avatarSrc"
+                        :role="item.post.author.roles[0].roleName"
+                      />
+                    </router-link>
                   </span>
                   <span>
                     post from {{ item.post.author.name }} <br />
@@ -165,8 +167,8 @@ export default Vue.extend({
     },
     background(): string {
       const backgroundUrl: string = this.$vuetify.theme.dark
-      ? require("../../assets/backgrounds/tertiary-dark.webp")
-      : require("../../assets/backgrounds/tertiary.webp");
+        ? require("../../assets/backgrounds/tertiary-dark.webp")
+        : require("../../assets/backgrounds/tertiary.webp");
       const backgroundImage: string =
         "background-image:  url(" + backgroundUrl + ");";
       const backgroundRepeat = "background-repeat:  no-repeat;";

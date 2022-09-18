@@ -5,15 +5,17 @@
         <v-card
           class="d-flex align-center mx-auto"
           elevation="0"
-          style="background-color: transparent;"
+          style="background-color: transparent"
           max-width="95%"
         >
-          <AvatarCpn
-            :avatarSrc="comment.author.avatarSrc"
-            :role="comment.author.roles[0].roleName"
-            size="55"
-            class="flex-shrink-1"
-          />
+          <router-link :to="'/team/' + comment.author.username">
+            <AvatarCpn
+              :avatarSrc="comment.author.avatarSrc"
+              :role="comment.author.roles[0].roleName"
+              size="55"
+              class="flex-shrink-1"
+            />
+          </router-link>
           <div
             class="message-arrowed flex-grow-1 elevation-3"
             style="
@@ -66,7 +68,11 @@
 import Vue from "vue";
 import { PropType } from "vue";
 import { Comment } from "../../utils/types";
-import { deleteComment, getAllComments, translateDate } from "../../utils/functions";
+import {
+  deleteComment,
+  getAllComments,
+  translateDate,
+} from "../../utils/functions";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
 import { COMMENT_GET_LIMIT } from "../../utils/defines";
 import { mapState } from "vuex";
