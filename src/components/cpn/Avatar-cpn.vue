@@ -25,7 +25,7 @@ export default Vue.extend({
         size: {
             type: String,
             required: false,
-            default: "65",
+            default: "55",
         }
     },
 });

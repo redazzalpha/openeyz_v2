@@ -29,7 +29,9 @@
               Description:
               {{ user.description ? user.description : "no description" }}
               <br />
-              Role: <span :class="roleClassColor">{{ user.roles[0].roleName }}</span> <br />
+              Role:
+              <span :class="roleClassColor">{{ user.roles[0].roleName }}</span>
+              <br />
               Account state:
               <span :class="user.state ? 'success--text' : 'error--text'">{{
                 user.state ? "Enabled" : "Disabled"
@@ -84,9 +86,17 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn text @click="menu = false"> Cancel </v-btn>
-        <v-btn color="primary" text @click="saveChanges" :loading="btnLoading" :disabled="btnLoading"> Save </v-btn>
+        <v-btn
+          color="primary"
+          text
+          @click="saveChanges"
+          :loading="btnLoading"
+          :disabled="btnLoading"
+        >
+          Save
+        </v-btn>
       </v-card-actions>
-    <!-- snackbar message -->
+      <!-- snackbar message -->
       <v-snackbar v-model="snackbar" :timeout="timeout" style="" class="test">
         {{ snackbarMessage }}
 
@@ -96,20 +106,17 @@
           </v-btn>
         </template>
       </v-snackbar>
-
-      
     </v-card>
-
   </v-menu>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import { Users } from "../../utils/types";
-import { mapState, mapActions } from "vuex";
+import { mapActions } from "vuex";
 import { PropType } from "vue";
 import InfoCpn from "./Info-cpn.vue";
-import { updateUserRole, updateUserState } from "@/utils/functions";
+import { getCurrentRole, updateUserRole, updateUserState } from "@/utils/functions";
 export default Vue.extend({
   name: "Authorization-cpn",
   props: {
@@ -133,8 +140,6 @@ export default Vue.extend({
     };
   },
   computed: {
-        ...mapState(["currentUser"]),
-
     roleClassColor(): string {
       let color: string;
 
@@ -157,8 +162,7 @@ export default Vue.extend({
       const { avatarSrc, roles, state } = this.user;
 
       if (typeof avatarSrc != "function" && typeof state != "function") {
-        if (!state)
-          return require("../../assets/users/banned.png");
+        if (!state) return require("../../assets/users/banned.png");
         else if (!avatarSrc && roles[0].roleName == "SUPERADMIN")
           return require("../../assets/users/suadmin.png");
         else if (!avatarSrc && roles[0].roleName == "ADMIN")
@@ -185,6 +189,12 @@ export default Vue.extend({
       this.role = this.user.roles[0].roleName as string;
       this.state =
         typeof this.user.state != "function" ? this.user.state : true;
+    },
+    isAuthorized(): boolean {
+      return (
+        getCurrentRole() == "SUPERADMIN" ||
+        getCurrentRole() == "ADMIN"
+      );
     },
   },
 });

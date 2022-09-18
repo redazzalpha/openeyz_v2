@@ -18,7 +18,7 @@
             :style="`background-color: ${
               $vuetify.theme.dark ? '#424242' : '#00acc1'
             }`"
-            style="border-radius: 7px 7px 0 0; display: block"
+            style="border-radius: 7px 7px 0 0; display: block; padding: 5px!important"
             class="font-italic white--text mb-4 pa-2"
           >
             <div class="d-flex align-center">

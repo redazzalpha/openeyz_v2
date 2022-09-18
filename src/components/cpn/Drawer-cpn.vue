@@ -14,7 +14,7 @@
           <AvatarCpn
             :avatarSrc="currentUser.avatarSrc"
             :role="currentUser.roles[0].roleName"
-            size="60"
+            size="50"
           />
         </div>
       </div>

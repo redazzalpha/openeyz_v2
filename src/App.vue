@@ -150,7 +150,7 @@ export default Vue.extend({
   color: red !important;
 }
 
-.app-container-block {
+.app-container {
   transition: background-image 0.7s linear;
 }
 </style>

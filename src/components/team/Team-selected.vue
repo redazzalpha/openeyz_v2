@@ -121,6 +121,7 @@ import Vue from "vue";
 import { mapActions, mapState } from "vuex";
 import {
   addPosts,
+  getCurrentRole,
   getPosts,
   getUserData,
   translateDateToISO,
@@ -134,6 +135,7 @@ import AuthorizationCpn from "../cpn/AuthorizationCpn.vue";
 import CommentBlock from "../comment/Comment-block.vue";
 import { Users, VueResponse } from "../../utils/types";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
+import { getCurrent } from '../../utils/functions';
 
 export default Vue.extend({
   name: "Team-selected",
@@ -166,7 +168,7 @@ export default Vue.extend({
     };
   },
   computed: {
-    ...mapState(["teamSelectedDialog", "posts", "currentItem", "currentUser"]),
+    ...mapState(["teamSelectedDialog", "posts", "currentItem"]),
     show(): boolean {
       let show = true;
       switch (this.$vuetify.breakpoint.name) {
@@ -241,14 +243,14 @@ export default Vue.extend({
     },
     isAuthorized(): boolean {
       return (
-        this.currentUser.roles[0].roleName == "SUPERADMIN" &&
-        this.currentUser.username != this.user.username
+        getCurrentRole() == "SUPERADMIN" &&
+        getCurrent("username") != this.user.username
       );
     },
     getUserImg(): string {
       const { avatarSrc, roles, state } = this.user;
       if (typeof avatarSrc != "function" && typeof state != "function") {
-        if (!state) return require("../../assets/users/banned.png");
+        if (!state && this.isAuthorized()) return require("../../assets/users/banned.png");
         else if (!avatarSrc && roles[0].roleName == "SUPERADMIN")
           return require("../../assets/users/suadmin.png");
         else if (!avatarSrc && roles[0].roleName == "ADMIN")
