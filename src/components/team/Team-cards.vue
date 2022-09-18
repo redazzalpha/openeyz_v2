@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts">
-import { getUser, getUserData } from "@/utils/functions";
+import { getUserData } from "@/utils/functions";
 import { VueResponse } from "@/utils/types";
 import Vue from "vue";
 import { mapState, mapActions } from "vuex";
