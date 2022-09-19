@@ -23,13 +23,11 @@
                   }`"
                 >
                   <!-- author-avatar -->
-                  <span class="shrink">
-                    <router-link :to="'/team/' + item.post.author.username">
-                      <AvatarCpn
-                        :avatarSrc="item.post.author.avatarSrc"
-                        :role="item.post.author.roles[0].roleName"
-                      />
-                    </router-link>
+                  <span class="shrink avatar" @click="pushTeamUrl()">
+                    <AvatarCpn
+                      :avatarSrc="item.post.author.avatarSrc"
+                      :role="item.post.author.roles[0].roleName"
+                    />
                   </span>
                   <span>
                     post from {{ item.post.author.name }} <br />
@@ -213,6 +211,12 @@ export default Vue.extend({
         this.currentUser.username == this.item.post?.author.username
       );
     },
+    pushTeamUrl() {
+      if (this.item.post && this.$router.currentRoute.name != "teamId") {
+        this.updateCommentDialog(false);
+        this.$router.push("/team/" + this.item.post.author.username);
+      }
+    },
   },
 });
 </script>
@@ -224,6 +228,8 @@ export default Vue.extend({
 
 p {
   margin: 10px 10px !important;
+  border: solid red 3px;
+  padding-left: 5px;
 }
 .badge {
   width: 35px !important;
@@ -233,10 +239,8 @@ p {
   .v-btn__content {
   opacity: 1 !important;
 }
-</style>
-<style lang="scss" scoped>
-p {
-  border: solid red 3px;
-  padding-left: 5px;
+
+.avatar:hover {
+  cursor: pointer;
 }
 </style>
