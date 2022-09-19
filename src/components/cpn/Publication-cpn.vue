@@ -169,15 +169,20 @@ export default Vue.extend({
         .replace(cover, coverReplace);
     },
     background(): string {
-      const backgroundUrl: string = this.$vuetify.theme.dark
+      const isXs: boolean = this.$vuetify.breakpoint.name == "xs";
+      const backgroundAf: string = this.$vuetify.theme.dark
         ? require("../../assets/backgrounds/tertiary-dark.webp")
         : require("../../assets/backgrounds/tertiary.webp");
+      const backgroundXs: string = this.$vuetify.theme.dark
+        ? require("../../assets/backgrounds/primary-xs-dark.webp")
+        : require("../../assets/backgrounds/primary-xs.webp");
+      const backgroundUrl = isXs ? backgroundXs : backgroundAf;
       const backgroundImage: string =
         "background-image:  url(" + backgroundUrl + ");";
       const backgroundRepeat = "background-repeat:  no-repeat;";
       const backgroundPosition = "background-position: center;";
       const backgroundSize = "background-size: cover;";
-      const backgroundAttachment = "background-attachment: fixed;";
+      const backgroundAttachment = "background-attachment: " + (isXs? "scroll" : "fixed") + ";";
       const backgroundColor = " background-color: #cccccc;";
       const background: string =
         backgroundImage +
@@ -207,7 +212,7 @@ export default Vue.extend({
     },
     openComment(item: Item) {
       this.updateCurrentItem(item);
-      this.updateCommentDialog(true); 
+      this.updateCommentDialog(true);
     },
     isAuthorized(): boolean {
       return (

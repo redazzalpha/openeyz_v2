@@ -47,14 +47,14 @@ export default Vue.extend({
   computed: {
     ...mapState(["currentUser", "userNotifs", "posts", "loader"]),
     background(): string {
+      const isXs : boolean = this.$vuetify.breakpoint.name == "xs";
       const backgroundAf: string = this.$vuetify.theme.dark
         ? require("./assets/backgrounds/primary-dark.webp")
         : require("./assets/backgrounds/primary.webp");
       const backgroundXs: string = this.$vuetify.theme.dark
         ? require("./assets/backgrounds/primary-xs-dark.webp")
         : require("./assets/backgrounds/primary-xs.webp");
-      const backgroundUrl =
-        this.$vuetify.breakpoint.name == "xs" ? backgroundXs : backgroundAf;
+      const backgroundUrl = isXs ? backgroundXs : backgroundAf;
       const backgroundImage: string =
         "background-image:  url(" + backgroundUrl + ");";
       const backgroundRepeat = "background-repeat:  no-repeat;";

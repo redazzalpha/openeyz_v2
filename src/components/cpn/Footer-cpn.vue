@@ -19,9 +19,9 @@
           </v-btn>
         </v-col>
       </v-row>
-      <v-row class="d-flex justify-center">
-        <v-col class="mb-5 shrink">
-          <LinksCpn show :plain="false" />
+      <v-row class="">
+        <v-col class="pa-0 mb-5 " >
+          <LinksFooterCpn show :plain="false" />
         </v-col>
       </v-row>
       <v-row>
@@ -51,11 +51,11 @@
 
 <script lang="ts">
 import Vue from "vue";
-import LinksCpn from "./Links-cpn.vue";
+import LinksFooterCpn from "./LinksFooter-cpn.vue";
 export default Vue.extend({
   name: "Footer-cpn",
   components: {
-    LinksCpn,
+    LinksFooterCpn,
   },
   data() {
     return {

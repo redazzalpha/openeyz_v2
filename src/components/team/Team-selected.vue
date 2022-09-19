@@ -13,13 +13,7 @@
       v-scroll.self="infiniteScroll"
       class="overflow-y-auto inscroll"
       max-height="400"
-      :style="
-        'background:  url(' +
-        ($vuetify.theme.dark
-          ? require('../../assets/backgrounds/secondary-dark.webp')
-          : require('../../assets/backgrounds/secondary.webp')) +
-        ') no-repeat fixed center'
-      "
+      :style="background"
     >
       <!-- toolbar -->
       <ToolbarCpn
@@ -48,9 +42,12 @@
       <v-container grid-list-xs fluid>
         <v-row class="mt-15">
           <v-col class="text-center">
-            <v-card-title primary-title class="d-flex flex-column justify-center">
-              <span> {{user.name}} {{user.lname}}</span>
-              <AvatarCpn :avatarSrc="getUserImg()" :role="role" size="175"  />
+            <v-card-title
+              primary-title
+              class="d-flex flex-column justify-center"
+            >
+              <span> {{ user.name }} {{ user.lname }}</span>
+              <AvatarCpn :avatarSrc="getUserImg()" :role="role" size="175" />
               <div class="d-flex flex-column">
                 <span class="text-body-2">
                   {{ user.username }}
@@ -135,7 +132,7 @@ import AuthorizationCpn from "../cpn/AuthorizationCpn.vue";
 import CommentBlock from "../comment/Comment-block.vue";
 import { Users, VueResponse } from "../../utils/types";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
-import { getCurrent } from '../../utils/functions';
+import { getCurrent } from "../../utils/functions";
 
 export default Vue.extend({
   name: "Team-selected",
@@ -169,6 +166,32 @@ export default Vue.extend({
   },
   computed: {
     ...mapState(["teamSelectedDialog", "posts", "currentItem"]),
+    background(): string {
+      const isXs: boolean = this.$vuetify.breakpoint.name == "xs";
+      const backgroundAf: string = this.$vuetify.theme.dark
+        ? require("../../assets/backgrounds/secondary-dark.webp")
+        : require("../../assets/backgrounds/secondary.webp");
+      const backgroundXs: string = this.$vuetify.theme.dark
+        ? require("../../assets/backgrounds/primary-xs-dark.webp")
+        : require("../../assets/backgrounds/primary-xs.webp");
+      const backgroundUrl = isXs ? backgroundXs : backgroundAf;
+      const backgroundImage: string =
+        "background-image:  url(" + backgroundUrl + ");";
+      const backgroundRepeat = "background-repeat:  no-repeat;";
+      const backgroundPosition = "background-position: center;";
+      const backgroundSize = "background-size: cover;";
+      const backgroundAttachment = "background-attachment: fixed;";
+      const backgroundColor = " background-color: #cccccc;";
+      const background: string =
+        backgroundImage +
+        backgroundRepeat +
+        backgroundPosition +
+        backgroundSize +
+        backgroundColor +
+        backgroundAttachment;
+      return background;
+    },
+
     show(): boolean {
       let show = true;
       switch (this.$vuetify.breakpoint.name) {
@@ -250,7 +273,8 @@ export default Vue.extend({
     getUserImg(): string {
       const { avatarSrc, roles, state } = this.user;
       if (typeof avatarSrc != "function" && typeof state != "function") {
-        if (!state && this.isAuthorized()) return require("../../assets/users/banned.png");
+        if (!state && this.isAuthorized())
+          return require("../../assets/users/banned.png");
         else if (!avatarSrc && roles[0].roleName == "SUPERADMIN")
           return require("../../assets/users/suadmin.png");
         else if (!avatarSrc && roles[0].roleName == "ADMIN")

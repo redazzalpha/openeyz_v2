@@ -16,14 +16,8 @@
     <v-card
       v-scroll.self="infiniteScroll"
       class="overflow-y-auto inscroll"
-      :style="
-        'background:  url(' +
-        ($vuetify.theme.dark
-          ? require('../../assets/backgrounds/tertiary-dark.webp')
-          : require('../../assets/backgrounds/tertiary.webp')) +
-        ') fixed no-repeat center; background-size: cover; '
-      "
       max-height="600"
+      :style="background"
       style="border: solid white 3px"
     >
       <v-btn icon plain fixed @click="closeComment"
@@ -102,6 +96,31 @@ export default Vue.extend({
   },
   computed: {
     ...mapState(["currentItem", "commentDialog", "comments"]),
+    background(): string {
+      const isXs : boolean = this.$vuetify.breakpoint.name == "xs";
+      const backgroundAf: string = this.$vuetify.theme.dark
+        ? require("../../assets/backgrounds/tertiary-dark.webp")
+        : require("../../assets/backgrounds/tertiary.webp");
+      const backgroundXs: string = this.$vuetify.theme.dark
+        ? require("../../assets/backgrounds/primary-xs-dark.webp")
+        : require("../../assets/backgrounds/primary-xs.webp");
+      const backgroundUrl = isXs ? backgroundXs : backgroundAf;
+      const backgroundImage: string =
+        "background-image:  url(" + backgroundUrl + ");";
+      const backgroundRepeat = "background-repeat:  no-repeat;";
+      const backgroundPosition = "background-position: center;";
+      const backgroundSize = "background-size: cover;";
+      const backgroundAttachment = "background-attachment: fixed;";
+      const backgroundColor = " background-color: #cccccc;";
+      const background: string =
+        backgroundImage +
+        backgroundRepeat +
+        backgroundPosition +
+        backgroundSize +
+        backgroundColor +
+        backgroundAttachment;
+      return background;
+    },
   },
   methods: {
     ...mapActions([

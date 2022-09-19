@@ -1,5 +1,5 @@
 <template>
-    <v-avatar :size="size" class="avatar-cpn-avatar mr-3" style="">
+    <v-avatar :size="size" class="avatar-cpn-avatar" style="">
         <img v-if="!avatarSrc && role == 'SUPERADMIN'" src="../../assets/users/suadmin.png" alt="alt" style="object-fit: cover;"/>
         <img v-else-if="!avatarSrc && role == 'ADMIN'" src="../../assets/users/admin.png" alt="alt" style="object-fit: cover;"/>
         <img v-else-if="!avatarSrc && role == 'USER'" src="../../assets/users/user.png" alt="alt" style="object-fit: cover;"/>
