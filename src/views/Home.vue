@@ -37,7 +37,8 @@ export default Vue.extend({
     ...mapState(["currentUser", "posts"]),
   },
   data() {
-    return {};
+    return {
+    };
   },
   methods: {
     ...mapActions(["updateLoader"]),
@@ -47,6 +48,7 @@ export default Vue.extend({
   },
   mounted() {
     initialize();
+
   },
   destroyed() {
     this.updateLoader(true);

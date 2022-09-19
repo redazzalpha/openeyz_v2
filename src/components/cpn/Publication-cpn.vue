@@ -143,11 +143,11 @@ export default Vue.extend({
   },
   data() {
     return {
-      translateDate: translateDate,
       isActive: false,
       comments: [],
       loading: false,
       disabled: false,
+      translateDate: translateDate,
     };
   },
   computed: {

@@ -18,7 +18,11 @@
             :style="`background-color: ${
               $vuetify.theme.dark ? '#424242' : '#00acc1'
             }`"
-            style="border-radius: 7px 7px 0 0; display: block; padding: 5px!important"
+            style="
+              border-radius: 7px 7px 0 0;
+              display: block;
+              padding: 5px !important;
+            "
             class="font-italic white--text mb-4 pa-2"
           >
             <div class="d-flex align-center">
@@ -30,16 +34,16 @@
               </v-btn>
               <div class="d-flex flex-column flex-sm-row">
                 <span class="text-subtitle-1 mr-2">{{ currentUser.name }}</span>
-                <span class="text-subtitle-1 "> say what you want </span>
+                <span class="text-subtitle-1"> say what you want </span>
               </div>
             </div>
           </v-card-title>
           <!--editor -->
           <v-card-text>
             <ckeditor
+            tools
               :editor="editor"
               v-model="editorData"
-              height="300"
               tag-name="textarea"
             ></ckeditor>
           </v-card-text>
@@ -63,7 +67,6 @@
 <script lang="ts">
 import Vue from "vue";
 import ClassicEditor from "../../ckeditor5/ckeditor5";
-
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
 import { mapState } from "vuex";
 import { btnSize, publishPost } from "../../utils/functions";
