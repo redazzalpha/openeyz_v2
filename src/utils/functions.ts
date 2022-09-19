@@ -544,6 +544,13 @@ export function pushAccessUrl(): void {
     router.push(defines.ACCESS_PAGE_URL);
   }
 }
+export function pushTeamUrl(username: string): void {
+  if (username && router.currentRoute.name != "teamId") {
+    store.dispatch("updateCommentDialog", false);
+    router.push("/team/" + username);
+  }
+}
+
 
 export function alert(type: string, message: string): void {
   store.dispatch("updateAlertType", type);

@@ -120,7 +120,12 @@
 import Vue, { PropType } from "vue";
 import { mapState, mapActions } from "vuex";
 import { Item, VueResponse } from "../../utils/types";
-import { deletePost, likePost, translateDate } from "../../utils/functions";
+import {
+  deletePost,
+  likePost,
+  pushTeamUrl,
+  translateDate,
+} from "../../utils/functions";
 import AvatarCpn from "./Avatar-cpn.vue";
 
 export default Vue.extend({
@@ -202,7 +207,7 @@ export default Vue.extend({
     },
     openComment(item: Item) {
       this.updateCurrentItem(item);
-      this.updateCommentDialog(true);
+      this.updateCommentDialog(true); 
     },
     isAuthorized(): boolean {
       return (
@@ -212,10 +217,7 @@ export default Vue.extend({
       );
     },
     pushTeamUrl() {
-      if (this.item.post && this.$router.currentRoute.name != "teamId") {
-        this.updateCommentDialog(false);
-        this.$router.push("/team/" + this.item.post.author.username);
-      }
+      if (this.item.post) pushTeamUrl(this.item.post?.author.username);
     },
   },
 });

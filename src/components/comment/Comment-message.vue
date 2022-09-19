@@ -8,14 +8,14 @@
           style="background-color: transparent"
           max-width="95%"
         >
-          <router-link :to="'/team/' + comment.author.username">
+          <span class="avatar" @click="pushTeamUrl()">
             <AvatarCpn
               :avatarSrc="comment.author.avatarSrc"
               :role="comment.author.roles[0].roleName"
               size="55"
               class="flex-shrink-1"
             />
-          </router-link>
+          </span>
           <div
             class="message-arrowed flex-grow-1 elevation-3"
             style="
@@ -71,6 +71,7 @@ import { Comment } from "../../utils/types";
 import {
   deleteComment,
   getAllComments,
+  pushTeamUrl,
   translateDate,
 } from "../../utils/functions";
 import AvatarCpn from "../cpn/Avatar-cpn.vue";
@@ -108,6 +109,9 @@ export default Vue.extend({
         this.currentUser.username == this.comment.author.username
       );
     },
+    pushTeamUrl() {
+      pushTeamUrl(this.comment.author.username);
+    },
   },
 });
 </script>
@@ -122,5 +126,8 @@ export default Vue.extend({
   border: solid transparent 15px;
   border-left: solid transparent 15px;
   border-right: solid #2196f3 15px;
+}
+.avatar:hover {
+  cursor: pointer;
 }
 </style>
