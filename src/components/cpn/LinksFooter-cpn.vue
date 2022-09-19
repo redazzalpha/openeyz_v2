@@ -4,11 +4,9 @@
       <v-col     
       v-for="icon in icons"
       :key="icon.title" 
-      class="d-flex justify-center col-5  col-sm-1 ma-2 mx-3"
+      class="d-flex justify-center col-5  col-sm-2 col-lg-1 ma-2 mx-3"
       :style="border"
-
       >
-
       <v-hover 
       v-slot="{hover}"
       >

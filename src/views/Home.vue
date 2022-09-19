@@ -41,7 +41,7 @@ export default Vue.extend({
     };
   },
   methods: {
-    ...mapActions(["updateLoader"]),
+    ...mapActions(["updateLoader", "updateCommentDialog"]),
   },
   created() {
     getPosts(POST_GET_LIMIT);
@@ -51,6 +51,7 @@ export default Vue.extend({
 
   },
   destroyed() {
+    this.updateCommentDialog(false);
     this.updateLoader(true);
   },
 });

@@ -308,6 +308,7 @@ export default Vue.extend({
     this.updateTeamSelectedDialog(false);
   },
   destroyed() {
+    this.updateCommentDialog(false);
     this.updateTeamSelectedDialog(false);
   },
 });
