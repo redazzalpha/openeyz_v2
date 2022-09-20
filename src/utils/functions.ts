@@ -632,3 +632,20 @@ export function initialize(callback?: () => void): Promise<VueResponse | void> {
     if (callback) callback();
   });
 }
+
+export function overflow(isVisible: boolean): void {
+  const html: HTMLElement | null = document.querySelector("html");
+  const isSelectedDialog: boolean = store.state.teamSelectedDialog;
+  if (html) {
+    if (isVisible) {
+      store.dispatch("updateCommentDialog", false);
+      if (!isSelectedDialog) {
+        store.dispatch("updateTeamSelectedDialog", false);
+        html.style.overflow = "scroll";
+      }
+    }
+    else {
+      html.style.overflow = "hidden";
+    }
+  }
+}

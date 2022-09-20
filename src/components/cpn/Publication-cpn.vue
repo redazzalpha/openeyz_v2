@@ -165,7 +165,7 @@ export default Vue.extend({
       }`;
 
       return this.item.post?.content
-        .replace(paragraph, paragraphReplace)
+        .replaceAll(paragraph, paragraphReplace)
         .replace(cover, coverReplace);
     },
     background(): string {

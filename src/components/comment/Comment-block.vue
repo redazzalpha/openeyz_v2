@@ -80,6 +80,7 @@ import {
 import {
   addAllComments,
   getAllComments,
+  overflow,
   translateDateToISO,
 } from "../../utils/functions";
 import InfoCpn from "../cpn/Info-cpn.vue";
@@ -97,7 +98,7 @@ export default Vue.extend({
   computed: {
     ...mapState(["currentItem", "commentDialog", "comments"]),
     background(): string {
-      const isXs : boolean = this.$vuetify.breakpoint.name == "xs";
+      const isXs: boolean = this.$vuetify.breakpoint.name == "xs";
       const backgroundAf: string = this.$vuetify.theme.dark
         ? require("../../assets/backgrounds/tertiary-dark.webp")
         : require("../../assets/backgrounds/tertiary.webp");
@@ -156,7 +157,12 @@ export default Vue.extend({
   },
   watch: {
     commentDialog(visible: boolean) {
-      if (visible) getAllComments(this.currentItem, COMMENT_GET_LIMIT);
+      if (visible) {
+        overflow(false);
+        getAllComments(this.currentItem, COMMENT_GET_LIMIT);
+      } else {
+        overflow(true);
+      }
     },
   },
 });

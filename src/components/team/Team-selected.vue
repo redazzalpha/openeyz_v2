@@ -121,6 +121,7 @@ import {
   getCurrentRole,
   getPosts,
   getUserData,
+  overflow,
   translateDateToISO,
 } from "../../utils/functions";
 import { POST_GET_LIMIT, TEAM_PAGE_URL } from "../../utils/defines";
@@ -227,6 +228,7 @@ export default Vue.extend({
     closeDialog() {
       this.updateTeamSelectedDialog(false);
       this.updateTeamSelectedUser(null);
+      overflow(true);
       this.toTop();
     },
     infiniteScroll(e: UIEvent) {
