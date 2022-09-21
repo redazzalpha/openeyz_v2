@@ -3,7 +3,6 @@
     id="wrapper"
     class="app-container"
     :style="background"
-    style="overflow: hidden !important"
   >
     <LoaderCpn :show="loader" />
     <AlertCpn />
@@ -28,7 +27,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { HOME_PAGE_URL, POST_GET_LIMIT } from "./utils/defines";
-import { addPosts, overflow, translateDateToISO } from "./utils/functions";
+import { addPosts, closeDialogs, translateDateToISO } from "./utils/functions";
 import FooterCpn from "@/components/cpn/Footer-cpn.vue";
 import AppbarCpn from "@/components/cpn/Appbar-cpn.vue";
 import DrawerCpn from "@/components/cpn/Drawer-cpn.vue";
@@ -131,11 +130,11 @@ export default Vue.extend({
     this.ckeThemeSwitcher();
   },
   updated() {
-    overflow(true);
+    closeDialogs();
     this.ckeThemeSwitcher();
   },
   async mounted() {
-    overflow(true);
+    closeDialogs();
     this.infiniteScroll();
   },
 });

@@ -633,19 +633,40 @@ export function initialize(callback?: () => void): Promise<VueResponse | void> {
   });
 }
 
-export function overflow(isVisible: boolean): void {
-  const html: HTMLElement | null = document.querySelector("html");
-  const isSelectedDialog: boolean = store.state.teamSelectedDialog;
-  if (html) {
-    if (isVisible) {
-      store.dispatch("updateCommentDialog", false);
-      if (!isSelectedDialog) {
-        store.dispatch("updateTeamSelectedDialog", false);
-        html.style.overflow = "scroll";
-      }
-    }
-    else {
-      html.style.overflow = "hidden";
-    }
+export function overflow(show?: boolean): void {
+
+  const hide = !show;
+
+  const htmlTag: HTMLElement | null = document.querySelector("html");
+  const teamSelectedTag: HTMLElement | null = document.querySelector(".team-selected-card");
+
+  const isTSDialog = store.state.teamSelectedDialog;
+  const isCommentDialog = store.state.commentDialog;
+
+  htmlTag?.classList.remove("overflow-y-auto");
+  htmlTag?.classList.remove("overflow-y-hidden");
+  teamSelectedTag?.classList.remove("overflow-y-auto");
+  teamSelectedTag?.classList.remove("overflow-y-hidden");
+
+  console.log(htmlTag && hide? "-- hide html overflow" : "");
+  console.log((htmlTag && !isTSDialog) && show? "++ show html overflow" : "");
+
+  console.log(teamSelectedTag && isTSDialog && isCommentDialog && hide? "-- hide team-selected-dialog overflow" : "");
+  console.log(teamSelectedTag && isTSDialog && show? "++ show team-selected-dialog overflow" : "");
+
+  if(hide) {
+    if(htmlTag) htmlTag.style.overflow = "hidden";
+    if(teamSelectedTag && isTSDialog && isCommentDialog) teamSelectedTag.style.overflow = "hidden";    
   }
+
+  else if(show) {
+    if(htmlTag && !isTSDialog) htmlTag.style.overflow = "auto";
+    if(teamSelectedTag && isTSDialog)  teamSelectedTag.style.overflow = "auto";
+  }
+}
+
+export function closeDialogs() {
+  store.dispatch("updateCommentDialog", false);
+  store.dispatch("updateTeamSelectedDialog", false);
+  overflow(true);
 }

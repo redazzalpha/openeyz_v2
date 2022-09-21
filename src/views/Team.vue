@@ -52,7 +52,7 @@
 import Vue from "vue";
 import { mapActions, mapState } from "vuex";
 import { UserObj } from "../utils/types";
-import { getSimpleUsers, initialize } from "../utils/functions";
+import { getSimpleUsers, initialize, overflow } from "../utils/functions";
 import AvatarCpn from "../components/cpn/Avatar-cpn.vue";
 import ToolbarCpn from "../components/cpn/Toolbar-cpn.vue";
 import TeamCards from "../components/team/Team-cards.vue";
@@ -128,6 +128,7 @@ export default Vue.extend({
       this.author = userObj.name;
       this.username = userObj.username;
       this.updateTeamSelectedDialog(true);
+      overflow();
     },
   },
   watch: {

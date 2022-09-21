@@ -11,9 +11,10 @@
   >
     <v-card
       v-scroll.self="infiniteScroll"
-      class="overflow-y-auto inscroll"
+      class="inscroll team-selected-card"
       max-height="400"
       :style="background"
+      style="overflow-y: auto"
     >
       <!-- toolbar -->
       <ToolbarCpn
@@ -228,8 +229,8 @@ export default Vue.extend({
     closeDialog() {
       this.updateTeamSelectedDialog(false);
       this.updateTeamSelectedUser(null);
-      overflow(true);
       this.toTop();
+      overflow(true)
     },
     infiniteScroll(e: UIEvent) {
       let scroll: number =
@@ -305,13 +306,6 @@ export default Vue.extend({
         });
       }
     },
-  },
-  created() {
-    this.updateTeamSelectedDialog(false);
-  },
-  destroyed() {
-    this.updateCommentDialog(false);
-    this.updateTeamSelectedDialog(false);
   },
 });
 </script>

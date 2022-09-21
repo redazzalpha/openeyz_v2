@@ -123,6 +123,7 @@ import { Item, VueResponse } from "../../utils/types";
 import {
   deletePost,
   likePost,
+  overflow,
   pushTeamUrl,
   translateDate,
 } from "../../utils/functions";
@@ -213,6 +214,7 @@ export default Vue.extend({
     openComment(item: Item) {
       this.updateCurrentItem(item);
       this.updateCommentDialog(true);
+      overflow();
     },
     isAuthorized(): boolean {
       return (

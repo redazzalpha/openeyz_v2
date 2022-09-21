@@ -48,10 +48,8 @@ export default Vue.extend({
   },
   mounted() {
     initialize();
-
   },
   destroyed() {
-    this.updateCommentDialog(false);
     this.updateLoader(true);
   },
 });

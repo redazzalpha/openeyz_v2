@@ -3,8 +3,8 @@
   <!-- dialog-block -->
   <v-dialog
     v-if="currentItem.post"
-    dialog-transition
     :value="commentDialog"
+    dialog-transition
     @click:outside="closeComment"
     @keydown="keyPressed"
     max-width="900"
@@ -23,7 +23,6 @@
       <v-btn icon plain fixed @click="closeComment"
         ><v-icon>mdi-close</v-icon></v-btn
       >
-
       <v-container grid-list-xs>
         <v-row>
           <v-col class="text-center">
@@ -150,6 +149,7 @@ export default Vue.extend({
       this.updateCommentDialog(false);
       this.updateComments([]);
       this.updateCurrentItem({});
+      overflow(true);
     },
     keyPressed({ code }: KeyboardEvent) {
       if (code.match("Escape")) this.closeComment();
@@ -158,10 +158,7 @@ export default Vue.extend({
   watch: {
     commentDialog(visible: boolean) {
       if (visible) {
-        overflow(false);
         getAllComments(this.currentItem, COMMENT_GET_LIMIT);
-      } else {
-        overflow(true);
       }
     },
   },

@@ -112,7 +112,7 @@ export default Vue.extend({
     },
     border(): string {
       const isXs : boolean = this.$vuetify.breakpoint.name == "xs";
-      let border : string = "border: " + (isXs? "solid grey 1px; border-radius: 15px; box-shadow: 3px 3px 7px #d7d8d9;" : "unset") + ";";
+      let border : string = "border: " + (isXs? "solid whitesmoke 1px; border-radius: 15px; box-shadow: 3px 3px 7px #d7d8d9;" : "unset") + ";";
       return border;
     }
   },
