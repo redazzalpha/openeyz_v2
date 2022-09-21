@@ -648,12 +648,6 @@ export function overflow(show?: boolean): void {
   teamSelectedTag?.classList.remove("overflow-y-auto");
   teamSelectedTag?.classList.remove("overflow-y-hidden");
 
-  console.log(htmlTag && hide? "-- hide html overflow" : "");
-  console.log((htmlTag && !isTSDialog) && show? "++ show html overflow" : "");
-
-  console.log(teamSelectedTag && isTSDialog && isCommentDialog && hide? "-- hide team-selected-dialog overflow" : "");
-  console.log(teamSelectedTag && isTSDialog && show? "++ show team-selected-dialog overflow" : "");
-
   if(hide) {
     if(htmlTag) htmlTag.style.overflow = "hidden";
     if(teamSelectedTag && isTSDialog && isCommentDialog) teamSelectedTag.style.overflow = "hidden";    
