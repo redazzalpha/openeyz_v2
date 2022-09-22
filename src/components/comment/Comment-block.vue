@@ -74,6 +74,7 @@ import { mapState, mapActions } from "vuex";
 import {
   COMMENT_GET_LIMIT,
   HOME_PAGE_URL,
+  INFINITE_SCROLL_OFFSET,
   TEAM_PAGE_URL,
 } from "../../utils/defines";
 import {
@@ -132,7 +133,7 @@ export default Vue.extend({
       let scroll: number =
         (e.target as Element).clientHeight + (e.target as Element).scrollTop;
       let bottom: number = (e.target as Element).scrollHeight;
-      if (bottom && scroll === bottom) {
+      if (bottom && scroll === (bottom - INFINITE_SCROLL_OFFSET)) {
         if (
           this.comments.length &&
           (this.$router.currentRoute.path === HOME_PAGE_URL ||

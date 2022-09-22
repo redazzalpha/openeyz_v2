@@ -125,7 +125,7 @@ import {
   overflow,
   translateDateToISO,
 } from "../../utils/functions";
-import { POST_GET_LIMIT, TEAM_PAGE_URL } from "../../utils/defines";
+import { INFINITE_SCROLL_OFFSET, POST_GET_LIMIT, TEAM_PAGE_URL } from "../../utils/defines";
 import PublicationCpn from "../cpn/Publication-cpn.vue";
 import ToolbarCpn from "../cpn/Toolbar-cpn.vue";
 import InfoCpn from "../cpn/Info-cpn.vue";
@@ -230,7 +230,7 @@ export default Vue.extend({
       this.updateTeamSelectedDialog(false);
       this.updateTeamSelectedUser(null);
       this.toTop();
-      overflow(true)
+      overflow(true);
     },
     infiniteScroll(e: UIEvent) {
       let scroll: number =
@@ -243,10 +243,11 @@ export default Vue.extend({
         this.fab = top > 20;
       }
 
-      if (bottom && scroll === bottom) {
+      if (bottom && scroll >= (bottom - INFINITE_SCROLL_OFFSET)) {
         if (
           this.posts.length &&
-          this.$router.currentRoute.path === TEAM_PAGE_URL
+          (this.$router.currentRoute.path === TEAM_PAGE_URL ||
+            this.$router.currentRoute.name === "teamId")
         ) {
           const date = translateDateToISO(
             this.posts[this.posts.length - 1].post.creation

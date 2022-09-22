@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { HOME_PAGE_URL, POST_GET_LIMIT } from "./utils/defines";
+import { HOME_PAGE_URL, INFINITE_SCROLL_OFFSET, POST_GET_LIMIT } from "./utils/defines";
 import { addPosts, closeDialogs, translateDateToISO } from "./utils/functions";
 import FooterCpn from "@/components/cpn/Footer-cpn.vue";
 import AppbarCpn from "@/components/cpn/Appbar-cpn.vue";
@@ -92,7 +92,7 @@ export default Vue.extend({
       window.onscroll = async () => {
         scroll = window.scrollY + window.innerHeight;
         bottom = document.body.scrollHeight;
-        if (scroll === bottom) {
+        if (scroll === (bottom - INFINITE_SCROLL_OFFSET)) {
           if (
             this.posts.length &&
             this.$router.currentRoute.path === HOME_PAGE_URL

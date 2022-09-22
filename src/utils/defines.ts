@@ -55,3 +55,4 @@ export const USER_IMG_URL = ROOT_URL + "@/assets/user.png";
 export const ERROR_MESSAGE_DURATION = 4000;
 export const POST_GET_LIMIT = 5;
 export const COMMENT_GET_LIMIT = 3;
+export const INFINITE_SCROLL_OFFSET = 0;
