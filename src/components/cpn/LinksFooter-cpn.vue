@@ -29,7 +29,7 @@
             >
               <AvatarCpn
                 v-if="icon.title == 'Profile' && currentUser != null"
-                :avatarSrc="currentUser.avatarSrc"
+                :path="currentUser.avatarSrc ? currentUser.avatarSrc : ''"
                 :role="currentUser.roles[0].roleName"
                 :size="$vuetify.breakpoint.name == 'xs' ? '35' : '45'"
               />

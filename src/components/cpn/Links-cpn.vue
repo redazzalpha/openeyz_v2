@@ -22,11 +22,11 @@
           :ripple="plain"
           :plain="!plain"
         >
-
           <AvatarCpn  
             v-if="icon.title == 'Profile' && currentUser != null" 
-            :avatarSrc="currentUser.avatarSrc" 
-            :role="currentUser.roles[0].roleName" :size="$vuetify.breakpoint.name == 'xs'? '35' : '45'"
+            :path="currentUser.avatarSrc?currentUser.avatarSrc:''"
+            :role="currentUser.roles[0].roleName"
+             :size="$vuetify.breakpoint.name == 'xs'? '35' : '45'"
            />
           <i v-if="icon.title != 'Profile'" :class="icon.class + ' mr-1'"></i>
           <span style="font-size: 13px">{{ icon.title }}</span>
@@ -42,7 +42,7 @@ import { mapState } from 'vuex';
 import { Notif } from "../../utils/types";
 import { HOME_PAGE_URL, NOTIFICATION_PAGE_URL, PROFILE_PAGE_URL, TEAM_PAGE_URL } from "../../utils/defines";
 import { getCurrent, getCurrentRole, logout } from '../../utils/functions';
-import AvatarCpn from "../cpn/Avatar-cpn.vue";
+import AvatarCpn from "./Avatar-cpn.vue";
 export default Vue.extend({
   name: "Links-cpn",
   components: {
@@ -92,7 +92,7 @@ export default Vue.extend({
       ],
     };
   },
-  computed: {
+  computed: {   
     ...mapState([
       'userNotifs',
       'currentUser'
@@ -101,7 +101,7 @@ export default Vue.extend({
         return this.userNotifs.filter((e: Notif) => {
           return !e.read
         }).length;
-    }
+    },
   },
   methods: {
         current(value: string): string {
@@ -110,9 +110,7 @@ export default Vue.extend({
     currentRole(): string {
       return getCurrentRole();
     },
-
-
-  }
+  },
 });
 </script>
 

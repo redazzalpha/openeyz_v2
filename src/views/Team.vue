@@ -11,7 +11,6 @@
           hide-details
           solo-inverted
           class="mx-4"
-          id="test"
           label="Search by username"
           item-text="name"
           item-value="username"
@@ -22,7 +21,7 @@
             <template>
               <v-list-item-avatar>
                 <AvatarCpn
-                  :avatarSrc="data.item.avatarSrc"
+                  :path="data.item.avatarSrc ? data.item.avatarSrc : ''"
                   :role="data.item.role"
                   size="30"
                 />
@@ -41,7 +40,7 @@
       subtitle="Interact with other users from here. Search and select a user, access their publications, react by adding a comment."
     >
       <template v-slot:content>
-        <TeamCards @open="openSelected" />
+        <TeamCards />
         <TeamSelected :author="author" :username="username" />
       </template>
     </ContainerCpn>
@@ -65,8 +64,8 @@ export default Vue.extend({
     ContainerCpn,
     ToolbarCpn,
     TeamCards,
-    AvatarCpn,
     TeamSelected,
+    AvatarCpn,
   },
   data() {
     return {
@@ -144,7 +143,6 @@ export default Vue.extend({
   },
   destroyed() {
     this.updateLoader(true);
-
     this.updateUserCardList([]);
     this.updateUserListObj([]);
   },

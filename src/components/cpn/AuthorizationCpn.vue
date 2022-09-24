@@ -8,17 +8,30 @@
   >
     <InfoCpn message="modification has been done successfully" v-if="false" />
     <template v-slot:activator="{ on, attrs }">
-      <v-btn color="red darken-3" dark v-bind="attrs" v-on="on">
-        Authorization
-      </v-btn>
+      <v-badge
+        bordered
+        dense
+        :color="$vuetify.theme.dark? 'black' : 'white'"
+        icon="mdi-account-circle"
+        avatar
+        overlap
+      >
+        <v-btn color="red darken-3" dark v-bind="attrs" v-on="on">
+          Authorization
+        </v-btn>
+      </v-badge>
     </template>
 
     <v-card>
       <v-list>
         <v-list-item>
-          <v-list-item-avatar>
-            <img v-if="user" :src="getUserImg()" alt="" />
-          </v-list-item-avatar>
+          <AvatarCpn
+            :path="user.avatarSrc ? user.avatarSrc : ''"
+            :role="user.roles[0].roleName"
+            :state="user.state"
+            size="55"
+          />
+          <v-list-item-avatar> </v-list-item-avatar>
 
           <v-list-item-content>
             <v-list-item-title>{{ user.username }}</v-list-item-title>
@@ -116,17 +129,24 @@ import { Users } from "../../utils/types";
 import { mapActions } from "vuex";
 import { PropType } from "vue";
 import InfoCpn from "./Info-cpn.vue";
-import { getCurrentRole, updateUserRole, updateUserState } from "@/utils/functions";
+import {
+  getCurrentRole,
+  updateUserRole,
+  updateUserState,
+} from "@/utils/functions";
+import AvatarCpn from "./Avatar-cpn.vue";
+
 export default Vue.extend({
   name: "Authorization-cpn",
+  components: {
+    InfoCpn,
+    AvatarCpn,
+  },
   props: {
     user: {
       type: Object as PropType<Users>,
       required: true,
     },
-  },
-  components: {
-    InfoCpn,
   },
   data() {
     return {
@@ -142,7 +162,6 @@ export default Vue.extend({
   computed: {
     roleClassColor(): string {
       let color: string;
-
       switch (this.user.roles[0].roleName) {
         case "SUPERADMIN":
           color = "error--text";
@@ -158,21 +177,6 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions(["updateCurrentUser"]),
-    getUserImg(): string {
-      const { avatarSrc, roles, state } = this.user;
-
-      if (typeof avatarSrc != "function" && typeof state != "function") {
-        if (!state) return require("../../assets/users/banned.png");
-        else if (!avatarSrc && roles[0].roleName == "SUPERADMIN")
-          return require("../../assets/users/suadmin.png");
-        else if (!avatarSrc && roles[0].roleName == "ADMIN")
-          return require("../../assets/users/admin.png");
-        else if (!avatarSrc && roles[0].roleName == "USER")
-          return require("../../assets/users/user.png");
-        else if (avatarSrc) return avatarSrc;
-      }
-      return require("../../assets/users/user.png");
-    },
     async saveChanges(): Promise<void> {
       this.btnLoading = true;
       let user: Users;
@@ -191,10 +195,7 @@ export default Vue.extend({
         typeof this.user.state != "function" ? this.user.state : true;
     },
     isAuthorized(): boolean {
-      return (
-        getCurrentRole() == "SUPERADMIN" ||
-        getCurrentRole() == "ADMIN"
-      );
+      return getCurrentRole() == "SUPERADMIN" || getCurrentRole() == "ADMIN";
     },
   },
 });

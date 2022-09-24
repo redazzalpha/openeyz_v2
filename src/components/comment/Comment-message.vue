@@ -10,7 +10,7 @@
         >
           <span class="avatar" @click="pushTeamUrl()">
             <AvatarCpn
-              :avatarSrc="comment.author.avatarSrc"
+              :path="comment.author.avatarSrc ? comment.author.avatarSrc : ''"
               :role="comment.author.roles[0].roleName"
               size="55"
               class="flex-shrink-1"

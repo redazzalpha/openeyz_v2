@@ -25,7 +25,7 @@
                   <!-- author-avatar -->
                   <span class="shrink avatar" @click="pushTeamUrl()">
                     <AvatarCpn
-                      :avatarSrc="item.post.author.avatarSrc"
+                      :path="item.post.author.avatarSrc ? item.post.author.avatarSrc : ''"
                       :role="item.post.author.roles[0].roleName"
                     />
                   </span>
@@ -183,7 +183,8 @@ export default Vue.extend({
       const backgroundRepeat = "background-repeat:  no-repeat;";
       const backgroundPosition = "background-position: center;";
       const backgroundSize = "background-size: cover;";
-      const backgroundAttachment = "background-attachment: " + (isXs? "scroll" : "fixed") + ";";
+      const backgroundAttachment =
+        "background-attachment: " + (isXs ? "scroll" : "fixed") + ";";
       const backgroundColor = " background-color: #cccccc;";
       const background: string =
         backgroundImage +

@@ -21,11 +21,7 @@
                 <!-- avatar -->
                 <span class="shrink">
                   <v-badge content="New" :value="!notif.read">
-                    <AvatarCpn
-                      :avatarSrc="notif.author.avatarSrc"
-                      :role="notif.author.roles[0].roleName"
-                      size="50"
-                    />
+                    <AvatarCpn :user="notif.author" size="50" />
                   </v-badge>
                 </span>
                 <!-- notification-timestamp -->

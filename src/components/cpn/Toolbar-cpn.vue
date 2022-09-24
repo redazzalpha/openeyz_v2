@@ -6,7 +6,7 @@
   >
     <v-toolbar-title
       v-if="$vuetify.breakpoint.name != 'xs' || xs"
-      style="position: absolute"
+      style="position: absolute"  
     >
       <i class="mr-2" :class="icon"></i>
       {{ title }}

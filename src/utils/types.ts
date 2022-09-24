@@ -66,13 +66,13 @@ export class Item {
 
 export class Users {
   username = "";
-  lname = String;
-  name = String;
-  password = String;
-  state = Boolean;
-  description = String;
-  avatarSrc = String;
-  dark = Boolean;
+  lname = "";
+  name = "";
+  password = "";
+  state = true;
+  description = "";
+  avatarSrc = "";
+  dark = false;
   roles = Array<Role>();
 }
 export interface Post {

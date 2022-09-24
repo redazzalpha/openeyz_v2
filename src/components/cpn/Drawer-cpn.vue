@@ -2,17 +2,18 @@
   <v-navigation-drawer
     tag="nav"
     class="drawer-cpn-nav"
-    v-model="$store.state.drawer"
+    :value="$store.state.drawer"
+    @input="update"
     temporary
     app
   >
     <!-- item-list -->
     <v-list-item class="my-2 align-center justify-center">
       <!-- user-avatara -->
-      <div class="">
+      <div>
         <div v-if="checkCurrentUser()">
           <AvatarCpn
-            :avatarSrc="currentUser.avatarSrc"
+            :path="currentUser.avatarSrc ? currentUser.avatarSrc : ''"
             :role="currentUser.roles[0].roleName"
             size="50"
           />
@@ -24,10 +25,11 @@
         }}</v-list-item-title>
       </v-list-item-content>
     </v-list-item>
-    <v-divider ></v-divider>
+    <v-divider></v-divider>
     <!-- links -->
     <v-list dense rounded>
       <!-- item-list -->
+
       <v-list-item
         v-for="icon in icons"
         :key="icon.title"
@@ -126,6 +128,9 @@ export default Vue.extend({
     checkCurrentUser(): boolean {
       return typeof this.currentUser != "function" && this.currentUser != null;
     },
+    update(value: boolean): void {
+      this.$store.dispatch("updateDrawer", value);
+    }
   },
 });
 </script>

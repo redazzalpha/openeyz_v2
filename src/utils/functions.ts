@@ -622,8 +622,8 @@ export function initialize(callback?: () => void): Promise<VueResponse | void> {
         resolve(response);
       },
       (error: VueResponse) => reject(error)
-    );
-    store.dispatch("updateLoader", false);
+      );
+      store.dispatch("updateLoader", false);
     window.scrollTo({
       top: 0,
       left: 0,
@@ -662,5 +662,6 @@ export function overflow(show?: boolean): void {
 export function closeDialogs() {
   store.dispatch("updateCommentDialog", false);
   store.dispatch("updateTeamSelectedDialog", false);
+  store.dispatch("updateTeamSelectedUser", null);
   overflow(true);
 }

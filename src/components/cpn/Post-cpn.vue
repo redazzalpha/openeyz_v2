@@ -28,7 +28,7 @@
             <div class="d-flex align-center">
               <v-btn :ripple="false" plain icon class="pa-7 mx-2" to="/profile">
                 <AvatarCpn
-                  :avatarSrc="currentUser.avatarSrc"
+                  :path="currentUser.avatarSrc ? currentUser.avatarSrc : ''"
                   :role="currentUser.roles[0].roleName"
                 />
               </v-btn>
@@ -41,7 +41,7 @@
           <!--editor -->
           <v-card-text>
             <ckeditor
-            tools
+              tools
               :editor="editor"
               v-model="editorData"
               tag-name="textarea"
@@ -67,7 +67,7 @@
 <script lang="ts">
 import Vue from "vue";
 import ClassicEditor from "../../ckeditor5/ckeditor5";
-import AvatarCpn from "../cpn/Avatar-cpn.vue";
+import AvatarCpn from "./Avatar-cpn.vue";
 import { mapState } from "vuex";
 import { btnSize, publishPost } from "../../utils/functions";
 

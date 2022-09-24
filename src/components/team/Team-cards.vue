@@ -21,10 +21,10 @@
           >
             <v-card-text class="d-flex align-center">
               <AvatarCpn
-                v-if="user.role"
-                :avatarSrc="user.avatarSrc"
+                :path="user.avatarSrc ? user.avatarSrc : ''"
                 :role="user.role"
               />
+
               <span class="text-center mx-auto" style="">
                 {{ user.name }}
               </span>
@@ -55,15 +55,12 @@ export default Vue.extend({
     ...mapActions(["updateTeamSelectedUser"]),
   },
   mounted() {
-    if(this.$route.params.username) {
-      getUserData(this.$route.params.username).then(
-        (response : VueResponse) => {
-          this.updateTeamSelectedUser(response.body);
-        }
-      );
-
+    if (this.$route.params.username) {
+      getUserData(this.$route.params.username).then((response: VueResponse) => {
+        this.updateTeamSelectedUser(response.body);
+      });
     }
-  }
+  },
 });
 </script>
 

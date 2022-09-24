@@ -133,7 +133,7 @@ export default Vue.extend({
     closeDialogs();
     this.ckeThemeSwitcher();
   },
-  async mounted() {
+  mounted() {
     closeDialogs();
     this.infiniteScroll();
   },

@@ -8,8 +8,8 @@
         <span>{{ current("name") }}</span>
         <span style="position: relative">
           <AvatarCpn
-            :avatarSrc="current('avatarSrc')"
-            :role="currentRole()"
+            :path="currentUser.avatarSrc ? currentUser.avatarSrc : ''"
+            :role="currentUser.roles[0].roleName"
             size="170"
           />
 
@@ -298,12 +298,10 @@ export default Vue.extend({
     },
     pickFile() {
       const input = this.$refs.input as HTMLInputElement;
-      sendUserAvatar(input).then(
-        (response: VueResponse) => {
-          this.currentUser.avatarSrc = response.bodyText;
-          this.updateCurrentUser(this.currentUser);
-        }
-      );
+      sendUserAvatar(input).then((response: VueResponse) => {
+        this.currentUser.avatarSrc = response.bodyText;
+        this.updateCurrentUser(this.currentUser);
+      });
     },
     async proceed() {
       this.loading = true;
