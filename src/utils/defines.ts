@@ -1,8 +1,5 @@
-// const SERVER_DOMAIN = "https://openeyz-v2.herokuapp.com";
-// export const DOMAIN_URL = "https://openeyz.netlify.app"
-
-const SERVER_DOMAIN = "http://localhost:8081";
-export const DOMAIN_URL = "http://localhost:8080"
+const SERVER_DOMAIN = "https://openeyz-v2.herokuapp.com";
+// const SERVER_DOMAIN = "http://localhost:8081";
 
 const API_PATH = SERVER_DOMAIN + "/api";
 const ADMIN_PATH = SERVER_DOMAIN + "/admin";
