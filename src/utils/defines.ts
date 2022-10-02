@@ -1,5 +1,5 @@
-// const SERVER_DOMAIN = "https://openeyz-v2.herokuapp.com";
-const SERVER_DOMAIN = "http://localhost:8081";
+const SERVER_DOMAIN = "https://openeyz-v2.herokuapp.com";
+// const SERVER_DOMAIN = "http://localhost:8081";
 
 const API_PATH = SERVER_DOMAIN + "/api";
 const ADMIN_PATH = SERVER_DOMAIN + "/admin";
@@ -44,6 +44,7 @@ const ROOT_URL = "/";
 export const HOME_PAGE_URL = ROOT_URL;
 export const ACCESS_PAGE_URL = ROOT_URL + "access";
 export const NOTIFICATION_PAGE_URL = ROOT_URL + "notification";
+export const MENTIONS_PAGE_URL = ROOT_URL + "mentions";
 export const PROFILE_PAGE_URL = ROOT_URL + "profile";
 export const TEAM_PAGE_URL = ROOT_URL + "team";
 export const NOTFOUND_PAGE_URL = ROOT_URL + "*";

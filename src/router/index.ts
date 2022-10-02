@@ -6,7 +6,8 @@ import Notfound from '../views/Notfound.vue';
 import Profile from '../views/Profile.vue';
 import Team from '../views/Team.vue';
 import Notification from '../views/Notification.vue';
-import { HOME_PAGE_URL, ACCESS_PAGE_URL, PROFILE_PAGE_URL, TEAM_PAGE_URL, NOTIFICATION_PAGE_URL, NOTFOUND_PAGE_URL } from '../utils/defines';
+import Mentions from '../views/Mentions.vue';
+import { HOME_PAGE_URL, ACCESS_PAGE_URL, PROFILE_PAGE_URL, TEAM_PAGE_URL, NOTIFICATION_PAGE_URL, NOTFOUND_PAGE_URL, MENTIONS_PAGE_URL } from '../utils/defines';
 
 Vue.use(VueRouter);
 
@@ -40,6 +41,11 @@ const routes: Array<RouteConfig> = [
     name: 'notification',
     path: NOTIFICATION_PAGE_URL,
     component: Notification,
+  },
+  {
+    name: 'mentions',
+    path: MENTIONS_PAGE_URL,
+    component: Mentions,
   },
   {
     name: 'notfound',

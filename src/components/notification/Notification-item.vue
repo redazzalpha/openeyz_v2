@@ -37,8 +37,7 @@
                 <!-- notification-timestamp -->
                 <span>
                   message from {{ notif.author.name }} <br />
-                  <!-- message from {{ notif.owner.name }} <br /> -->
-                  {{ translateDate(notif.comment.creation) }}
+                    {{ translateDate(notif.comment.creation) }}
                 </span>
                 <!-- delete-button -->
                 <v-btn

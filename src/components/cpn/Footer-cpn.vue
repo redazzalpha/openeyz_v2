@@ -26,11 +26,13 @@
       </v-row>
       <v-row>
         <v-col>
+          <router-link to="/">
           <v-img
             src="../../assets/logos/primary-title.png"
             width="350"
             class="mx-auto"
           />
+          </router-link>
         </v-col>
       </v-row>
 
@@ -41,8 +43,11 @@
           cols="12"
           style="background-color: rgba(0, 0, 0, 0.2)"
         >
+        <router-link to="/mentions" class="white--text">Mentions</router-link>
+        <div>
           © {{ new Date().getFullYear() }} Copyright: —
-          <strong>RedazzInc</strong>
+          <strong>RedazzInc</strong> 
+        </div>
         </v-col>
       </v-row>
     </v-container>
