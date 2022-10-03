@@ -46,6 +46,16 @@
               v-model="editorData"
               tag-name="textarea"
             ></ckeditor>
+            <v-container fluid v-if="max255">
+              <v-row>
+                <v-spacer></v-spacer>
+                <v-col class="flex-grow-0 flex-shrink-0">
+                  <span class="red--text text-no-wrap">
+                    {{ errorMessage }}
+                  </span>
+                </v-col>
+              </v-row>
+            </v-container>
           </v-card-text>
           <!-- buttons -->
           <v-card-actions class="d-flex justify-center">
@@ -80,6 +90,7 @@ export default Vue.extend({
     return {
       editor: ClassicEditor,
       editorData: "",
+      errorMessage: "255 characters max",
       loading: false,
       disabled: true,
       btnSize: btnSize,
@@ -87,6 +98,9 @@ export default Vue.extend({
   },
   computed: {
     ...mapState(["posts", "currentUser"]),
+    max255(): boolean {
+      return this.editorData.length > 255;
+    },
   },
   methods: {
     checkCurrentUser(): boolean {
@@ -110,8 +124,8 @@ export default Vue.extend({
   },
   watch: {
     editorData(value: string) {
-      if (value.length > 0) this.disabled = false;
-      else if (value.length < 1) this.disabled = true;
+      if (value.length > 0 && value.length <= 255) this.disabled = false;
+      else this.disabled = true;
     },
   },
 });
