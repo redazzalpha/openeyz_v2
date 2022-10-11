@@ -159,7 +159,7 @@ export default Vue.extend({
     getPostContent(): string | undefined {
       const isXs: boolean = this.$vuetify.breakpoint.name == "xs";
       const paragraph = "<p>";
-      const paragraphReplace = "<p style='padding-left: 15px;'>";
+      const paragraphReplace = "<p style='padding: 15px;'>";
       const cover = "cover";
       const coverReplace = `${
         isXs ? "cover; max-height: 1000px" : "contain; max-height: 700px"

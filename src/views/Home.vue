@@ -37,8 +37,7 @@ export default Vue.extend({
     ...mapState(["currentUser", "posts"]),
   },
   data() {
-    return {
-    };
+    return {};
   },
   methods: {
     ...mapActions(["updateLoader", "updateCommentDialog"]),

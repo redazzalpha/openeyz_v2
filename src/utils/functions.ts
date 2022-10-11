@@ -242,10 +242,6 @@ export function addPosts(limit: number, creation?: string, authorId?: string): P
 export function publishPost(post: string): Promise<void | VueResponse> {
   return new Promise((resolve, reject) => {
     const data: FormData = new FormData();
-
-    console.log(post)
-
-
     generateFiles().forEach(file => data.append("images", file));
     post = post.trim();
     data.append("post", post);
@@ -594,10 +590,6 @@ export function generateFiles(): File[] {
   const imageTags: HTMLImageElement[] = document.querySelectorAll(
     "figure.image.ck-widget img, p img"
   ) as unknown as HTMLImageElement[];
-
-
-console.log(imageTags);
-
   imageTags.forEach((img) => {
     const dataUrlTab = img.currentSrc.split(",");
     const match = dataUrlTab[0].match(/:(.*?);/);
