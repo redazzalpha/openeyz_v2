@@ -27,6 +27,11 @@ export default Vue.extend({
     };
   },
   methods: {
+    /**
+     * shows button on scroll
+     * @function
+     * @param {UIEvent} e 
+     */
     onScroll(e: UIEvent) {
       if (typeof window === "undefined") return;
       if (e.target != null) {
@@ -34,6 +39,10 @@ export default Vue.extend({
         this.fab = top > 20;
       }
     },
+    /**
+     * scrolls page to top
+     * @function
+     */
     toTop() {
       this.$vuetify.goTo(0);
     },

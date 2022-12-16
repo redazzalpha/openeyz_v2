@@ -55,6 +55,7 @@ export default Vue.extend({
     ...mapActions(["updateTeamSelectedUser"]),
   },
   mounted() {
+    /** opens user publication page  */
     if (this.$route.params.username) {
       getUserData(this.$route.params.username).then((response: VueResponse) => {
         this.updateTeamSelectedUser(response.body);

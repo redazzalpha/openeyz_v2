@@ -9,7 +9,7 @@
       transition="dialog-transition"
       class="team-selected-dialog"
       @click:outside="closeDialog"
-      @keydown="keyPressed"
+      @keydown="escape"
     >
       <v-card
         v-scroll.self="infiniteScroll"
@@ -129,6 +129,7 @@ import Vue from "vue";
 import { mapActions, mapState } from "vuex";
 import {
   addPosts,
+  escapePressed,
   getCurrentRole,
   getPosts,
   getSimpleUsers,
@@ -183,6 +184,11 @@ export default Vue.extend({
   },
   computed: {
     ...mapState(["teamSelectedDialog", "posts", "currentItem"]),
+    /**
+     * determines background style according screen size
+     * @function
+     * @returns {string}
+     */
     background(): string {
       const isXs: boolean = this.$vuetify.breakpoint.name == "xs";
       const backgroundAf: string = this.$vuetify.theme.dark
@@ -208,7 +214,11 @@ export default Vue.extend({
         backgroundAttachment;
       return background;
     },
-
+    /**
+     * returns if links must be shown or not according screens size
+     * @function
+     * @returns {boolean}
+     */
     show(): boolean {
       let show = true;
       switch (this.$vuetify.breakpoint.name) {
@@ -238,9 +248,18 @@ export default Vue.extend({
       "updateCommentDialog",
       "updateTeamSelectedUser",
     ]),
-    keyPressed({ code }: KeyboardEvent) {
-      if (code.match("Escape")) this.closeDialog();
+    /**
+     * action on escape pressed
+     * @function
+     * @param {keyboardEvent} event 
+     */
+    escape(event: KeyboardEvent) {
+      escapePressed(event, this.closeDialog);
     },
+    /**
+     * closes dialog
+     * @function
+     */
     closeDialog() {
       this.updateTeamSelectedDialog(false);
       this.updateTeamSelectedUser(null);
@@ -248,6 +267,11 @@ export default Vue.extend({
       getSimpleUsers();
       overflow(true);
     },
+    /**
+     * dowloads following publication on scroll to bottom
+     * @function
+     * @param {UIEvent} e 
+     */
     infiniteScroll(e: UIEvent) {
       let scroll: number =
         (e.target as Element).clientHeight + (e.target as Element).scrollTop;
@@ -272,6 +296,10 @@ export default Vue.extend({
         }
       }
     },
+    /**
+     * scrolls page to top
+     * @function
+     */
     toTop() {
       const container = document.querySelector(".inscroll");
       if (container)
@@ -281,9 +309,19 @@ export default Vue.extend({
           behavior: "smooth",
         });
     },
+    /**
+     * updates user authorization 
+     * @function
+     * @param payload 
+     */
     updated(payload: Users): void {
       this.user = payload;
     },
+    /**
+     * checks if user is authorized to do action
+     * @function
+     * @returns {boolean}
+     */
     isAuthorized(): boolean {
       return (
         getCurrentRole() == "SUPERADMIN" &&
@@ -292,6 +330,11 @@ export default Vue.extend({
     },
   },
   watch: {
+    /**
+     * get user data when dialog modal is visible
+     * @function
+     * @param {boolean} visible - team dialog modal state 
+     */
     teamSelectedDialog(visible: boolean) {
       if (visible) {
         getPosts(POST_GET_LIMIT, undefined, this.username);

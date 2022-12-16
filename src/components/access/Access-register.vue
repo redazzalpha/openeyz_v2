@@ -26,7 +26,7 @@
                   placeholder="Last name"
                   name="lname"
                   class="pt-0"
-                  @keydown="enterPressed"
+                  @keydown="enter"
                 ></v-text-field>
               </v-col>
               <!--name-field-->
@@ -38,7 +38,7 @@
                   placeholder="First name"
                   name="name"
                   class="pt-0"
-                  @keydown="enterPressed"
+                  @keydown="enter"
                 ></v-text-field>
               </v-col>
               <!--email-field-->
@@ -50,7 +50,7 @@
                   placeholder="E-mail"
                   name="username"
                   class="pt-0"
-                  @keydown="enterPressed"
+                  @keydown="enter"
                 ></v-text-field>
               </v-col>
               <!--password-field-->
@@ -64,7 +64,7 @@
                   name="password"
                   class="pt-0"
                   :type="isSecret ? 'password' : 'text'"
-                  @keydown="enterPressed"
+                  @keydown="enter"
                 >
                   <template v-slot:append>
                     <v-btn
@@ -86,7 +86,7 @@
                   placeholder="Description"
                   name="description"
                   class="pt-0"
-                  @keydown="enterPressed"
+                  @keydown="enter"
                 >
                 </v-text-field>
               </v-col>
@@ -148,7 +148,7 @@ import Vue from "vue";
 import { rules } from "@/utils/rules";
 import { mapActions } from "vuex";
 import { VueElement, VueFunction } from "../../utils/types";
-import { register } from "@/utils/functions";
+import { register, enterPressed } from "@/utils/functions";
 import { btnSize } from '../../utils/functions';
 export default Vue.extend({
   name: "Access-register",
@@ -173,6 +173,11 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions(["updateTabAccess"]),
+    /**
+     * registers the user
+     * @function
+     * @async
+     */
     async register(): Promise<void> {
       let form: VueElement = this.$refs.register;
       if (form != null) {
@@ -185,9 +190,13 @@ export default Vue.extend({
         }
       }
     },
-    enterPressed({ code }: KeyboardEvent): void {
-      const isEnter: boolean = code == "Enter" || code == "NumpadEnter";
-      if (isEnter) this.register();
+    /**
+     * action on enter pressed
+     * @function
+     * @param event 
+     */
+    enter(event: KeyboardEvent): void {
+      enterPressed(event, this.register);
     },
   },
 });

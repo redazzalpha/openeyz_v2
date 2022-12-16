@@ -58,7 +58,11 @@ export default Vue.extend({
   },
   computed: {
     ...mapState(["drawer"]),
-    /** returns if appbar is shown or not  */
+    /** 
+     * returns if appbar is shown or not
+     * @function
+     * @returns {boolean}
+     */
     show(): boolean {
       let show = true;
       switch (this.$vuetify.breakpoint.name) {

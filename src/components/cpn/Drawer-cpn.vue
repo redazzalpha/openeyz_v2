@@ -77,8 +77,7 @@ import {
   PROFILE_PAGE_URL,
   TEAM_PAGE_URL,
 } from "../../utils/defines";
-import { logout } from "@/utils/functions";
-import { Notif } from "@/utils/types";
+import { logout, unreadNotif } from "@/utils/functions";
 export default Vue.extend({
   name: "Drawer-cpn",
   components: {
@@ -118,16 +117,28 @@ export default Vue.extend({
   },
   computed: {
     ...mapState(["currentUser", "userNotifs"]),
+    /**
+     * returns unread notification number value
+     * @function
+     * @returns {number}
+     */
     unreadNotif() {
-      return this.userNotifs.filter((e: Notif) => {
-        return !e.read;
-      }).length;
+      return unreadNotif();
     },
   },
   methods: {
+    /**
+     * check if current user object is ready to use
+     * @function
+     * @return {boolean}
+     */
     checkCurrentUser(): boolean {
       return typeof this.currentUser != "function" && this.currentUser != null;
     },
+    /**
+     * updates drawer visibility value
+     * @param {boolean} value - visibility value 
+     */
     update(value: boolean): void {
       this.$store.dispatch("updateDrawer", value);
     }

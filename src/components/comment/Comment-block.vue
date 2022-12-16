@@ -6,7 +6,7 @@
     :value="commentDialog"
     dialog-transition
     @click:outside="closeComment"
-    @keydown="keyPressed"
+    @keydown="escape"
     max-width="900"
     :scrollable="comments.length < 1"
     overlay-opacity="0.7"
@@ -79,6 +79,7 @@ import {
 } from "../../utils/defines";
 import {
   addAllComments,
+  escapePressed,
   getAllComments,
   overflow,
   translateDateToISO,
@@ -97,6 +98,10 @@ export default Vue.extend({
   },
   computed: {
     ...mapState(["currentItem", "commentDialog", "comments"]),
+    /**
+     * determines background style according screen size
+     * @function
+     */
     background(): string {
       const isXs: boolean = this.$vuetify.breakpoint.name == "xs";
       const backgroundAf: string = this.$vuetify.theme.dark
@@ -129,6 +134,10 @@ export default Vue.extend({
       "updateComments",
       "updateCurrentItem",
     ]),
+    /**
+     * downloads followind comments on scroll to bottom
+     * @param {UIEvent} e 
+     */
     infiniteScroll(e: UIEvent) {
       let scroll: number =
         (e.target as Element).clientHeight + (e.target as Element).scrollTop;
@@ -146,17 +155,29 @@ export default Vue.extend({
         }
       }
     },
+    /**
+     * closes comment dialog modal
+     * @function
+     */
     closeComment() {
       this.updateCommentDialog(false);
       this.updateComments([]);
       this.updateCurrentItem({});
       overflow(true);
     },
-    keyPressed({ code }: KeyboardEvent) {
-      if (code.match("Escape")) this.closeComment();
+    /**
+     * closes comment dialog modal
+     * @function
+     */
+    escape(event: KeyboardEvent) {
+      escapePressed(event, this.closeComment);
     },
   },
   watch: {
+    /**
+     * gets all comments when comment dialog modal is visible
+     * @param {boolean} visible 
+     */
     commentDialog(visible: boolean) {
       if (visible) {
         getAllComments(this.currentItem, COMMENT_GET_LIMIT);

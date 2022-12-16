@@ -22,7 +22,5 @@ export default Vue.extend({
       items: ["Information", "Password", "Account"],
     };
   },
-  methods: {
-  },
 });
 </script>

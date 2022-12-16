@@ -111,15 +111,32 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions(["updateNotifPanel"]),
+    /**
+     * emits on all notifications opened / closed
+     * @function
+     * @param {Object} panel - represent notifications panel 
+     */
     updatePanel(panel: number[]) {
       this.updateNotifPanel(panel);
       if (this.notifPanel.length == this.userNotifs.length)
         this.$emit("allOpen");
       else if (this.notifPanel.length == 0) this.$emit("allClose");
     },
+    /**
+     * reads one notification
+     * @function
+     * @async
+     * @param {Object} notif - represents notification instance 
+     */
     async readOne(notif: Notif) {
       readNotif(notif);
     },
+    /**
+     * deletes one notification
+     * @function
+     * @async
+     * @param {Object} notif - represents notification instance 
+     */
     async deleteOne(notif: Notif) {
       deleteNotif(notif);
     },

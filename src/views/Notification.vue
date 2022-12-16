@@ -74,34 +74,62 @@ export default Vue.extend({
 
   methods: {
     ...mapActions(["updateLoader", "updateNotifPanel"]),
+    /**
+     * opens / closes all notifications
+     * @function
+     */
     toogle() {
       this.isAllClosed = !this.isAllClosed;
       if (this.isAllClosed) this.closeAll();
       else this.showAll();
     },
+    /**
+     * shows all notifications
+     * @function
+     */
     showAll() {
       let tab: number[] = [];
       for (let i = 0; i < this.userNotifs.length; i++) tab[i] = i;
       this.updateNotifPanel(tab);
       this.readAll();
     },
+    /**
+     * closes all notifications
+     * @function
+     */
     closeAll() {
       this.updateNotifPanel([]);
     },
+    /**
+     * marks as read all notification
+     * @function
+     */
     readAll() {
       readNotifs();
     },
-
+    /**
+     * delete all notifications
+     * @function
+     */
     deleteAll() {
       deleteNotifs();
       this.$vuetify.goTo(0);
     },
+    /**
+     * sets isAllClosed boolean to true
+     * @function
+     */
     allClose() {
       this.isAllClosed = true;
     },
+    /**
+     * sets isAllClosed boolean to false
+     * @function
+     */
+
     allOpen() {
       this.isAllClosed = false;
-    }
+    },
   },
   mounted() {
     initialize();

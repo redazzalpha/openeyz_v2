@@ -2,8 +2,18 @@ import Vue from 'vue';
 import { VueResponse } from './types';
 import { SERVER_REFRESH_TOKEN_URL } from './defines';
 
+/**
+ * variable that stores jwt expired token regexp
+ * @member {RegExp}
+ * @constant
+ */
 const tokenExpired = new RegExp("JWT expired");
 
+/**
+ * Object that represents http requests
+ * @const
+ * @member {Object} 
+ */
 export const httpRequest = {
     post: function (url: string, body?: FormData | string | object | null): Promise<VueResponse> {
         return new Promise((resolve, reject) => {

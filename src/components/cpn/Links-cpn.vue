@@ -39,9 +39,8 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapState } from 'vuex';
-import { Notif } from "../../utils/types";
 import { HOME_PAGE_URL, NOTIFICATION_PAGE_URL, PROFILE_PAGE_URL, TEAM_PAGE_URL } from "../../utils/defines";
-import { getCurrent, getCurrentRole, logout } from '../../utils/functions';
+import { logout, unreadNotif } from '../../utils/functions';
 import AvatarCpn from "./Avatar-cpn.vue";
 export default Vue.extend({
   name: "Links-cpn",
@@ -97,18 +96,13 @@ export default Vue.extend({
       'userNotifs',
       'currentUser'
     ]),
+    /**
+     * returns unread notification number value
+     * @function
+     * @returns {number}
+     */
     unreadNotif() {
-        return this.userNotifs.filter((e: Notif) => {
-          return !e.read
-        }).length;
-    },
-  },
-  methods: {
-        current(value: string): string {
-      return getCurrent(value);
-    },
-    currentRole(): string {
-      return getCurrentRole();
+      return unreadNotif();
     },
   },
 });

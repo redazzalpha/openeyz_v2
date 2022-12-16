@@ -31,6 +31,11 @@ export default Vue.extend({
   },
   computed: {
     ...mapState(["currentUser"]),
+    /**
+     * used to get user avatar img when is ready 
+     * @function
+     * @returns {boolean}
+     */
     userImg(): string | null {
       if (this.isReady) {
         let img = "";
@@ -54,6 +59,11 @@ export default Vue.extend({
       }
       return null;
     },
+    /**
+     * check if img path and role is ready
+     * @function
+     * @returns {boolean}
+     */
     isReady(): boolean {
       const isPath: boolean =
         this.path != null || this.path != undefined || this.path != "";
@@ -63,6 +73,5 @@ export default Vue.extend({
       return isPath && isRole && isState;
     },
   },
-  methods: {},
 });
 </script>

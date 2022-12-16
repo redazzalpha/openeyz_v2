@@ -165,7 +165,7 @@
                 name="data"
                 :rules="fieldRules"
                 counter
-                @keydown="keypressed"
+                @keydown="enter"
               >
               </v-text-field>
             </v-form>
@@ -202,6 +202,7 @@ import {
 } from "../../utils/defines";
 import { rules } from "../../utils/rules";
 import {
+  enterPressed,
   getCurrent,
   getCurrentRole,
   modifyUserDescription,
@@ -240,12 +241,28 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions(["updateCurrentUser"]),
+    /**
+     * shorthand to get current data
+     * @function
+     * @param {string} value - type of param to get
+     * @returns {string}
+     */
     current(value: string): string {
       return getCurrent(value);
     },
+    /**
+     * shorthand to get current user role
+     * @function
+     * @returns {string}
+     */
     currentRole(): string {
       return getCurrentRole();
     },
+    /**
+     * opens modifier dialog modal
+     * @function
+     * @param {number} target - type of modfifier to open 
+     */
     openModify(target: number) {
       switch (target) {
         case 0:
@@ -265,6 +282,10 @@ export default Vue.extend({
       this.target = target;
       this.modifyDialog = true;
     },
+    /**
+     * switches target server url 
+     * @function
+     */
     switchTarget() {
       switch (this.target) {
         case 0:
@@ -278,6 +299,10 @@ export default Vue.extend({
           break;
       }
     },
+    /**
+     * updates current user instance 
+     * @function
+     */
     updateUser() {
       switch (this.target) {
         case 0:
@@ -292,10 +317,18 @@ export default Vue.extend({
       }
       this.updateCurrentUser(this.currentUser);
     },
+    /**
+     * opens select image file dialog
+     * @function
+     */
     openFolder() {
       const input = this.$refs.input as HTMLInputElement;
       input.click();
     },
+    /**
+     * modify user avatar image
+     * @function
+     */
     pickFile() {
       const input = this.$refs.input as HTMLInputElement;
       sendUserAvatar(input).then((response: VueResponse) => {
@@ -303,6 +336,11 @@ export default Vue.extend({
         this.updateCurrentUser(this.currentUser);
       });
     },
+    /**
+     * save modification to server
+     * @function
+     * @async
+     */
     async proceed() {
       this.loading = true;
       this.disabled = true;
@@ -326,17 +364,33 @@ export default Vue.extend({
       }, 1000);
       this.modifyDialog = false;
     },
+    /**
+     * save description to server
+     * @function
+     * @async
+     */
     async sendDescription() {
       await modifyUserDescription(this.description);
       this.currentUser.description = this.description;
       this.updateCurrentUser(this.currentUser);
       this.description = "";
     },
+    /**
+     * remove avatar to server
+     * @function
+     * @async
+     */
     async removeAvatar() {
       await removeUserAvatar();
       this.currentUser.avatarSrc = null;
       this.updateCurrentUser(this.currentUser);
     },
+    /**
+     * modifies app theme dark / light
+     * @function
+     * @async
+     * @param {boolean} darkMode - dark mode state
+     */
     async themeSwitcher(darkMode: boolean) {
       await modifyUserTheme(darkMode);
       this.currentUser.dark = darkMode;
@@ -361,6 +415,11 @@ export default Vue.extend({
         style.removeProperty("--ck-color-button-on-background");
       }
     },
+    /**
+     * checks if user is authorized to do action
+     * @functikon
+     * @returns {boolean}
+     */
     isAuthorized(): boolean {
       if (this.currentUser == null) return false;
       return (
@@ -368,27 +427,42 @@ export default Vue.extend({
         this.currentUser.roles[0].roleName == "ADMIN"
       );
     },
-    keypressed(e: KeyboardEvent): void {
-      const isEnterPressed: boolean =
-        e.code == "NumpadEnter" || e.code == "Enter";
-      if (isEnterPressed && this.valid) {
-        e.preventDefault();
-        this.proceed();
-      }
+    /**
+     * execute action on enter pressed
+     * @function
+     * @param {KeyboardEvent} e 
+     */
+    enter(e: KeyboardEvent) {
+      enterPressed(e, () => {
+        if (this.valid) {
+          e.preventDefault();
+          this.proceed();
+        }
+      });
     },
+    /**
+     * closes modifier dialog modal 
+     * @function
+     */
     closeModify(): void {
       this.$refs.form.reset();
     },
+    /**
+     * executes action on enter pressed on description text area
+     * @param {KeyboardEvent} e 
+     */
     textarePressed(e: KeyboardEvent) {
-      const isEnterPressed: boolean =
-        e.code == "NumpadEnter" || e.code == "Enter";
-      if (isEnterPressed) {
+      enterPressed(e, () => {
         e.preventDefault();
         this.sendDescription();
-      }
+      });
     },
   },
   watch: {
+    /**
+     * activate / desactivate proceed button
+     * @param {string} value - input value 
+     */
     userData(value: string) {
       if (value) this.disabled = false;
       else this.disabled = true;

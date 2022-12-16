@@ -25,7 +25,7 @@
             :rules="emailRules"
             placeholder="E-mail"
             name="username"
-            @keydown="enterPressed"
+            @keydown="enter"
           ></v-text-field>
           <!--password-field-->
           <v-text-field
@@ -37,7 +37,7 @@
             placeholder="Password"
             :type="isSecret ? 'password' : 'text'"
             name="password"
-            @keydown="enterPressed"
+            @keydown="enter"
           >
             <template v-slot:append>
               <v-btn icon plain :ripple="false" @click="isSecret = !isSecret"
@@ -72,7 +72,7 @@ import Vue from "vue";
 import { mapActions } from "vuex";
 import { rules } from "@/utils/rules";
 import { VueElement, VueFunction } from "../../utils/types";
-import { login } from "@/utils/functions";
+import { login, enterPressed } from "@/utils/functions";
 import { btnSize } from '../../utils/functions';
 
 export default Vue.extend({
@@ -90,6 +90,10 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions(["updateTabAccess"]),
+    /**
+     * logs the user in
+     * @function
+     */
     login(): void {
       let form: VueElement = this.$refs.login;
       if (form != null) {
@@ -100,9 +104,13 @@ export default Vue.extend({
         }
       }
     },
-    enterPressed({ code }: KeyboardEvent): void {
-      const isEnter: boolean = code == "Enter" || code == "NumpadEnter";
-      if (isEnter) this.login();
+    /**
+     * action on enter pressed
+     * @function
+     * @param event
+     */
+    enter(event: KeyboardEvent): void {
+      enterPressed(event, this.login);
     },
   },
 });

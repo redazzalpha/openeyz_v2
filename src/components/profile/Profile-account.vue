@@ -159,12 +159,27 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions(["updateCurrentUser"]),
+    /**
+     * shorthand to get current data
+     * @function
+     * @param {string} value - type of param to get 
+     * @returns {string}
+     */
     current(value: string): string {
       return getCurrent(value);
     },
+    /**
+     * shorthand to get current user role 
+     * @function
+     * @returns {string}
+     */
     currentRole(): string {
       return getCurrentRole();
     },
+    /**
+     * deletes user account
+     * @function
+     */
     delAccount() {
       deleteUserAccount();
     },

@@ -102,6 +102,10 @@ export default Vue.extend({
       await getAllComments(this.currentItem, COMMENT_GET_LIMIT);
       this.currentItem.commentCount--;
     },
+    /**
+     * returns if user is authorized to do action
+     * @returns {boolean}
+     */
     isAuthorized(): boolean {
       return (
         this.currentUser.roles[0].roleName == "SUPERADMIN" ||

@@ -7,7 +7,11 @@ import { httpRequest } from '@/utils/http';
 import vuetify from '@/plugins/vuetify';
 import { v4 as uuidv4 } from "uuid";
 
-
+/**
+ * logs the user in
+ * @param {FormData} body - login input form 
+ * @returns {Promise<void | VueResponse>}
+ */
 export function login(body: FormData): Promise<void | VueResponse> {
   return new Promise((resolve, reject) => {
     httpRequest.post(defines.SERVER_ACCESS_URL, body).then(
@@ -16,6 +20,11 @@ export function login(body: FormData): Promise<void | VueResponse> {
     );
   });
 }
+/**
+ * registers the user and logs in
+ * @param {FormData} formElem - register input form 
+ * @returns {Promise<void | VueResponse>}
+ */
 export function register(formElem: FormData): Promise<void | VueResponse> {
   return new Promise((resolve, reject) => {
     login(formElem).then(
@@ -24,6 +33,11 @@ export function register(formElem: FormData): Promise<void | VueResponse> {
     );
   });
 }
+/**
+ * logs the user out 
+ * @function
+ * @async
+ */
 export async function logout(): Promise<void> {
   try {
     await httpRequest.post(defines.SERVER_LOGOUT_URL);
@@ -498,6 +512,7 @@ export function deleteNotif({ id }: Notif): Promise<VueResponse> {
 /**
  * Reads all notitications from current user
  * @function
+ * @async
  * @returns {Promise<VueResponse>}
  */
 export async function readNotifs(): Promise<VueResponse> {
@@ -545,6 +560,7 @@ export function deleteNotifs(): Promise<VueResponse> {
 // this function became useless due to the upload image update
 /**
  * @function
+ * @async
  * @param {File} file - file instance 
  * @returns {Promise<string>}
  */
@@ -608,10 +624,19 @@ export function translateDate(timestamp: string): string {
 export function translateDateToISO(timestamp: string): string {
   return DateTime.fromISO(timestamp).setLocale("fr").toISO();
 }
-
+/**
+ * unavailable server handler on http response 
+ * @function
+ * @param {VueResponse} response - http response
+ */
 export function unavailableServerHandler(response: VueResponse): void {
   response.bodyText = "server is unavailable";
 }
+/**
+ * internal server error handler on http response 
+ * @function
+ * @param {VueResponse} response - http response
+ */
 export function internalServerErrorHandler(response: VueResponse): void {
   let message = "internal server error";
   const regexp = new RegExp(".*Maximum upload size.*", "gi");
@@ -620,7 +645,13 @@ export function internalServerErrorHandler(response: VueResponse): void {
 
   response.bodyText = message;
 }
-
+/**
+ * default handler on http response 
+ * @function
+ * @param {VueResponse} param - http response
+ * @param {Body} param.body 
+ * @param {Headers} param.headers 
+ */
 export function defaultHandler({ body, headers }: VueResponse): void {
   const token: string | null = headers.get("x-auth-token");
   const refreshToken: string | null = headers.get("x-refresh-token");
@@ -733,14 +764,16 @@ export function generateFiles(): File[] {
 }
 /**
  * Shorthand to get current user data from state management
- * @param {string} name 
+ * @function
+ * @param {string} value - param to get
  * @returns {string}
  */
-export function getCurrent(name: string): string {
-  return store.state.currentUser ? store.state.currentUser[name] : "";
+export function getCurrent(value: string): string {
+  return store.state.currentUser ? store.state.currentUser[value] : "";
 }
 /**
  * Shorthand to get current user role from state management
+ * @function
  * @returns {string}
  */
 export function getCurrentRole(): string {
@@ -748,6 +781,7 @@ export function getCurrentRole(): string {
 }
 /**
  * Initializes pages when mounted on the DOM
+ * @function
  * @param {function} callback - callback function
  * @returns {Promise<void>|void}
  */
@@ -772,6 +806,7 @@ export function initialize(callback?: () => void): Promise<VueResponse | void> {
 }
 /**
  * Handles the overflow when modal is shown
+ * @function
  * @param {boolean} show - value of overflow visibility 
  */
 export function overflow(show?: boolean): void {
@@ -808,4 +843,37 @@ export function closeDialogs() {
   store.dispatch("updateTeamSelectedDialog", false);
   store.dispatch("updateTeamSelectedUser", null);
   overflow(true);
+}
+/**
+ * execute given action on press enter 
+ * @function
+ * @param {KeyboardEvent} param
+ * @param {number} param.code
+ * @param {function} action 
+ */
+export function enterPressed({code}: KeyboardEvent, action: () => void) {
+  const isEnter: boolean = code == "Enter" || code == "NumpadEnter";
+  if (isEnter) action();
+
+}
+/**
+ * execute given action on press escape
+ * @function
+ * @param {keyboardEvent} param 
+ * @param {number} param.code 
+ * @param {function} action 
+ */
+export function escapePressed({code}: KeyboardEvent, action: () => void) {
+  if (code.match("Escape")) action();
+}
+
+/**
+ * returns number of unread notifications
+ * @function
+ * @returns {number}
+ */
+export function unreadNotif() {
+  return store.state.userNotifs.filter((e: Notif) => {
+    return !e.read
+  }).length;
 }

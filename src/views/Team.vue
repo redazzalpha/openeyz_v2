@@ -86,6 +86,12 @@ export default Vue.extend({
       "updateTeamSelectedDialog",
       "updateLoader",
     ]),
+    /**
+     * gets selected user data from input search user
+     * and opens selected user publication page
+     * @function
+     * @param {string} selectedUsername
+     */
     input(selectedUsername: string) {
       const userObj: UserObj[] = this.userListObj.filter((e: UserObj) => {
         return e.username == selectedUsername;
@@ -93,6 +99,13 @@ export default Vue.extend({
       this.updateTeamSelectedUser(userObj[0]);
       this.select = [];
     },
+    /**
+     * filters user list from input search user
+     * on change search value
+     * @function
+     * @param {string} search
+     */
+
     searching(search: string) {
       const regexp = new RegExp(search, "gi");
       const found = this.userListObj.filter((e: UserObj) => {
@@ -102,6 +115,12 @@ export default Vue.extend({
       if (search) this.updateUserCardList(found);
       else if (!search) this.updateUserCardList(this.userListObj);
     },
+    /**
+     * returns if title must be shown or not
+     * according screen size
+     * @function
+     * @returns {boolean} 
+     */
     showTitle(): boolean {
       let show = true;
       switch (this.$vuetify.breakpoint.name) {
@@ -123,6 +142,11 @@ export default Vue.extend({
       }
       return show;
     },
+    /**
+     * opens selected user dialog modal 
+     * @function
+     * @param {Object} userObj 
+     */
     openSelected(userObj: UserObj) {
       this.author = userObj.name;
       this.username = userObj.username;
@@ -131,6 +155,12 @@ export default Vue.extend({
     },
   },
   watch: {
+    /**
+     * open selected user dialog modal 
+     * on change selected user
+     * @function
+     * @param userObj 
+     */
     teamSelectedUser(userObj: UserObj) {
       if (userObj) this.openSelected(userObj);
     },

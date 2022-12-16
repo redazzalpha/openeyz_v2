@@ -198,6 +198,12 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions(["updateCurrentItem", "updateCommentDialog"]),
+    /**
+     * like or dislike publication
+     * @function
+     * @async
+     * @param {Object} item - represents the current item  
+     */
     async like(item: Item) {
       this.loading = true;
       this.disabled = true;
@@ -212,11 +218,21 @@ export default Vue.extend({
     async deletePost() {
       deletePost(this.item, this.posts);
     },
+    /**
+     * opens comment dialog modal
+     * @function
+     * @param {Object} item - represents the current item 
+     */
     openComment(item: Item) {
       this.updateCurrentItem(item);
       this.updateCommentDialog(true);
       overflow();
     },
+    /**
+     * checks if user is authorized to do action
+     * @function
+     * @returns {boolean}
+     */
     isAuthorized(): boolean {
       return (
         this.currentUser.roles[0].roleName == "SUPERADMIN" ||

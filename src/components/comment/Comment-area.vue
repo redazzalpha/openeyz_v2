@@ -75,6 +75,11 @@ export default Vue.extend({
     ...mapState(["currentUser", "currentItem"]),
   },
   methods: {
+    /**
+     * sends comment to the server
+     * @function
+     * @async
+     */
     async send(): Promise<void> {
       if (this.valid) {
         this.loading = true;
@@ -90,6 +95,11 @@ export default Vue.extend({
     },
   },
   watch: {
+    /**
+     * activate / desactivated send button
+     * in comment area
+     * @param {string} value - user input  
+     */
     comment(value: string) {
       if (value) this.disabled = false;
       else this.disabled = true;

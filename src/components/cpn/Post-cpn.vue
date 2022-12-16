@@ -103,9 +103,18 @@ export default Vue.extend({
     },
   },
   methods: {
+    /**
+     * checks if current user instance is ready
+     * @function
+     * @return {boolean}
+     */
     checkCurrentUser(): boolean {
       return typeof this.currentUser != "function" && this.currentUser != null;
     },
+    /**
+     * publish publication
+     * @function
+     */
     publish(): void {
       if (this.editorData) {
         this.loading = true;
@@ -123,6 +132,10 @@ export default Vue.extend({
     },
   },
   watch: {
+    /**
+     * activates / disactivates send button
+     * @param {string} value - represents publication content 
+     */
     editorData(value: string) {
       if (value.length > 0 && value.length <= 255) this.disabled = false;
       else this.disabled = true;

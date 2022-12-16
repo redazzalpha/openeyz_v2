@@ -12,26 +12,108 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    /** 
+     * represents user list object
+     * on team page 
+     * @member {Object} 
+     */
     userListObj: [] as UserObj[],
+    /** 
+     * represents user list cards
+     * on team page 
+     * @member {Object} 
+     */
     userCardList: [] as UserObj[],
+    /** 
+     * represents publications list
+     * @member {Object} 
+     */
     posts: [] as Post[],
+    /** 
+     * represents comments list
+     * @member {Object} 
+     */
     comments: [] as Comment[],
+    /** 
+     * represents user notifications list
+     * @member {Object} 
+     */
     userNotifs: [] as Notif[],
-    notifPanel: []  as number[],
-
+    /** 
+     * represents open notifications panel list
+     * @member {Object} 
+     */
+    notifPanel: [] as number[],
+    /** 
+     * represents loader page visibility
+     * @member {boolean} 
+     */
     loader: true,
+    /** 
+     * represents current user instance
+     * @member {Object} 
+     */
     currentUser: null,
+    /** 
+     * represents current item
+     * on team page 
+     * @member {Object} 
+     */
     currentItem: new Item,
+    /** 
+     * represents selected user on team page
+     * on team page 
+     * @member {Object} 
+     */
     teamSelectedUser: null,
+    /** 
+     * represents team selected dialog modal visbility
+     * on team page 
+     * @member {boolean} 
+     */
     teamSelectedDialog: false,
+    /** 
+     * represents comment dialog modal visbility
+     * on team page 
+     * @member {boolean} 
+     */
     commentDialog: false,
+    /** 
+     * drawer menu visbility
+     * on team page 
+     * @member {Object} 
+     */
     drawer: null,
+    /** 
+     * represents selected tab on access page
+     * @member {number} 
+     */
     tabAccess: 0,
+    /** 
+     * represents selected tab on profil page
+     * @member {number} 
+     */
     tabProfile: 0,
 
+    /** 
+     * represents alert visibility
+     * @member {boolean} 
+     */
     alert: false,
+    /** 
+     * represents persistent alert visibility
+     * @member {boolean} 
+     */
     alertPersist: false,
+    /** 
+     * represents default alert type
+     * @member {string} 
+     */
     alertType: "error",
+    /** 
+     * represents default alert message
+     * @member {string} 
+     */
     alertMessage: "error",
   },
   getters: {
@@ -117,7 +199,7 @@ export default new Vuex.Store({
       state.loader = true;
       state.currentUser = null;
       state.currentItem = new Item;
-      
+
       state.teamSelectedUser = null;
       state.teamSelectedDialog = false;
       state.commentDialog = false;

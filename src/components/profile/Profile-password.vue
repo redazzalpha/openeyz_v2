@@ -144,6 +144,11 @@ export default Vue.extend({
   methods: {
     ...mapActions(["updateCurrentUser"]),
 
+    /**
+     * modifies user password
+     * @function
+     * @returns {Promise<void>}
+     */
     async sendPassword(): Promise<void> {
       this.loading = true;
       this.valid = false;
