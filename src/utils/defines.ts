@@ -25,7 +25,7 @@ export const SERVER_PUBLICATION_URL = API_PATH + '/publication';
 export const SERVER_PUBLICATION_LIMIT_URL = SERVER_PUBLICATION_URL + '/limit';
 
 export const SERVER_COMMENT_URL = API_PATH + '/comment';
-export const SERVER_COMMENT_LIMIT_URL = SERVER_COMMENT_URL + '/limit';  
+export const SERVER_COMMENT_LIMIT_URL = SERVER_COMMENT_URL + '/limit';
 export const SERVER_COMMENT_DELETE_URL = SERVER_COMMENT_URL + '/delete';
 
 export const SERVER_USER_NOTIF_URL = API_PATH + '/notif';

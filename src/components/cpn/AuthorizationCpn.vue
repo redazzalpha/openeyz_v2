@@ -177,6 +177,12 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions(["updateCurrentUser"]),
+    /**
+     * save modifications on authorization on the server 
+     * @function
+     * @async
+     * @return {Promise<void>}
+     */
     async saveChanges(): Promise<void> {
       this.btnLoading = true;
       let user: Users;
@@ -189,11 +195,21 @@ export default Vue.extend({
         this.btnLoading = false;
       }, this.timeout);
     },
+    /**
+     * loads user role and account state
+     * @function
+     * 
+     */
     onload(): void {
       this.role = this.user.roles[0].roleName as string;
       this.state =
         typeof this.user.state != "function" ? this.user.state : true;
     },
+    /**
+     * check if current user has role SUPERADMIN or ADMIN 
+     * @function
+     * @returns {boolean}
+     */
     isAuthorized(): boolean {
       return getCurrentRole() == "SUPERADMIN" || getCurrentRole() == "ADMIN";
     },

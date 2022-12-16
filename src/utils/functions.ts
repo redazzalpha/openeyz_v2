@@ -35,6 +35,11 @@ export async function logout(): Promise<void> {
 }
 
 
+/**
+ * Gets all users data as simple form
+ * @function
+ * @returns {Promise<VueResponse>} 
+ */
 export function getSimpleUsers(): Promise<VueResponse> {
   return new Promise((resolve, reject) => {
     httpRequest.get(defines.SERVER_USER_SIMPLE_URL).then(
@@ -59,6 +64,11 @@ export function getSimpleUsers(): Promise<VueResponse> {
     );
   });
 }
+/**
+ *  Gets current user data
+ * @function
+ * @returns {Promise<VueResponse>}
+ */
 export function getUser(): Promise<VueResponse> {
   return new Promise((resolve, reject) => {
     httpRequest.get(defines.SERVER_USER_URL).then(
@@ -70,6 +80,12 @@ export function getUser(): Promise<VueResponse> {
     );
   });
 }
+/**
+ * Gets user data from given username  
+ * @function
+ * @param {string} username - username to get data from
+ * @returns {Promise<VueResponse>}
+ */
 export function getUserData(username: string): Promise<VueResponse> {
   return new Promise((resolve, reject) => {
     httpRequest.get(defines.SERVER_USER_DATA_URL, { params: { username } }).then(
@@ -81,6 +97,13 @@ export function getUserData(username: string): Promise<VueResponse> {
     );
   });
 }
+/**
+ * modify user account state on server from given username 
+ * @function
+ * @param {Object} user - represents user instance
+ * @param {boolean} state - account state value  
+ * @returns {Promise<Users>}
+ */
 export function updateUserState({ username }: Users, state: boolean): Promise<Users> {
   return new Promise((resolve, reject) => {
     const body: FormData = new FormData();
@@ -96,6 +119,13 @@ export function updateUserState({ username }: Users, state: boolean): Promise<Us
     );
   });
 }
+/**
+ * Modify and save user role from given username
+ * @function
+ * @param {Object}  user - represents user instance
+ * @param {string} role - role name as string  
+ * @returns 
+ */
 export function updateUserRole({ username }: Users, role: string): Promise<Users> {
   return new Promise((resolve, reject) => {
     const body: FormData = new FormData();
@@ -110,6 +140,14 @@ export function updateUserRole({ username }: Users, role: string): Promise<Users
     );
   });
 }
+/**
+ * Modify and save data for given api path 
+ * according body data
+ * @function
+ * @param {string} url - server api path to modify  
+ * @param {Object} body - body data to modify 
+ * @returns {Promise<VueResponse>}
+ */
 export function modifyUserField(url: string, body: FormData): Promise<VueResponse> {
   return new Promise((resolve, reject) => {
     httpRequest.patch(url, body).then(
@@ -158,6 +196,12 @@ export function modifyUserPassword(body: FormData): Promise<VueResponse> {
     );
   });
 }
+/**
+ * Modify user avatar image
+ * @function
+ * @param {HTMLInputElement} input - input form file  
+ * @returns {Promise<VueResponse>}
+ */
 export function sendUserAvatar(input: HTMLInputElement): Promise<VueResponse> {
   return new Promise((resolve, reject) => {
     if (input.files) {
@@ -318,6 +362,15 @@ export function getAllComments({ post }: Item, limit: number, creation?: string)
     );
   });
 }
+/**
+ * Adds following publication to the list of threads of publications 
+ * on scroll to bottom
+ * @function
+ * @param {number} postId - represents the post id  
+ * @param {number} limit - limit of max publications to get  
+ * @param {string} creation - creation date of last publication in the list of threads of publications
+ * @returns {Promise<VueResponse>}
+ */
 export function addAllComments(postId: number, limit: number, creation?: string): Promise<VueResponse> {
   return new Promise((resolve, reject) => {
     httpRequest.get(
@@ -368,7 +421,11 @@ export function deleteComment({ id }: Comment): Promise<VueResponse> {
   });
 }
 
-
+/**
+ * Gets notifications from current user
+ * @function
+ * @returns {Promise<VueResponse>}
+ */
 export function getNotifs(): Promise<VueResponse> {
   return new Promise((resolve, reject) => {
     if (localStorage.getItem("token")) {
@@ -387,6 +444,12 @@ export function getNotifs(): Promise<VueResponse> {
     }
   });
 }
+/**
+ * Reads notification from current user
+ * @function
+ * @param {Object} Notif - notification instance
+ * @returns {Promise<VueResponse>}
+ */
 export function readNotif({ read, id }: Notif): Promise<VueResponse> {
   return new Promise((resolve, reject) => {
     if (!read) {
@@ -432,6 +495,11 @@ export function deleteNotif({ id }: Notif): Promise<VueResponse> {
     );
   });
 }
+/**
+ * Reads all notitications from current user
+ * @function
+ * @returns {Promise<VueResponse>}
+ */
 export async function readNotifs(): Promise<VueResponse> {
   return new Promise((resolve, reject) => {
     httpRequest.patch(defines.SERVER_USER_NOTIF_URL).then(
@@ -475,6 +543,11 @@ export function deleteNotifs(): Promise<VueResponse> {
 }
 
 // this function became useless due to the upload image update
+/**
+ * @function
+ * @param {File} file - file instance 
+ * @returns {Promise<string>}
+ */
 export async function uploaderSend(file: File) {
   return new Promise((resolve, reject) => {
     const data = new FormData();
@@ -492,10 +565,18 @@ export async function uploaderSend(file: File) {
   });
 }
 
-
+/**
+ * clears all variable values from state management 
+ * @function
+ */
 export function clearVuex() {
   store.dispatch("clearVuex");
 }
+
+/**
+ * clears all variable values from localstorage 
+ * @function
+ */
 export function clearStorage() {
   store.dispatch("clearVuex");
   localStorage.removeItem("token");
@@ -503,13 +584,27 @@ export function clearStorage() {
   localStorage.removeItem("vuex");
 }
 
+/**
+ * Determines publish button size according screen size
+ * @function 
+ * @returns {string}
+ */
 export function btnSize(): string {
   return vuetify.framework.breakpoint.name == 'xs' ? '100%' : '50%';
 }
-
+/**
+ * Translate ISO datetime string to human format string
+ * @param {string} timestamp - date and time as ISO format 
+ * @returns {string}
+ */
 export function translateDate(timestamp: string): string {
   return DateTime.fromISO(timestamp).setLocale("en").toFormat("DD 'at' HH:mm");
 }
+/**
+ * Translate human datetime string to ISO format string
+ * @param {string} timestamp - date and time as ISO format 
+ * @returns {string}
+ */
 export function translateDateToISO(timestamp: string): string {
   return DateTime.fromISO(timestamp).setLocale("fr").toISO();
 }
@@ -537,13 +632,21 @@ export function defaultHandler({ body, headers }: VueResponse): void {
     store.dispatch('updateCurrentUser', user);
   }
 }
-
+/**
+ * Redirects to access page
+ * @function
+ */
 export function pushAccessUrl(): void {
   if (router.currentRoute.name != "access") {
     clearStorage();
     router.push(defines.ACCESS_PAGE_URL);
   }
 }
+/**
+ * Redirects to team page user from given username
+ * @function
+ * @param {string} username - name of the user on page to redirects 
+ */
 export function pushTeamUrl(username: string): void {
   if (username && router.currentRoute.name != "teamId") {
     store.dispatch("updateCommentDialog", false);
@@ -551,7 +654,12 @@ export function pushTeamUrl(username: string): void {
   }
 }
 
-
+/**
+ * Selects proper alert to show to user on error message
+ * @function
+ * @param {string} type - type of alerte  
+ * @param {string} message - alerte message 
+ */
 export function alert(type: string, message: string): void {
   store.dispatch("updateAlertType", type);
   store.dispatch("updateAlertMessage", message);
@@ -560,6 +668,12 @@ export function alert(type: string, message: string): void {
     store.dispatch("updateAlert", false);
   }, 4000);
 }
+/**
+ * Shows persistent alert
+ * @function
+ * @param {string} type - type of alert 
+ * @param {string} message - alert message 
+ */
 export function alertPersist(type: string, message: string): void {
   clearStorage();
   store.dispatch("updateLoader", false);
@@ -567,9 +681,19 @@ export function alertPersist(type: string, message: string): void {
   store.dispatch("updateAlertMessage", message);
   store.dispatch("updateAlertPersist", true);
 }
+/**
+ * Shows alert on success action
+ * @function
+ * @param {string} message - success alert message 
+ */
 export function success(message: string): void {
   alert("success", message);
 }
+/**
+ * Selects alerte type on error
+ * @function
+ * @param {string} message - alert message  
+ */
 export function failed(message: string): void {
   const jwtError: boolean = new RegExp("(.*JWT.*)|(.*Unauthorized.*)", "gi").test(message);
   const forbiddenError: boolean = new RegExp(".*forbidden.*", "gi").test(message);
@@ -584,7 +708,10 @@ export function failed(message: string): void {
     alertPersist("error", message);
   else alert("error", message);
 }
-
+/**
+ * Generates image files and filename and stores them into a list 
+ * @returns {File[]} Returns list of file added in one publication
+ */
 export function generateFiles(): File[] {
   const fileList: Array<File> = new Array<File>();
   const imageTags: HTMLImageElement[] = document.querySelectorAll(
@@ -604,14 +731,26 @@ export function generateFiles(): File[] {
   });
   return fileList;
 }
-
-export function getCurrent(value: string): string {
-  return store.state.currentUser ? store.state.currentUser[value] : "";
+/**
+ * Shorthand to get current user data from state management
+ * @param {string} name 
+ * @returns {string}
+ */
+export function getCurrent(name: string): string {
+  return store.state.currentUser ? store.state.currentUser[name] : "";
 }
+/**
+ * Shorthand to get current user role from state management
+ * @returns {string}
+ */
 export function getCurrentRole(): string {
   return store.state.currentUser ? (store.state.currentUser as Users).roles[0].roleName as string : "";
 }
-
+/**
+ * Initializes pages when mounted on the DOM
+ * @param {function} callback - callback function
+ * @returns {Promise<void>|void}
+ */
 export function initialize(callback?: () => void): Promise<VueResponse | void> {
   return new Promise((resolve, reject) => {
     getUser().then(
@@ -631,7 +770,10 @@ export function initialize(callback?: () => void): Promise<VueResponse | void> {
     if (callback) callback();
   });
 }
-
+/**
+ * Handles the overflow when modal is shown
+ * @param {boolean} show - value of overflow visibility 
+ */
 export function overflow(show?: boolean): void {
 
   const hide = !show;
@@ -657,7 +799,10 @@ export function overflow(show?: boolean): void {
     if(teamSelectedTag && isTSDialog)  teamSelectedTag.style.overflow = "auto";
   }
 }
-
+/**
+ * Closes all dialogs 
+ * @function
+ */
 export function closeDialogs() {
   store.dispatch("updateCommentDialog", false);
   store.dispatch("updateTeamSelectedDialog", false);

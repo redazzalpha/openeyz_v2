@@ -1,4 +1,7 @@
 
+/**
+ * Represents all rules validation for fields
+ */
 export const rules = {
     isNotEmpty: (v: string): boolean => {
         return !/^\s*$/gi.test(v);

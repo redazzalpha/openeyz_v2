@@ -1,3 +1,10 @@
+/*
+ * ckeditor is a rich editor text and in this case
+ * it's used as user input to post publication 
+ * This file is used to import the custom ckeditor 
+ * with all configuration and imports by default
+ */
+
 import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
 import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat';
 import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold.js';
@@ -20,6 +27,7 @@ import AutoImage from '@ckeditor/ckeditor5-image/src/autoimage';
 
 import UploadAdapterPlugin from './uploadAdapter';
 
+/**  ckeditor plugins */
 ClassicEditor.builtinPlugins = [
     Autoformat,
     Bold,
@@ -41,6 +49,7 @@ ClassicEditor.builtinPlugins = [
     AutoImage,
 ];
 
+/**  ckeditor default config */
 ClassicEditor.defaultConfig = {
     language: 'en',
     placeholder: 'Express yourself...',

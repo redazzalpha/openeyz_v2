@@ -1,14 +1,14 @@
 <template>
   <v-footer
     :color="$vuetify.theme.dark ? '' : '#757575'"
-    class="footer-cpn-footer ck pt-5"
+    class="pt-5"
   >
     <!--main-conatiner-->
     <v-container fluid grid-list-xs>
       <!--follow-us-row-->
       <v-row>
         <v-col class="text-center white--text">
-          <span>Folow us:</span>
+          <span>Follow us:</span>
         </v-col>
       </v-row>
       <!--follow-us-row-->

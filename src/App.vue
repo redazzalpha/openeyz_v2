@@ -1,9 +1,5 @@
 <template>
-  <v-app
-    id="wrapper"
-    class="app-container"
-    :style="background"
-  >
+  <v-app id="wrapper" class="app-container" :style="background">
     <LoaderCpn :show="loader" />
     <AlertCpn />
     <AlertPersistCpn />
@@ -26,7 +22,11 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { HOME_PAGE_URL, INFINITE_SCROLL_OFFSET, POST_GET_LIMIT } from "./utils/defines";
+import {
+  HOME_PAGE_URL,
+  INFINITE_SCROLL_OFFSET,
+  POST_GET_LIMIT,
+} from "./utils/defines";
 import { addPosts, closeDialogs, translateDateToISO } from "./utils/functions";
 import FooterCpn from "@/components/cpn/Footer-cpn.vue";
 import AppbarCpn from "@/components/cpn/Appbar-cpn.vue";
@@ -50,6 +50,7 @@ export default Vue.extend({
   },
   computed: {
     ...mapState(["currentUser", "userNotifs", "posts", "loader"]),
+    /** selects background style according screen size */
     background(): string {
       const isXs: boolean = this.$vuetify.breakpoint.name == "xs";
       const backgroundAf: string = this.$vuetify.theme.dark
@@ -75,6 +76,7 @@ export default Vue.extend({
         backgroundAttachment;
       return background;
     },
+    /** determines section min height */
     minHeight(): string {
       if (this.$vuetify.breakpoint.name == "xs") return "";
       else return "min-height: 100vh";
@@ -86,13 +88,17 @@ export default Vue.extend({
       "updateCommentDialog",
       "updateTeamSelectedDialog",
     ]),
+    /**
+     * downloads publication on scroll to bottom 
+     * @function
+     */
     infiniteScroll() {
       let scroll: number;
       let bottom: number;
       window.onscroll = async () => {
         scroll = window.scrollY + window.innerHeight;
         bottom = document.body.scrollHeight;
-        if (scroll === (bottom - INFINITE_SCROLL_OFFSET)) {
+        if (scroll === bottom - INFINITE_SCROLL_OFFSET) {
           if (
             this.posts.length &&
             this.$router.currentRoute.path === HOME_PAGE_URL
@@ -105,6 +111,10 @@ export default Vue.extend({
         }
       };
     },
+    /**
+     * set the ckeditor theme, light or dark according user parameter 
+     * @function
+     */
     ckeThemeSwitcher() {
       if (this.currentUser) this.$vuetify.theme.dark = this.currentUser.dark;
       const style = document.documentElement.style;
