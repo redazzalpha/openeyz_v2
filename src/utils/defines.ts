@@ -45,6 +45,7 @@ export const HOME_PAGE_URL = ROOT_URL;
 export const ACCESS_PAGE_URL = ROOT_URL + "access";
 export const NOTIFICATION_PAGE_URL = ROOT_URL + "notification";
 export const MENTIONS_PAGE_URL = ROOT_URL + "mentions";
+export const ERROR_PAGE_URL = ROOT_URL + "error";
 export const PROFILE_PAGE_URL = ROOT_URL + "profile";
 export const TEAM_PAGE_URL = ROOT_URL + "team";
 export const NOTFOUND_PAGE_URL = ROOT_URL + "*";

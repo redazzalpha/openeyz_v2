@@ -7,7 +7,8 @@ import Profile from '../views/Profile.vue';
 import Team from '../views/Team.vue';
 import Notification from '../views/Notification.vue';
 import Mentions from '../views/Mentions.vue';
-import { HOME_PAGE_URL, ACCESS_PAGE_URL, PROFILE_PAGE_URL, TEAM_PAGE_URL, NOTIFICATION_PAGE_URL, NOTFOUND_PAGE_URL, MENTIONS_PAGE_URL } from '../utils/defines';
+import Error from '../views/Error.vue';
+import { HOME_PAGE_URL, ACCESS_PAGE_URL, PROFILE_PAGE_URL, TEAM_PAGE_URL, NOTIFICATION_PAGE_URL, NOTFOUND_PAGE_URL, MENTIONS_PAGE_URL, ERROR_PAGE_URL } from '../utils/defines';
 
 Vue.use(VueRouter);
 
@@ -46,6 +47,11 @@ const routes: Array<RouteConfig> = [
     name: 'mentions',
     path: MENTIONS_PAGE_URL,
     component: Mentions,
+  },
+  {
+    name: 'error',
+    path: ERROR_PAGE_URL,
+    component: Error,
   },
   {
     name: 'notfound',

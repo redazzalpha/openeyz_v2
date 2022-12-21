@@ -2,7 +2,6 @@
   <v-app id="wrapper" class="app-container" :style="background">
     <LoaderCpn :show="loader" />
     <AlertCpn />
-    <AlertPersistCpn />
     <div class="app-container-block">
       <AppbarCpn />
       <!--main-->
@@ -34,7 +33,6 @@ import DrawerCpn from "@/components/cpn/Drawer-cpn.vue";
 import ScrollTopBtnCpn from "./components/cpn/ScrollTopBtn-cpn.vue";
 import LoaderCpn from "./components/cpn/Loader-cpn.vue";
 import AlertCpn from "@/components/cpn/Alert-cpn.vue";
-import AlertPersistCpn from "@/components/cpn/Alert-persist-cpn.vue";
 import { mapActions, mapState } from "vuex";
 
 export default Vue.extend({
@@ -46,7 +44,6 @@ export default Vue.extend({
     ScrollTopBtnCpn,
     LoaderCpn,
     AlertCpn,
-    AlertPersistCpn,
   },
   computed: {
     ...mapState(["currentUser", "userNotifs", "posts", "loader"]),

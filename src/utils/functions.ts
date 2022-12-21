@@ -686,7 +686,7 @@ export function pushTeamUrl(username: string): void {
 }
 
 /**
- * Selects proper alert to show to user on error message
+ * alert on success action
  * @function
  * @param {string} type - type of alerte  
  * @param {string} message - alerte message 
@@ -700,7 +700,7 @@ export function alert(type: string, message: string): void {
   }, 4000);
 }
 /**
- * Shows persistent alert
+ * Persistent alert on error action
  * @function
  * @param {string} type - type of alert 
  * @param {string} message - alert message 
@@ -721,7 +721,7 @@ export function success(message: string): void {
   alert("success", message);
 }
 /**
- * Selects alerte type on error
+ * Selects type and shows alert on error
  * @function
  * @param {string} message - alert message  
  */
@@ -730,6 +730,10 @@ export function failed(message: string): void {
   const forbiddenError: boolean = new RegExp(".*forbidden.*", "gi").test(message);
   const unavailableServerError: boolean = new RegExp(".*server is unavailable.*", "gi").test(message);
   const isAccesPage: boolean = router.currentRoute.name == "access";
+
+
+  router.push('error');
+
 
   if (jwtError)
     alertPersist("error", "auth. error please connect !");
