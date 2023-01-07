@@ -731,9 +731,7 @@ export function failed(message: string): void {
   const unavailableServerError: boolean = new RegExp(".*server is unavailable.*", "gi").test(message);
   const isAccesPage: boolean = router.currentRoute.name == "access";
 
-
   router.push('error');
-
 
   if (jwtError)
     alertPersist("error", "auth. error please connect !");
