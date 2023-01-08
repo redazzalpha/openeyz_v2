@@ -61,12 +61,79 @@
     <meta property="og:image" content="https://openeyz.netlify.app/logo-site.png" >
 
     <title>OpenEyz - Corporate Social Network</title>
+
+    <script src="jquery-3.6.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js" integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/app.js"></script>
+
   </head>
   <body>
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
+
+
     <div id="app"></div>
     <!-- built files will be auto injected -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div>
+      <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="connect">WebSocket connection papy:</label>
+                <button id="connect" class="btn btn-default" type="submit">Connect</button>
+                <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
+                </button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="name">What is your name?</label>
+                    <input type="text" id="name" class="form-control" placeholder="Your name here...">
+                </div>
+                <button id="send" class="btn btn-default" type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table id="conversation" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Greetings</th>
+                    </tr>
+                </thead>
+                <tbody id="greetings">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
   </body>
 </html>
