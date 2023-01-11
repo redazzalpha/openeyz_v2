@@ -46,8 +46,6 @@ export default Vue.extend({
     getPosts(POST_GET_LIMIT);
   },
   mounted() {
-
-    console.log("mounted here bro")
     initialize();
   },
   destroyed() {

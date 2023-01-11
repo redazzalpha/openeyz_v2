@@ -1,7 +1,8 @@
 
+// import { SERVER_WEBSOCKET_END_POINT } from '../src/utils/defines';
 
 var stompClient = null;
-const headerToken = {'Authorization' : 'Bearer ' + localStorage.getItem("token") };
+const headerToken = { 'Authorization': 'Bearer ' + localStorage.getItem("token") };
 
 
 function setConnected(connected) {
@@ -18,12 +19,13 @@ function setConnected(connected) {
 
 function connect() {
 
-    var socket = new SockJS('http://localhost:8081/gs-guide-websocket');
+    var socket = new SockJS('http://localhost:8081/api/ws');
+    // var socket = new SockJS(SERVER_WEBSOCKET_END_POINT);
     stompClient = Stomp.over(socket);
     stompClient.connect(headerToken, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/greetings', function (greeting) {
+        stompClient.subscribe('/signal-update', function (greeting) {
             showGreeting(JSON.parse(greeting.body).content);
         }, headerToken);
     });
@@ -38,8 +40,7 @@ function disconnect() {
 }
 
 function sendName() {
-    stompClient.send("/app/hello", headerToken, JSON.stringify({'name': "zizipog"}));
-    // stompClient.send("/app/hello", {}, JSON.stringify({'name': $("#name").val()}));
+    stompClient.send("/api/signal/update", headerToken, JSON.stringify({ 'name': "zizipog" }));
 }
 
 function showGreeting(message) {
@@ -50,7 +51,7 @@ $(function () {
     $("form").on('submit', function (e) {
         e.preventDefault();
     });
-    $( "#connect" ).on('click', function() { connect(); });
-    $( "#disconnect").on('click', function() { disconnect(); });
-    $( "#send").on('click', function() { sendName(); });
+    $("#connect").on('click', function () { connect(); });
+    $("#disconnect").on('click', function () { disconnect(); });
+    $("#send").on('click', function () { sendName(); });
 });

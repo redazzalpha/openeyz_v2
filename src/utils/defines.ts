@@ -1,3 +1,5 @@
+// urls
+
 // const SERVER_DOMAIN = "https://openeyz-v2.herokuapp.com";
 const SERVER_DOMAIN = "http://localhost:8081";
 
@@ -39,6 +41,8 @@ export const SERVER_IMG_URL = API_PATH + '/img';
 export const SERVER_USER_STATE_URL = ADMIN_PATH + '/state';
 export const SERVER_USER_ROLE_URL = ADMIN_PATH + '/role';
 
+export const SERVER_WEBSOCKET_END_POINT = API_PATH + "/ws"
+
 
 const ROOT_URL = "/";
 export const HOME_PAGE_URL = ROOT_URL;
@@ -53,6 +57,7 @@ export const SUPERADMIN_IMG_URL = "../assets/suadmin.png";
 export const ADMIN_IMG_URL = ROOT_URL + "@/assets/admin.png";
 export const USER_IMG_URL = ROOT_URL + "@/assets/user.png";
 
+// others
 
 export const ERROR_MESSAGE_DURATION = 4000;
 export const POST_GET_LIMIT = 5;
