@@ -41,7 +41,9 @@ export const SERVER_IMG_URL = API_PATH + '/img';
 export const SERVER_USER_STATE_URL = ADMIN_PATH + '/state';
 export const SERVER_USER_ROLE_URL = ADMIN_PATH + '/role';
 
-export const SERVER_WEBSOCKET_END_POINT = API_PATH + "/ws"
+export const SERVER_WS_END_POINT_URL = API_PATH + "/ws";
+export const SERVER_WS_SUBSCRIBE_URL = "/signal-update";
+export const SERVER_WS_SEND_URL = "/api/signal/update";
 
 
 const ROOT_URL = "/";

@@ -6,6 +6,7 @@ import * as defines from './defines';
 import { httpRequest } from '@/utils/http';
 import vuetify from '@/plugins/vuetify';
 import { v4 as uuidv4 } from "uuid";
+import { socketHandler } from '@/js/socket';
 
 /**
  * logs the user in
@@ -277,7 +278,6 @@ export function getPosts(limit: number, creation?: string, authorId?: string): P
         reject(error);
       },
     );
-
   });
 }
 export function addPosts(limit: number, creation?: string, authorId?: string): Promise<VueResponse> {
@@ -305,7 +305,14 @@ export function publishPost(post: string): Promise<void | VueResponse> {
     data.append("post", post);
 
     httpRequest.post(defines.SERVER_PUBLICATION_URL, data).then(
-      (response: VueResponse): void => { getPosts(defines.POST_GET_LIMIT), resolve(response); },
+      (response: VueResponse): void => {
+
+          //TODO : got to check socket handler action if got to send signal  to perform reload
+          socketHandler.sendSignal("POST");
+
+        getPosts(defines.POST_GET_LIMIT),
+          resolve(response);
+      },
       (error: VueResponse) => {
         failed(error.bodyText);
         reject(error);
@@ -319,6 +326,10 @@ export function deletePost({ post }: Item, posts: Post[]): Promise<VueResponse> 
       params: { postId: post?.id },
     }).then(
       () => {
+
+          //TODO : got to check socket handler action if got to send signal  to perform reload
+          socketHandler.sendSignal("POST");
+
         getPosts(defines.POST_GET_LIMIT, posts[posts.length - 1].creation).then(
           (response: VueResponse) => resolve(response),
           (error: VueResponse) => {
@@ -411,6 +422,10 @@ export function sendComment({ post }: Item, comment: string): Promise<VueRespons
       data.append("postId", post.id.toString());
       httpRequest.post(defines.SERVER_COMMENT_URL, data).then(
         (response: VueResponse) => {
+
+          //TODO : got to check socket handler action if got to send signal  to perform reload
+          socketHandler.sendSignal("NOTIF");
+
           resolve(response);
         },
         (error: VueResponse) => {
@@ -796,8 +811,8 @@ export function initialize(callback?: () => void): Promise<VueResponse | void> {
         resolve(response);
       },
       (error: VueResponse) => reject(error)
-      );
-      store.dispatch("updateLoader", false);
+    );
+    store.dispatch("updateLoader", false);
     window.scrollTo({
       top: 0,
       left: 0,
@@ -826,14 +841,14 @@ export function overflow(show?: boolean): void {
   teamSelectedTag?.classList.remove("overflow-y-auto");
   teamSelectedTag?.classList.remove("overflow-y-hidden");
 
-  if(hide) {
-    if(htmlTag) htmlTag.style.overflow = "hidden";
-    if(teamSelectedTag && isTSDialog && isCommentDialog) teamSelectedTag.style.overflow = "hidden";    
+  if (hide) {
+    if (htmlTag) htmlTag.style.overflow = "hidden";
+    if (teamSelectedTag && isTSDialog && isCommentDialog) teamSelectedTag.style.overflow = "hidden";
   }
 
-  else if(show) {
-    if(htmlTag && !isTSDialog) htmlTag.style.overflow = "auto";
-    if(teamSelectedTag && isTSDialog)  teamSelectedTag.style.overflow = "auto";
+  else if (show) {
+    if (htmlTag && !isTSDialog) htmlTag.style.overflow = "auto";
+    if (teamSelectedTag && isTSDialog) teamSelectedTag.style.overflow = "auto";
   }
 }
 /**
@@ -853,7 +868,7 @@ export function closeDialogs() {
  * @param {number} param.code
  * @param {function} action 
  */
-export function enterPressed({code}: KeyboardEvent, action: () => void) {
+export function enterPressed({ code }: KeyboardEvent, action: () => void) {
   const isEnter: boolean = code == "Enter" || code == "NumpadEnter";
   if (isEnter) action();
 
@@ -865,7 +880,7 @@ export function enterPressed({code}: KeyboardEvent, action: () => void) {
  * @param {number} param.code 
  * @param {function} action 
  */
-export function escapePressed({code}: KeyboardEvent, action: () => void) {
+export function escapePressed({ code }: KeyboardEvent, action: () => void) {
   if (code.match("Escape")) action();
 }
 
@@ -876,6 +891,6 @@ export function escapePressed({code}: KeyboardEvent, action: () => void) {
  */
 export function unreadNotif() {
   return store.state.userNotifs.filter((e: Notif) => {
-    return !e.read
+    return !e.read;
   }).length;
 }
