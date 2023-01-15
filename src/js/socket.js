@@ -14,7 +14,9 @@ function signalHandler(signal) {
 
     //TODO : better check signal here before do action
 
-    received = JSON.parse(signal.body).content;
+
+
+    received = signal.body;
 
     if (received == 'POST')
         getPosts(POST_GET_LIMIT);
@@ -28,9 +30,8 @@ export const socketHandler = {
         stompClient = Stomp.over(function(){
             return new WebSocket(SERVER_WS_END_POINT_URL);
           });
-   
-
         stompClient.connect(headerToken, function (frame) {
+            localStorage.setItem("ws-user-name", frame.headers["user-name"]);
             stompClient.subscribe(SERVER_WS_SUBSCRIBE_URL, signal => {
                 signalHandler(signal);
             }, headerToken);

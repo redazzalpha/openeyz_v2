@@ -19,7 +19,6 @@ import Vue from "vue";
 import { mapState, mapActions } from "vuex";
 import { getPosts, initialize } from "../utils/functions";
 import { POST_GET_LIMIT } from "../utils/defines";
-import {socketHandler} from '@/js/socket';
 import HeadCpn from "@/components/cpn/Head-cpn.vue";
 import PostCpn from "@/components/cpn/Post-cpn.vue";
 import PublicationCpn from "@/components/cpn/Publication-cpn.vue";
@@ -49,7 +48,6 @@ export default Vue.extend({
   },
   mounted() {
     initialize();
-    socketHandler.connect();
   },
   destroyed() {
     this.updateLoader(true);

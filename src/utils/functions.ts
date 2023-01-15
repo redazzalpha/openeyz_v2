@@ -16,7 +16,7 @@ import { socketHandler } from '@/js/socket';
 export function login(body: FormData): Promise<void | VueResponse> {
   return new Promise((resolve, reject) => {
     httpRequest.post(defines.SERVER_ACCESS_URL, body).then(
-      () => router.push(defines.HOME_PAGE_URL),
+      () => { router.push(defines.HOME_PAGE_URL); socketHandler.connect(); },
       (error: VueResponse) => { alert("error", error.bodyText); reject(error); },
     );
   });
@@ -46,6 +46,7 @@ export async function logout(): Promise<void> {
   finally {
     clearStorage();
     pushAccessUrl();
+    socketHandler.disconnect();
   }
 }
 
@@ -307,8 +308,8 @@ export function publishPost(post: string): Promise<void | VueResponse> {
     httpRequest.post(defines.SERVER_PUBLICATION_URL, data).then(
       (response: VueResponse): void => {
 
-          //TODO : got to check socket handler action if got to send signal  to perform reload
-          socketHandler.sendSignal("POST");
+        //TODO : got to check socket handler action if got to send signal  to perform reload
+        socketHandler.sendSignal("POST");
 
         getPosts(defines.POST_GET_LIMIT),
           resolve(response);
@@ -327,8 +328,8 @@ export function deletePost({ post }: Item, posts: Post[]): Promise<VueResponse> 
     }).then(
       () => {
 
-          //TODO : got to check socket handler action if got to send signal  to perform reload
-          socketHandler.sendSignal("POST");
+        //TODO : got to check socket handler action if got to send signal  to perform reload
+        socketHandler.sendSignal("POST");
 
         getPosts(defines.POST_GET_LIMIT, posts[posts.length - 1].creation).then(
           (response: VueResponse) => resolve(response),
@@ -611,6 +612,7 @@ export function clearVuex() {
 export function clearStorage() {
   store.dispatch("clearVuex");
   localStorage.removeItem("token");
+  localStorage.removeItem("ws-user-name");
   localStorage.removeItem("refreshToken");
   localStorage.removeItem("vuex");
 }

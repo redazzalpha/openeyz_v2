@@ -73,7 +73,8 @@ import { mapActions } from "vuex";
 import { rules } from "@/utils/rules";
 import { VueElement, VueFunction } from "../../utils/types";
 import { login, enterPressed } from "@/utils/functions";
-import { btnSize } from '../../utils/functions';
+import { btnSize } from "../../utils/functions";
+import { socketHandler } from "@/js/socket";
 
 export default Vue.extend({
   name: "Access-login",
@@ -100,7 +101,8 @@ export default Vue.extend({
         if ((form as unknown as VueFunction).validate()) {
           const formElem: HTMLFormElement | null =
             document.querySelector(".login");
-          if (formElem != null) login(new FormData(formElem));
+          if (formElem != null)
+            login(new FormData(formElem));
         }
       }
     },
