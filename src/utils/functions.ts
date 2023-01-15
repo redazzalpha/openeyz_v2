@@ -42,11 +42,14 @@ export function register(formElem: FormData): Promise<void | VueResponse> {
 export async function logout(): Promise<void> {
   try {
     await httpRequest.post(defines.SERVER_LOGOUT_URL);
-  }
-  finally {
     clearStorage();
     pushAccessUrl();
     socketHandler.disconnect();
+  }
+  finally {
+    // clearStorage();
+    // pushAccessUrl();
+    // socketHandler.disconnect();
   }
 }
 
@@ -307,10 +310,6 @@ export function publishPost(post: string): Promise<void | VueResponse> {
 
     httpRequest.post(defines.SERVER_PUBLICATION_URL, data).then(
       (response: VueResponse): void => {
-
-        //TODO : got to check socket handler action if got to send signal  to perform reload
-        socketHandler.sendSignal("POST");
-
         getPosts(defines.POST_GET_LIMIT),
           resolve(response);
       },
@@ -327,10 +326,6 @@ export function deletePost({ post }: Item, posts: Post[]): Promise<VueResponse> 
       params: { postId: post?.id },
     }).then(
       () => {
-
-        //TODO : got to check socket handler action if got to send signal  to perform reload
-        socketHandler.sendSignal("POST");
-
         getPosts(defines.POST_GET_LIMIT, posts[posts.length - 1].creation).then(
           (response: VueResponse) => resolve(response),
           (error: VueResponse) => {
@@ -423,10 +418,6 @@ export function sendComment({ post }: Item, comment: string): Promise<VueRespons
       data.append("postId", post.id.toString());
       httpRequest.post(defines.SERVER_COMMENT_URL, data).then(
         (response: VueResponse) => {
-
-          //TODO : got to check socket handler action if got to send signal  to perform reload
-          socketHandler.sendSignal("NOTIF");
-
           resolve(response);
         },
         (error: VueResponse) => {
