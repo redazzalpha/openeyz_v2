@@ -10,7 +10,7 @@ function signalHandler(signal) {
 
     /* check signal here to know what action to do */
 
-    //TODO : better check signal here before do action
+    //TODO : better check signal here before do actionGIT 
 
     received = signal.body;
 

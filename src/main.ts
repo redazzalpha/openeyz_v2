@@ -6,7 +6,7 @@ import vuetify from '@/plugins/vuetify';
 import vueResource from 'vue-resource';
 import CKEditor from '@ckeditor/ckeditor5-vue2';
 import { VueRequest, VueResponse } from './utils/types';
-import { unavailableServerHandler, defaultHandler, internalServerErrorHandler } from './utils/functions';
+import { unavailableServerHandler, defaultHandler, internalServerErrorHandler, badRequestHandler } from './utils/functions';
 
 
 Vue.config.productionTip = false;
@@ -21,12 +21,15 @@ Vue.http.interceptors.push(function (request: VueRequest) {
   return (response: VueResponse) => {
     const { status } = response;
     switch (status) {
-      case 0:
-        unavailableServerHandler(response);
+        case 0:
+          unavailableServerHandler(response);
+          break;
+      case 400:
+        badRequestHandler(response);
         break;
-      case 500:
-        internalServerErrorHandler(response);
-        break;
+        case 500:
+          internalServerErrorHandler(response);
+          break;
       default:
         defaultHandler(response);
     }

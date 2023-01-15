@@ -1,6 +1,6 @@
 <template>
   <v-dialog :value="alert" hide-overlay max-width="390">
-    <v-alert dense elevation="5" class="d-flex justify-center" :type="alertType"
+    <v-alert dense elevation="5" class="d-flex justify-center" :type="alertType" 
       >{{ alertMessage }} <br />
     </v-alert>
   </v-dialog>

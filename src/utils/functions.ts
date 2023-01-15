@@ -7,6 +7,7 @@ import { httpRequest } from '@/utils/http';
 import vuetify from '@/plugins/vuetify';
 import { v4 as uuidv4 } from "uuid";
 import { socketHandler } from '@/js/socket';
+import { POST_GET_LIMIT } from './defines';
 
 /**
  * logs the user in
@@ -654,6 +655,14 @@ export function internalServerErrorHandler(response: VueResponse): void {
   response.bodyText = message;
 }
 /**
+ * bad request handler on http response 
+ * @function
+ * @param {VueResponse} response - http response
+ */
+export function badRequestHandler(response: VueResponse): void {
+  getPosts(POST_GET_LIMIT);
+}
+/**
  * default handler on http response 
  * @function
  * @param {VueResponse} param - http response
@@ -715,6 +724,7 @@ export function alert(type: string, message: string): void {
  */
 export function alertPersist(type: string, message: string): void {
   clearStorage();
+  router.push('error');
   store.dispatch("updateLoader", false);
   store.dispatch("updateAlertType", type);
   store.dispatch("updateAlertMessage", message);
@@ -738,8 +748,6 @@ export function failed(message: string): void {
   const forbiddenError: boolean = new RegExp(".*forbidden.*", "gi").test(message);
   const unavailableServerError: boolean = new RegExp(".*server is unavailable.*", "gi").test(message);
   const isAccesPage: boolean = router.currentRoute.name == "access";
-
-  router.push('error');
 
   if (jwtError)
     alertPersist("error", "auth. error please connect !");
@@ -806,6 +814,7 @@ export function initialize(callback?: () => void): Promise<VueResponse | void> {
       (error: VueResponse) => reject(error)
     );
     store.dispatch("updateLoader", false);
+    store.dispatch("updateAlert", false);
     window.scrollTo({
       top: 0,
       left: 0,
