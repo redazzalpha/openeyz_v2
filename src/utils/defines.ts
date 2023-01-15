@@ -42,7 +42,7 @@ export const SERVER_USER_STATE_URL = ADMIN_PATH + '/state';
 export const SERVER_USER_ROLE_URL = ADMIN_PATH + '/role';
 
 // TODO: IMPORTANT - CHANGE URL ACCORDING PRODUCTION URL 
-export const SERVER_WS_END_POINT_URL = 'ws' + SERVER_DOMAIN.split(RegExp("https?"))[1] + '/ws';
+export const SERVER_WS_END_POINT_URL = 'wss' + SERVER_DOMAIN.split(RegExp("https?"))[1] + '/ws';
 export const SERVER_WS_SUBSCRIBE_URL = "/users/ws/signal";
 export const SERVER_WS_SEND_URL = "/ws/signal/update";
 
