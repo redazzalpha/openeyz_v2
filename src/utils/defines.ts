@@ -1,7 +1,7 @@
 // urls
 
-const SERVER_DOMAIN = "https://openeyz-v2.herokuapp.com";
-// const SERVER_DOMAIN = "http://localhost:8081";
+// const SERVER_DOMAIN = "https://openeyz-v2.herokuapp.com";
+const SERVER_DOMAIN = "http://localhost:8081";
 
 const API_PATH = SERVER_DOMAIN + "/api";
 const ADMIN_PATH = SERVER_DOMAIN + "/admin";

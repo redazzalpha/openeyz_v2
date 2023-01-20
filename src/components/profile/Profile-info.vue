@@ -52,7 +52,7 @@
           <!-- last-name-row -->
           <v-row>
             <v-col>
-              <span class="mr-3">Last name: {{ current("lname") }} </span>
+              <span class="mr-3"><span class="font-weight-bold">Last name:</span> {{ current("lname") }} </span>
             </v-col>
             <v-col class="shrink">
               <v-btn small color="primary" @click="openModify(0)">Modify</v-btn>
@@ -62,7 +62,7 @@
           <!-- name-row -->
           <v-row>
             <v-col>
-              <span class="mr-3">First name: {{ current("name") }} </span>
+              <span class="mr-3"><span class="font-weight-bold">First name: </span> {{ current("name") }} </span>
             </v-col>
             <v-col class="shrink">
               <v-btn small color="primary" @click="openModify(1)">Modify</v-btn>
@@ -72,19 +72,20 @@
           <!-- email-row -->
           <v-row>
             <v-col>
-              <span class="mr-3">E-mail: {{ current("username") }} </span>
+              <span class="mr-3"><span class="font-weight-bold">E-mail:</span> {{ current("username") }} </span>
             </v-col>
           </v-row>
+          <!-- role row-->
           <v-row v-if="isAuthorized()">
             <v-col>
-              <span class="mr-3">Role: {{ currentRole() }} </span>
+              <span class="mr-3"><span class="font-weight-bold">Role: </span>{{ currentRole() }} </span>
             </v-col>
           </v-row>
           <!-- description-row -->
           <v-row>
             <v-col>
               <span class="mr-3">
-                Description:
+                <span class="font-weight-bold">Description: </span>
                 {{
                   current("description")
                     ? current("description")
