@@ -49,7 +49,7 @@
                 primary-title
                 class="d-flex flex-column justify-center"
               >
-                <span> {{ user.name }} {{ user.lname }}</span>
+                <span> {{ user.name }} </span>
                 <AvatarCpn
                   :path="user.avatarSrc ? user.avatarSrc : ''"
                   :role="
@@ -58,14 +58,12 @@
                   :state="user.state"
                   size="175"
                 />
-                <div class="d-flex flex-column">
+                <div class="d-flex flex-column my-5">
                   <span class="text-body-2">
-                    {{ user.username }}
+                    {{ user.description }}
                   </span>
                 </div>
               </v-card-title>
-
-              <v-card-subtitle class="text-center; pb-0"> </v-card-subtitle>
               <v-card-subtitle style="opacity: 0.7">
                 Here you could find all {{ author }} publications. From this
                 place you can interact add comment or like publications.

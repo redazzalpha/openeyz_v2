@@ -11,7 +11,7 @@
       <v-badge
         bordered
         dense
-        :color="$vuetify.theme.dark? 'black' : 'white'"
+        :color="$vuetify.theme.dark ? 'black' : 'white'"
         icon="mdi-account-circle"
         avatar
         overlap
@@ -34,23 +34,99 @@
           <v-list-item-avatar> </v-list-item-avatar>
 
           <v-list-item-content>
-            <v-list-item-title>{{ user.username }}</v-list-item-title>
-            <v-list-item-subtitle>Authorizations</v-list-item-subtitle>
-            <div v-if="user.roles[0] != undefined" class="pt-3">
-              First name: {{ user.lname }} <br />
-              Name: {{ user.name }} <br />
-              Description:
+
+
+
+
+
+
+
+
+            
+            
+            
+            <v-container fluid grid-list-xs v-if="user.roles[0] != undefined" class="pt-3">
+              
+              <v-row>
+                <v-col class="py-0 mb-4">
+                    <span class="font-weight-bold">Username: </span>{{ user.username }}
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col class="py-0 mb-2">
+                      <v-list-item-subtitle>Informations</v-list-item-subtitle>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col class="py-0 mb-1">
+                      <span class="font-weight-bold">First name: </span>
+                      {{ user.lname }} 
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col class="py-0 mb-1">
+                      <span class="font-weight-bold">Name: </span> {{ user.name }}
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col class="py-0 mb-1">
+                      <span class="font-weight-bold">Description: </span>
+                      {{ user.description ? user.description : "no description" }}
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col class="py-0 mb-1">
+                      <span class="font-weight-bold">Role: </span>
+                      <span :class="roleClassColor">{{ user.roles[0].roleName }}</span>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col class="py-0 mb-1">
+                  <span class="font-weight-bold">Account state: </span>
+                  <span :class="user.state ? 'success--text' : 'error--text'">{{
+                    user.state ? "Enabled" : "Disabled"
+                  }}</span>
+                </v-col>
+              </v-row>
+
+
+
+
+
+              <!-- <v-list-item-title>
+                <span class="font-weight-bold">Username: </span
+                >{{ user.username }}</v-list-item-title
+              >
+              <v-list-item-subtitle>Informations</v-list-item-subtitle>
+              <span class="font-weight-bold">First name: </span>
+              {{ user.lname }} <br />
+              <span class="font-weight-bold">Name: </span> {{ user.name }}
+              <br />
+              <span class="font-weight-bold">Description: </span>
               {{ user.description ? user.description : "no description" }}
               <br />
-              Role:
+              <span class="font-weight-bold">Role: </span>
               <span :class="roleClassColor">{{ user.roles[0].roleName }}</span>
               <br />
-              Account state:
+              <span class="font-weight-bold">Account state: </span>
               <span :class="user.state ? 'success--text' : 'error--text'">{{
                 user.state ? "Enabled" : "Disabled"
               }}</span>
               <br />
-            </div>
+
+ -->
+
+
+
+
+            </v-container>
+
+
+
+
+
+
+
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -66,9 +142,20 @@
                 label="Super Admin"
                 value="SUPERADMIN"
                 color="error"
+                active-class="font-weight-bold"
               ></v-radio>
-              <v-radio label="Admin" value="ADMIN" color="warning"></v-radio>
-              <v-radio label="User" value="USER" color="primary"></v-radio>
+              <v-radio
+                label="Admin"
+                value="ADMIN"
+                color="warning"
+                active-class="font-weight-bold"
+              ></v-radio>
+              <v-radio
+                label="User"
+                value="USER"
+                color="primary"
+                active-class="font-weight-bold"
+              ></v-radio>
             </v-radio-group>
           </v-list-item-content>
         </v-list-item>
@@ -88,6 +175,7 @@
                 ></v-switch>
                 <v-list-item-title
                   :class="state ? 'success--text' : 'error--text'"
+                  class="font-weight-bold"
                   >{{ state ? "enabled" : "disabled" }}</v-list-item-title
                 >
               </div>
@@ -178,7 +266,7 @@ export default Vue.extend({
   methods: {
     ...mapActions(["updateCurrentUser"]),
     /**
-     * save modifications on authorization on the server 
+     * save modifications on authorization on the server
      * @function
      * @async
      * @return {Promise<void>}
@@ -198,7 +286,7 @@ export default Vue.extend({
     /**
      * loads user role and account state
      * @function
-     * 
+     *
      */
     onload(): void {
       this.role = this.user.roles[0].roleName as string;
@@ -206,7 +294,7 @@ export default Vue.extend({
         typeof this.user.state != "function" ? this.user.state : true;
     },
     /**
-     * check if current user has role SUPERADMIN or ADMIN 
+     * check if current user has role SUPERADMIN or ADMIN
      * @function
      * @returns {boolean}
      */

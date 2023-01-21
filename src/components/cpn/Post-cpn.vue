@@ -137,8 +137,6 @@ export default Vue.extend({
      * @param {string} value - represents publication content 
      */
     editorData(value: string) {
-
-      console.log(value.length)
       if (value.length > 0 && value.length <= 999) this.disabled = false;
       else this.disabled = true;
     },

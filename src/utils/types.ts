@@ -67,7 +67,9 @@ export class Item {
 export class Users {
   username = "";
   lname = "";
+  lnameDec = "";
   name = "";
+  nameDec = "";
   password = "";
   state = true;
   description = "";
