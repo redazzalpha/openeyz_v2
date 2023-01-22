@@ -896,3 +896,12 @@ export function unreadNotif() {
     return !e.read;
   }).length;
 }
+
+export function reveal(): Promise<string> {
+  return new Promise((resolve, reject) => {
+    httpRequest.get(defines.SERVER_USER_REVEAL_URL).then(
+      (response: VueResponse) => resolve(response.bodyText),
+      (error: VueResponse) => { alert("error", error.bodyText); reject(error); },
+    );
+  });
+}

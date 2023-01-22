@@ -45,24 +45,39 @@
         <v-container grid-list-xs>
           <!-- information-title-row -->
           <v-row>
-            <v-col>
+            <v-col class="d-flex">
               <h3 class="text-decoration-underline">Informations</h3>
+              <v-btn class="ml-auto" small color="primary" @click="reveal">{{
+                lname ? "Hide" : "Reveal"
+              }}</v-btn>
             </v-col>
           </v-row>
           <!-- last-name-row -->
           <v-row>
             <v-col>
-              <span class="mr-3"><span class="font-weight-bold">Last name:</span> {{ current("lname") }} </span>
+              <span class="mr-3"
+                ><span class="font-weight-bold">Last name:</span>
+                {{ lname ? lname : current("lname") }}
+              </span>
             </v-col>
-            <v-col class="shrink">
-              <v-btn small color="primary" @click="openModify(0)">Modify</v-btn>
+            <v-col class="d-flex">
+              <v-btn
+                class="ml-auto"
+                small
+                color="primary"
+                @click="openModify(0)"
+                >Modify</v-btn
+              >
               <br />
             </v-col>
           </v-row>
           <!-- name-row -->
           <v-row>
             <v-col>
-              <span class="mr-3"><span class="font-weight-bold">First name: </span> {{ current("name") }} </span>
+              <span class="mr-3"
+                ><span class="font-weight-bold">First name: </span>
+                {{ current("name") }}
+              </span>
             </v-col>
             <v-col class="shrink">
               <v-btn small color="primary" @click="openModify(1)">Modify</v-btn>
@@ -72,13 +87,18 @@
           <!-- email-row -->
           <v-row>
             <v-col>
-              <span class="mr-3"><span class="font-weight-bold">E-mail:</span> {{ current("username") }} </span>
+              <span class="mr-3"
+                ><span class="font-weight-bold">E-mail:</span>
+                {{ current("username") }}
+              </span>
             </v-col>
           </v-row>
           <!-- role row-->
           <v-row v-if="isAuthorized()">
             <v-col>
-              <span class="mr-3"><span class="font-weight-bold">Role: </span>{{ currentRole() }} </span>
+              <span class="mr-3"
+                ><span class="font-weight-bold">Role: </span>{{ currentRole() }}
+              </span>
             </v-col>
           </v-row>
           <!-- description-row -->
@@ -211,6 +231,7 @@ import {
   modifyUserTheme,
   removeUserAvatar,
   sendUserAvatar,
+  reveal,
 } from "@/utils/functions";
 
 export default Vue.extend({
@@ -220,6 +241,7 @@ export default Vue.extend({
   },
   data() {
     return {
+      lname: "",
       darkTheme: this.$vuetify.theme.dark,
       userData: "",
       description: "",
@@ -262,7 +284,7 @@ export default Vue.extend({
     /**
      * opens modifier dialog modal
      * @function
-     * @param {number} target - type of modfifier to open 
+     * @param {number} target - type of modfifier to open
      */
     openModify(target: number) {
       switch (target) {
@@ -284,7 +306,7 @@ export default Vue.extend({
       this.modifyDialog = true;
     },
     /**
-     * switches target server url 
+     * switches target server url
      * @function
      */
     switchTarget() {
@@ -299,24 +321,6 @@ export default Vue.extend({
           this.url = SERVER_USER_USERNAME_URL;
           break;
       }
-    },
-    /**
-     * updates current user instance 
-     * @function
-     */
-    updateUser() {
-      switch (this.target) {
-        case 0:
-          this.currentUser.lname = this.userData;
-          break;
-        case 1:
-          this.currentUser.name = this.userData;
-          break;
-        case 2:
-          this.currentUser.username = this.userData;
-          break;
-      }
-      this.updateCurrentUser(this.currentUser);
     },
     /**
      * opens select image file dialog
@@ -353,9 +357,14 @@ export default Vue.extend({
             document.querySelector(".form");
           if (formElem != null) {
             this.switchTarget();
-            await modifyUserField(this.url, new FormData(formElem));
-            this.updateUser();
+            const response: VueResponse = await modifyUserField(
+              this.url,
+              new FormData(formElem)
+            );
+            console.log(response.body);
+            this.updateCurrentUser(response.body);
             this.userData = "";
+            this.lname = "";
           }
         }
       }
@@ -431,7 +440,7 @@ export default Vue.extend({
     /**
      * execute action on enter pressed
      * @function
-     * @param {KeyboardEvent} e 
+     * @param {KeyboardEvent} e
      */
     enter(e: KeyboardEvent) {
       enterPressed(e, () => {
@@ -442,7 +451,7 @@ export default Vue.extend({
       });
     },
     /**
-     * closes modifier dialog modal 
+     * closes modifier dialog modal
      * @function
      */
     closeModify(): void {
@@ -450,7 +459,7 @@ export default Vue.extend({
     },
     /**
      * executes action on enter pressed on description text area
-     * @param {KeyboardEvent} e 
+     * @param {KeyboardEvent} e
      */
     textarePressed(e: KeyboardEvent) {
       enterPressed(e, () => {
@@ -458,11 +467,16 @@ export default Vue.extend({
         this.sendDescription();
       });
     },
+    async reveal() {
+      if (this.lname == "") {
+        this.lname = await reveal();
+      } else this.lname = "";
+    },
   },
   watch: {
     /**
      * activate / desactivate proceed button
-     * @param {string} value - input value 
+     * @param {string} value - input value
      */
     userData(value: string) {
       if (value) this.disabled = false;
