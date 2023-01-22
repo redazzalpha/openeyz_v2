@@ -47,9 +47,14 @@
           <v-row>
             <v-col class="d-flex">
               <h3 class="text-decoration-underline">Informations</h3>
-              <v-btn class="ml-auto" small color="primary" @click="reveal">{{
-                lname ? "Hide" : "Reveal"
-              }}</v-btn>
+              <v-btn
+                class="ml-auto"
+                min-width="75"
+                small
+                color="primary"
+                @click="reveal"
+                >{{ lname ? "Hide" : "Reveal" }}</v-btn
+              >
             </v-col>
           </v-row>
           <!-- last-name-row -->
@@ -63,6 +68,7 @@
             <v-col class="d-flex">
               <v-btn
                 class="ml-auto"
+                min-width="75"
                 small
                 color="primary"
                 @click="openModify(0)"
@@ -79,8 +85,15 @@
                 {{ current("name") }}
               </span>
             </v-col>
-            <v-col class="shrink">
-              <v-btn small color="primary" @click="openModify(1)">Modify</v-btn>
+            <v-col class="d-flex">
+              <v-btn
+                class="ml-auto"
+                min-width="75"
+                small
+                color="primary"
+                @click="openModify(1)"
+                >Modify</v-btn
+              >
               <br />
             </v-col>
           </v-row>
@@ -361,7 +374,6 @@ export default Vue.extend({
               this.url,
               new FormData(formElem)
             );
-            console.log(response.body);
             this.updateCurrentUser(response.body);
             this.userData = "";
             this.lname = "";
