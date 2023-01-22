@@ -95,16 +95,14 @@
           <v-divider class="mb-7 mt-8"></v-divider>
           <!--text-terms-->
           <v-card-text class="text-caption text-sm-body-2 py-0">
-            En cliquant sur S’inscrire, vous acceptez nos Conditions générales.
+            By clicking Register, you agree to our Terms and Conditions.
             <br />
-            Découvrez comment nous recueillons, utilisons et partageons vos
-            données <br />
-            en lisant notre Politique d’utilisation des données et comment nous
-            utilisons <br />
-            les cookies et autres technologies similaires en consultant notre
-            Politique d’utilisation des cookies. <br />
-            Vous recevrez peut-être des notifications par texto de notre part et
-            vous pouvez à tout moment vous désabonner. <br />
+            Find out how we collect, use and share your data <br />
+            by reading our Data Use Policy and how we use <br />
+            cookies and other similar technologies by consulting our Cookies
+            Policy. <br />
+            You may receive text notifications from us and you can unsubscribe
+            at any time. <br />
           </v-card-text>
           <!--register-actions-->
           <v-card-actions>
@@ -149,7 +147,7 @@ import { rules } from "@/utils/rules";
 import { mapActions } from "vuex";
 import { VueElement, VueFunction } from "../../utils/types";
 import { register, enterPressed } from "@/utils/functions";
-import { btnSize } from '../../utils/functions';
+import { btnSize } from "../../utils/functions";
 export default Vue.extend({
   name: "Access-register",
   data() {
@@ -193,7 +191,7 @@ export default Vue.extend({
     /**
      * action on enter pressed
      * @function
-     * @param event 
+     * @param event
      */
     enter(event: KeyboardEvent): void {
       enterPressed(event, this.register);
