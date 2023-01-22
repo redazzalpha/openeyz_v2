@@ -59,10 +59,17 @@
           </v-row>
           <!-- last-name-row -->
           <v-row>
-            <v-col>
+            <v-col
+              style="
+                text-overflow: ellipsis;
+                overflow: hidden
+              "
+            >
               <span class="mr-3"
                 ><span class="font-weight-bold">Last name:</span>
-                {{ lname ? lname : current("lname") }}
+                <span class="text-no-wrap">
+                  {{ lname ? lname : current("lname") }}
+                </span>
               </span>
             </v-col>
             <v-col class="d-flex">
