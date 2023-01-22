@@ -26,7 +26,7 @@ export const socketHandler = {
         stompClient = Stomp.over(function () {
             return new WebSocket(SERVER_WS_END_POINT_URL);
         });
-        stompClient.connect({ 'Authorization': 'Bearer ' + localStorage.getItem("token") }, function (frame) {
+        stompClient.connect({ 'Authorization': 'Bearer ' + localStorage.getItem("token") }, function () {
             stompClient.subscribe(SERVER_WS_SUBSCRIBE_URL, signal => {
                 signalHandler(signal);
             }, { 'Authorization': 'Bearer ' + localStorage.getItem("token") });

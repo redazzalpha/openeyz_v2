@@ -25,7 +25,7 @@ Vue.http.interceptors.push(function (request: VueRequest) {
           unavailableServerHandler(response);
           break;
       case 400:
-        badRequestHandler(response);
+        badRequestHandler();
         break;
         case 500:
           internalServerErrorHandler(response);

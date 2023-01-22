@@ -659,7 +659,7 @@ export function internalServerErrorHandler(response: VueResponse): void {
  * @function
  * @param {VueResponse} response - http response
  */
-export function badRequestHandler(response: VueResponse): void {
+export function badRequestHandler(): void {
   getPosts(POST_GET_LIMIT);
 }
 /**

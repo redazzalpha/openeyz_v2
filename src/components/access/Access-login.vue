@@ -74,7 +74,6 @@ import { rules } from "@/utils/rules";
 import { VueElement, VueFunction } from "../../utils/types";
 import { login, enterPressed } from "@/utils/functions";
 import { btnSize } from "../../utils/functions";
-import { socketHandler } from "@/js/socket";
 
 export default Vue.extend({
   name: "Access-login",
