@@ -34,50 +34,49 @@
           <v-list-item-avatar> </v-list-item-avatar>
 
           <v-list-item-content>
-
-
-
-
-
-
-
-
-            
-            
-            
-            <v-container fluid grid-list-xs v-if="user.roles[0] != undefined" class="pt-3">
-              
+            <v-container
+              fluid
+              grid-list-xs
+              v-if="user.roles[0] != undefined"
+              class="pt-3"
+            >
               <v-row>
                 <v-col class="py-0 mb-4">
-                    <span class="font-weight-bold">Username: </span>{{ user.username }}
-                    </v-col>
-                  </v-row>
-                  <v-row>
-                    <v-col class="py-0 mb-2">
-                      <v-list-item-subtitle>Informations</v-list-item-subtitle>
-                    </v-col>
-                  </v-row>
-                  <v-row>
-                    <v-col class="py-0 mb-1">
-                      <span class="font-weight-bold">First name: </span>
-                      {{ user.lname }} 
-                    </v-col>
-                  </v-row>
-                  <v-row>
-                    <v-col class="py-0 mb-1">
-                      <span class="font-weight-bold">Name: </span> {{ user.name }}
-                    </v-col>
-                  </v-row>
-                  <v-row>
-                    <v-col class="py-0 mb-1">
-                      <span class="font-weight-bold">Description: </span>
-                      {{ user.description ? user.description : "no description" }}
-                    </v-col>
-                  </v-row>
-                  <v-row>
-                    <v-col class="py-0 mb-1">
-                      <span class="font-weight-bold">Role: </span>
-                      <span :class="roleClassColor">{{ user.roles[0].roleName }}</span>
+                  <span class="font-weight-bold">Username: </span
+                  >{{ user.username }}
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col class="py-0 mb-2">
+                  <v-list-item-subtitle>Informations</v-list-item-subtitle>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col
+                  class="py-0 mb-1 text-no-wrap col-sm-6"
+                  style="overflow: hidden; text-overflow: ellipsis"
+                >
+                  <span class="font-weight-bold">Last name: </span>
+                  {{ user.lname }}
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col class="py-0 mb-1">
+                  <span class="font-weight-bold">Name: </span> {{ user.name }}
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col class="py-0 mb-1">
+                  <span class="font-weight-bold">Description: </span>
+                  {{ user.description ? user.description : "no description" }}
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col class="py-0 mb-1">
+                  <span class="font-weight-bold">Role: </span>
+                  <span :class="roleClassColor">{{
+                    user.roles[0].roleName
+                  }}</span>
                 </v-col>
               </v-row>
               <v-row>
@@ -88,45 +87,7 @@
                   }}</span>
                 </v-col>
               </v-row>
-
-
-
-
-
-              <!-- <v-list-item-title>
-                <span class="font-weight-bold">Username: </span
-                >{{ user.username }}</v-list-item-title
-              >
-              <v-list-item-subtitle>Informations</v-list-item-subtitle>
-              <span class="font-weight-bold">First name: </span>
-              {{ user.lname }} <br />
-              <span class="font-weight-bold">Name: </span> {{ user.name }}
-              <br />
-              <span class="font-weight-bold">Description: </span>
-              {{ user.description ? user.description : "no description" }}
-              <br />
-              <span class="font-weight-bold">Role: </span>
-              <span :class="roleClassColor">{{ user.roles[0].roleName }}</span>
-              <br />
-              <span class="font-weight-bold">Account state: </span>
-              <span :class="user.state ? 'success--text' : 'error--text'">{{
-                user.state ? "Enabled" : "Disabled"
-              }}</span>
-              <br />
-
- -->
-
-
-
-
             </v-container>
-
-
-
-
-
-
-
           </v-list-item-content>
         </v-list-item>
       </v-list>
