@@ -25,20 +25,21 @@ export const socketHandler = {
 
     connect: () => {
         const token = localStorage.getItem("token");
-        if(token) {
+        if (token) {
 
             stompClient = Stomp.over(function () {
                 return new WebSocket(SERVER_WS_END_POINT_URL);
             });
             stompClient.debug = () => {/**/ };
-    
+
             stompClient.connect({ 'Authorization': 'Bearer ' + token }, function () {
                 stompClient.subscribe(SERVER_WS_SUBSCRIBE_URL, signal => {
                     signalHandler(signal);
                 }, { 'Authorization': 'Bearer ' + token });
             });
-            if ( router.currentRoute.name != "access")
+            if (router.currentRoute.name != "access" && router.currentRoute.name != "error")
                 stompClient.reconnect_delay = 5000;
+            else stompClient.reconnect_delay = 0;
         }
     },
     disconnect: () => {

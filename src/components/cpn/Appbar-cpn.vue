@@ -5,6 +5,8 @@
       class="appbar-cpn-container"
       :color="$vuetify.theme.dark ? '#212121' : 'cyan darken-1'"
       elevation="1"
+      hide-on-scroll
+      scroll-threshold="100"
       app
     >
       <v-container fluid grid-list-xs>
@@ -58,7 +60,7 @@ export default Vue.extend({
   },
   computed: {
     ...mapState(["drawer"]),
-    /** 
+    /**
      * returns if appbar is shown or not
      * @function
      * @returns {boolean}
