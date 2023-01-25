@@ -34,6 +34,7 @@ import ScrollTopBtnCpn from "./components/cpn/ScrollTopBtn-cpn.vue";
 import LoaderCpn from "./components/cpn/Loader-cpn.vue";
 import AlertCpn from "@/components/cpn/Alert-cpn.vue";
 import { mapActions, mapState } from "vuex";
+import { socketHandler } from '@/js/socket';
 
 export default Vue.extend({
   name: "App",
@@ -134,6 +135,7 @@ export default Vue.extend({
     },
   },
   created() {
+    window.onbeforeunload =  ()  => socketHandler.disconnect();
     this.ckeThemeSwitcher();
   },
   updated() {

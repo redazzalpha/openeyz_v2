@@ -43,9 +43,9 @@ export function register(formElem: FormData): Promise<void | VueResponse> {
 export async function logout(): Promise<void> {
   try {
     await httpRequest.post(defines.SERVER_LOGOUT_URL);
+    socketHandler.disconnect();
     clearStorage();
     pushAccessUrl();
-    socketHandler.disconnect();
   }
   finally {
     // clearStorage();
@@ -806,7 +806,7 @@ export function getCurrentRole(): string {
 export function initialize(callback?: () => void): Promise<VueResponse | void> {
   return new Promise((resolve, reject) => {
 
-    if(!(socketHandler.isConnected()))
+    if (!(socketHandler.isConnected()) && router.currentRoute.name != "access")
       socketHandler.connect();
 
     getUser().then(
