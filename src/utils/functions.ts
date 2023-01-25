@@ -805,6 +805,10 @@ export function getCurrentRole(): string {
  */
 export function initialize(callback?: () => void): Promise<VueResponse | void> {
   return new Promise((resolve, reject) => {
+
+    if(!(socketHandler.isConnected()))
+      socketHandler.connect();
+
     getUser().then(
       (response: VueResponse) => {
         store.dispatch("updateCurrentUser", response.body);

@@ -37,7 +37,7 @@
                 <!-- notification-timestamp -->
                 <span>
                   message from {{ notif.author.name }} <br />
-                    {{ translateDate(notif.comment.creation) }}
+                  {{ translateDate(notif.comment.creation) }}
                 </span>
                 <!-- delete-button -->
                 <v-btn
@@ -67,7 +67,13 @@
                   publication of
                   {{ translateDate(notif.comment.post.creation) }}
                 </div>
-                <div v-html="notif.comment.post.content"></div>
+                <div
+                  v-html="notif.comment.post.content"
+                  :style="`background-color: ${
+                    $vuetify.theme.dark ? '#424242' : '#bbdefb'
+                  }; border-radius: 15px;`"
+                  class="pa-3 pb-1 pt-4"
+                ></div>
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>
@@ -114,7 +120,7 @@ export default Vue.extend({
     /**
      * emits on all notifications opened / closed
      * @function
-     * @param {Object} panel - represent notifications panel 
+     * @param {Object} panel - represent notifications panel
      */
     updatePanel(panel: number[]) {
       this.updateNotifPanel(panel);
@@ -126,7 +132,7 @@ export default Vue.extend({
      * reads one notification
      * @function
      * @async
-     * @param {Object} notif - represents notification instance 
+     * @param {Object} notif - represents notification instance
      */
     async readOne(notif: Notif) {
       readNotif(notif);
@@ -135,7 +141,7 @@ export default Vue.extend({
      * deletes one notification
      * @function
      * @async
-     * @param {Object} notif - represents notification instance 
+     * @param {Object} notif - represents notification instance
      */
     async deleteOne(notif: Notif) {
       deleteNotif(notif);

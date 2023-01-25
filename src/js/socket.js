@@ -41,6 +41,9 @@ export const socketHandler = {
     sendSignal: (signal) => {
         stompClient.send(SERVER_WS_SEND_URL, { 'Authorization': 'Bearer ' + localStorage.getItem("token") }, JSON.stringify({ 'content': signal }));
     },
+    isConnected: () => {
+        return stompClient != null;
+    }
 };
 
 
