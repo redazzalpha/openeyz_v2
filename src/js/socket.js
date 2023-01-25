@@ -30,7 +30,7 @@ export const socketHandler = {
             stompClient = Stomp.over(function () {
                 return new WebSocket(SERVER_WS_END_POINT_URL);
             });
-            // stompClient.debug = () => {/**/ };
+            stompClient.debug = () => {/**/ };
     
             stompClient.connect({ 'Authorization': 'Bearer ' + token }, function () {
                 stompClient.subscribe(SERVER_WS_SUBSCRIBE_URL, signal => {
