@@ -47,6 +47,8 @@
                 :ripple="false"
                 @click.stop="deleteComment"
                 style="position: absolute; top: 0px; right: 0"
+                :loading="loadingDelete"
+                :disabled="loadingDelete"
               >
                 <v-icon color="white">mdi-close-circle</v-icon>
               </v-btn>
@@ -91,6 +93,7 @@ export default Vue.extend({
   data() {
     return {
       translateDate: translateDate,
+      loadingDelete: false,
     };
   },
   computed: {
@@ -98,6 +101,10 @@ export default Vue.extend({
   },
   methods: {
     async deleteComment() {
+      this.loadingDelete = true;
+      setTimeout(() => {
+        this.loadingDelete = false;
+      }, 3000);
       await deleteComment(this.comment);
       await getAllComments(this.currentItem, COMMENT_GET_LIMIT);
       this.currentItem.commentCount--;

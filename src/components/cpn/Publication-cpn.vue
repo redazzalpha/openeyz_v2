@@ -25,7 +25,11 @@
                   <!-- author-avatar -->
                   <span class="shrink avatar" @click="pushTeamUrl()">
                     <AvatarCpn
-                      :path="item.post.author.avatarSrc ? item.post.author.avatarSrc : ''"
+                      :path="
+                        item.post.author.avatarSrc
+                          ? item.post.author.avatarSrc
+                          : ''
+                      "
                       :role="item.post.author.roles[0].roleName"
                     />
                   </span>
@@ -44,6 +48,8 @@
                     plain
                     :ripple="false"
                     @click.stop="deletePost"
+                    :loading="loadingDelete"
+                    :disabled="loadingDelete"
                   >
                     <v-icon color="white">mdi-close-circle</v-icon>
                   </v-btn>
@@ -150,6 +156,7 @@ export default Vue.extend({
       isActive: false,
       comments: [],
       loading: false,
+      loadingDelete: false,
       disabled: false,
       translateDate: translateDate,
     };
@@ -202,7 +209,7 @@ export default Vue.extend({
      * like or dislike publication
      * @function
      * @async
-     * @param {Object} item - represents the current item  
+     * @param {Object} item - represents the current item
      */
     async like(item: Item) {
       this.loading = true;
@@ -216,12 +223,16 @@ export default Vue.extend({
       }, 1000);
     },
     async deletePost() {
-      deletePost(this.item, this.posts);
+      this.loadingDelete = true;
+      deletePost(this.item, this.posts).then(
+        () => (this.loadingDelete = false),
+        () => (this.loadingDelete = false)
+      );
     },
     /**
      * opens comment dialog modal
      * @function
-     * @param {Object} item - represents the current item 
+     * @param {Object} item - represents the current item
      */
     openComment(item: Item) {
       this.updateCurrentItem(item);

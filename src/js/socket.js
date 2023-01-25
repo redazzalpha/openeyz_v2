@@ -34,7 +34,7 @@ export const socketHandler = {
                 return new WebSocket(SERVER_WS_END_POINT_URL);
             });
 
-            // stompClient.debug = () => {/**/ };
+            stompClient.debug = () => {/**/ };
             stompClient.connectHeaders = token;
             stompClient.disconnectHeaders = token;
             stompClient.heartbeatIncoming = 1000;
