@@ -15,8 +15,6 @@ function signalHandler(signal) {
 
     received = signal.body;
 
-    console.log("signal.body : " + signal.body);
-
     if (received == 'POST')
         getPosts(POST_GET_LIMIT);
     if (received == 'NOTIF')
