@@ -23,6 +23,7 @@ export const SERVER_USER_AVATAR_URL = SERVER_USER_URL + '/avatar';
 export const SERVER_USER_THEME_URL = SERVER_USER_URL + '/theme';
 export const SERVER_USER_DELETE_URL = SERVER_USER_URL + '/delete';
 export const SERVER_USER_REVEAL_URL = SERVER_USER_URL + '/reveal';
+export const SERVER_USER_WS_INIT_URL = SERVER_USER_URL + '/websocket/init';
 
 export const SERVER_PUBLICATION_URL = API_PATH + '/publication';
 export const SERVER_PUBLICATION_LIMIT_URL = SERVER_PUBLICATION_URL + '/limit';

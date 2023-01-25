@@ -1,8 +1,8 @@
 
-import { SERVER_WS_END_POINT_URL, SERVER_WS_SEND_URL, SERVER_WS_SUBSCRIBE_URL, POST_GET_LIMIT } from '../utils/defines';
+import { SERVER_WS_END_POINT_URL, SERVER_WS_SEND_URL, SERVER_WS_SUBSCRIBE_URL, POST_GET_LIMIT, SERVER_USER_WS_INIT_URL } from '../utils/defines';
 import { Stomp } from '@stomp/stompjs';
 import { getNotifs, getPosts } from '../utils/functions';
-import router from '@/router';
+import { httpRequest } from '@/utils/http';
 
 let stompClient = null;
 let received = null;
@@ -15,6 +15,8 @@ function signalHandler(signal) {
 
     received = signal.body;
 
+    console.log("signal.body : " + signal.body);
+
     if (received == 'POST')
         getPosts(POST_GET_LIMIT);
     if (received == 'NOTIF')
@@ -23,23 +25,33 @@ function signalHandler(signal) {
 
 export const socketHandler = {
 
-    connect: () => {
+    connect: async () => {
         const token = localStorage.getItem("token");
+
         if (token) {
 
             stompClient = Stomp.over(function () {
                 return new WebSocket(SERVER_WS_END_POINT_URL);
             });
-            stompClient.debug = () => {/**/ };
 
-            stompClient.connect({ 'Authorization': 'Bearer ' + token }, function () {
+            // stompClient.debug = () => {/**/ };
+            stompClient.connectHeaders = token;
+            stompClient.disconnectHeaders = token;
+            stompClient.heartbeatIncoming = 1000;
+            stompClient.heartbeatOutgoing = 1000;
+            stompClient.reconnect_delay = 5000;
+
+            stompClient.beforeConnect = async () => {
+                await httpRequest.post(SERVER_USER_WS_INIT_URL);
+            };
+
+            stompClient.connect({ 'Authorization': 'Bearer ' + token }, function (frame) {
+                localStorage.setItem("ws-user-name", frame.headers["user-name"]);
+
                 stompClient.subscribe(SERVER_WS_SUBSCRIBE_URL, signal => {
                     signalHandler(signal);
                 }, { 'Authorization': 'Bearer ' + token });
             });
-            if (router.currentRoute.name != "access" && router.currentRoute.name != "error")
-                stompClient.reconnect_delay = 5000;
-            else stompClient.reconnect_delay = 0;
         }
     },
     disconnect: () => {
@@ -48,6 +60,7 @@ export const socketHandler = {
         }
     },
     sendSignal: (signal) => {
+        console.log("send the message here ws-user-name -> " + localStorage.getItem("ws-user-name"));
         stompClient.send(SERVER_WS_SEND_URL, { 'Authorization': 'Bearer ' + localStorage.getItem("token") }, JSON.stringify({ 'content': signal }));
     },
     isConnected: () => {
