@@ -648,10 +648,10 @@ export function unavailableServerHandler(response: VueResponse): void {
  */
 export function internalServerErrorHandler(response: VueResponse): void {
   let message = "internal server error";
-  const regexp = new RegExp(".*Maximum upload size.*", "gi");
-  if (regexp.test(response.bodyText))
+  const maxError = new RegExp(".*Maximum upload size.*", "gi");
+  const maxError1 = new RegExp(".*content exceeds max size 20mb.*", "gi");
+  if (maxError.test(response.bodyText) || maxError1.test(response.bodyText))
     message = "content exceeds max size 20mb";
-
   response.bodyText = message;
 }
 /**
@@ -724,7 +724,7 @@ export function alert(type: string, message: string): void {
  */
 export function alertPersist(type: string, message: string): void {
   clearStorage();
-  router.push('access');
+  router.push('error');
   store.dispatch("updateLoader", false);
   store.dispatch("updateAlertType", type);
   store.dispatch("updateAlertMessage", message);
