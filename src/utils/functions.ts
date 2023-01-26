@@ -78,7 +78,7 @@ export function getSimpleUsers(): Promise<VueResponse> {
         resolve(response);
       },
       (error: VueResponse) => {
-        failed(error.bodyText);
+        failed(error);
         reject(error);
       },
     );
@@ -94,7 +94,7 @@ export function getUser(): Promise<VueResponse> {
     httpRequest.get(defines.SERVER_USER_URL).then(
       (response: VueResponse) => resolve(response),
       (error: VueResponse) => {
-        failed(error.bodyText);
+        failed(error);
         reject(error);
       },
     );
@@ -111,7 +111,7 @@ export function getUserData(username: string): Promise<VueResponse> {
     httpRequest.get(defines.SERVER_USER_DATA_URL, { params: { username } }).then(
       (response: VueResponse) => resolve(response),
       (error: VueResponse) => {
-        failed(error.bodyText);
+        failed(error);
         reject(error);
       },
     );
@@ -133,7 +133,7 @@ export function updateUserState({ username }: Users, state: boolean): Promise<Us
     httpRequest.patch(defines.SERVER_USER_STATE_URL, body).then(
       (response: VueResponse) => resolve(response.body as Users),
       (error: VueResponse) => {
-        failed(error.bodyText);
+        failed(error);
         reject(error);
       },
     );
@@ -154,7 +154,7 @@ export function updateUserRole({ username }: Users, role: string): Promise<Users
     httpRequest.patch(defines.SERVER_USER_ROLE_URL, body).then(
       (response: VueResponse) => resolve(response.body as Users),
       (error: VueResponse) => {
-        failed(error.bodyText);
+        failed(error);
         reject(error);
       },
     );
@@ -173,7 +173,7 @@ export function modifyUserField(url: string, body: FormData): Promise<VueRespons
     httpRequest.patch(url, body).then(
       (response: VueResponse) => { success("modification done"); resolve(response); },
       (error: VueResponse) => {
-        failed(error.bodyText);
+        failed(error);
         reject(error);
       },
     );
@@ -186,7 +186,7 @@ export function modifyUserDescription(description: string): Promise<VueResponse>
     httpRequest.patch(defines.SERVER_USER_DESCRIPTION_URL, body).then(
       (response: VueResponse) => { success("modification done"); resolve(response); },
       (error: VueResponse) => {
-        failed(error.bodyText);
+        failed(error);
         reject(error);
       },
     );
@@ -199,7 +199,7 @@ export function modifyUserTheme(darkMode: boolean): Promise<VueResponse> {
     httpRequest.patch(defines.SERVER_USER_THEME_URL, data).then(
       (response: VueResponse) => resolve(response),
       (error: VueResponse) => {
-        failed(error.bodyText);
+        failed(error);
         reject(error);
       },
     );
@@ -210,7 +210,7 @@ export function modifyUserPassword(body: FormData): Promise<VueResponse> {
     httpRequest.patch(defines.SERVER_USER_PASSWORD_URL, body).then(
       (response: VueResponse) => { success("modification done"); resolve(response); },
       (error: VueResponse) => {
-        failed(error.bodyText);
+        failed(error);
         reject(error);
       },
     );
@@ -230,7 +230,7 @@ export function sendUserAvatar(input: HTMLInputElement): Promise<VueResponse> {
       httpRequest.post(defines.SERVER_USER_AVATAR_URL, file).then(
         (response: VueResponse) => resolve(response),
         (error: VueResponse) => {
-          failed(error.bodyText);
+          failed(error);
           reject(error);
         },
       );
@@ -242,7 +242,7 @@ export function removeUserAvatar(): Promise<VueResponse> {
     httpRequest.post(defines.SERVER_USER_AVATAR_URL).then(
       (response: VueResponse) => resolve(response),
       (error: VueResponse) => {
-        failed(error.bodyText);
+        failed(error);
         reject(error);
       },
     );
@@ -264,7 +264,7 @@ export function deleteUserAccount(): Promise<VueResponse> {
         }, 8000);
       },
       (error: VueResponse) => {
-        failed(error.bodyText);
+        failed(error);
         reject(error);
       },
     );
@@ -279,7 +279,7 @@ export function getPosts(limit: number, creation?: string, authorId?: string): P
     ).then(
       (response: VueResponse) => { store.dispatch("updatePosts", JSON.parse(response.bodyText)); resolve(response); },
       (error: VueResponse) => {
-        failed(error.bodyText);
+        failed(error);
         reject(error);
       },
     );
@@ -296,7 +296,7 @@ export function addPosts(limit: number, creation?: string, authorId?: string): P
         resolve(response);
       },
       (error: VueResponse) => {
-        failed(error.bodyText);
+        failed(error);
         reject(error);
       },
     );
@@ -315,7 +315,7 @@ export function publishPost(post: string): Promise<void | VueResponse> {
           resolve(response);
       },
       (error: VueResponse) => {
-        failed(error.bodyText);
+        failed(error);
         reject(error);
       },
     );
@@ -330,13 +330,13 @@ export function deletePost({ post }: Item, posts: Post[]): Promise<VueResponse> 
         getPosts(defines.POST_GET_LIMIT, posts[posts.length - 1].creation).then(
           (response: VueResponse) => resolve(response),
           (error: VueResponse) => {
-            failed(error.bodyText);
+            failed(error);
             reject(error);
           },
         );
       },
       (error: VueResponse) => {
-        failed(error.bodyText);
+        failed(error);
         reject(error);
       },
     );
@@ -352,13 +352,13 @@ export function likePost({ post }: Item): Promise<VueResponse> {
           httpRequest.get(defines.SERVER_LIKE_COUNT_URL, { params: { postId: post?.id } }).then(
             (response: VueResponse) => resolve(response),
             (error: VueResponse) => {
-              failed(error.bodyText);
+              failed(error);
               reject(error);
             },
           );
         },
         (error: VueResponse) => {
-          failed(error.bodyText);
+          failed(error);
           reject(error);
         },
       );
@@ -378,7 +378,7 @@ export function getAllComments({ post }: Item, limit: number, creation?: string)
         resolve(response);
       },
       (error: VueResponse) => {
-        failed(error.bodyText);
+        failed(error);
         reject(error);
       },
     );
@@ -404,7 +404,7 @@ export function addAllComments(postId: number, limit: number, creation?: string)
         resolve(response);
       },
       (error: VueResponse) => {
-        failed(error.bodyText);
+        failed(error);
         reject(error);
       },
     );
@@ -422,7 +422,7 @@ export function sendComment({ post }: Item, comment: string): Promise<VueRespons
           resolve(response);
         },
         (error: VueResponse) => {
-          failed(error.bodyText);
+          failed(error);
           reject(error);
         },
       );
@@ -436,7 +436,7 @@ export function deleteComment({ id }: Comment): Promise<VueResponse> {
     }).then(
       (response: VueResponse) => resolve(response),
       (error: VueResponse) => {
-        failed(error.bodyText);
+        failed(error);
         reject(error);
       },
     );
@@ -459,7 +459,7 @@ export function getNotifs(): Promise<VueResponse> {
           resolve(response);
         },
         (error: VueResponse) => {
-          failed(error.bodyText);
+          failed(error);
           reject(error);
         },
       );
@@ -482,14 +482,14 @@ export function readNotif({ read, id }: Notif): Promise<VueResponse> {
           getNotifs().then(
             (response: VueResponse) => resolve(response),
             (error: VueResponse) => {
-              failed(error.bodyText);
+              failed(error);
               reject(error);
             },
 
           );
         },
         (error: VueResponse) => {
-          failed(error.bodyText);
+          failed(error);
           reject(error);
         },
       );
@@ -505,13 +505,13 @@ export function deleteNotif({ id }: Notif): Promise<VueResponse> {
         getNotifs().then(
           (response: VueResponse) => resolve(response),
           (error: VueResponse) => {
-            failed(error.bodyText);
+            failed(error);
             reject(error);
           },
         );
       },
       (error: VueResponse) => {
-        failed(error.bodyText);
+        failed(error);
         reject(error);
       },
     );
@@ -530,13 +530,13 @@ export async function readNotifs(): Promise<VueResponse> {
         getNotifs().then(
           (response: VueResponse) => resolve(response),
           (error: VueResponse) => {
-            failed(error.bodyText);
+            failed(error);
             reject(error);
           },
         );
       },
       (error: VueResponse) => {
-        failed(error.bodyText);
+        failed(error);
         reject(error);
       },
     );
@@ -550,14 +550,14 @@ export function deleteNotifs(): Promise<VueResponse> {
         getNotifs().then(
           (response: VueResponse) => resolve(response),
           (error: VueResponse) => {
-            failed(error.bodyText);
+            failed(error);
             reject(error);
           },
 
         );
       },
       (error: VueResponse) => {
-        failed(error.bodyText);
+        failed(error);
         reject(error);
       },
     );
@@ -723,13 +723,17 @@ export function alert(type: string, message: string): void {
  * @param {string} type - type of alert 
  * @param {string} message - alert message 
  */
-export function alertPersist(type: string, message: string): void {
-  clearStorage();
-  router.push('error');
-  store.dispatch("updateLoader", false);
-  store.dispatch("updateAlertType", type);
-  store.dispatch("updateAlertMessage", message);
-  store.dispatch("updateAlertPersist", true);
+export function alertPersist(type: string, error: VueResponse, message?: string): void {
+
+  if (error.url != defines.SERVER_PUBLICATION_URL) {
+    clearStorage();
+    router.push('error');
+    store.dispatch("updateLoader", false);
+    store.dispatch("updateAlertType", type);
+    store.dispatch("updateAlertMessage", message);
+    store.dispatch("updateAlertPersist", true);
+  }
+  else alert("error", "content exceeds max size 40mb");
 }
 /**
  * Shows alert on success action
@@ -744,19 +748,19 @@ export function success(message: string): void {
  * @function
  * @param {string} message - alert message  
  */
-export function failed(message: string): void {
-  const jwtError: boolean = new RegExp("(.*JWT.*)|(.*Unauthorized.*)", "gi").test(message);
-  const forbiddenError: boolean = new RegExp(".*forbidden.*", "gi").test(message);
-  const unavailableServerError: boolean = new RegExp(".*server is unavailable.*", "gi").test(message);
+export function failed(error: VueResponse): void {
+  const jwtError: boolean = new RegExp("(.*JWT.*)|(.*Unauthorized.*)", "gi").test(error.bodyText);
+  const forbiddenError: boolean = new RegExp(".*forbidden.*", "gi").test(error.bodyText);
+  const unavailableServerError: boolean = new RegExp(".*server is unavailable.*", "gi").test(error.bodyText);
   const isAccesPage: boolean = router.currentRoute.name == "access";
 
   if (jwtError)
-    alertPersist("error", "auth. error please connect !");
+    alertPersist("error", error, "auth. error please connect !");
   else if (forbiddenError && !isAccesPage)
-    alertPersist("error", "your account has been disabled");
+    alertPersist("error", error, "your account has been disabled");
   else if (unavailableServerError && !isAccesPage)
-    alertPersist("error", message);
-  else alert("error", message);
+    alertPersist("error", error, "server is unavailable");
+  else alert("error", error.bodyText);
 }
 /**
  * Generates image files and filename and stores them into a list 
