@@ -647,12 +647,15 @@ export function unavailableServerHandler(response: VueResponse): void {
  * @param {VueResponse} response - http response
  */
 export function internalServerErrorHandler(response: VueResponse): void {
-  let message = "internal server error";
-  const maxError = new RegExp(".*Maximum upload size.*", "gi");
-  const maxError1 = new RegExp(".*content exceeds max size 20mb.*", "gi");
-  if (maxError.test(response.bodyText) || maxError1.test(response.bodyText))
-    message = "content exceeds max size 20mb";
-  response.bodyText = message;
+
+
+  console.log(response.bodyText);
+  // let message = "internal server error";
+  // const maxError = new RegExp(".*Maximum upload size.*", "gi");
+  // const maxError1 = new RegExp(".*content exceeds max size 20mb.*", "gi");
+  // if (maxError.test(response.bodyText) || maxError1.test(response.bodyText))
+  //   message = "content exceeds max size 20mb";
+  // response.bodyText = message;
 }
 /**
  * bad request handler on http response 
