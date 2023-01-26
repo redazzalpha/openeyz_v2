@@ -650,7 +650,7 @@ export function internalServerErrorHandler(response: VueResponse): void {
   let message = "internal server error";
   const regexp = new RegExp(".*Maximum upload size.*", "gi");
   if (regexp.test(response.bodyText))
-    message = "image file too big";
+    message = "content exceeds max size 20mb";
 
   response.bodyText = message;
 }
@@ -724,7 +724,7 @@ export function alert(type: string, message: string): void {
  */
 export function alertPersist(type: string, message: string): void {
   clearStorage();
-  router.push('error');
+  router.push('access');
   store.dispatch("updateLoader", false);
   store.dispatch("updateAlertType", type);
   store.dispatch("updateAlertMessage", message);
